@@ -214,11 +214,30 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\AgentController.cs" />
+    <Compile Include="Controllers\FeedBackController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812030707395_initial-migration.cs" />
+    <Compile Include="Migrations\201812030707395_initial-migration.Designer.cs">
+      <DependentUpon>201812030707395_initial-migration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812030917091_addedFirstAndLastName.cs" />
+    <Compile Include="Migrations\201812030917091_addedFirstAndLastName.Designer.cs">
+      <DependentUpon>201812030917091_addedFirstAndLastName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812030918529_addedFirstAndLastName1.cs" />
+    <Compile Include="Migrations\201812030918529_addedFirstAndLastName1.Designer.cs">
+      <DependentUpon>201812030918529_addedFirstAndLastName1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812031002489_addedFirstAndLastName2.cs" />
+    <Compile Include="Migrations\201812031002489_addedFirstAndLastName2.Designer.cs">
+      <DependentUpon>201812031002489_addedFirstAndLastName2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -230,6 +249,129 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\slim.css" />
+    <Content Include="Content\img\icon1.svg" />
+    <Content Include="Content\img\icon2.svg" />
+    <Content Include="Content\img\img0.jpg" />
+    <Content Include="Content\img\img1.jpg" />
+    <Content Include="Content\img\img10.jpg" />
+    <Content Include="Content\img\img11.jpg" />
+    <Content Include="Content\img\img12.jpg" />
+    <Content Include="Content\img\img13.jpg" />
+    <Content Include="Content\img\img14.jpg" />
+    <Content Include="Content\img\img15.jpg" />
+    <Content Include="Content\img\img16.jpg" />
+    <Content Include="Content\img\img17.jpg" />
+    <Content Include="Content\img\img18.jpg" />
+    <Content Include="Content\img\img19.jpg" />
+    <Content Include="Content\img\img2.jpg" />
+    <Content Include="Content\img\img20.jpg" />
+    <Content Include="Content\img\img21.jpg" />
+    <Content Include="Content\img\img22.jpg" />
+    <Content Include="Content\img\img23.jpg" />
+    <Content Include="Content\img\img24.jpg" />
+    <Content Include="Content\img\img25.jpg" />
+    <Content Include="Content\img\img26.jpg" />
+    <Content Include="Content\img\img27.jpg" />
+    <Content Include="Content\img\img28.jpg" />
+    <Content Include="Content\img\img29.jpg" />
+    <Content Include="Content\img\img3.jpg" />
+    <Content Include="Content\img\img30.jpg" />
+    <Content Include="Content\img\img31.jpg" />
+    <Content Include="Content\img\img32.jpg" />
+    <Content Include="Content\img\img4.jpg" />
+    <Content Include="Content\img\img5.jpg" />
+    <Content Include="Content\img\img6.jpg" />
+    <Content Include="Content\img\img7.jpg" />
+    <Content Include="Content\img\img8.jpg" />
+    <Content Include="Content\img\img9.jpg" />
+    <Content Include="Content\js\chart.chartist.js" />
+    <Content Include="Content\js\chart.chartjs.js" />
+    <Content Include="Content\js\chart.echarts.js" />
+    <Content Include="Content\js\chart.flot.js" />
+    <Content Include="Content\js\chart.morris.js" />
+    <Content Include="Content\js\chart.peity.js" />
+    <Content Include="Content\js\chart.rickshaw.js" />
+    <Content Include="Content\js\chart.sparkline.js" />
+    <Content Include="Content\js\dashboard.js" />
+    <Content Include="Content\js\jquery.vmap.sampledata.js" />
+    <Content Include="Content\js\map.apple.js" />
+    <Content Include="Content\js\map.bluewater.js" />
+    <Content Include="Content\js\map.mapbox.js" />
+    <Content Include="Content\js\map.shadesofgray.js" />
+    <Content Include="Content\js\map.shiftworker.js" />
+    <Content Include="Content\js\ResizeSensor.js" />
+    <Content Include="Content\js\slim.js" />
+    <Content Include="Content\js\widgets.js" />
+    <Content Include="Content\lib\bootstrap-tagsinput\css\bootstrap-tagsinput.css" />
+    <Content Include="Content\lib\bootstrap-tagsinput\js\bootstrap-tagsinput.js" />
+    <Content Include="Content\lib\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\lib\chart.js\js\Chart.js" />
+    <Content Include="Content\lib\chartist\css\chartist.css" />
+    <Content Include="Content\lib\chartist\js\chartist.js" />
+    <Content Include="Content\lib\d3\js\d3.js" />
+    <Content Include="Content\lib\datatables-responsive\js\dataTables.responsive.js" />
+    <Content Include="Content\lib\datatables\css\jquery.dataTables.css" />
+    <Content Include="Content\lib\datatables\js\jquery.dataTables.js" />
+    <Content Include="Content\lib\echarts\js\echarts.min.js" />
+    <Content Include="Content\lib\flag-icon-css\css\flag-icon.min.css" />
+    <Content Include="Content\lib\flot-spline\js\jquery.flot.spline.js" />
+    <Content Include="Content\lib\Flot\js\jquery.flot.js" />
+    <Content Include="Content\lib\Flot\js\jquery.flot.pie.js" />
+    <Content Include="Content\lib\Flot\js\jquery.flot.resize.js" />
+    <Content Include="Content\lib\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\lib\fullcalendar\css\fullcalendar.css" />
+    <Content Include="Content\lib\fullcalendar\js\fullcalendar.js" />
+    <Content Include="Content\lib\gmaps\js\gmaps.js" />
+    <Content Include="Content\lib\ion.rangeSlider\css\ion.rangeSlider.css" />
+    <Content Include="Content\lib\ion.rangeSlider\css\ion.rangeSlider.skinFlat.css" />
+    <Content Include="Content\lib\ion.rangeSlider\img\sprite-skin-flat.png" />
+    <Content Include="Content\lib\ion.rangeSlider\js\ion.rangeSlider.min.js" />
+    <Content Include="Content\lib\Ionicons\css\fonts\fontawesome-webfont.woff2v=4.7.0.svg" />
+    <Content Include="Content\lib\Ionicons\css\ionicons.css" />
+    <Content Include="Content\lib\Ionicons\fonts\fontawesome-webfont.woff2v=4.7.0.svg" />
+    <Content Include="Content\lib\Jcrop\css\Jcrop.css" />
+    <Content Include="Content\lib\Jcrop\js\Jcrop.js" />
+    <Content Include="Content\lib\jquery-toggles\css\toggles-full.css" />
+    <Content Include="Content\lib\jquery-toggles\js\toggles.min.js" />
+    <Content Include="Content\lib\jquery-ui\js\jquery-ui.js" />
+    <Content Include="Content\lib\jquery.cookie\js\jquery.cookie.js" />
+    <Content Include="Content\lib\jquery.maskedinput\js\jquery.maskedinput.js" />
+    <Content Include="Content\lib\jquery.sparkline.bower\js\jquery.sparkline.min.js" />
+    <Content Include="Content\lib\jquery.steps\css\jquery.steps.css" />
+    <Content Include="Content\lib\jquery.steps\js\jquery.steps.js" />
+    <Content Include="Content\lib\jquery\js\jquery.js" />
+    <Content Include="Content\lib\jqvmap\css\jqvmap.min.css" />
+    <Content Include="Content\lib\jqvmap\js\jquery.vmap.canada.js" />
+    <Content Include="Content\lib\jqvmap\js\jquery.vmap.min.js" />
+    <Content Include="Content\lib\jqvmap\js\jquery.vmap.usa.js" />
+    <Content Include="Content\lib\jqvmap\js\jquery.vmap.world.js" />
+    <Content Include="Content\lib\jt.timepicker\css\jquery.timepicker.css" />
+    <Content Include="Content\lib\jt.timepicker\js\jquery.timepicker.js" />
+    <Content Include="Content\lib\leaflet\css\leaflet.css" />
+    <Content Include="Content\lib\leaflet\js\leaflet-src.js" />
+    <Content Include="Content\lib\medium-editor\css\default.css" />
+    <Content Include="Content\lib\medium-editor\css\medium-editor.css" />
+    <Content Include="Content\lib\medium-editor\js\medium-editor.js" />
+    <Content Include="Content\lib\moment\js\moment.js" />
+    <Content Include="Content\lib\morris.js\css\morris.css" />
+    <Content Include="Content\lib\morris.js\js\morris.js" />
+    <Content Include="Content\lib\parsleyjs\js\parsley.js" />
+    <Content Include="Content\lib\peity\js\jquery.peity.js" />
+    <Content Include="Content\lib\perfect-scrollbar\css\perfect-scrollbar.css" />
+    <Content Include="Content\lib\perfect-scrollbar\js\perfect-scrollbar.jquery.js" />
+    <Content Include="Content\lib\popper.js\js\popper.js" />
+    <Content Include="Content\lib\raphael\js\raphael.min.js" />
+    <Content Include="Content\lib\rickshaw\css\rickshaw.min.css" />
+    <Content Include="Content\lib\rickshaw\js\rickshaw.min.js" />
+    <Content Include="Content\lib\select2\css\select2.min.css" />
+    <Content Include="Content\lib\select2\js\select2.full.min.js" />
+    <Content Include="Content\lib\select2\js\select2.min.js" />
+    <Content Include="Content\lib\spectrum\css\spectrum.css" />
+    <Content Include="Content\lib\spectrum\js\spectrum.js" />
+    <Content Include="Content\lib\SpinKit\css\spinkit.css" />
+    <Content Include="Content\lib\summernote\css\summernote-bs4.css" />
+    <Content Include="Content\lib\summernote\js\summernote-bs4.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -239,6 +381,74 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\css\Descr.WD3" />
+    <Content Include="Content\img\Descr.WD3" />
+    <Content Include="Content\js\Descr.WD3" />
+    <Content Include="Content\lib\bootstrap-tagsinput\css\Descr.WD3" />
+    <Content Include="Content\lib\bootstrap-tagsinput\js\Descr.WD3" />
+    <Content Include="Content\lib\bootstrap\js\Descr.WD3" />
+    <Content Include="Content\lib\chart.js\js\Descr.WD3" />
+    <Content Include="Content\lib\chartist\css\Descr.WD3" />
+    <Content Include="Content\lib\chartist\js\Descr.WD3" />
+    <Content Include="Content\lib\d3\js\Descr.WD3" />
+    <Content Include="Content\lib\datatables-responsive\js\Descr.WD3" />
+    <Content Include="Content\lib\datatables\css\Descr.WD3" />
+    <Content Include="Content\lib\datatables\js\Descr.WD3" />
+    <Content Include="Content\lib\echarts\js\Descr.WD3" />
+    <Content Include="Content\lib\flag-icon-css\css\Descr.WD3" />
+    <Content Include="Content\lib\flot-spline\js\Descr.WD3" />
+    <Content Include="Content\lib\Flot\js\Descr.WD3" />
+    <Content Include="Content\lib\font-awesome\css\Descr.WD3" />
+    <Content Include="Content\lib\fullcalendar\css\Descr.WD3" />
+    <Content Include="Content\lib\fullcalendar\js\Descr.WD3" />
+    <Content Include="Content\lib\gmaps\js\Descr.WD3" />
+    <Content Include="Content\lib\ion.rangeSlider\css\Descr.WD3" />
+    <Content Include="Content\lib\ion.rangeSlider\img\Descr.WD3" />
+    <Content Include="Content\lib\ion.rangeSlider\js\Descr.WD3" />
+    <Content Include="Content\lib\Ionicons\css\Descr.WD3" />
+    <Content Include="Content\lib\Ionicons\css\fonts\ionicons.eot" />
+    <Content Include="Content\lib\Ionicons\css\fonts\ionicons.ttf" />
+    <Content Include="Content\lib\Ionicons\css\fonts\ionicons.woff" />
+    <Content Include="Content\lib\Ionicons\fonts\ionicons.eot" />
+    <Content Include="Content\lib\Ionicons\fonts\ionicons.ttf" />
+    <Content Include="Content\lib\Ionicons\fonts\ionicons.woff" />
+    <Content Include="Content\lib\Jcrop\css\Descr.WD3" />
+    <Content Include="Content\lib\Jcrop\js\Descr.WD3" />
+    <Content Include="Content\lib\jquery-toggles\css\Descr.WD3" />
+    <Content Include="Content\lib\jquery-toggles\js\Descr.WD3" />
+    <Content Include="Content\lib\jquery-ui\js\Descr.WD3" />
+    <Content Include="Content\lib\jquery.cookie\js\Descr.WD3" />
+    <Content Include="Content\lib\jquery.maskedinput\js\Descr.WD3" />
+    <Content Include="Content\lib\jquery.sparkline.bower\js\Descr.WD3" />
+    <Content Include="Content\lib\jquery.steps\css\Descr.WD3" />
+    <Content Include="Content\lib\jquery.steps\js\Descr.WD3" />
+    <Content Include="Content\lib\jquery\js\Descr.WD3" />
+    <Content Include="Content\lib\jqvmap\css\Descr.WD3" />
+    <Content Include="Content\lib\jqvmap\js\Descr.WD3" />
+    <Content Include="Content\lib\jt.timepicker\css\Descr.WD3" />
+    <Content Include="Content\lib\jt.timepicker\js\Descr.WD3" />
+    <Content Include="Content\lib\leaflet\css\Descr.WD3" />
+    <Content Include="Content\lib\leaflet\js\Descr.WD3" />
+    <Content Include="Content\lib\medium-editor\css\Descr.WD3" />
+    <Content Include="Content\lib\medium-editor\js\Descr.WD3" />
+    <Content Include="Content\lib\moment\js\Descr.WD3" />
+    <Content Include="Content\lib\morris.js\css\Descr.WD3" />
+    <Content Include="Content\lib\morris.js\js\Descr.WD3" />
+    <Content Include="Content\lib\parsleyjs\js\Descr.WD3" />
+    <Content Include="Content\lib\peity\js\Descr.WD3" />
+    <Content Include="Content\lib\perfect-scrollbar\css\Descr.WD3" />
+    <Content Include="Content\lib\perfect-scrollbar\js\Descr.WD3" />
+    <Content Include="Content\lib\popper.js\js\Descr.WD3" />
+    <Content Include="Content\lib\raphael\js\Descr.WD3" />
+    <Content Include="Content\lib\rickshaw\css\Descr.WD3" />
+    <Content Include="Content\lib\rickshaw\js\Descr.WD3" />
+    <Content Include="Content\lib\select2\css\Descr.WD3" />
+    <Content Include="Content\lib\select2\js\Descr.WD3" />
+    <Content Include="Content\lib\spectrum\css\Descr.WD3" />
+    <Content Include="Content\lib\spectrum\js\Descr.WD3" />
+    <Content Include="Content\lib\SpinKit\css\Descr.WD3" />
+    <Content Include="Content\lib\summernote\css\Descr.WD3" />
+    <Content Include="Content\lib\summernote\js\Descr.WD3" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -250,6 +460,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Views\Agent\DashBoard.cshtml" />
+    <None Include="Views\FeedBack\feedback.chtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -261,9 +473,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -284,6 +493,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\User\DashBoard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -300,6 +510,20 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201812030707395_initial-migration.resx">
+      <DependentUpon>201812030707395_initial-migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812030917091_addedFirstAndLastName.resx">
+      <DependentUpon>201812030917091_addedFirstAndLastName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812030918529_addedFirstAndLastName1.resx">
+      <DependentUpon>201812030918529_addedFirstAndLastName1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812031002489_addedFirstAndLastName2.resx">
+      <DependentUpon>201812031002489_addedFirstAndLastName2.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

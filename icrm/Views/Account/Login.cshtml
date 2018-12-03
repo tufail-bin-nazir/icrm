@@ -1,63 +1,64 @@
 ﻿@using icrm.Models
 @model LoginViewModel
 @{
-    ViewBag.Title = "Log in";
+    Layout = null;
 }
 
 <h2>@ViewBag.Title.</h2>
-<div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Meta -->
+    <meta name="description" content="feedback managment system.">
+    <meta name="author" content="feedback">
+
+    <title>Feedback</title>
+
+    <!-- Vendor css -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+
+    <!-- Slim CSS -->
+
+    <link rel="stylesheet" href="~/Content/css/slim.css">
+
+</head>
+<body>
+
+    <div class="signin-wrapper">
+         @Html.ValidationSummary()
+        <div class="signin-box">
+            <h2 class="slim-logo"><a href="index.html">Feedback<span>.</span></a></h2>
+            <h2 class="signin-title-primary">Welcome back!</h2>
+            <h3 class="signin-title-secondary">Sign in to continue.</h3>
+            @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-default" />
-                    </div>
-                </div>
-                <p>
-                    @Html.ActionLink("Register as a new user", "Register")
-                </p>
-                @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
-            }
-        </section>
-    </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
-</div>
+                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = "Enter your email" })
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+                </div><!-- form-group -->
+                <div class="form-group mg-b-50">
+                    @Html.TextBoxFor(x => x.Password, new { @class = "form-control", placeholder = "Enter your password" })
+
+                </div><!-- form-group -->
+                <button class="btn btn-primary btn-block btn-signin">Sign In</button>
+                <p class="mg-b-0">Don't have an account?  @Html.ActionLink("Sign Up", "Register")</p>
+            }
+        </div><!-- signin-box -->
+
+    </div><!-- signin-wrapper -->
+
+    <script src="~/Content/lib/jquery/js/jquery.js"></script>
+    <script src="~/Content/lib/popper.js/js/popper.js"></script>
+    <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
+
+    <script src="~/Content/js/slim.js"></script>
+
+</body>
+</html>
+

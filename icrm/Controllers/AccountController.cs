@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using icrm.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Diagnostics;
 
 namespace icrm.Controllers
 {
@@ -17,6 +19,9 @@ namespace icrm.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+       
+
+
 
         public AccountController()
         {
@@ -79,7 +84,21 @@ namespace icrm.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    {
+                        IdentityUser user = UserManager.FindByEmail(model.Email);
+                        var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                        var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                        if (UserManager.IsInRole(user.Id, roleManager.FindByName("User").Name))
+                        {
+                            return RedirectToAction("DashBoard", "User");
+                        }
+                        else
+                        {
+                            return RedirectToAction("DashBoard", "Agent");
+                        }
+                    }
+                    
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -149,21 +168,65 @@ namespace icrm.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+           
+           
+            ApplicationDbContext context = new ApplicationDbContext();
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+         
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
-                {
+                 {
+
+                    //checking if the email contains the word Agent
+                    if (model.Email.Contains("agent"))
+                    {
+                        //if Agent role exists then just add the role to the user else create the role and add it to user
+                        if (!roleManager.RoleExists("Agent"))
+                        {
+                            var role = new IdentityRole();
+                            role.Name = "Agent";
+                            roleManager.Create(role);
+                            UserManager.AddToRole(user.Id, roleManager.FindByName("Agent").Name);
+                        }
+                        else
+                        {
+                            UserManager.AddToRole(user.Id, roleManager.FindByName("Agent").Name);
+                        }
+}
+                    else
+                    {
+                        //if User role exists then just add the role to the user else create the role and add it to user
+                        if (!roleManager.RoleExists("User"))
+                        {
+                            var role = new IdentityRole();
+                            role.Name = "User";
+                            roleManager.Create(role);
+                            UserManager.AddToRole(user.Id, roleManager.FindByName("User").Name);
+                        }
+                        else
+                        {
+                            UserManager.AddToRole(user.Id, roleManager.FindByName("User").Name);
+                        }
+
+                    }
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
+                    if (UserManager.IsInRole(user.Id, roleManager.FindByName("User").Name)) {
+                        return RedirectToAction("DashBoard", "User");
+                    }
+                    else {
+                        return RedirectToAction("Dashboard", "Agent");
+                    }
+                   
                 }
                 AddErrors(result);
             }
@@ -392,7 +455,7 @@ namespace icrm.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //
