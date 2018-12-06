@@ -31,6 +31,7 @@ namespace icrm.Controllers
         {
             //GET CURRENTLY LOGGED IN USER BY THIS CODE
             var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewBag.Email = user.Email;
             Debug.WriteLine(user.FirstName + "99009099090909090909090");
             return View();
         }

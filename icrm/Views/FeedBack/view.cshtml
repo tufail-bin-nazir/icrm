@@ -1,11 +1,12 @@
-﻿@{
-    ViewBag.Title = "DashBoard";
-}
-
-@{
+﻿@using icrm.Models
+@{ 
     Layout = null;
 }
-<h2>User DashBoard</h2>
+@model Feedback
+    @{ 
+        var data = (ApplicationUser)ViewData["user"];
+
+    }
 
 
 <!DOCTYPE html>
@@ -18,16 +19,18 @@
     <!-- Meta -->
     <meta name="description" content="feedback managment system.">
     <meta name="author" content="feedback">
-
     <title>Feedback</title>
     <!-- vendor css -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
-    <link href="../lib/rickshaw/css/rickshaw.min.css" rel="stylesheet">
-    <!-- Slim CSS -->
+    <link href="~/Content/lib/jquery-toggles/css/toggles-full.css" rel="stylesheet">
+    <link href="~/Content/lib/jt.timepicker/css/jquery.timepicker.css" rel="stylesheet">
+    <link href="~/Content/lib/spectrum/css/spectrum.css" rel="stylesheet">
+    <link href="~/Content/lib/bootstrap-tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet">
+    <!-- Feadback CSS -->
     <link rel="stylesheet" href="~/Content/css/slim.css">
 </head>
-<body class="dashboard-3">
+<body>
     <div class="slim-header">
         <div class="container">
             <div class="slim-header-left">
@@ -155,9 +158,7 @@
                 <div class="dropdown dropdown-c">
                     <a href="#" class="logged-user" data-toggle="dropdown">
                         <img src="~/Content/img/img1.jpg" alt="">
-                        <span>
-                            @ViewBag.Email
-                        </span>
+                        <span>@data.Email</span>
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -176,7 +177,7 @@
     <div class="slim-navbar">
         <div class="container">
             <ul class="nav">
-                <li class="nav-item with-sub active">
+                <li class="nav-item with-sub">
                     <a class="nav-link" href="#">
                         <i class="icon ion-ios-home-outline"></i>
                         <span>Dashboard</span>
@@ -318,14 +319,14 @@
                         </ul>
                     </div><!-- dropdown-menu -->
                 </li>
-                <li class="nav-item with-sub">
+                <li class="nav-item with-sub active">
                     <a class="nav-link" href="#" data-toggle="dropdown">
                         <i class="icon ion-ios-gear-outline"></i>
                         <span>Forms</span>
                     </a>
                     <div class="sub-item">
                         <ul>
-                            <li><a href="form-elements.html">Form Elements</a></li>
+                            <li class="active"><a href="form-elements.html">Form Elements</a></li>
                             <li><a href="form-layouts.html">Form Layouts</a></li>
                             <li><a href="form-validation.html">Form Validation</a></li>
                             <li><a href="form-wizards.html">Form Wizards</a></li>
@@ -357,72 +358,129 @@
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                    <li class="breadcrumb-item active" aria-current="page">Feedback</li>
                 </ol>
-                <h6 class="slim-pagetitle">Welcome back, User</h6>
+                <h6 class="slim-pagetitle">Feedback</h6>
             </div><!-- slim-pageheader -->
-            <div class="row row-xs">
-                <div class="col-sm-6 col-lg-4">
-                    <div class="card card-status">
-                        <div class="media">
-                            <i class="icon ion-ios-chatboxes-outline tx-purple"></i>
-                            <div class="media-body">
-                                <h1>Chat</h1>
-                                <p>Users Online</p>
-                            </div><!-- media-body -->
-                        </div><!-- media -->
-                    </div><!-- card -->
-                </div><!-- col-3 -->
-                <div class="col-sm-6 col-lg-4 mg-t-10 mg-sm-t-0">
-                    <div class="card card-status">
-                        <div class="media">
-                            <i class="icon ion-ios-email-outline tx-teal"></i>
-                            <div class="media-body">
-                                <h1>@Html.ActionLink("Feedback","dashboard","FeedBack")</h1>
-                                <p>Compliments/Complaints</p>
-                            </div><!-- media-body -->
-                        </div><!-- media -->
-                    </div><!-- card -->
-                </div><!-- col-3 -->
+            <div class="section-wrapper">
+                <label class="section-title">YOUR FEEDBACK</label>
+                <p class="mg-b-20 mg-sm-b-40">@data.Email</p>
+                @using (Html.BeginForm("edit", "Feed", Model, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <h2> @ViewBag.Success</h2>
+                    <div class="form-layout">
+                        <div class="row mg-b-25">
+                            
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Name: </label>
+                                    @Html.HiddenFor(model => model.id, new { @class = "form-control" })
 
+                                    @Html.TextBoxFor(model => model.name, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
+                            </div><!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Contact No: </label>
+                                    @Html.TextBoxFor(model => model.contactNo, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
+                            </div><!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Email: </label>
+                                    @Html.TextBoxFor(model => model.email, new { @readonly="readonly", @class = "form-control" })
+                                </div>
+                            </div><!-- col-4 -->
 
+                            <div class="col-lg-4">
 
-                <div class="col-sm-6 col-lg-4 mg-t-10 mg-lg-t-0">
-                    <div class="card card-status">
-                        <div class="media">
-                            <i class="icon ion-ios-analytics-outline tx-pink"></i>
-                            <div class="media-body">
-                                <h1>2,942</h1>
-                                <p>Total analytics</p>
-                            </div><!-- media-body -->
-                        </div><!-- media -->
-                    </div><!-- card -->
-                </div><!-- col-3 -->
-            </div><!-- row -->
+                                <div class="form-group mg-b-10-force">
+                                    <label class="form-control-label">Type of Feedback: </label>
+                                    @Html.TextBoxFor(model => model.typeOfFeedback, new { @readonly = "readonly", @class = "form-control" })
 
-        </div><!-- container -->
-    </div><!-- slim-mainpanel -->
-    <div class="slim-footer" style="    position: fixed;
-    bottom: 0;
-    width: 100%;">
-        <div class="container">
-            <p>Copyright 2018 &copy; All Rights Reserved.</p>
+                                </div>
+                            </div><!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group mg-b-10-force">
+                                    <label class="form-control-label">Subject: </label>
+                                    @Html.TextBoxFor(model => model.subject, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
+                            </div><!-- col-4 -->
+                            <div class="col-lg-12">
+                                <div class="form-group mg-b-10-force">
+                                    <label class="form-control-label">Details:</label>
+                                    @Html.TextAreaFor(model => model.details, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
+                            </div><!-- col-4 -->
+                        </div><!-- row -->
+                        <div class="form-layout-footer">
+                            @Html.ActionLink("Back to List","list","FeedBack")
+                        </div><!-- form-layout-footer -->
+                    </div>
+                }
+            </div><!-- container -->
+        </div><!-- slim-mainpanel -->
+        <div class="slim-footer">
+            <div class="container">
+                <p>Copyright 2018 &copy; All Rights Reserved. </p>
 
-        </div><!-- container -->
-    </div><!-- slim-footer -->
-    <script src="~/Content/lib/jquery/js/jquery.js"></script>
-    <script src="~/Content/lib/popper.js/js/popper.js"></script>
-    <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
-    <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
-    <script src="~/Content/lib/d3/js/d3.js"></script>
-    <script src="~/Content/lib/rickshaw/js/rickshaw.min.js"></script>
-    <script src="~/Content/lib/Flot/js/jquery.flot.js"></script>
-    <script src="~/Content/lib/Flot/js/jquery.flot.resize.js"></script>
-    <script src="~/Content/lib/peity/js/jquery.peity.js"></script>
-    <script src="~/Content/js/slim.js"></script>
-    <script src="~/Content/js/ResizeSensor.js"></script>
-    <script></script>
+            </div><!-- container -->
+        </div><!-- slim-footer -->
+        <script src="~/Content/lib/jquery/js/jquery.js"></script>
+        <script src="~/Content/lib/popper.js/js/popper.js"></script>
+        <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
+        <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
+        <script src="~/Content/lib/jquery-toggles/js/toggles.min.js"></script>
+        <script src="~/Content/lib/jt.timepicker/js/jquery.timepicker.js"></script>
+        <script src="~/Content/lib/spectrum/js/spectrum.js"></script>
+        <script src="~/Content/lib/jquery.maskedinput/js/jquery.maskedinput.js"></script>
+        <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
+        <script src="~/Content/js/slim.js"></script>
+        <script>
+            $(function () {
+                'use strict'
+
+                // Toggles
+                $('.toggle').toggles({
+                    on: true,
+                    height: 26
+                });
+
+                // Input Masks
+                $('#dateMask').mask('99/99/9999');
+                $('#phoneMask').mask('(999) 999-9999');
+                $('#ssnMask').mask('999-99-9999');
+
+                // Time Picker
+                $('#tpBasic').timepicker();
+                $('#tp2').timepicker({ 'scrollDefault': 'now' });
+                $('#tp3').timepicker();
+
+                $('#setTimeButton').on('click', function () {
+                    $('#tp3').timepicker('setTime', new Date());
+                });
+
+                // Color picker
+                $('#colorpicker').spectrum({
+                    color: '#17A2B8'
+                });
+
+                $('#showAlpha').spectrum({
+                    color: 'rgba(23,162,184,0.5)',
+                    showAlpha: true
+                });
+
+                $('#showPaletteOnly').spectrum({
+                    showPaletteOnly: true,
+                    showPalette: true,
+                    color: '#DC3545',
+                    palette: [
+                        ['#1D2939', '#fff', '#0866C6', '#23BF08', '#F49917'],
+                        ['#DC3545', '#17A2B8', '#6610F2', '#fa1e81', '#72e7a6']
+                    ]
+                });
+
+            });
+        </script>
 </body>
 </html>
-
-

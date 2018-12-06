@@ -26,10 +26,14 @@ namespace icrm.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
+
+        public DbSet<Models.Feedback> Feedbacks { get; set; }
 
         public static ApplicationDbContext Create()
         {

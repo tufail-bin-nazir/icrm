@@ -1,9 +1,13 @@
-﻿@{
+﻿@using icrm.Models;
+@{
     ViewBag.Title = "DashBoard";
 }
 
 @{
     Layout = null;
+}
+@{
+    var data = (ApplicationUser)ViewData["user"];
 }
 <h2>User DashBoard</h2>
 
@@ -156,7 +160,7 @@
                     <a href="#" class="logged-user" data-toggle="dropdown">
                         <img src="~/Content/img/img1.jpg" alt="">
                         <span>
-                            @ViewBag.Email
+                            @data.Email
                         </span>
                         <i class="fa fa-angle-down"></i>
                     </a>
@@ -367,8 +371,8 @@
                         <div class="media">
                             <i class="icon ion-ios-chatboxes-outline tx-purple"></i>
                             <div class="media-body">
-                                <h1>Chat</h1>
-                                <p>Users Online</p>
+                                <h1>@Html.ActionLink("View Feedback", "list", "FeedBack")</h1>
+                                <p>View Feedbacks</p>
                             </div><!-- media-body -->
                         </div><!-- media -->
                     </div><!-- card -->
@@ -378,7 +382,7 @@
                         <div class="media">
                             <i class="icon ion-ios-email-outline tx-teal"></i>
                             <div class="media-body">
-                                <h1>@Html.ActionLink("Feedback","dashboard","FeedBack")</h1>
+                                <h1>@Html.ActionLink(" Add Feedback", "add", "FeedBack")</h1>
                                 <p>Compliments/Complaints</p>
                             </div><!-- media-body -->
                         </div><!-- media -->
@@ -387,17 +391,7 @@
 
 
 
-                <div class="col-sm-6 col-lg-4 mg-t-10 mg-lg-t-0">
-                    <div class="card card-status">
-                        <div class="media">
-                            <i class="icon ion-ios-analytics-outline tx-pink"></i>
-                            <div class="media-body">
-                                <h1>2,942</h1>
-                                <p>Total analytics</p>
-                            </div><!-- media-body -->
-                        </div><!-- media -->
-                    </div><!-- card -->
-                </div><!-- col-3 -->
+
             </div><!-- row -->
 
         </div><!-- container -->

@@ -49,6 +49,12 @@
     <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net46\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="RabbitMQ.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\packages\RabbitMQ.Client.5.1.0\lib\net451\RabbitMQ.Client.dll</HintPath>
     </Reference>
@@ -237,8 +243,13 @@
     <Compile Include="Migrations\201812031002489_addedFirstAndLastName2.Designer.cs">
       <DependentUpon>201812031002489_addedFirstAndLastName2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812040940360_feedback1.cs" />
+    <Compile Include="Migrations\201812040940360_feedback1.Designer.cs">
+      <DependentUpon>201812040940360_feedback1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -372,6 +383,7 @@
     <Content Include="Content\lib\SpinKit\css\spinkit.css" />
     <Content Include="Content\lib\summernote\css\summernote-bs4.css" />
     <Content Include="Content\lib\summernote\js\summernote-bs4.min.js" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -461,7 +473,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Views\Agent\DashBoard.cshtml" />
-    <None Include="Views\FeedBack\feedback.chtml" />
+    <Content Include="Views\FeedBack\view.cshtml" />
+    <Content Include="Views\FeedBack\dashboard.cshtml" />
+    <None Include="Views\FeedBack\add.cshtml" />
+    <None Include="Views\FeedBack\list.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -523,6 +538,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812031002489_addedFirstAndLastName2.resx">
       <DependentUpon>201812031002489_addedFirstAndLastName2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812040940360_feedback1.resx">
+      <DependentUpon>201812040940360_feedback1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
