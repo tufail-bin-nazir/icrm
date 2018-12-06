@@ -431,7 +431,7 @@
                                             
                                             <li class="page-item">
                                                 
-                                                @Html.PagedListPager(Model, page => Url.Action("feedbacklist", new { page}),new PagedListRenderOptions(){LiElementClasses=new string[]{"page-link"}})
+                                                @Html.PagedListPager(Model, page => Url.Action("list", new { page}),new PagedListRenderOptions(){LiElementClasses=new string[]{"page-link"}})
                                                 
                                             </li>
                                             
