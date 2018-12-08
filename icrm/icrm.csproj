@@ -253,6 +253,8 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryImpl\FeedbackRepository.cs" />
+    <Compile Include="RepositoryInterface\IFeedback.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
