@@ -1,4 +1,4 @@
-@using icrm.Models
+﻿@using icrm.Models
 @model Feedback
 @{
 Layout = null;
@@ -366,7 +366,7 @@ Layout = null;
             <div class="section-wrapper">
                 <label class="section-title">YOUR FEEDBACK</label>
                 <p class="mg-b-20 mg-sm-b-40">PLEASE TELL US ABOUT YOURSELF:</p>
-                @using (Html.BeginForm("feedback", "FeedBack", Model, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("add", "FeedBack", Model, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                 <h2> @TempData["Message"]</h2>
                 <div class="form-layout">
@@ -393,21 +393,21 @@ Layout = null;
                             <div class="form-group">
                                 <label class="form-control-label">Name: <span class="tx-danger">*</span></label>
                                 @Html.HiddenFor(model=> model.userId,new {Value=@data.Id})
-                                @Html.TextBoxFor(model => model.name, new { placeholder = "Enter name", @class = "form-control" })
+                                @Html.TextBoxFor(model => model.name, new { placeholder = "Enter name", @class = "form-control",Value=@data.FirstName+@data.LastName,@readonly="readonly" })
                                 @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
                             </div>
                         </div><!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">Contact No: <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(model => model.contactNo, new { placeholder = "Enter Contact", @class = "form-control" })
+                                @Html.TextBoxFor(model => model.contactNo, new { placeholder = "Enter Contact", @class = "form-control", Value = @data.PhoneNumber,@readonly="read" })
                                 @Html.ValidationMessageFor(model => model.contactNo, "", new { @class = "text-danger" })
                             </div>
                         </div><!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(model => model.email, new { placeholder = "Enter email", @class = "form-control" })
+                                @Html.TextBoxFor(model => model.email, new { placeholder = "Enter email", @class = "form-control",Value=@data.Email,@readonly="read" })
                                 @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
                             </div>
                         </div><!-- col-4 -->
