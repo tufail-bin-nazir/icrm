@@ -247,13 +247,20 @@
     <Compile Include="Migrations\201812040940360_feedback1.Designer.cs">
       <DependentUpon>201812040940360_feedback1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812081915293_departmentClass.cs" />
+    <Compile Include="Migrations\201812081915293_departmentClass.Designer.cs">
+      <DependentUpon>201812081915293_departmentClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Department.cs" />
     <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provider\ApplicationOAuthProvider.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="WebApi\RegisterController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -541,6 +548,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812040940360_feedback1.resx">
       <DependentUpon>201812040940360_feedback1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812081915293_departmentClass.resx">
+      <DependentUpon>201812081915293_departmentClass.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

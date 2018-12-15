@@ -15,6 +15,12 @@ namespace icrm.Models
 
         [Required]
         public string  LastName { get; set; }
+
+        public Department department { get; set; }
+
+        [Required]
+        public int DepartmentID { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -34,6 +40,8 @@ namespace icrm.Models
         }
 
         public DbSet<Models.Feedback> Feedbacks { get; set; }
+
+        public DbSet<Models.Department> Departments { get; set; }
 
         public static ApplicationDbContext Create()
         {

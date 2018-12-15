@@ -6,6 +6,8 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using icrm.Models;
+using Microsoft.Owin.Security.OAuth;
+using icrm.Provider;
 
 namespace icrm
 {
@@ -34,7 +36,14 @@ namespace icrm
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
+
+            app.UseOAuthBearerTokens(new OAuthAuthorizationServerOptions
+            {
+                Provider = new ApplicationOAuthProvider(),
+                AllowInsecureHttp = true,
+                TokenEndpointPath = new PathString("/Authenticate")
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.

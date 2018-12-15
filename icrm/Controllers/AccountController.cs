@@ -175,7 +175,8 @@ namespace icrm.Controllers
          
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
+                
+                var user = new ApplicationUser { UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName , Email = model.Email, PhoneNumber = model.PhoneNumber, DepartmentID = model.DepartmentID };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -196,7 +197,7 @@ namespace icrm.Controllers
                         {
                             UserManager.AddToRole(user.Id, roleManager.FindByName("Agent").Name);
                         }
-}
+                    }
                     else
                     {
                         //if User role exists then just add the role to the user else create the role and add it to user
