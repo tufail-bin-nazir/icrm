@@ -22,10 +22,6 @@ namespace icrm.RepositoryImpl
         }
 
 
-        
-
-
-
         public void Save(Feedback feedback) {
             
             db.Feedbacks.Add(feedback);
@@ -43,8 +39,17 @@ namespace icrm.RepositoryImpl
 
         }
 
+        public IPagedList<Feedback> getAll(int pageIndex, int pageSize)
+        {
+            return db.Feedbacks.OrderByDescending(m => m.user.Id).ToPagedList(pageIndex, pageSize);
+
+        }
+
+        public IPagedList<Feedback> search(string search,int pageIndex, int pageSize)
+        {
+            return db.Feedbacks.OrderByDescending(x => x.user.Id).Where(x => x.name.StartsWith(search) || search == null).ToPagedList(pageIndex,pageSize);
 
 
-
+        }
     }
 }
