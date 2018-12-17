@@ -14,5 +14,7 @@ namespace icrm.RepositoryInterface
         void Save(Feedback feedback);
         Feedback Find(int? id);
         IPagedList<Feedback> Pagination(int pageIndex, int pageSize,string userId);
+        IPagedList<Feedback> getAll(int pageIndex, int pageSize);
+        IPagedList<Feedback> search(string search,int pageIndex, int pageSize);
     }
 }
