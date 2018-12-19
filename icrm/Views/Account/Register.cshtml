@@ -31,7 +31,7 @@
     <div class="signin-wrapper">
          
         <div class="signin-box signup">
-            <h2 class="slim-logo"><a href="index.html">Feedback<span>.</span></a></h2>
+            <h2 class="slim-logo"><a href="index.html">ICRM 2.0<span>.</span></a></h2>
             <h3 class="signin-title-primary">Get Started!</h3>
             <h5 class="signin-title-secondary lh-4">It's free to signup and only takes a minute.</h5>
             @Html.ValidationSummary()
@@ -46,10 +46,36 @@
 
                 <div class="row row-xs mg-b-10">
                     <div class="col-sm">@Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = "Email" })</div>
-                    <div class="col-sm mg-t-10 mg-sm-t-0">@Html.TextBoxFor(x => x.Password, new { @class = "form-control", placeholder = "Password" })</div>
-                    <div class="col-sm mg-t-10 mg-sm-t-0">@Html.TextBoxFor(x => x.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Your Password" })</div>
+                    <div class="col-sm">@Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control", placeholder = "Phone Number" })</div>
+
                 </div><!-- row -->
 
+               
+                <div class="row row-xs mg-b-10">
+
+
+                    <div class="col-sm">
+                        @{
+                            var selectList = new SelectList(
+                                new List<SelectListItem>
+                                {
+                                new SelectListItem {Text = "Department A", Value = "1"},
+                                new SelectListItem {Text = "Department B", Value = "2"},
+                                }, "Value", "Text");
+                        }
+
+                        @Html.DropDownListFor(x => x.DepartmentID, selectList, "Choose Department", new { @class = "form-control select2" })
+
+
+                    </div>
+
+
+                </div>
+
+                <div class="row row-xs mg-b-10">
+                    <div class="col-sm mg-t-10 mg-sm-t-0">@Html.TextBoxFor(x => x.Password, new { @class = "form-control", placeholder = "Password" })</div>
+                    <div class="col-sm mg-t-10 mg-sm-t-0">@Html.TextBoxFor(x => x.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })</div>
+                </div>
 
                 <button class="btn btn-primary btn-block btn-signin">Sign Up</button>
 

@@ -15,6 +15,12 @@ namespace icrm
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
+                name: "ActionMethods",
+                routeTemplate: "api/{controller}/{action}/{user}",
+                defaults: new { user = RouteParameter.Optional }
+                );
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
