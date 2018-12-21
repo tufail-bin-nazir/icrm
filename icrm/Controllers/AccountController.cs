@@ -93,9 +93,17 @@ namespace icrm.Controllers
                         {
                             return RedirectToAction("DashBoard", "User");
                         }
+                        else if (UserManager.IsInRole(user.Id, roleManager.FindByName("Admin").Name))
+                        {
+                            return RedirectToAction("DashBoard", "Admin");
+                        }
+                        else if (UserManager.IsInRole(user.Id, roleManager.FindByName("HR").Name))
+                        {
+                            return RedirectToAction("DashBoard", "HR");
+                        }
                         else
                         {
-                            return RedirectToAction("DashBoard", "Agent");
+                            return RedirectToAction("DashBoard", "Department");
                         }
                     }
                     
@@ -176,7 +184,7 @@ namespace icrm.Controllers
             if (ModelState.IsValid)
             {
                 
-                var user = new ApplicationUser { UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName , Email = model.Email, PhoneNumber = model.PhoneNumber, DepartmentID = model.DepartmentID };
+                var user = new ApplicationUser { UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName , Email = model.Email, PhoneNumber = model.PhoneNumber};
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
