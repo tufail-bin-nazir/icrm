@@ -16,5 +16,6 @@ namespace icrm.RepositoryInterface
         IPagedList<Feedback> Pagination(int pageIndex, int pageSize,string userId);
         IPagedList<Feedback> getAll(int pageIndex, int pageSize);
         IPagedList<Feedback> search(string search,int pageIndex, int pageSize);
+        IEnumerable<Feedback> getAll();
     }
 }

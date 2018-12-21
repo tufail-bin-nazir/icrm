@@ -167,7 +167,10 @@
                             <a href="page-edit-profile.html" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>
                             <a href="page-activity.html" class="nav-link"><i class="icon ion-ios-bolt"></i> Activity Log</a>
                             <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>
-                            <a href="page-signin.html" class="nav-link"><i class="icon ion-forward"></i> Sign Out</a>
+                            <form action="/Account/LogOff" method="post">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-link nav-link"> <i class="icon ion-forward"></i> Sign Out</button>
+                            </form>
                         </nav>
                     </div><!-- dropdown-menu -->
                 </div><!-- dropdown -->
@@ -370,7 +373,7 @@
                     <h2> @ViewBag.Success</h2>
                     <div class="form-layout">
                         <div class="row mg-b-25">
-                            
+
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Name: </label>
@@ -388,7 +391,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Email: </label>
-                                    @Html.TextBoxFor(model => model.email, new { @readonly="readonly", @class = "form-control" })
+                                    @Html.TextBoxFor(model => model.email, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
                             </div><!-- col-4 -->
 
@@ -405,13 +408,22 @@
                                     <label class="form-control-label">Subject: </label>
                                     @Html.TextBoxFor(model => model.subject, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group mg-b-10-force">
+                                    <label class="form-control-label">Status: </label>
+                                    @Html.TextBoxFor(model => model.status, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-12">
                                 <div class="form-group mg-b-10-force">
                                     <label class="form-control-label">Details:</label>
                                     @Html.TextAreaFor(model => model.details, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
-                            </div><!-- col-4 -->
+                            </div>
+
+                            
+                            <!-- col-4 -->
                         </div><!-- row -->
                         <div class="form-layout-footer">
                             @Html.ActionLink("Back to View","list","FeedBack")
