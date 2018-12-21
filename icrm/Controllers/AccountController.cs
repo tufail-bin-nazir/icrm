@@ -93,9 +93,17 @@ namespace icrm.Controllers
                         {
                             return RedirectToAction("DashBoard", "User");
                         }
+                        else if (UserManager.IsInRole(user.Id, roleManager.FindByName("Admin").Name))
+                        {
+                            return RedirectToAction("DashBoard", "Admin");
+                        }
+                        else if (UserManager.IsInRole(user.Id, roleManager.FindByName("HR").Name))
+                        {
+                            return RedirectToAction("DashBoard", "HR");
+                        }
                         else
                         {
-                            return RedirectToAction("DashBoard", "Agent");
+                            return RedirectToAction("DashBoard", "Department");
                         }
                     }
                     
