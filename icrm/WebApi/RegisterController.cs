@@ -33,7 +33,7 @@ namespace icrm.WebApi
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-            var user = new ApplicationUser { UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName, Email = model.Email, PhoneNumber = model.PhoneNumber, DepartmentID = model.DepartmentID };
+            var user = new ApplicationUser { UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName, Email = model.Email, PhoneNumber = model.PhoneNumber};
 
             var result = await UserManager.CreateAsync(user, model.Password);
             if (result.Succeeded)

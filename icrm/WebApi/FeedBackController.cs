@@ -56,24 +56,24 @@ namespace icrm.WebApi
 
         }
 
-        [HttpGet]
-        public IHttpActionResult GetFeedbacks() {
-            var query = from f in feedInterface.getAll()
-                        select new { f.email, f.contactNo };
-            return Ok(query.ToList());
+        //[HttpGet]
+        //public IHttpActionResult GetFeedbacks() {
+        //    var query = from f in feedInterface.getAll()
+        //                select new { f.email, f.contactNo };
+        //    return Ok(query.ToList());
 
-        }
+        //}
 
-        [HttpGet]
-        public IHttpActionResult SearchResult() {
-            //Created A List Of System Defined Delegates
-            List<Func<Feedback, bool>> filters = new List<Func<Feedback, bool>>();
-               filters.Add(p => p.email.ToLower().Contains("tufail@gmail.com"));
-               filters.Add(p => p.typeOfFeedback.Equals("2"));
+        //[HttpGet]
+        //public IHttpActionResult SearchResult() {
+        //    //Created A List Of System Defined Delegates
+        //    List<Func<Feedback, bool>> filters = new List<Func<Feedback, bool>>();
+        //       filters.Add(p => p.email.ToLower().Contains("tufail@gmail.com"));
+        //       filters.Add(p => p.typeOfFeedback.Equals("2"));
 
-             var list =  feedInterface.getAll().Where(x => filters.All(f => f(x)));
-             return Ok(list);
-        }
+        //     var list =  feedInterface.getAll().Where(x => filters.All(f => f(x)));
+        //     return Ok(list);
+        //}
 
     }
 }

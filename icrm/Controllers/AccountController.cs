@@ -176,7 +176,7 @@ namespace icrm.Controllers
             if (ModelState.IsValid)
             {
                 
-                var user = new ApplicationUser { UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName , Email = model.Email, PhoneNumber = model.PhoneNumber, DepartmentID = model.DepartmentID };
+                var user = new ApplicationUser { UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName , Email = model.Email, PhoneNumber = model.PhoneNumber};
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
