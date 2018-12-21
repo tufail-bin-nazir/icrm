@@ -20,10 +20,11 @@ namespace icrm.Controllers
     public class FeedBackController : Controller
     {
         private IFeedback feedInterface;
+        private IDepartment departInterface;
 
         public FeedBackController() {
             feedInterface = new FeedbackRepository();
-        }
+            departInterface = new DepartmentRepository();        }
        
         private ApplicationUserManager _userManager;
 
@@ -53,13 +54,18 @@ namespace icrm.Controllers
         [Route("feedbacklist/")]
         public ActionResult list(int? page)
         {
+           
+            
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-           
+            List<Department> departments = departInterface.getAll();
+
+           // ViewBag.departmemts = departments;
             IPagedList<Feedback> feedbackList = feedInterface.Pagination(pageIndex,pageSize,user.Id);
+         //  var Bcm= new Tuple<IPagedList<Feedback>, FeedbackDTO>(feedbackList, new FeedbackDTO());
             return View(feedbackList);
         
         }
@@ -115,5 +121,21 @@ namespace icrm.Controllers
             }
 
         }
+
+        [HttpGet]
+        [Route("searchfeedback")]
+        public ActionResult search(string search,int? page)
+        {
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+
+            IPagedList<Feedback> feedbacks=feedInterface.search(search, pageIndex, pageSize);
+            return View("list",feedbacks);
+
+        }
+
     }
 }

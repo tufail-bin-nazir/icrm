@@ -1,14 +1,15 @@
 ﻿@using icrm.Models
-@using PagedList;
-@using PagedList.Mvc;
-@model PagedList.IPagedList<icrm.Models.Feedback>
+@model icrm.Models.Feedback
 @{
     Layout = null;
 }
+
+
 @{
     var data = (ApplicationUser)ViewData["user"];
 
 }
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,11 +25,14 @@
     <!-- vendor css -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
-    <link href="~/Content/lib/rickshaw/css/rickshaw.min.css" rel="stylesheet">
-    <!-- Slim CSS -->
+    <link href="~/Content/lib/jquery-toggles/css/toggles-full.css" rel="stylesheet">
+    <link href="~/Content/lib/jt.timepicker/css/jquery.timepicker.css" rel="stylesheet">
+    <link href="~/Content/lib/spectrum/css/spectrum.css" rel="stylesheet">
+    <link href="~/Content/lib/bootstrap-tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet">
+    <!-- Feadback CSS -->
     <link rel="stylesheet" href="~/Content/css/slim.css">
 </head>
-<body class="dashboard-3">
+<body>
     <div class="slim-header">
         <div class="container">
             <div class="slim-header-left">
@@ -178,7 +182,7 @@
     <div class="slim-navbar">
         <div class="container">
             <ul class="nav">
-                <li class="nav-item with-sub active">
+                <li class="nav-item with-sub">
                     <a class="nav-link" href="#">
                         <i class="icon ion-ios-home-outline"></i>
                         <span>Dashboard</span>
@@ -320,14 +324,14 @@
                         </ul>
                     </div><!-- dropdown-menu -->
                 </li>
-                <li class="nav-item with-sub">
+                <li class="nav-item with-sub active">
                     <a class="nav-link" href="#" data-toggle="dropdown">
                         <i class="icon ion-ios-gear-outline"></i>
                         <span>Forms</span>
                     </a>
                     <div class="sub-item">
                         <ul>
-                            <li><a href="form-elements.html">Form Elements</a></li>
+                            <li class="active"><a href="form-elements.html">Form Elements</a></li>
                             <li><a href="form-layouts.html">Form Layouts</a></li>
                             <li><a href="form-validation.html">Form Validation</a></li>
                             <li><a href="form-wizards.html">Form Wizards</a></li>
@@ -361,168 +365,182 @@
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Feedback</li>
                 </ol>
-                <h6 class="slim-pagetitle">Welcome back, @data.FirstName</h6>
+                <h6 class="slim-pagetitle">Feedback</h6>
             </div><!-- slim-pageheader -->
+            <div class="section-wrapper">
+                <label class="section-title">VIEW FEEDBACK</label>
+                <p class="mg-b-20 mg-sm-b-40">@data.Email</p>
+                @using (Html.BeginForm("assign", "Agent", Model, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                <h2 style="color:forestgreen"> @TempData["displayMsg"]</h2>
+                    <div class="form-layout">
+                        <div class="row mg-b-25">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Assign Department: </label>
+                                    @Html.HiddenFor(m => m.id, new { @class = "form-control" })
+                                    @Html.HiddenFor(m => m.userId, new { @class = "form-control" })
+                                    @Html.HiddenFor(m => m.satisfaction, new { @class = "form-control" })
+                                    @Html.DropDownListFor(m => m.departmentID,
+                            new SelectList(ViewBag.Departmn,
+                               "ID", "Name"),"Choose Department", new { @class = "form-control select2"})
+                                    @Html.ValidationMessageFor(m => m.departmentID, "", new { @class = "text-danger"})
 
-
-            <div class="row row-xs mg-t-10">
-                <div class="col-lg-12">
-                    <div class="card card-table">
-                        <div class="card-header">
-                            <span>@ViewBag.ErrorMsg</span>
-                            <h6 class="slim-card-title">Feedback List</h6>
-                        </div><!-- card-header -->
-                        <div class="table-responsive">
-                            <table class="table mg-b-0 tx-13">
-                                <thead>
-                                    <tr class="tx-10">
-                                        <th class="wd-10p pd-y-5">S.No</th>
-                                        <th class="pd-y-5">User</th>
-                                        <th class="pd-y-5">Type Of Feedback</th>
-                                        <th class="pd-y-5">Subject</th>
-                                        <th class="pd-y-5">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i }))
-                                    {
-
-                                    <tr>
-                                        <td class="pd-l-20">
-
-                                            @(item.Index + ((Model.PageNumber - 1) * Model.PageSize) + 1)
-
-
-                                        </td>
-                                        <td>
-
-                                            @Html.ActionLink(item.Data.name, "view", new { id = item.Data.id })
-
-                                        </td>
-                                        <td class="tx-12">
-
-                                            @switch (item.Data.typeOfFeedback)
-                                            {
-                                                case "1":
-                                                    <p>@Html.Raw("Give comments/suggestions/compliments")</p>
-                                                    break;
-                                                case "2":
-                                                    <p>@Html.Raw("General Inquiries")</p>
-                                                    break;
-                                                case "3":
-                                                    <p>@Html.Raw("Raise a complaint")</p>
-
-                                                    break;
-                                                default:
-                                                    <p>@Html.Raw("")</p>
-
-                                                    break;
-                                            }
-
-                                        </td>
-                                        <td>@Html.DisplayFor(modelitem => item.Data.subject)</td>
-                                        <td>@Html.DisplayFor(modelitem => item.Data.status)</td>
-                                    </tr>
-
-                                    }
-                                </tbody>
-                            </table>
-                        </div><!-- table-responsive -->
-
-                        <div class="pagination-wrapper">
-                            <div class="pagination-wrapper">
-                                <div id='Paging' style="text-align:center">
-                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
-                                    of @Model.PageCount
-                                    <ul class="pagination pagination-circle mg-b-0">
-
-                                        <li class="page-item">
-                                            @Html.PagedListPager(Model, page => Url.Action("DashBoard", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
-
-                                        </li>
-
-                                    </ul>
                                 </div>
-                            </div><!-- pagination-wrapper -->
-                          
-                        </div><!-- pagination-wrapper -->
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Name: </label>
+
+                                    @Html.TextBoxFor(model => model.name, new { @readonly = "readonly", @class = "form-control" })
+
+                                    @Html.ValidationMessageFor(m => m.name, "", new { @class = "error" })
+                                </div>
+                            </div><!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Contact No: </label>
+                                    @Html.TextBoxFor(model => model.contactNo, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.contactNo, "", new { @class = "error" })
+                                </div>
+                            </div><!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Email: </label>
+                                    @Html.TextBoxFor(model => model.email, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.email, "", new { @class = "error" })
+                                </div>
+                            </div><!-- col-4 -->
+
+                            <div class="col-lg-4">
+
+                                <div class="form-group mg-b-10-force">
+                                    <label class="form-control-label">Type of Feedback: </label>
+                                    @Html.HiddenFor(model => model.typeOfFeedback, new { @readonly = "readonly", @class = "form-control" })
+
+                                    @switch (Model.typeOfFeedback)
+                                    {
+                                        case "1":
+                                            @Html.TextBox("type1", "Give comments/suggestions/compliments", new { @readonly = "readonly", @class = "form-control" })
+                                            @Html.HiddenFor(model => model.typeOfFeedback, new { Value = "1", @readonly = "readonly", @class = "form-control" })
+                                            break;
+                                        case "2":
+                                            @Html.TextBox("type2", "General Inquiries", new { @readonly = "readonly", @class = "form-control" })
+
+                                            @Html.HiddenFor(model => model.typeOfFeedback, new { Value = "General Inquiries", @readonly = "readonly", @class = "form-control" })
+                                            break;
+                                        case "3":
+                                            @Html.TextBox("type3", "Raise a complaint", new { @readonly = "readonly", @class = "form-control" })
+
+                                            @Html.HiddenFor(model => model.typeOfFeedback, new { Value = "3", @readonly = "readonly", @class = "form-control" })
+
+                                            break;
+                                        default:
 
 
-                    </div><!-- card -->
-                </div><!-- col-6 -->
+                                            break;
+                                    }
+                                    @Html.ValidationMessageFor(m => m.typeOfFeedback, "", new { @class = "error" })
 
-            </div><!-- row -->
-        </div><!-- container -->
-    </div><!-- slim-mainpanel -->
-    <div class="slim-footer">
-        <div class="container">
-            <p>Copyright 2018 &copy; All Rights Reserved. </p>
-        </div><!-- container -->
-    </div><!-- slim-footer -->
-    <script src="~/Content/lib/jquery/js/jquery.js"></script>
-    <script src="~/Content/lib/popper.js/js/popper.js"></script>
-    <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
-    <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
-    <script src="~/Content/lib/d3/js/d3.js"></script>
-    <script src="~/Content/lib/rickshaw/js/rickshaw.min.js"></script>
-    <script src="~/Content/lib/Flot/js/jquery.flot.js"></script>
-    <script src="~/Content/lib/Flot/js/jquery.flot.resize.js"></script>
-    <script src="~/Content/lib/peity/js/jquery.peity.js"></script>
-    <script src="~/Content/js/slim.js"></script>
-    <script src="~/Content/js/ResizeSensor.js"></script>
-    <script>
+                                </div>
+                            </div><!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group mg-b-10-force">
+                                    <label class="form-control-label">Subject: </label>
+                                    @Html.TextBoxFor(model => model.subject, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.subject, "", new { @class = "error" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group mg-b-10-force">
+                                    <label class="form-control-label">Status: </label>
+                                    @Html.TextBoxFor(model => model.status, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.status, "", new { @class = "error" })
+                                </div>
+                            </div><!-- col-4 -->
+                            <div class="col-lg-12">
+                                <div class="form-group mg-b-10-force">
+                                    <label class="form-control-label">Details:</label>
+                                    @Html.TextAreaFor(model => model.details, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.details, "", new { @class = "error" })
+                                </div>
+                            </div>
 
+
+                            <!-- col-4 -->
+                        </div><!-- row -->
+                        <div class="form-layout-footer">
+                            <input type="submit" value="Submit" class="btn btn-primary bd-0" />
+                        </div><!-- form-layout-footer -->
+                    </div>
+                }
+            </div><!-- container -->
+        </div><!-- slim-mainpanel -->
+        <div class="slim-footer">
+            <div class="container">
+                <p>Copyright 2018 &copy; All Rights Reserved. </p>
+
+            </div><!-- container -->
+        </div><!-- slim-footer -->
+        <script src="~/Content/lib/jquery/js/jquery.js"></script>
+        <script src="~/Content/lib/popper.js/js/popper.js"></script>
+        <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
+        <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
+        <script src="~/Content/lib/jquery-toggles/js/toggles.min.js"></script>
+        <script src="~/Content/lib/jt.timepicker/js/jquery.timepicker.js"></script>
+        <script src="~/Content/lib/spectrum/js/spectrum.js"></script>
+        <script src="~/Content/lib/jquery.maskedinput/js/jquery.maskedinput.js"></script>
+        <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
+        <script src="~/Content/js/slim.js"></script>
+        <script>
+            if (dropdownlist.Items.Count ==null) {
+               alert('jdfh') 
+            }
             $(function () {
                 'use strict'
 
-                var multibar = new Rickshaw.Graph({
-                    element: document.querySelector('#chartMultiBar1'),
-                    renderer: 'bar',
-                    stack: false,
-                    max: 60,
-                    series: [{
-                        data: [
-                            { x: 0, y: 20 },
-                            { x: 1, y: 25 },
-                            { x: 2, y: 10 },
-                            { x: 3, y: 15 },
-                            { x: 4, y: 20 },
-                            { x: 5, y: 40 },
-                            { x: 6, y: 15 },
-                            { x: 7, y: 40 },
-                            { x: 8, y: 25 }
-                        ],
-                        color: '#065381'
-                    },
-                    {
-                        data: [
-                            { x: 0, y: 10 },
-                            { x: 1, y: 30 },
-                            { x: 2, y: 45 },
-                            { x: 3, y: 30 },
-                            { x: 4, y: 42 },
-                            { x: 5, y: 20 },
-                            { x: 6, y: 30 },
-                            { x: 7, y: 15 },
-                            { x: 8, y: 20 }
-                        ],
-                        color: '#34B2E4'
-                    }]
+                // Toggles
+                $('.toggle').toggles({
+                    on: true,
+                    height: 26
                 });
 
-                multibar.render();
+                // Input Masks
+                $('#dateMask').mask('99/99/9999');
+                $('#phoneMask').mask('(999) 999-9999');
+                $('#ssnMask').mask('999-99-9999');
 
-                // Responsive Mode
-                new ResizeSensor($('.slim-mainpanel'), function () {
-                    multibar.configure({
-                        width: $('#chartMultiBar1').width(),
-                        height: $('#chartMultiBar1').height()
-                    });
-                    multibar.render();
+                // Time Picker
+                $('#tpBasic').timepicker();
+                $('#tp2').timepicker({ 'scrollDefault': 'now' });
+                $('#tp3').timepicker();
+
+                $('#setTimeButton').on('click', function () {
+                    $('#tp3').timepicker('setTime', new Date());
+                });
+
+                // Color picker
+                $('#colorpicker').spectrum({
+                    color: '#17A2B8'
+                });
+
+                $('#showAlpha').spectrum({
+                    color: 'rgba(23,162,184,0.5)',
+                    showAlpha: true
+                });
+
+                $('#showPaletteOnly').spectrum({
+                    showPaletteOnly: true,
+                    showPalette: true,
+                    color: '#DC3545',
+                    palette: [
+                        ['#1D2939', '#fff', '#0866C6', '#23BF08', '#F49917'],
+                        ['#DC3545', '#17A2B8', '#6610F2', '#fa1e81', '#72e7a6']
+                    ]
                 });
 
             });
-    </script>
+        </script>
 </body>
 </html>

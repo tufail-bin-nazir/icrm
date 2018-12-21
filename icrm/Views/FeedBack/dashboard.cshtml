@@ -170,7 +170,10 @@
                             <a href="page-edit-profile.html" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>
                             <a href="page-activity.html" class="nav-link"><i class="icon ion-ios-bolt"></i> Activity Log</a>
                             <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>
-                            <a href="page-signin.html" class="nav-link"><i class="icon ion-forward"></i> Sign Out</a>
+                            <form action="/Account/LogOff" method="post">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-link nav-link"> <i class="icon ion-forward"></i> Sign Out</button>
+                            </form>
                         </nav>
                     </div><!-- dropdown-menu -->
                 </div><!-- dropdown -->

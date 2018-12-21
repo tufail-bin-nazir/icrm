@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
 
 
-namespace icrm.RepositoryImpl 
+namespace icrm.RepositoryImpl
 {
     public class FeedbackRepository : IFeedback
     {
@@ -22,19 +22,22 @@ namespace icrm.RepositoryImpl
         }
 
 
-        public void Save(Feedback feedback) {
-            
+        public void Save(Feedback feedback)
+        {
+
             db.Feedbacks.Add(feedback);
             db.SaveChanges();
-           
+
         }
 
-        public Feedback Find(int? id) {
+        public Feedback Find(int? id)
+        {
             return db.Feedbacks.Find(id);
         }
 
 
-        public IPagedList<Feedback> Pagination(int pageIndex,int pageSize,string userId) {
+        public IPagedList<Feedback> Pagination(int pageIndex, int pageSize, string userId)
+        {
             return db.Feedbacks.OrderByDescending(m => m.user.Id).Where(m => m.user.Id == userId).ToPagedList(pageIndex, pageSize);
 
         }
@@ -45,10 +48,14 @@ namespace icrm.RepositoryImpl
 
         }
 
-        public IPagedList<Feedback> search(string search,int pageIndex, int pageSize)
+        public IPagedList<Feedback> search(string search, int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(x => x.user.Id).Where(x => x.name.StartsWith(search) || search == null).ToPagedList(pageIndex,pageSize);
+            return db.Feedbacks.OrderByDescending(x => x.user.Id).Where(x => x.name.StartsWith(search) || search == null).ToPagedList(pageIndex, pageSize);
+        }
 
+        public IEnumerable<Feedback> getAll()
+        {
+            return db.Feedbacks.OrderByDescending(m => m.user.Id).ToList();
 
         }
     }
