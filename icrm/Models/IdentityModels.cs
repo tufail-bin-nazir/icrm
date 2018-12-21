@@ -17,7 +17,20 @@ namespace icrm.Models
         [Required]
         public string  LastName { get; set; }
 
-       
+        [Required]
+        public int LocationId { get; set; }
+
+        [Required]
+        public int SubLocationId { get; set; }
+
+        [Required]
+        public int PositionId { get; set; }
+
+        [Required]
+        public int NationalityId { get; set; }
+
+
+
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

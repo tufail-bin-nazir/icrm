@@ -29,7 +29,7 @@
 <body>
 
     <div class="signin-wrapper">
-         
+
         <div class="signin-box signup">
             <h2 class="slim-logo"><a href="index.html">ICRM 2.0<span>.</span></a></h2>
             <h3 class="signin-title-primary">Get Started!</h3>
@@ -50,23 +50,36 @@
 
                 </div><!-- row -->
 
-               
+
                 <div class="row row-xs mg-b-10">
 
 
                     <div class="col-sm">
-                        @{
-                            var selectList = new SelectList(
-                                new List<SelectListItem>
-                                {
-                                new SelectListItem {Text = "Department A", Value = "1"},
-                                new SelectListItem {Text = "Department B", Value = "2"},
-                                }, "Value", "Text");
-                        }
+                        @Html.DropDownListFor(m => m.LocationId,
+                            new SelectList(ViewBag.Locationlist,
+                               "Id", "name"),"Choose Location", new { @class = "form-control select2", @id="location"})
+                    </div>
 
-                        @Html.DropDownListFor(x => x.DepartmentID, selectList, "Choose Department", new { @class = "form-control select2" })
+                    <div class="col-sm">
+                        <select name="SubLocationId" id="sublocation" class="form-control select2">
+                            <option value="">Select SubLocation</option>
+                        </select>
+                    </div>
+                </div>
 
+                <div class="row row-xs mg-b-10">
 
+                    <div class="col-sm">
+
+                        @Html.DropDownListFor(m => m.PositionId,
+                            new SelectList(ViewBag.Positionlist,
+                               "Id", "name"),"Choose Position", new { @class = "form-control select2"})
+                    </div>
+
+                    <div class="col-sm">
+                        @Html.DropDownListFor(m => m.NationalityId,
+                            new SelectList(ViewBag.Nationalitylist,
+                               "Id", "name"),"Choose Nationality", new { @class = "form-control select2"})
                     </div>
 
 
@@ -95,6 +108,30 @@
 
     <script src="~/Content/js/slim.js"></script>
 
+    <script>
+        $("#location").change(function () {
+            var id = this.value;
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: '{"id":"' + id + '"}',
+                url: "@Url.Action("getSublocations", "SubLocations")",
+                dataType: "json",
+                success: function (response) {
+                    $.each(response, function (i, item) {
+                        $('#sublocation').append($('<option>', {
+                            value: item.Id,
+                            text: item.name
+                        }));
+                    });
+                },
+                error: function (response) {
+                    alert(response.responseText)
+                }
+
+            })
+        });
+    </script>
 </body>
 </html>
 
