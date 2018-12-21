@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -113,6 +114,12 @@ namespace icrm.Controllers
             db.SubLocations.Remove(subLocation);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public JsonResult getSublocations(int? id) {
+            Debug.WriteLine(db.SubLocations.Where(s => s.locationId == id).Count()+"9090090909090909090909099");
+           return Json(db.SubLocations.Where(s => s.locationId == id).ToList());
         }
 
         protected override void Dispose(bool disposing)

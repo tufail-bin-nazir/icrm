@@ -19,8 +19,9 @@ namespace icrm.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-       
 
+
+     
 
 
         public AccountController()
@@ -166,6 +167,13 @@ namespace icrm.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            ApplicationDbContext db = new ApplicationDbContext();
+           
+
+            ViewBag.Locationlist=db.Locations.OrderByDescending(m=> m.name).ToList();
+            ViewBag.Positionlist=db.Positions.ToList();
+            ViewBag.Nationalitylist=db.Nationalities.ToList();
+
             return View();
         }
 
@@ -184,44 +192,17 @@ namespace icrm.Controllers
             if (ModelState.IsValid)
             {
                 
-                var user = new ApplicationUser { UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName , Email = model.Email, PhoneNumber = model.PhoneNumber};
+                var user = new ApplicationUser { UserName = model.Email,
+                    FirstName = model.FirstName, LastName = model.LastName ,
+                    Email = model.Email, PhoneNumber = model.PhoneNumber,
+                    LocationId = model.LocationId, SubLocationId = model.SubLocationId,
+                    PositionId = model.PositionId, NationalityId = model.NationalityId};
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                  {
-
-                    //checking if the email contains the word Agent
-                    if (model.Email.Contains("agent"))
-                    {
-                        //if Agent role exists then just add the role to the user else create the role and add it to user
-                        if (!roleManager.RoleExists("Agent"))
-                        {
-                            var role = new IdentityRole();
-                            role.Name = "Agent";
-                            roleManager.Create(role);
-                            UserManager.AddToRole(user.Id, roleManager.FindByName("Agent").Name);
-                        }
-                        else
-                        {
-                            UserManager.AddToRole(user.Id, roleManager.FindByName("Agent").Name);
-                        }
-                    }
-                    else
-                    {
-                        //if User role exists then just add the role to the user else create the role and add it to user
-                        if (!roleManager.RoleExists("User"))
-                        {
-                            var role = new IdentityRole();
-                            role.Name = "User";
-                            roleManager.Create(role);
-                            UserManager.AddToRole(user.Id, roleManager.FindByName("User").Name);
-                        }
-                        else
-                        {
-                            UserManager.AddToRole(user.Id, roleManager.FindByName("User").Name);
-                        }
-
-                    }
+                    UserManager.AddToRole(user.Id, roleManager.FindByName("User").Name);
+                   
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -229,14 +210,9 @@ namespace icrm.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                    if (UserManager.IsInRole(user.Id, roleManager.FindByName("User").Name)) {
+                    
                         return RedirectToAction("DashBoard", "User");
-                    }
-                    else {
-                        return RedirectToAction("Dashboard", "Agent");
-                    }
-                   
-                }
+                 }
                 AddErrors(result);
             }
 

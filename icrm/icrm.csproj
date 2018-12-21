@@ -238,6 +238,10 @@
     <Compile Include="Migrations\201812210905115_InitialMigration.Designer.cs">
       <DependentUpon>201812210905115_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812210927402_AddedUserFields.cs" />
+    <Compile Include="Migrations\201812210927402_AddedUserFields.Designer.cs">
+      <DependentUpon>201812210927402_AddedUserFields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -567,6 +571,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201812210905115_InitialMigration.resx">
       <DependentUpon>201812210905115_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812210927402_AddedUserFields.resx">
+      <DependentUpon>201812210927402_AddedUserFields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

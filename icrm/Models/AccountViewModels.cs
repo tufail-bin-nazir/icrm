@@ -86,8 +86,16 @@ namespace icrm.Models
         public string PhoneNumber { get; set; }
 
         [Required]
-        [Display(Name = "Department")]
-        public int DepartmentID { get; set; }
+        public int LocationId { get; set; }
+
+        [Required]
+        public int SubLocationId { get; set; }
+
+        [Required]
+        public int PositionId { get; set; }
+
+        [Required]
+        public int NationalityId { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
