@@ -368,7 +368,7 @@
             <div class="section-wrapper">
                 <label class="section-title">YOUR FEEDBACK</label>
                 <p class="mg-b-20 mg-sm-b-40">@data.Email</p>
-                @using (Html.BeginForm("edit", "Feed", Model, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("edit", "FeedBack", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                 {
                     <h2> @ViewBag.Success</h2>
                     <div class="form-layout">
@@ -376,57 +376,73 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Name: </label>
+                                    <label class="form-control-label">Title: </label>
                                     @Html.HiddenFor(model => model.id, new { @class = "form-control" })
+                                    @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
+                                    @Html.HiddenFor(model => model.attachment, new { @class = "form-control" })
 
-                                    @Html.TextBoxFor(model => model.name, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.TextBoxFor(model => model.title, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Contact No: </label>
-                                    @Html.TextBoxFor(model => model.contactNo, new { @readonly = "readonly", @class = "form-control" })
+                                    <label class="form-control-label">Description: </label>
+                                    @Html.TextBoxFor(model => model.description, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
                             </div><!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Email: </label>
-                                    @Html.TextBoxFor(model => model.email, new { @readonly = "readonly", @class = "form-control" })
-                                </div>
-                            </div><!-- col-4 -->
+                            @if (Model.departmentID != null)
+                            {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Department: </label>
+                                        @Html.HiddenFor(model => model.departmentID, new { @readonly = "readonly", @class = "form-control" })
 
-                            <div class="col-lg-4">
+                                        @Html.TextBoxFor(model => model.department.Name, new { @readonly = "readonly", @class = "form-control" })
+                                    </div>
+                                </div><!-- col-4 -->
 
-                                <div class="form-group mg-b-10-force">
-                                    <label class="form-control-label">Type of Feedback: </label>
-                                    @Html.TextBoxFor(model => model.typeOfFeedback, new { @readonly = "readonly", @class = "form-control" })
+                                <div class="col-lg-4">
 
+                                    <div class="form-group mg-b-10-force">
+                                        <label class="form-control-label">Category: </label>
+                                        @Html.TextBoxFor(model => model.category.name, new { @readonly = "readonly", @class = "form-control" })
+
+                                    </div>
+                                </div><!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group mg-b-10-force">
+                                        <label class="form-control-label">Priority: </label>
+                                        @Html.TextBoxFor(model => model.priority.priorityId, new { @readonly = "readonly", @class = "form-control" })
+                                    </div>
                                 </div>
-                            </div><!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group mg-b-10-force">
-                                    <label class="form-control-label">Subject: </label>
-                                    @Html.TextBoxFor(model => model.subject, new { @readonly = "readonly", @class = "form-control" })
-                                </div>
-                            </div>
+                            }
                             <div class="col-lg-4">
                                 <div class="form-group mg-b-10-force">
                                     <label class="form-control-label">Status: </label>
                                     @Html.TextBoxFor(model => model.status, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
                             </div><!-- col-4 -->
-                            <div class="col-lg-12">
-                                <div class="form-group mg-b-10-force">
-                                    <label class="form-control-label">Details:</label>
-                                    @Html.TextAreaFor(model => model.details, new { @readonly = "readonly", @class = "form-control" })
+                            @if (Model.status == "Resolve")
+                            {
+                                <div class="col-lg-12">
+                                    <div class="form-group mg-b-10-force">
+                                        <label class="form-control-label">Are you satisfied:</label>
+                                        @Html.CheckBoxFor(model => model.satisfaction)
+                                    </div>
                                 </div>
-                            </div>
 
-                            
+                                <div class="col-lg-12">
+                                    <div class="form-group mg-b-10-force">
+                                        <input type="submit" class="btn btn-primary bd-0" value="Submit"/>
+                                    
+                                    </div>
+                                </div>
+                            }
+
                             <!-- col-4 -->
                         </div><!-- row -->
                         <div class="form-layout-footer">
-                            @Html.ActionLink("Back to View","list","FeedBack")
+                            @Html.ActionLink("Back to View","dashboard","FeedBack")
                         </div><!-- form-layout-footer -->
                     </div>
                 }

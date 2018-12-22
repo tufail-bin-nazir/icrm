@@ -369,66 +369,39 @@ Layout = null;
             <div class="section-wrapper">
                 <label class="section-title">YOUR FEEDBACK</label>
                 <p class="mg-b-20 mg-sm-b-40">PLEASE TELL US ABOUT YOURSELF:</p>
-                @using (Html.BeginForm("add", "FeedBack", Model, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                @using (Html.BeginForm("add", "FeedBack", Model, FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
                 {
                 <h2 style="color:forestgreen"> @TempData["Message"]</h2>
                 <div class="form-layout">
                     <div class="row mg-b-25">
-                       
+
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Name: <span class="tx-danger">*</span></label>
-                                @Html.HiddenFor(model=> model.userId,new {Value=@data.Id})
-                                @Html.TextBoxFor(model => model.name, new { placeholder = "Enter name", @class = "form-control",Value=@data.FirstName+@data.LastName,@readonly="readonly" })
-                                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
-                            </div>
-                        </div><!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">Contact No: <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(model => model.contactNo, new { placeholder = "Enter Contact", @class = "form-control", Value = @data.PhoneNumber,@readonly="read" })
-                                @Html.ValidationMessageFor(model => model.contactNo, "", new { @class = "text-danger" })
+                                <label class="form-control-label">Title: <span class="tx-danger">*</span></label>
+                                @Html.HiddenFor(model => model.userId, new { Value = @data.Id })
+                                @Html.TextBoxFor(model => model.title, new { placeholder = "Enter Title", @class = "form-control"})
+                                @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
                             </div>
                         </div><!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(model => model.email, new { placeholder = "Enter email", @class = "form-control",Value=@data.Email,@readonly="read" })
-                                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                                <label class="form-control-label">Description: <span class="tx-danger">*</span></label>
+                                @Html.TextAreaFor(model => model.description, new { placeholder = "Enter Description", @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
                             </div>
                         </div><!-- col-4 -->
 
-                        <div class="col-lg-4">
-
-                            <div class="form-group mg-b-10-force">
-                                <label class="form-control-label">Type of Feedback: <span class="tx-danger">*</span></label>
-
-                                @Html.DropDownListFor(model => model.typeOfFeedback,
-                                new List<SelectListItem>
-                                    {
-
-                                    new SelectListItem() {Text = "Give comments/suggestions/compliments", Value="1"},
-                                    new SelectListItem() {Text = "General Inquiries", Value="2"},
-                                    new SelectListItem() {Text = "Raise a complaint", Value="3"}
-                                    },"Choose",new { @class="form-control select2"})
-
-                                    @Html.ValidationMessageFor(model => model.typeOfFeedback, "", new { @class = "text-danger" })
-                            </div>
-                        </div><!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group mg-b-10-force">
-                                <label class="form-control-label">Subject: <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(model => model.subject, new { placeholder = "Subject", @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.subject, "", new { @class = "text-danger" })
-                            </div>
-                        </div><!-- col-4 -->
                         <div class="col-lg-12">
-                            <div class="form-group mg-b-10-force">
-                                <label class="form-control-label">Details: <span class="tx-danger">*</span></label>
-                                @Html.TextAreaFor(model => model.details, new { placeholder = "Enter Details", @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.details, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <label class="form-control-label">
+                                    Attachment: <span class="tx-danger">*</span>
+                                </label><span class="tx-danger">File Size Limit is 2MB</span>
+                                <input type="file" name="file">
+                                @Html.ValidationMessageFor(model => model.attachment, "", new { @class = "text-danger" })
                             </div>
                         </div><!-- col-4 -->
+                        
+
                     </div><!-- row -->
                     <div class="form-layout-footer">
                         <button class="btn btn-primary bd-0">Submit Form</button>
