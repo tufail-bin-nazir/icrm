@@ -82,6 +82,8 @@ namespace icrm.Models
         {
             return new ApplicationDbContext();
         }
+
+        
     }
 
     public class MyDBInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>

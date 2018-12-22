@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Diagnostics;
 
 namespace icrm.Controllers
 {
@@ -46,15 +47,17 @@ namespace icrm.Controllers
         [HttpGet]
         public ActionResult AddUser(string id)
         {
-            ApplicationDbContext db = new ApplicationDbContext();
-            ViewBag.Locationlist = db.Locations.ToList();
-            ViewBag.Positionlist = db.Positions.ToList();
-            ViewBag.Nationalitylist = db.Nationalities.ToList();
-            return View();
+
+            ViewBag.rolename = id;
+            if (Request.Cookies["sucess"] != null) {
+                Response.SetCookie(new HttpCookie("sucess", "") { Expires = DateTime.Now.AddDays(-1) });
+                ViewBag.message = "User Saved Sucessfully";
+            }
+                return View();
         }
 
 
-        public ActionResult postUser(RegisterViewModel model) {
+        public ActionResult postUser(RegisterViewModel model,string rolename) {
 
             ApplicationDbContext context = new ApplicationDbContext();
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
@@ -69,34 +72,36 @@ namespace icrm.Controllers
                     LastName = model.LastName,
                     Email = model.Email,
                     PhoneNumber = model.PhoneNumber,
-                    LocationId = model.LocationId,
-                    SubLocationId = model.SubLocationId,
-                    PositionId = model.PositionId,
-                    NationalityId = model.NationalityId
+                   
                 };
 
                 var result = UserManager.Create(user, model.Password);
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id, roleManager.FindByName("User").Name);
+                    if(rolename.Equals("HR"))
+                         UserManager.AddToRole(user.Id, roleManager.FindByName("HR").Name);
+                    else if (rolename.Equals("Department"))
+                        UserManager.AddToRole(user.Id, roleManager.FindByName("Department").Name);
 
-                   
+
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("DashBoard", "User");
+                    Response.SetCookie(new HttpCookie("sucess", ""));
+                    return RedirectToAction("AddUser", new { @id= rolename });
                 }
                 AddErrors(result);
             }
 
-           
+
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            
+            return View("AddUser",model);
+          
         }
 
         private void AddErrors(IdentityResult result)
@@ -105,6 +110,13 @@ namespace icrm.Controllers
             {
                 ModelState.AddModelError("", error);
             }
+        }
+
+        [HttpGet]
+        public ViewResult ListUser() {
+            ApplicationDbContext db = new ApplicationDbContext();
+            
+            return View(db.Users.ToList());
         }
     }
 
