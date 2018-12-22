@@ -170,9 +170,14 @@ namespace icrm.Controllers
             ApplicationDbContext db = new ApplicationDbContext();
            
 
-            ViewBag.Locationlist=db.Locations.OrderByDescending(m=> m.name).ToList();
+            ViewBag.Locationlist=db.Locations.ToList();
             ViewBag.Positionlist=db.Positions.ToList();
             ViewBag.Nationalitylist=db.Nationalities.ToList();
+            ViewBag.Nationalitylist = db.Nationalities.ToList();
+            ViewBag.Jobtitlelist = db.JobTitles.ToList();
+            ViewBag.Departmentlist = db.Users.Where(u => u.Roles.Any(s => s.RoleId == ""));
+            ViewBag.CostCenterlist = db.CostCenters.ToList();
+            ViewBag.Religionlist = db.Religions.ToList();
 
             return View();
         }
@@ -196,7 +201,10 @@ namespace icrm.Controllers
                     FirstName = model.FirstName, LastName = model.LastName ,
                     Email = model.Email, PhoneNumber = model.PhoneNumber,
                     LocationId = model.LocationId, SubLocationId = model.SubLocationId,
-                    PositionId = model.PositionId, NationalityId = model.NationalityId};
+                    PositionId = model.PositionId, NationalityId = model.NationalityId,
+                    CostCenterId = model.CostCenterId, JobTitleId = model.JobTitleId,
+                    DepartmentId = model.DepartmentId, PayScaleType = model.PayScaleType,
+                    EmployeeHireDate = model.EmployeeHireDate, ReligionId = model.ReligionId };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
