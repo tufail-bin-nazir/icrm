@@ -85,17 +85,32 @@ namespace icrm.Models
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
         public string PhoneNumber { get; set; }
 
-        [Required]
+        
         public int LocationId { get; set; }
 
-        [Required]
+        
         public int SubLocationId { get; set; }
 
-        [Required]
+        
         public int PositionId { get; set; }
 
-        [Required]
+        
         public int NationalityId { get; set; }
+
+
+        public int EmployeeId { get; set; }
+
+        public int JobTitleId { get; set; }
+
+        public int DepartmentId { get; set; }
+
+        public int CostCenterId { get; set; }
+
+        public string PayScaleType { get; set; }
+
+        public System.DateTime EmployeeHireDate { get; set; }
+
+        public int ReligionId { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

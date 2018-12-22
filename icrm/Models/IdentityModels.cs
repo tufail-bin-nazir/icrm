@@ -17,17 +17,30 @@ namespace icrm.Models
         [Required]
         public string  LastName { get; set; }
 
-        [Required]
+        public int EmployeeId { get; set; }
+
         public int LocationId { get; set; }
 
-        [Required]
+       
         public int SubLocationId { get; set; }
 
-        [Required]
+        
         public int PositionId { get; set; }
 
-        [Required]
+        
         public int NationalityId { get; set; }
+
+        public int JobTitleId { get; set; }
+
+        public int DepartmentId { get; set; }
+
+        public int CostCenterId { get; set; }
+
+        public string PayScaleType { get; set; }
+
+        public System.DateTime? EmployeeHireDate { get; set; }
+
+        public int ReligionId { get; set; }
 
 
 
@@ -93,7 +106,7 @@ namespace icrm.Models
             // Initialize default user
             var ustore = new UserStore<ApplicationUser>(context);
             var umanager = new UserManager<ApplicationUser>(ustore);
-            var admin = new ApplicationUser { UserName = "admin@admin.com", FirstName = "admin", LastName = "admin", Email = "admin@admin.com", PhoneNumber = "1234567890" };
+            var admin = new ApplicationUser { EmployeeId=1000, UserName = "admin@admin.com", FirstName = "admin", LastName = "admin", Email = "admin@admin.com", PhoneNumber = "1234567890" };
 
 
             umanager.Create(admin, "123456");
