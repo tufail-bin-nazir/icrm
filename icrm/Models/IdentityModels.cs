@@ -53,7 +53,7 @@ namespace icrm.Models
 
         public DbSet<Models.Feedback> Feedbacks { get; set; }
 
-        public DbSet<Models.Department> Departments { get; set; }
+      
 
         public DbSet<Models.Category> Categories { get; set; }
         public DbSet<Models.Location> Locations { get; set; }
@@ -61,6 +61,9 @@ namespace icrm.Models
         public DbSet<Models.Nationality> Nationalities { get; set; }
         public DbSet<Models.Position> Positions { get; set; }
         public DbSet<Models.Priority> Priorities { get; set; }
+        public DbSet<Models.JobTitle> JobTitles { get; set; }
+        public DbSet<Models.CostCenter> CostCenters { get; set; }
+        public DbSet<Models.Religion> Religions { get; set; }
 
         public static ApplicationDbContext Create()
         {
