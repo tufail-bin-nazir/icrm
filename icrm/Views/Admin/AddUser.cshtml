@@ -1,0 +1,113 @@
+﻿@model icrm.Models.RegisterViewModel
+@{
+    Layout = null;
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <!-- Meta -->
+    <meta name="description" content="feedback managment system.">
+    <meta name="author" content="feedback">
+
+    <title>Feedback</title>
+
+    <!-- Vendor css -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+
+    <!-- Feedback CSS -->
+    <link rel="stylesheet" href="~/Content/css/slim.css">
+
+</head>
+<body>
+
+    <div class="signin-wrapper">
+
+        <div class="signin-box signup">
+            <h2 class="slim-logo"><a href="index.html">ICRM 2.0<span>.</span></a></h2>
+            <h3 class="signin-title-primary">Get Started!</h3>
+            <h5 class="signin-title-secondary lh-4">It's free to signup and only takes a minute.</h5>
+            @Html.ValidationSummary()
+            @using (Html.BeginForm())
+            {
+
+                @Html.AntiForgeryToken()
+
+                <div class="row row-xs mg-b-10">
+                    <div class="col-sm">@Html.TextBoxFor(x => x.EmployeeId, new { @class = "form-control", placeholder = "Employee Id" })</div>
+                </div>
+                    <div class="row row-xs mg-b-10">
+
+                        <div class="col-sm">@Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", placeholder = "Firstname" })</div>
+                        <div class="col-sm mg-t-10 mg-sm-t-0">@Html.TextBoxFor(x => x.LastName, new { @class = "form-control", placeholder = "Lastname" })</div>
+                    </div><!-- row -->
+
+                    <div class="row row-xs mg-b-10">
+                        <div class="col-sm">@Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = "Email" })</div>
+                        <div class="col-sm">@Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control", placeholder = "Phone Number" })</div>
+
+                    </div><!-- row -->
+
+
+
+
+
+                    <div class="row row-xs mg-b-10">
+                        <div class="col-sm mg-t-10 mg-sm-t-0">@Html.TextBoxFor(x => x.Password, new { @class = "form-control", placeholder = "Password" })</div>
+                        <div class="col-sm mg-t-10 mg-sm-t-0">@Html.TextBoxFor(x => x.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })</div>
+                    </div>
+
+                    <button class="btn btn-primary btn-block btn-signin">Sign Up</button>
+
+                    <div class="signup-separator"><span>or signup using</span></div>
+
+                    <button class="btn btn-facebook btn-block">Sign Up Using Facebook</button>
+                    <button class="btn btn-twitter btn-block">Sign Up Using Twitter</button>
+                    }
+                    <p class="mg-t-40 mg-b-0">Already have an account? @Html.ActionLink("Sign In", "login")</a></p>
+                </div><!-- signin-box -->
+
+            </div><!-- signin-wrapper -->
+
+    <script src="~/Content/lib/jquery/js/jquery.js"></script>
+    <script src="~/Content/lib/popper.js/js/popper.js"></script>
+    <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
+
+    <script src="~/Content/js/slim.js"></script>
+
+    <script>
+        $("#location").change(function () {
+            var id = this.value;
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: '{"id":"' + id + '"}',
+                url: "@Url.Action("getSublocations", "SubLocations")",
+                dataType: "json",
+                success: function (response) {
+                    $.each(response, function (i, item) {
+                        $('#sublocation').append($('<option>', {
+                            value: item.Id,
+                            text: item.name
+                        }));
+                    });
+                },
+                error: function (response) {
+                    alert(response.responseText)
+                }
+
+            })
+        });
+    </script>
+</body>
+</html>
+
+
+

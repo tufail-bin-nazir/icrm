@@ -38,6 +38,14 @@
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
+
+
+                <div class="row row-xs mg-b-10">
+
+                    <div class="col-sm">@Html.TextBoxFor(x => x.EmployeeId, new { @class = "form-control", placeholder = "Employee" })</div>
+                   
+                </div><!-- row -->
+
                 <div class="row row-xs mg-b-10">
 
                     <div class="col-sm">@Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", placeholder = "Firstname" })</div>
@@ -81,6 +89,52 @@
                             new SelectList(ViewBag.Nationalitylist,
                                "Id", "name"),"Choose Nationality", new { @class = "form-control select2"})
                     </div>
+
+
+                </div>
+
+
+                <div class="row row-xs mg-b-10">
+
+                    <div class="col-sm">
+
+                        @Html.DropDownListFor(m => m.JobTitleId,
+                            new SelectList(ViewBag.Jobtitlelist,
+                               "Id", "name"),"Choose Job Title", new { @class = "form-control select2"})
+                    </div>
+
+                    <div class="col-sm">
+                        @Html.DropDownListFor(m => m.DepartmentId,
+                            new SelectList(ViewBag.Departmentlist,
+                               "Id", "name"),"Choose Department", new { @class = "form-control select2"})
+                    </div>
+
+
+                </div>
+
+
+                <div class="row row-xs mg-b-10">
+
+                    <div class="col-sm">
+
+                        @Html.DropDownListFor(m => m.CostCenterId,
+                            new SelectList(ViewBag.CostCenterlist,
+                               "Id", "name"),"Choose Cost Center", new { @class = "form-control select2"})
+                    </div>
+
+                    <div class="col-sm">
+                        @Html.DropDownListFor(m => m.ReligionId,
+                            new SelectList(ViewBag.Religionlist,
+                               "Id", "name"),"Choose Department", new { @class = "form-control select2"})
+                    </div>
+
+
+                </div>
+
+                <div class="row row-xs mg-b-10">
+
+                    <div class="col-sm mg-t-10 mg-sm-t-0">@Html.TextBoxFor(x => x.PayScaleType, new { @class = "form-control", placeholder = "PayScale" })</div>
+                    <div class="col-sm mg-t-10 mg-sm-t-0">@Html.TextBoxFor(x => x.EmployeeHireDate, new { @class = "form-control", placeholder = "Hire Date" })</div>
 
 
                 </div>
