@@ -63,7 +63,7 @@ namespace icrm.Controllers
             var departments = db.Users.Where(m => m.Roles.Any(s=>s.RoleId == "2c29c854-a352-470e-a909-7300ce35e478" )).ToList();
             var categories = db.Categories.OrderByDescending(m => m.name).ToList();
             var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
-             ViewBag.Departmn = departments;
+             
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
 
@@ -74,6 +74,9 @@ namespace icrm.Controllers
             }
             else
             {
+                ViewBag.Departmn = departments;
+                ViewBag.Categories = categories;
+                ViewBag.Priorities = priorities;
                 Feedback f = feedInterface.Find(id);
 
                 

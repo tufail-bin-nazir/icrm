@@ -9,7 +9,8 @@ using PagedList.Mvc;
 using PagedList;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
-
+using System.Data.SqlClient;
+using System.Data;
 
 namespace icrm.RepositoryImpl
 {
@@ -48,9 +49,23 @@ namespace icrm.RepositoryImpl
 
         }
 
-        public IPagedList<Feedback> search(string search, int pageIndex, int pageSize)
+        public IPagedList<Feedback> search(DateTime d1, DateTime d2,int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(x => x.user.Id).Where(x => x.name.StartsWith(search) || search == null).ToPagedList(pageIndex, pageSize);
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@Date";
+           
+            param1.SqlDbType = SqlDbType.DateTime;
+            param1.SqlValue = d1;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@Date2";
+            param2.SqlDbType = SqlDbType.DateTime;
+            param2.SqlValue = d2;
+
+            var result = db.Feedbacks.SqlQuery("searchcriteria @Date1,@Date2", param1, param2).ToPagedList(pageIndex, pageSize);
+
+            return result;
+          //  return db.Feedbacks.OrderByDescending(x => x.user.Id).Where(x => x.title.StartsWith(search) || search == null).ToPagedList(pageIndex, pageSize);
         }
 
         public IEnumerable<Feedback> getAll()

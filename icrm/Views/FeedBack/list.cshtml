@@ -438,12 +438,12 @@
                                         </td>
                                         <td>
 
-                                            @Html.ActionLink(item.Data.name, "view", new { id = item.Data.id })
+                                            @Html.ActionLink(item.Data.title, "view", new { id = item.Data.id })
 
                                         </td>
-                                        <td class="tx-12">
+                                     <!--   <td class="tx-12">
 
-                                            @switch (item.Data.typeOfFeedback)
+                                         @**   @switch (item.Data.typeOfFeedback)
                                             {
                                                 case "1":
                                                     <p>@Html.Raw("Give comments/suggestions/compliments")</p>
@@ -459,10 +459,10 @@
                                                     <p>@Html.Raw("")</p>
 
                                                     break;
-                                            }
+                                            }**@
 
-                                        </td>
-                                        <td>@Html.DisplayFor(modelitem => item.Data.subject)</td>
+                                        </td>-->
+                                        <td>@Html.DisplayFor(modelitem => item.Data.departmentID)</td>
                                         <td>@Html.DisplayFor(modelitem => item.Data.status)</td>
                                     </tr>
 
