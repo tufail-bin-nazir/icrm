@@ -23,11 +23,11 @@ namespace icrm.Controllers
         private ApplicationUserManager _userManager;
         private ApplicationDbContext db = new ApplicationDbContext();
         private IFeedback feedInterface;
-        private IDepartment departInterface;
+       
 
         public HRController() {
             feedInterface = new FeedbackRepository();
-            departInterface = new DepartmentRepository();
+           
         }
         public ApplicationUserManager UserManager
         {

@@ -22,12 +22,12 @@ namespace icrm.Controllers
     public class FeedBackController : Controller
     {
         private IFeedback feedInterface;
-        private IDepartment departInterface;
+       
         private ApplicationDbContext db = new ApplicationDbContext();
 
         public FeedBackController() {
             feedInterface = new FeedbackRepository();
-            departInterface = new DepartmentRepository();        }
+               }
        
         private ApplicationUserManager _userManager;
 
@@ -53,7 +53,7 @@ namespace icrm.Controllers
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             
-            List<Department> departments = departInterface.getAll();
+          
 
             IPagedList<Feedback> feedbackList = feedInterface.Pagination(pageIndex, pageSize, user.Id);
             //  var Bcm= new Tuple<IPagedList<Feedback>, FeedbackDTO>(feedbackList, new FeedbackDTO());
@@ -72,7 +72,7 @@ namespace icrm.Controllers
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-            List<Department> departments = departInterface.getAll();
+            
 
            // ViewBag.departmemts = departments;
             IPagedList<Feedback> feedbackList = feedInterface.Pagination(pageIndex,pageSize,user.Id);
