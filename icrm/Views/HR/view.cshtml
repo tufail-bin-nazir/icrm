@@ -9,6 +9,15 @@
 @{
     var data = (ApplicationUser)ViewData["user"];
 
+    var list = new SelectList(new[]
+{
+    new { Value = "Open", Name = "Open" },
+    new { Value = "Resolved", Name = "Resolved" },
+    new { Value = "Closed", Name = "Closed" },
+},
+"Value", "Name", 1);
+    ViewData["list"] = list;
+
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -314,8 +323,8 @@
             <!-- slim-pageheader -->
             @using (Html.BeginForm("assign", "HR", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
-               
-        @Html.AntiForgeryToken()
+
+                @Html.AntiForgeryToken()
                 <div class="section-wrapper">
                     <label class="section-title">Creating Tickets</label>
 
@@ -325,8 +334,12 @@
                         @Html.HiddenFor(model => model.id, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.status, new { @class = "form-control" })
-                        
+                        @Html.HiddenFor(model => model.user.LastName, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
+
+
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
@@ -458,7 +471,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Uploaded File</label>
-                                    @Html.HiddenFor(m=>m.attachment)
+                                    @Html.HiddenFor(m => m.attachment)
                                     <a href="~/Images/@Url.Content(Model.attachment)" target="_blank" style="height:200px;width:200px;">View</a>
 
                                 </div>
@@ -467,9 +480,30 @@
 
 
                         </div>
+                        @if (Model.departmentID != null)
+                        {
+                            <div class="row mg-b-25">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Choose Action</label>
+                                        @Html.DropDownListFor(m=>m.status,ViewData["list"] as SelectList)
+                                    </div>
+                                </div>
+                                <!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Response By Department</label>
+                                        @Html.TextAreaFor(m => m.response, new { @class = "form-control" })
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
                         <!-- row -->
                         <div class="form-layout-footer">
-                            <input type="submit" class="btn btn-primary bd-0"/>
+                            <input type="submit" class="btn btn-primary bd-0" />
                             <button class="btn btn-secondary bd-0">Cancel</button>
                         </div>
                         <!-- form-layout-footer -->
@@ -477,8 +511,8 @@
 
                 </div>
             }
-                <!-- container -->
-            </div>
+            <!-- container -->
+        </div>
         <!-- slim-mainpanel -->
         <div class="slim-footer">
             <div class="container">

@@ -50,7 +50,7 @@ namespace icrm.Controllers
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-            IPagedList<Feedback> feedbackList = feedInterface.getAll(pageIndex,pageSize);
+            IPagedList<Feedback> feedbackList = feedInterface.getAllOpen(pageIndex,pageSize);
             
             return View(feedbackList);
         }
@@ -93,16 +93,16 @@ namespace icrm.Controllers
         [Route("assigndepart/")]
         public ActionResult assign(Feedback feedback)
         {
-            if (feedback.departmentID == null) {
-                TempData["displayMsg"] = "Choose Department";
+            if (feedback.departmentID == null || feedback.categoryId==null || feedback.priorityId==null) {
+                TempData["displayMsg"] = "Enter Fields Properly";
                 return RedirectToAction("view",new { id=feedback.id});
             }
 
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-            
-            feedback.userDepartment = (ApplicationUser)db.Users.Where(m=>m.Roles.Contains(new IdentityUserRole() { RoleId = "2c29c854-a352-470e-a909-7300ce35e478" }));
-
+            feedback.assignedBy = user.Id;
+            feedback.assignedDate = DateTime.Now;
+            feedback.userDepartment = db.Users.Find(feedback.departmentID);
             feedback.user = db.Users.Find(feedback.userId);
 
             if (ModelState.IsValid)
@@ -111,7 +111,7 @@ namespace icrm.Controllers
                 
                 db.Entry(feedback).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["displayMsg"] ="Department Assigned";
+                TempData["displayMsg"] ="FeedBack Updated";
                 return RedirectToAction("view",new { id = feedback.id });
             }
             else

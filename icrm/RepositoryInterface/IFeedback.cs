@@ -14,7 +14,7 @@ namespace icrm.RepositoryInterface
         void Save(Feedback feedback);
         Feedback Find(int? id);
         IPagedList<Feedback> Pagination(int pageIndex, int pageSize,string userId);
-        IPagedList<Feedback> getAll(int pageIndex, int pageSize);
+        IPagedList<Feedback> getAllOpen(int pageIndex, int pageSize);
         IPagedList<Feedback> search(DateTime d1,DateTime d2,int pageIndex, int pageSize);
         IEnumerable<Feedback> getAll();
         IPagedList<Feedback> getAllWithDepartment(string id, int pageIndex, int pageSize);

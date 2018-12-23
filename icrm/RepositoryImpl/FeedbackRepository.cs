@@ -43,9 +43,9 @@ namespace icrm.RepositoryImpl
 
         }
 
-        public IPagedList<Feedback> getAll(int pageIndex, int pageSize)
+        public IPagedList<Feedback> getAllOpen(int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(m => m.user.Id).ToPagedList(pageIndex, pageSize);
+            return db.Feedbacks.Where(m=>m.status=="Open").OrderByDescending(m => m.user.Id).ToPagedList(pageIndex, pageSize);
 
         }
 
