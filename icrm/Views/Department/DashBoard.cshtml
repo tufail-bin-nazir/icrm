@@ -1,15 +1,20 @@
-﻿@using icrm.Models
-@model icrm.Models.Feedback
+﻿@using icrm.Models;
+@using PagedList;
+
+@using PagedList.Mvc;
+@model PagedList.IPagedList<icrm.Models.Feedback>
+
+@{
+    ViewBag.Title = "DashBoard";
+}
 
 @{
     Layout = null;
 }
-
-
 @{
     var data = (ApplicationUser)ViewData["user"];
-
 }
+<h2>Department DashBoard</h2>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,18 +25,19 @@
     <!-- Meta -->
     <meta name="description" content="feedback managment system.">
     <meta name="author" content="feedback">
-    <title>Create Tickets</title>
+
+    <title>ICRM 2.0</title>
     <!-- vendor css -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
-    <link href="~/Content/lib/jquery-toggles/css/toggles-full.css" rel="stylesheet">
-    <link href="~/Content/lib/jt.timepicker/css/jquery.timepicker.css" rel="stylesheet">
-    <link href="~/Content/lib/spectrum/css/spectrum.css" rel="stylesheet">
-    <link href="~/Content/lib/bootstrap-tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet">
-    <!-- Feadback CSS -->
+    <link href="~/Content/lib/rickshaw/css/rickshaw.min.css" rel="stylesheet">
+    <!-- Slim CSS -->
     <link rel="stylesheet" href="~/Content/css/slim.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <
+
 </head>
-<body>
+<body class="dashboard-3">
     <div class="slim-header">
         <div class="container">
             <div class="slim-header-left">
@@ -42,7 +48,7 @@
                 </div>
                 <!-- search-box -->
             </div>
-            <!-- slim-header-left -->
+            <!-- header-left -->
             <div class="slim-header-right">
                 <div class="dropdown dropdown-a">
                     <a href="default.htm" class="header-notification" data-toggle="dropdown">
@@ -182,8 +188,8 @@
                 <!-- dropdown -->
                 <div class="dropdown dropdown-c">
                     <a href="#" class="logged-user" data-toggle="dropdown">
-                        <img src="~/Content/img/img1.jpg" alt="">
-                        <span>Administrator</span>
+                        <img src="../img/img1.jpg" alt="">
+                        <span>@data.Email</span>
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -207,7 +213,7 @@
     <div class="slim-navbar">
         <div class="container">
             <ul class="nav">
-                <li class="nav-item with-sub">
+                <li class="nav-item with-sub active">
                     <a class="nav-link" href="#">
                         <i class="icon ion-ios-home-outline"></i>
                         <span>Dashboard</span>
@@ -222,6 +228,95 @@
                         </ul>
                     </div>
                     <!-- sub-item -->
+                </li>
+                <li class="nav-item with-sub mega-dropdown">
+                    <a class="nav-link" href="#">
+                        <i class="icon ion-ios-filing-outline"></i>
+                        <span>UI Elements</span>
+                    </a>
+                    <div class="sub-item">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <label class="section-label">Basic Elements</label>
+                                <div class="row">
+                                    <div class="col">
+                                        <ul>
+                                            <li><a href="elem-accordion.html">Accordion</a></li>
+                                            <li><a href="elem-alerts.html">Alerts</a></li>
+                                            <li><a href="elem-buttons.html">Buttons</a></li>
+                                            <li><a href="elem-cards.html">Cards</a></li>
+                                            <li><a href="elem-carousel.html">Carousel</a></li>
+                                            <li><a href="elem-dropdowns.html">Dropdown</a></li>
+                                            <li><a href="elem-icons.html">Icons</a></li>
+                                            <li><a href="elem-images.html">Images</a></li>
+                                            <li><a href="elem-lists.html">Lists</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- col -->
+                                    <div class="col-lg">
+                                        <ul>
+                                            <li><a href="elem-modal.html">Modal</a></li>
+                                            <li><a href="elem-media.html">Media Object</a></li>
+                                            <li><a href="elem-navigation.html">Navigation</a></li>
+                                            <li><a href="elem-pagination.html">Pagination</a></li>
+                                            <li><a href="elem-tooltip.html">Tooltip</a></li>
+                                            <li><a href="elem-popover.html">Popover</a></li>
+                                            <li><a href="elem-progress.html">Progress</a></li>
+                                            <li><a href="elem-spinner.html">Spinner</a></li>
+                                            <li><a href="elem-typography.html">Typography</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- col -->
+                                </div>
+                                <!-- row -->
+                            </div>
+                            <!-- col -->
+                            <div class="col-lg mg-t-30 mg-lg-t-0">
+                                <label class="section-label">Charts</label>
+                                <ul>
+                                    <li><a href="chart-morris.html">Morris Charts</a></li>
+                                    <li><a href="chart-flot.html">Flot Charts</a></li>
+                                    <li><a href="chart-chartjs.html">ChartJS</a></li>
+                                    <li><a href="chart-echarts.html">ECharts</a></li>
+                                    <li><a href="chart-chartist.html">Chartist</a></li>
+                                    <li><a href="chart-rickshaw.html">Rickshaw</a></li>
+                                    <li><a href="chart-sparkline.html">Sparkline</a></li>
+                                    <li><a href="chart-peity.html">Peity</a></li>
+                                </ul>
+                            </div>
+                            <!-- col -->
+                            <div class="col-lg mg-t-30 mg-lg-t-0">
+                                <label class="section-label">Maps</label>
+                                <ul>
+                                    <li><a href="map-google.html">Google Maps</a></li>
+                                    <li><a href="map-leaflet.html">Leaflet Maps</a></li>
+                                    <li><a href="map-vector.html">Vector Maps</a></li>
+                                </ul>
+                                <label class="section-label mg-t-20">Tables</label>
+                                <ul>
+                                    <li><a href="table-basic.html">Basic Table</a></li>
+                                    <li><a href="table-datatable.html">Data Table</a></li>
+                                </ul>
+                            </div>
+                            <!-- col -->
+                            <div class="col-lg mg-t-30 mg-lg-t-0">
+                                <label class="section-label">Helper / Utilities</label>
+                                <ul>
+                                    <li><a href="util-background.html">Background</a></li>
+                                    <li><a href="util-border.html">Border</a></li>
+                                    <li><a href="util-height.html">Height</a></li>
+                                    <li><a href="util-margin.html">Margin</a></li>
+                                    <li><a href="util-padding.html">Padding</a></li>
+                                    <li><a href="util-position.html">Position</a></li>
+                                    <li><a href="util-typography.html">Typography</a></li>
+                                    <li><a href="util-width.html">Width</a></li>
+                                </ul>
+                            </div>
+                            <!-- col -->
+                        </div>
+                        <!-- row -->
+                    </div>
+                    <!-- dropdown-menu -->
                 </li>
                 <li class="nav-item with-sub">
                     <a class="nav-link" href="#">
@@ -271,14 +366,14 @@
                     </div>
                     <!-- dropdown-menu -->
                 </li>
-                <li class="nav-item with-sub active">
+                <li class="nav-item with-sub">
                     <a class="nav-link" href="#" data-toggle="dropdown">
                         <i class="icon ion-ios-gear-outline"></i>
                         <span>Forms</span>
                     </a>
                     <div class="sub-item">
                         <ul>
-                            <li class="active"><a href="form-elements.html">Form Elements</a></li>
+                            <li><a href="form-elements.html">Form Elements</a></li>
                             <li><a href="form-layouts.html">Form Layouts</a></li>
                             <li><a href="form-validation.html">Form Validation</a></li>
                             <li><a href="form-wizards.html">Form Wizards</a></li>
@@ -297,6 +392,12 @@
                         <span class="square-8"></span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="widgets.html">
+                        <i class="icon ion-ios-analytics-outline"></i>
+                        <span>Widgets</span>
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- container -->
@@ -307,264 +408,241 @@
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Create Tickets</li>
+                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
                 </ol>
-                <h6 class="slim-pagetitle">Create Tickets</h6>
+                <h6 class="slim-pagetitle">Welcome back, User</h6>
             </div>
             <!-- slim-pageheader -->
-            @using (Html.BeginForm("assign", "HR", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-               
-        @Html.AntiForgeryToken()
-                <div class="section-wrapper">
-                    <label class="section-title">Creating Tickets</label>
-
-                    <p class="mg-b-20 mg-sm-b-40">@data.Email</p>
-                    <div class="form-layout">
-                        <span>@TempData["displayMsg"]</span>
-                        @Html.HiddenFor(model => model.id, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.status, new { @class = "form-control" })
-                        
-                        <div class="row mg-b-25">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Name: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.FirstName, new { @readonly = "readonly", @class = "form-control" })
-                                </div>
+            <div class="row row-xs">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card card-status">
+                        <div class="media">
+                            <i class="icon fa fa-bullhorn tx-purple"></i>
+                            <div class="media-body">
+                                <h1>2,942</h1>
+                                <p>All Tickets</p>
                             </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Batch No: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.Id, new { @readonly = "readonly", @class = "form-control" })
-                                </div>
-                            </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.Email, new { @readonly = "readonly", @class = "form-control" })
-                                </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Phone No: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.PhoneNumber, new { @readonly = "readonly", @class = "form-control" })
-                                </div>
-                            </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Location: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.LocationId, new { @readonly = "readonly", @class = "form-control" })
-
-                                </div>
-                            </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.SubLocationId, new { @readonly = "readonly", @class = "form-control" })
-
-                                </div>
-                            </div>
-
-                            <!-- col-4 -->
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Position: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.PositionId, new { @readonly = "readonly", @class = "form-control" })
-
-                                </div>
-                            </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Nationality: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.Id, new { @readonly = "readonly", @class = "form-control" })
-
-                                </div>
-                            </div>
-                            <!-- col-4 -->
-                            <!-- col-4 -->
+                            <!-- media-body -->
                         </div>
-                        <!-- row -->
-                        <!-- form-layout-footer -->
-
+                        <!-- media -->
                     </div>
-
-                    <label class="section-title">Issue / Incident</label>
-
-
-                    <div class="form-layout">
-                        <div class="row mg-b-25">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Title: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.title, new { @readonly = "readonly", @class = "form-control" })
-                                </div>
+                    <!-- card -->
+                </div>
+                <!-- col-3 -->
+                <div class="col-sm-6 col-lg-3 mg-t-10 mg-sm-t-0">
+                    <div class="card card-status">
+                        <div class="media">
+                            <i class="icon fa fa-envelope-open tx-teal"></i>
+                            <div class="media-body">
+                                <h1>2,942</h1>
+                                <p>Daily Complaint Open</p>
                             </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group mg-b-10-force">
-                                    <label class="form-control-label">Description: <span class="tx-danger">*</span></label>
-                                    @Html.TextAreaFor(model => model.description, new { @readonly = "readonly", @class = "form-control" })
-                                </div>
-                            </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.departmentID,
-                          new SelectList(ViewBag.Departmn,
-                        "Id", "FirstName"), "Choose Department", new { @class = "form-control select2" })
-                                </div>
-                            </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.categoryId,
-                           new SelectList(ViewBag.Categories,
-                         "Id", "name"), "Choose Category", new { @class = "form-control select2" })
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Priority: <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.priorityId,
-                           new SelectList(ViewBag.Priorities,
-                         "Id", "priorityId"), "Choose Priority", new { @class = "form-control select2" })
-                                </div>
-                            </div>
-                            <!-- col-4 -->
+                            <!-- media-body -->
                         </div>
-                        <!-- row -->
-                        <!-- form-layout-footer -->
+                        <!-- media -->
                     </div>
+                    <!-- card -->
+                </div>
+                <!-- col-3 -->
+                <div class="col-sm-6 col-lg-3 mg-t-10 mg-lg-t-0">
+                    <div class="card card-status">
+                        <div class="media">
+                            <i class="icon fa fa-envelope tx-pink"></i>
+                            <div class="media-body">
+                                <h1>2,942</h1>
+                                <p>Daily Complaint Closed</p>
+                            </div>
+                            <!-- media-body -->
+                        </div>
+                        <!-- media -->
+                    </div>
+                    <!-- card -->
+                </div>
+                <!-- col-3 -->
+                <div class="col-sm-6 col-lg-3 mg-t-10 mg-lg-t-0">
+                    <div class="card card-status">
+                        <div class="media">
+                            <i class="icon fa fa-question-circle tx-pink"></i>
+                            <div class="media-body">
+                                <h1>2,942</h1>
+                                <p>Daily Inquiry</p>
+                            </div>
+                            <!-- media-body -->
+                        </div>
+                        <!-- media -->
+                    </div>
+                    <!-- card -->
+                </div>
+                <!-- col-3 -->
 
 
+            </div>
+            <!-- row -->
 
-                    <label class="section-title">Attachment</label>
-
-
-                    <div class="form-layout">
+            <br><br>
+            <div class="section-wrapper">
+                <label class="section-title">Search your tickets</label>
+                <p class="mg-b-20 mg-sm-b-40">On date criteria</p>
+                <div class="form-layout">
+                    @using (Html.BeginForm("search", "FeedBack", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                    {
                         <div class="row mg-b-25">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Uploaded File</label>
-                                    @Html.HiddenFor(m=>m.attachment)
-                                    <a href="~/Images/@Url.Content(Model.attachment)" target="_blank" style="height:200px;width:200px;">View</a>
 
+                            <div class="col-lg-4">
+                                <label class="form-control-label">From: <span class="tx-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control date hasDatepicker" name="date1" placeholder="MM-DD-YYYY" id="dp1545306018953">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="form-control-label">To : <span class="tx-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control date " name="date2" placeholder="MM-DD-YYYY" id="dp1545306018953">
                                 </div>
                             </div>
                             <!-- col-4 -->
-
-
                         </div>
+
                         <!-- row -->
                         <div class="form-layout-footer">
-                            <input type="submit" class="btn btn-primary bd-0"/>
+                            <button class="btn btn-primary bd-0">Submit Form</button>
                             <button class="btn btn-secondary bd-0">Cancel</button>
                         </div>
-                        <!-- form-layout-footer -->
-                    </div>
-
+                    }
+                    <!-- form-layout-footer -->
                 </div>
-            }
-                <!-- container -->
+
             </div>
-        <!-- slim-mainpanel -->
-        <div class="slim-footer">
-            <div class="container">
-                <p>Copyright 2018 &copy; All Rights Reserved. </p>
+
+
+            <div class="row row-xs mg-t-10">
+                <div class="col-lg-12">
+                    <div class="card card-table">
+                        <div class="card-header">
+                            <h6 class="slim-card-title">Ticket List</h6>
+                        </div>
+                        <!-- card-header -->
+                        <div class="table-responsive">
+                            <table class="table mg-b-0 tx-13">
+                                <thead>
+                                    <tr class="tx-10">
+                                        <th class="wd-10p pd-y-5">S.No</th>
+                                        <th class="pd-y-5">Ticket ID</th>
+                                        <th class="pd-y-5">Title</th>
+                                        <th class="pd-y-5">Action</th>
+                                        <th class="pd-y-5">Desc.</th>
+                                        <th class="pd-y-5">Status</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var item in Model.Select((x, i) => new { Data = x, Index = i }))
+                                    {
+
+                                        <tr>
+                                            <td class="pd-l-20">
+
+                                                @(item.Index + ((Model.PageNumber - 1) * Model.PageSize) + 1)
+
+
+                                            </td>
+                                            <td>@Html.DisplayFor(modelitem => item.Data.id)</td>
+                                            <td>
+
+                                                @Html.DisplayFor(modelitem => item.Data.title)
+
+                                            </td>
+                                            <td>
+
+                                                @Html.ActionLink("View", "view", new { id = item.Data.id })
+
+                                            </td>
+
+                                            <td>@Html.DisplayFor(modelitem => item.Data.description)</td>
+                                            <td>@Html.DisplayFor(modelitem => item.Data.status)</td>
+
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- table-responsive -->
+                        <div class="pagination-wrapper">
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item">
+                                            @Html.PagedListPager(Model, page => Url.Action("dashboard", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- pagination-wrapper -->
+
+                    </div>
+                    <!-- card -->
+                </div>
+                <!-- col-6 -->
             </div>
-            <!-- container -->
+            <!-- row -->
+            <br> <br> <br> <br>
         </div>
-        <!-- slim-footer -->
-        <script src="~/Content/lib/jquery/js/jquery.js"></script>
-        <script src="~/Content/lib/popper.js/js/popper.js"></script>
-        <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
-        <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
-        <script src="~/Content/lib/moment/js/moment.js"></script>
-        <script src="~/Content/lib/jquery-ui/js/jquery-ui.js"></script>
-        <script src="~/Content/lib/jquery-toggles/js/toggles.min.js"></script>
-        <script src="~/Content/lib/jt.timepicker/js/jquery.timepicker.js"></script>
-        <script src="~/Content/lib/spectrum/js/spectrum.js"></script>
-        <script src="~/Content/lib/jquery.maskedinput/js/jquery.maskedinput.js"></script>
-        <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
-        <script src="~/Content/js/slim.js"></script>
-        <script>
-            $(function () {
-                'use strict'
+        <!-- container -->
 
-                // Toggles
-                $('.toggle').toggles({
-                    on: true,
-                    height: 26
-                });
+    </div>
+    <!-- mainpanel -->
+    <div class="slim-footer" style="position: fixed;bottom: 0;width: 100%;">
+        <div class="container">
+            <p>Copyright 2018 &copy; All Rights Reserved.</p>
+        </div>
+        <!-- container -->
+    </div>
+    <!--footer -->
+    <script src="~/Content/lib/jquery/js/jquery.js"></script>
+    <script src="~/Content/lib/popper.js/js/popper.js"></script>
+    <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
+    <script src="~/Content/lib/d3/js/d3.js"></script>
+    <script src="~/Content/lib/rickshaw/js/rickshaw.min.js"></script>
+    <script src="~/Content/lib/Flot/js/jquery.flot.js"></script>
+    <script src="~/Content/lib/Flot/js/jquery.flot.resize.js"></script>
+    <script src="~/Content/lib/peity/js/jquery.peity.js"></script>
+    <script src="~/Content/js/slim.js"></script>
+    <script src="~/Content/js/ResizeSensor.js"></script>
 
-                // Input Masks
-                $('#dateMask').mask('99/99/9999');
-                $('#phoneMask').mask('(999) 999-9999');
-                $('#ssnMask').mask('999-99-9999');
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        $(function () {
+            'use strict'
 
-                // Time Picker
-                $('#tpBasic').timepicker();
-                $('#tp2').timepicker({
-                    'scrollDefault': 'now'
-                });
-                $('#tp3').timepicker();
+            // Datepicker
 
-                $('#setTimeButton').on('click', function () {
-                    $('#tp3').timepicker('setTime', new Date());
-                });
-
-                // Color picker
-                $('#colorpicker').spectrum({
-                    color: '#17A2B8'
-                });
-
-                $('#showAlpha').spectrum({
-                    color: 'rgba(23,162,184,0.5)',
-                    showAlpha: true
-                });
-
-                $('#showPaletteOnly').spectrum({
-                    showPaletteOnly: true,
-                    showPalette: true,
-                    color: '#DC3545',
-                    palette: [
-                        ['#1D2939', '#fff', '#0866C6', '#23BF08', '#F49917'],
-                        ['#DC3545', '#17A2B8', '#6610F2', '#fa1e81', '#72e7a6']
-                    ]
-                });
-
+            $(".date").flatpickr({
+                dateFormat: "d-m-Y"
             });
 
-            $(function () {
-                'use strict'
 
-                // Datepicker
-                $('.fc-datepicker').datepicker({
-                    showOtherMonths: true,
-                    selectOtherMonths: true,
-                    dateFormat: 'dd-mm-yy'
-                });
+        });
 
-                $('#datepickerNoOfMonths').datepicker({
-                    showOtherMonths: true,
-                    selectOtherMonths: true,
-                    numberOfMonths: 2
-                });
-
-            });
-
-        </script>
+    </script>
 </body>
 </html>

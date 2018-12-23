@@ -20,7 +20,7 @@
     <!-- Meta -->
     <meta name="description" content="feedback managment system.">
     <meta name="author" content="feedback">
-    <title>Create Tickets</title>
+    <title>Response Tickets</title>
     <!-- vendor css -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
@@ -307,17 +307,18 @@
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Create Tickets</li>
+                    <li class="breadcrumb-item active" aria-current="page"> Ticket Response</li>
                 </ol>
-                <h6 class="slim-pagetitle">Create Tickets</h6>
+                <h6 class="slim-pagetitle"> Ticket Response</h6>
             </div>
             <!-- slim-pageheader -->
-            @using (Html.BeginForm("assign", "HR", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            @using (Html.BeginForm("response", "Department", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
-               
+
         @Html.AntiForgeryToken()
                 <div class="section-wrapper">
-                    <label class="section-title">Creating Tickets</label>
+                    <label class="section-title">Ticket Response
+                    </label>
 
                     <p class="mg-b-20 mg-sm-b-40">@data.Email</p>
                     <div class="form-layout">
@@ -326,7 +327,12 @@
                         @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.status, new { @class = "form-control" })
-                        
+                        @Html.HiddenFor(model => model.createDate, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.user.LastName, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
+
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
@@ -419,8 +425,8 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.departmentID,
-                          new SelectList(ViewBag.Departmn,
-                        "Id", "FirstName"), "Choose Department", new { @class = "form-control select2" })
+new SelectList(ViewBag.Departmn,
+"Id", "FirstName"), "Choose Department", new { disabled = "disabled", @class = "form-control select2" })
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -428,8 +434,8 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.categoryId,
-                           new SelectList(ViewBag.Categories,
-                         "Id", "name"), "Choose Category", new { @class = "form-control select2" })
+new SelectList(ViewBag.Categories,
+"Id", "name"), "Choose Category", new { disabled = "disabled", @class = "form-control select2" })
                                 </div>
                             </div>
 
@@ -438,8 +444,8 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Priority: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.priorityId,
-                           new SelectList(ViewBag.Priorities,
-                         "Id", "priorityId"), "Choose Priority", new { @class = "form-control select2" })
+new SelectList(ViewBag.Priorities,
+"Id", "priorityId"), "Choose Priority", new { disabled = "disabled", @class = "form-control select2" })
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -458,14 +464,20 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Uploaded File</label>
-                                    @Html.HiddenFor(m=>m.attachment)
+                                    @Html.HiddenFor(m => m.attachment)
                                     <a href="~/Images/@Url.Content(Model.attachment)" target="_blank" style="height:200px;width:200px;">View</a>
 
                                 </div>
+
                             </div>
                             <!-- col-4 -->
 
-
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Response:</label>
+                                    @Html.TextAreaFor(m => m.response, new { @class = "form-control" })
+                                </div>
+                            </div>
                         </div>
                         <!-- row -->
                         <div class="form-layout-footer">
