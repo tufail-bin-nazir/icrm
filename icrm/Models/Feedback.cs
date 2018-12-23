@@ -24,7 +24,7 @@ namespace icrm.Models
         public string userId { get; set; }
         public virtual ApplicationUser user { get; set; }
 
-        public int? departmentID { get; set; }
+        public string departmentID { get; set; }
         public virtual ApplicationUser userDepartment { get; set; }
 
         public string status { get; set; }
@@ -40,6 +40,15 @@ namespace icrm.Models
         public int? priorityId { get; set; }
 
         public virtual Priority priority { get; set; }
+
+        public string assignedBy { get; set; }
+
+        public DateTime? assignedDate { get; set; }
+        public DateTime? responseDate { get; set; }
+        public DateTime? closedDate { get; set; }
+
+        public string response { get; set; }
+
 
     }
 }

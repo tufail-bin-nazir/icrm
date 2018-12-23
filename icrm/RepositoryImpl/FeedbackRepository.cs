@@ -73,5 +73,10 @@ namespace icrm.RepositoryImpl
             return db.Feedbacks.OrderByDescending(m => m.user.Id).ToList();
 
         }
+
+        public IPagedList<Feedback> getAllWithDepartment(string departId, int pageIndex, int pageSize)
+        {
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID== departId).ToPagedList(pageIndex, pageSize);
+        }
     }
 }
