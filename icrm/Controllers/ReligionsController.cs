@@ -38,7 +38,7 @@ namespace icrm.Controllers
         // GET: Religions/Create
         public ActionResult Create()
         {
-            return View();
+            return View("CreateList", new ReligionViewModel { Religions = db.Religions.ToList()});
         }
 
         // POST: Religions/Create
@@ -52,10 +52,10 @@ namespace icrm.Controllers
             {
                 db.Religions.Add(religion);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
-            return View(religion);
+            return View("CreateList", new ReligionViewModel { Religions = db.Religions.ToList() });
         }
 
         // GET: Religions/Edit/5

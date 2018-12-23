@@ -39,7 +39,8 @@ namespace icrm.Controllers
         // GET: SubLocations/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.Locationlist = db.Locations.ToList();
+            return View("CreateList", new SubLocationViewModel { SubLocations = db.SubLocations.ToList()});
         }
 
         // POST: SubLocations/Create
@@ -51,12 +52,13 @@ namespace icrm.Controllers
         {
             if (ModelState.IsValid)
             {
+               
                 db.SubLocations.Add(subLocation);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
-            return View(subLocation);
+            return View("CreateList", new SubLocationViewModel { SubLocations = db.SubLocations.ToList() });
         }
 
         // GET: SubLocations/Edit/5

@@ -38,7 +38,7 @@ namespace icrm.Controllers
         // GET: Positions/Create
         public ActionResult Create()
         {
-            return View();
+            return View("CreateList", new PositionsViewModel { Positions = db.Positions.ToList()});
         }
 
         // POST: Positions/Create
@@ -52,10 +52,10 @@ namespace icrm.Controllers
             {
                 db.Positions.Add(position);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
-            return View(position);
+            return View("CreateList", new PositionsViewModel { Positions = db.Positions.ToList() });
         }
 
         // GET: Positions/Edit/5
