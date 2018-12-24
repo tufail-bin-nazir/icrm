@@ -1,5 +1,5 @@
-﻿@model IEnumerable<icrm.Models.ApplicationUser>
-
+﻿
+@model icrm.Models.PositionsViewModel
 @{
     Layout = null;
 }
@@ -17,7 +17,7 @@
     <meta name="description" content="feedback managment system.">
     <meta name="author" content="feedback">
 
-    <title>User List</title>
+    <title>Create Category</title>
 
     <!-- vendor css -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -33,7 +33,7 @@
 </head>
 
 <body>
-     @Html.Partial("_AdminMenu")
+   @Html.Partial("_AdminMenu")
     <!-- slim-navbar -->
 
     <div class="slim-mainpanel">
@@ -41,59 +41,91 @@
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">List Users</li>
+                    <li class="breadcrumb-item active" aria-current="page">Create Positions</li>
                 </ol>
-                <h6 class="slim-pagetitle">User List</h6>
+                <h6 class="slim-pagetitle">Create Positions</h6>
             </div>
             <!-- slim-pageheader -->
 
-            
+            <div class="section-wrapper">
+                <label class="section-title">Creating Positions</label>
+                <p class="mg-b-20 mg-sm-b-40"></p>
+
+
+                <label class="section-title">Admin / Positions</label>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-layout">
+                        <div class="row mg-b-25">
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Positions: <span class="tx-danger">*</span></label>
+                                    @Html.EditorFor(x => x.Position.name, new { @class = "form-control", placeholder = "Enter Positions", Required = "true" })
+
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <!-- col-4 -->
+                        </div>
+                        <!-- row -->
+                        <!-- form-layout-footer -->
+                    </div>
+
+
+
+
+                    <div class="form-layout">
+
+                        <!-- row -->
+
+                        <div class="form-layout-footer">
+                            <button class="btn btn-primary bd-0">Submit Form</button>
+                            <button class="btn btn-secondary bd-0">Cancel</button>
+                        </div>
+                        <!-- form-layout-footer -->
+                    </div>
+
+                }
+                </div>
 
             <div class="row row-xs mg-t-10">
                 <div class="col-lg-12">
                     <div class="card card-table">
                         <div class="card-header">
-                            <h6 class="slim-card-title">User List</h6>
+                            <h6 class="slim-card-title">Category List</h6>
                         </div>
                         <!-- card-header -->
                         <div class="table-responsive">
                             <table class="table mg-b-0 tx-13">
                                 <thead>
                                     <tr class="tx-10">
-                                        <th class="wd-10p pd-y-5">Employee ID</th>
-                                        <th class="pd-y-5">FirstName</th>
-                                        <th class="pd-y-5">Last Name</th>
-                                        <th class="pd-y-5">Email</th>
-                                        <th class="pd-y-5">Phone Number</th>
-                                        <th class="pd-y-5">Status</th>
-                                       
+                                        <th class="wd-10p pd-y-5">S.No</th>
+                                        <th class="pd-y-5">Name</th>
+                                        <th class="pd-y-5">Action</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var item in Model)
+
+                                    @foreach (var item in Model.Positions)
                                     {
                                         <tr>
                                             <td class="pd-l-20">
-                                                @Html.DisplayFor(modelItem => item.EmployeeId)
+                                                1
                                             </td>
                                             <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block"> @Html.DisplayFor(modelItem => item.FirstName)</a>
-                                                
-                                            </td>
-                                            <td class="tx-12 text-center">
-                                                @Html.DisplayFor(modelItem => item.LastName)
-                                            </td>
-                                            
-                                            <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                                            <td>  @Html.DisplayFor(modelItem => item.PhoneNumber)</td>
-                                            <td>Active</td>
-                                           
-                                        </tr>
-                                       
-                                    }
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.name</a>
 
-
-                                </tbody>
+                                            </td>
+                                            <td class="tx-12">
+                                                <i class="fa fa-edit"> | </i> <i class="fa fa-eye"> </i> |  <i class="fa fa-trash"> </i>
+                                            </td>
+                                            </tr>
+                                            }
+                                    </tbody>
                             </table>
                         </div>
                         <!-- table-responsive -->
@@ -134,11 +166,10 @@
             <!-- container -->
         </div>
         <!-- slim-mainpanel -->
-@Html.Partial("_AdminFooter")
+
+      @Html.Partial("_AdminFooter")
 </body>
 
 </html>
 
 
-
-   

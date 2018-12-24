@@ -10,6 +10,7 @@ using icrm.Models;
 
 namespace icrm.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class LocationsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -38,7 +39,7 @@ namespace icrm.Controllers
         // GET: Locations/Create
         public ActionResult Create()
         {
-            return View();
+            return View("CreateList", new LocationViewModel { Locations = db.Locations.ToList()});
         }
 
         // POST: Locations/Create
@@ -52,10 +53,10 @@ namespace icrm.Controllers
             {
                 db.Locations.Add(location);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
-            return View(location);
+            return View("CreateList", new LocationViewModel { Locations = db.Locations.ToList() });
         }
 
         // GET: Locations/Edit/5

@@ -10,6 +10,7 @@ using icrm.Models;
 
 namespace icrm.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class JobTitlesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -38,7 +39,8 @@ namespace icrm.Controllers
         // GET: JobTitles/Create
         public ActionResult Create()
         {
-            return View();
+             
+            return View("CreateList",new JobTitlesViewModel { jobTitles = db.JobTitles.ToList()});
         }
 
         // POST: JobTitles/Create
@@ -52,10 +54,10 @@ namespace icrm.Controllers
             {
                 db.JobTitles.Add(jobTitle);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
-            return View(jobTitle);
+            return View("CreateList", new JobTitlesViewModel { jobTitles = db.JobTitles.ToList() });
         }
 
         // GET: JobTitles/Edit/5

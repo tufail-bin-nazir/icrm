@@ -10,6 +10,7 @@ using icrm.Models;
 
 namespace icrm.Controllers
 {
+
     public class CostCentersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

@@ -10,6 +10,7 @@ using icrm.Models;
 
 namespace icrm.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PrioritiesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -38,7 +39,7 @@ namespace icrm.Controllers
         // GET: Priorities/Create
         public ActionResult Create()
         {
-            return View();
+            return View("CreateList",new PrioritiesViewModel { Priorities = db.Priorities.ToList()});
         }
 
         // POST: Priorities/Create
@@ -52,10 +53,10 @@ namespace icrm.Controllers
             {
                 db.Priorities.Add(priority);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
-            return View(priority);
+            return View("CreateList", new PrioritiesViewModel { Priorities = db.Priorities.ToList() });
         }
 
         // GET: Priorities/Edit/5

@@ -10,6 +10,7 @@ using icrm.Models;
 
 namespace icrm.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class CategoriesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -38,7 +39,8 @@ namespace icrm.Controllers
         // GET: Categories/Create
         public ActionResult Create()
         {
-            return View();
+
+            return View("CreateList",new CategoryViewModel { Categories = db.Categories.ToList()});
         }
 
         // POST: Categories/Create
@@ -52,10 +54,10 @@ namespace icrm.Controllers
             {
                 db.Categories.Add(category);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
-            return View(category);
+            return View("CreateList", new CategoryViewModel { Categories = db.Categories.ToList() });
         }
 
         // GET: Categories/Edit/5

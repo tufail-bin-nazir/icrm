@@ -10,11 +10,13 @@ using icrm.Models;
 
 namespace icrm.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class NationalitiesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Nationalities
+        
         public ActionResult Index()
         {
             return View(db.Nationalities.ToList());
@@ -38,7 +40,7 @@ namespace icrm.Controllers
         // GET: Nationalities/Create
         public ActionResult Create()
         {
-            return View();
+            return View("CreateList",new NationalitiesViewModel { Nationalities = db.Nationalities.ToList()});
         }
 
         // POST: Nationalities/Create
@@ -52,10 +54,10 @@ namespace icrm.Controllers
             {
                 db.Nationalities.Add(nationality);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
-            return View(nationality);
+            return View("CreateList", new NationalitiesViewModel { Nationalities = db.Nationalities.ToList() });
         }
 
         // GET: Nationalities/Edit/5

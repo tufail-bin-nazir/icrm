@@ -12,6 +12,7 @@ using System.Diagnostics;
 
 namespace icrm.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
        
