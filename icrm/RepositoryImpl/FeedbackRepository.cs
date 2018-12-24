@@ -78,5 +78,10 @@ namespace icrm.RepositoryImpl
         {
             return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID== departId).ToPagedList(pageIndex, pageSize);
         }
+
+        public IPagedList<Feedback> getAllOpenWithDepart(int pageIndex, int pageSize)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

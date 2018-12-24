@@ -107,9 +107,9 @@ namespace icrm.Controllers
             if (ModelState.IsValid)
             {
                 if (file != null && file.ContentLength > 0) {
-                    // feedback.attachment=Server.MapPath("~/Images/" + file.FileName);
+                    
                     feedback.attachment = file.FileName;
-                    file.SaveAs(feedback.attachment);
+                    file.SaveAs(Server.MapPath("~/Images/" + file.FileName));
                 }
                     feedInterface.Save(feedback);
                 TempData["Message"] = "Feedback Saved";

@@ -18,5 +18,6 @@ namespace icrm.RepositoryInterface
         IPagedList<Feedback> search(DateTime d1,DateTime d2,int pageIndex, int pageSize);
         IEnumerable<Feedback> getAll();
         IPagedList<Feedback> getAllWithDepartment(string id, int pageIndex, int pageSize);
+        IPagedList<Feedback> getAllOpenWithDepart(int pageIndex, int pageSize);
     }
 }

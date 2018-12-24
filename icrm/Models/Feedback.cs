@@ -8,7 +8,8 @@ namespace icrm.Models
     public class Feedback
     {
         public Feedback() {
-            createDate = DateTime.Now;
+           
+            createDate = Convert.ToDateTime(DateTime.Now.ToString("MM-dd-yyyy"));
             status = "Open";
         }
         public int id { get; set; }

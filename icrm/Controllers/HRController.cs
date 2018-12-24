@@ -125,5 +125,19 @@ namespace icrm.Controllers
 
         }
 
+        
+        public ActionResult open(int? page)
+        {
+
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            IPagedList<Feedback> feedbackList = feedInterface.getAllOpenWithDepart(pageIndex, pageSize);
+
+            return View(feedbackList);
+        }
+
     }
 }
