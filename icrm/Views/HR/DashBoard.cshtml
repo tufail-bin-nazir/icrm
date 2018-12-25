@@ -369,18 +369,19 @@
                 <li class="nav-item with-sub">
                     <a class="nav-link" href="#" data-toggle="dropdown">
                         <i class="icon ion-ios-gear-outline"></i>
-                        <span>Forms</span>
+                        <span>View Lists</span>
                     </a>
                     <div class="sub-item">
                         <ul>
-                            <li><a href="form-elements.html">Form Elements</a></li>
-                            <li><a href="form-layouts.html">Form Layouts</a></li>
-                            <li><a href="form-validation.html">Form Validation</a></li>
-                            <li><a href="form-wizards.html">Form Wizards</a></li>
-                            <li><a href="form-editor.html">WYSIWYG Editor</a></li>
-                            <li><a href="form-select2.html">Select2</a></li>
-                            <li><a href="form-rangeslider.html">Range Slider</a></li>
-                            <li><a href="form-datepicker.html">Datepicker</a></li>
+                            <li> @Html.ActionLink("Open", "Open")</li>
+                            <li> @Html.ActionLink("Assigned", "assigned")</li>
+                            <li> @Html.ActionLink("Responded", "assigned")</li>
+                            <li>
+                                @Html.ActionLink("Resolved", "resolved")
+                                                     
+                                                    </li>
+                            <li>@Html.ActionLink("Closed", "Closed")</li>
+                            
                         </ul>
                     </div>
                     <!-- dropdown-menu -->
