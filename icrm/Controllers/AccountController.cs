@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using icrm.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Diagnostics;
+using System.Data;
 
 namespace icrm.Controllers
 {
@@ -206,7 +207,7 @@ namespace icrm.Controllers
                     PositionId = model.PositionId, NationalityId = model.NationalityId,
                     CostCenterId = model.CostCenterId, JobTitleId = model.JobTitleId,
                     DepartmentId = model.DepartmentId, PayScaleType = model.PayScaleType,
-                    EmployeeHireDate = model.EmployeeHireDate, ReligionId = model.ReligionId };
+                    EmployeeHireDate = DateTime.Today, ReligionId = model.ReligionId };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
