@@ -10,113 +10,109 @@ using icrm.Models;
 
 namespace icrm.Controllers
 {
-    [Authorize(Roles ="Admin")]
-    public class CategoriesController : Controller
+    public class PayScaleTypesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Categories
+        // GET: PayScaleTypes
         public ActionResult Index()
         {
-            return View(db.Categories.ToList());
+            return View(db.PayScaleTypes.ToList());
         }
 
-        // GET: Categories/Details/5
+        // GET: PayScaleTypes/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            PayScaleType payScaleType = db.PayScaleTypes.Find(id);
+            if (payScaleType == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(payScaleType);
         }
 
-        // GET: Categories/Create
+        // GET: PayScaleTypes/Create
         public ActionResult Create()
         {
-            @ViewBag.Status = "Add";
-            return View("CreateList",new CategoryViewModel { Categories = db.Categories.ToList()});
+            return View();
         }
 
-        // POST: Categories/Create
+        // POST: PayScaleTypes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,name")] Category category)
+        public ActionResult Create([Bind(Include = "Id,name")] PayScaleType payScaleType)
         {
             if (ModelState.IsValid)
             {
-                db.Categories.Add(category);
+                db.PayScaleTypes.Add(payScaleType);
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Index");
             }
 
-            return View("CreateList", new CategoryViewModel { Categories = db.Categories.ToList() });
+            return View(payScaleType);
         }
 
-        // GET: Categories/Edit/5
+        // GET: PayScaleTypes/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            PayScaleType payScaleType = db.PayScaleTypes.Find(id);
+            if (payScaleType == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.Status = "Update";
-            return View("CreateList", new CategoryViewModel {Category = category, Categories = db.Categories.ToList() });
+            return View(payScaleType);
         }
 
-        // POST: Categories/Edit/5
+        // POST: PayScaleTypes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,name")] Category category)
+        public ActionResult Edit([Bind(Include = "Id,name")] PayScaleType payScaleType)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(category).State = EntityState.Modified;
+                db.Entry(payScaleType).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Index");
             }
-            return View("CreateList", new CategoryViewModel {  Categories = db.Categories.ToList() });
+            return View(payScaleType);
         }
 
-        // GET: Categories/Delete/5
+        // GET: PayScaleTypes/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = db.Categories.Find(id);
-            if (category == null)
+            PayScaleType payScaleType = db.PayScaleTypes.Find(id);
+            if (payScaleType == null)
             {
                 return HttpNotFound();
             }
-            @ViewBag.Status = "Delete";
-            return View("CreateList", new CategoryViewModel { Category = category, Categories = db.Categories.ToList() });
+            return View(payScaleType);
         }
 
-        // POST: Categories/Delete/5
+        // POST: PayScaleTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
+            PayScaleType payScaleType = db.PayScaleTypes.Find(id);
+            db.PayScaleTypes.Remove(payScaleType);
             db.SaveChanges();
-            return RedirectToAction("Create");
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

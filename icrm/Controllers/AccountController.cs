@@ -205,8 +205,7 @@ namespace icrm.Controllers
                     Email = model.Email, PhoneNumber = model.PhoneNumber,
                     LocationId = model.LocationId, SubLocationId = model.SubLocationId,
                     PositionId = model.PositionId, NationalityId = model.NationalityId,
-                    CostCenterId = model.CostCenterId, JobTitleId = model.JobTitleId,
-                    DepartmentId = model.DepartmentId, PayScaleType = model.PayScaleType,
+                    DepartmentId = model.DepartmentId, PayScaleTypeId = model.PayScaleTypeId,
                     EmployeeHireDate = DateTime.Today, ReligionId = model.ReligionId };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
