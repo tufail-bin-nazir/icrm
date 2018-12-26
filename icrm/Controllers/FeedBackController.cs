@@ -15,6 +15,7 @@ using icrm.RepositoryInterface;
 using icrm.RepositoryImpl;
 using System.Data.SqlClient;
 using System.Data;
+using System.Globalization;
 
 namespace icrm.Controllers
 {
@@ -95,6 +96,7 @@ namespace icrm.Controllers
         [Route("feedback/")]
         public ActionResult add([Bind(Include = "id,title,description,userId,file")] Feedback feedback,HttpPostedFileBase file)
         {
+
             var fileSize = file.ContentLength;
             if (fileSize > 10 * 1024 * 1024)
             {
@@ -151,11 +153,13 @@ namespace icrm.Controllers
         [Route("searchfeedback")]
         public ActionResult search(int? page)
         {
-          //  DateTime d1 = Convert.ToDateTime(Request["date1"]);
-          //  DateTime d2= Convert.ToDateTime(Request["date2"]);
-
-            DateTime d1= Convert.ToDateTime("2018 - 12 - 22 00:46:42.087");
-            DateTime d2 = Convert.ToDateTime("2018 - 12 - 22 00:46:42.087");
+            //string d1 = Convert.ToDateTime(Request["date1"], CultureInfo.CurrentCulture).ToString("yyyy-MM-dd HH:mm:ss.fff");
+            // string d2 = Convert.ToDateTime(Request["date2"], CultureInfo.CurrentCulture).ToString("yyyy-MM-dd HH:mm:ss.fff");
+            DateTime d1 = Convert.ToDateTime(Request["date1"]);
+                DateTime d2 = Convert.ToDateTime(Request["date2"]);
+            ViewBag.showDate =d2 ;
+          //  DateTime d1= Convert.ToDateTime("2018-12-24 00:00:00.000");
+           // DateTime d2 = Convert.ToDateTime("2018-12-24 00:00:00.000");
             Debug.WriteLine(d1 + "00000" + d2 + "saaaaaaaaath");
             int pageSize = 10;
             int pageIndex = 1;
@@ -163,8 +167,8 @@ namespace icrm.Controllers
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
 
-            IPagedList<Feedback> feedbacks=feedInterface.search(d1,d2, pageIndex, pageSize);
-            return View("list",feedbacks);
+           IPagedList<Feedback> feedbacks=feedInterface.search(d1,d2, pageIndex, pageSize);
+            return View("dashboard");
 
         }
 

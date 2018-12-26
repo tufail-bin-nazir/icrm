@@ -9,7 +9,8 @@ namespace icrm.Models
     {
         public Feedback() {
            
-            createDate = Convert.ToDateTime(DateTime.Now.ToString("MM-dd-yyyy"));
+
+            createDate = DateTime.Today;
             status = "Open";
         }
         public int id { get; set; }
@@ -17,6 +18,7 @@ namespace icrm.Models
         [Required(ErrorMessage = "Name is required")]
         public string title { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime createDate { get; set; }
 
         [Required(ErrorMessage = "Detail is required")]
@@ -44,8 +46,11 @@ namespace icrm.Models
 
         public string assignedBy { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? assignedDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? responseDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? closedDate { get; set; }
 
         public string response { get; set; }

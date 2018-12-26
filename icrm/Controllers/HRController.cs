@@ -41,19 +41,41 @@ namespace icrm.Controllers
             }
         }
 
-        // GET: Agent
+        // GET: HR DAshboard
         public ActionResult DashBoard(int? page)
-        {
-           
+        {      
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-            IPagedList<Feedback> feedbackList = feedInterface.getAllOpen(pageIndex,pageSize);
-            
+            IPagedList<Feedback> feedbackList = feedInterface.getAllOpen(pageIndex,pageSize);          
             return View(feedbackList);
         }
+
+
+        //HR Ticket Raise
+        [HttpGet]
+        [Route("feedback/{id}")]
+        public ActionResult CreatetTicket()
+        {
+            var departments = db.Users.Where(m => m.Roles.Any(s => s.RoleId == "fdc6f3b2-e87b-4719-909d-569ce5340854")).ToList();
+            var categories = db.Categories.OrderByDescending(m => m.name).ToList();
+            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+
+            Debug.WriteLine(user.Email+"ajjjajajajajjaaj");
+                ViewBag.Departmn = departments;
+                ViewBag.Categories = categories;
+                ViewBag.Priorities = priorities;
+      
+                return View();
+            }
+
+        
+
+
 
 
         [HttpGet]
@@ -62,11 +84,9 @@ namespace icrm.Controllers
         {
             var departments = db.Users.Where(m => m.Roles.Any(s=>s.RoleId == "fdc6f3b2-e87b-4719-909d-569ce5340854")).ToList();
             var categories = db.Categories.OrderByDescending(m => m.name).ToList();
-            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
-             
+            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();            
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-
             if (id == null)
             {
                 ViewBag.ErrorMsg = "FeedBack not found";
@@ -78,15 +98,10 @@ namespace icrm.Controllers
                 ViewBag.Categories = categories;
                 ViewBag.Priorities = priorities;
                 Feedback f = feedInterface.Find(id);
-
-                
-              
                 return View(f);
             }
 
         }
-
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -101,24 +116,20 @@ namespace icrm.Controllers
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             feedback.assignedBy = user.Id;
-            feedback.assignedDate = DateTime.Now;
+            feedback.assignedDate = DateTime.Today;
             feedback.userDepartment = db.Users.Find(feedback.departmentID);
             feedback.user = db.Users.Find(feedback.userId);
 
             if (ModelState.IsValid)
-            {
-                Debug.WriteLine(feedback.departmentID + "----------fbnds--------------00");
-                
+            {                
                 db.Entry(feedback).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["displayMsg"] ="FeedBack Updated";
+                TempData["displayMsg"] ="Department assigned to  FeedBack ";
                 return RedirectToAction("view",new { id = feedback.id });
             }
             else
             {
-
-
-                TempData["displayMsg"] = "Enter Fields Properly";
+                 TempData["displayMsg"] = "Enter Fields Properly";
                 return RedirectToAction("view", new { id = feedback.id });
                 
             }
@@ -128,14 +139,12 @@ namespace icrm.Controllers
         
         public ActionResult open(int? page)
         {
-
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             IPagedList<Feedback> feedbackList = feedInterface.getAllOpenWithDepart(pageIndex, pageSize);
-
             return View(feedbackList);
         }
 

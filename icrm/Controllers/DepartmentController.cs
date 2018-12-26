@@ -49,10 +49,7 @@ namespace icrm.Controllers
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-            Debug.WriteLine(user.Id+ "raaaaaaa88aaaaaaaaaaaaaaaaasta");
-
             IPagedList<Feedback> feedbackList = feedInterface.getAllWithDepartment(user.Id,pageIndex, pageSize);
-            Debug.WriteLine(feedbackList.Count()+"raaaaaaaaaaaaaaaaaaaaaaaasta");
             return View(feedbackList);
         }
 
@@ -65,10 +62,8 @@ namespace icrm.Controllers
             var departments = db.Users.Where(m => m.Roles.Any(s => s.RoleId == "fdc6f3b2-e87b-4719-909d-569ce5340854")).ToList();
             var categories = db.Categories.OrderByDescending(m => m.name).ToList();
             var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
-
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-
             if (id == null)
             {
                 ViewBag.ErrorMsg = "FeedBack not found";
@@ -94,24 +89,17 @@ namespace icrm.Controllers
         [Route("response/")]
         public ActionResult response(Feedback feedback)
         {
-
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-
-            feedback.responseDate = DateTime.Now;
-
+            feedback.responseDate = DateTime.Today;
             if (ModelState.IsValid)
             {
-
                 db.Entry(feedback).State = EntityState.Modified;
-                db.SaveChanges();
-              
+                db.SaveChanges();             
                 return RedirectToAction("DashBoard");
             }
             else
             {
-
-
                 TempData["displayMsg"] = "Information is not Valid";
                 return RedirectToAction("view", new { id = feedback.id });
 
