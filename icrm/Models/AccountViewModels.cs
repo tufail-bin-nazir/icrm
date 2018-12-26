@@ -106,7 +106,7 @@ namespace icrm.Models
 
         public int CostCenterId { get; set; }
 
-        public string PayScaleType { get; set; }
+        public int PayScaleTypeId { get; set; }
 
         public System.DateTime EmployeeHireDate { get; set; }
 
