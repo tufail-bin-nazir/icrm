@@ -1,11 +1,7 @@
-﻿@using icrm.Models;
-@{
-    var data = (ApplicationUser)ViewData["user"];
-}
-<div class="slim-header">
+﻿<div class="slim-header">
     <div class="container">
         <div class="slim-header-left">
-            <h2 class="slim-logo"><a href="index.html">ICRM 2.0</a></h2>
+            <h2 class="slim-logo"><a href="index.html">ICRM 2.0<span>.</span></a></h2>
 
             <div class="search-box">
                 <input type="text" class="form-control" placeholder="Search">
@@ -154,7 +150,7 @@
             <div class="dropdown dropdown-c">
                 <a href="#" class="logged-user" data-toggle="dropdown">
                     <img src="../img/img1.jpg" alt="">
-                    <span>@data.Email</span>
+                    <span>Administrator</span>
                     <i class="fa fa-angle-down"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
@@ -168,7 +164,6 @@
                             @Html.AntiForgeryToken()
                             <input class="icon ion-forward" type="submit" value="Sign Out" />
                         }
-
                     </nav>
                 </div>
                 <!-- dropdown-menu -->
@@ -180,12 +175,11 @@
     <!-- container -->
 </div>
 <!-- slim-header -->
-
 <div class="slim-navbar">
     <div class="container">
         <ul class="nav">
             <li class="nav-item  active">
-                <a class="nav-link" href="/HR/DashBoard">
+                <a class="nav-link" href="#">
                     <i class="icon ion-ios-home-outline"></i>
                     <span>Dashboard</span>
                 </a>
@@ -201,16 +195,37 @@
                 </a>
                 <div class="sub-item">
                     <ul>
-                        <li class="active">@Html.ActionLink("Open Tickets", "Create", "Categories")</li>
-                        
-                        <li>@Html.ActionLink("Closed Tickets", "Create", "Positions")</li>
+                        <li class="active">@Html.ActionLink("Categories", "Create", "Categories")</a></li>
+                        <li> @Html.ActionLink("Location","Create","Locations")</li>
+                        <li>@Html.ActionLink("Sub Location", "Create", "SubLocations")</a></li>
+                        <li>@Html.ActionLink("Nationality", "Create", "Nationalities")Nationality</a></li>
+                        <li>@Html.ActionLink("Position", "Create", "Positions")Position</a></li>
+                        <li>@Html.ActionLink("Priority", "Create", "Priorities")Priority</a></li>
+                        <li>@Html.ActionLink("Job Title", "Create", "JobTitles")Job Title</a></li>
+                        <li>@Html.ActionLink("Cost Center", "Create", "CostCenters")Cost Center</a></li>
+                        <li>@Html.ActionLink("Religion", "Create", "Religions")Religion</a></li>
 
                     </ul>
                 </div>
                 <!-- dropdown-menu -->
             </li>
-           
+            <li class="nav-item with-sub ">
+                <a class="nav-link" href="#" data-toggle="dropdown">
+                    <i class="icon ion-ios-person-outline"></i>
+                    <span>Users</span>
+                </a>
+                <div class="sub-item">
+                    <ul>
+                        <li class="active">@Html.ActionLink("Add HR", "AddUser", "Admin", new { id="HR"}, null)</a></li>
+                        <li>@Html.ActionLink("Add Department", "AddUser", "Department", new { id = "Department" }, null)</a></li>
+                        <li>@Html.ActionLink("Add Department", "ListUser", "Department")</li>
+
+                    </ul>
+                </div>
+                <!-- dropdown-menu -->
+            </li>
         </ul>
     </div>
     <!-- container -->
 </div>
+<!-- slim-navbar -->
