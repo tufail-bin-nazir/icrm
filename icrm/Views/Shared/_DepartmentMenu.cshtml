@@ -153,7 +153,7 @@
             <!-- dropdown -->
             <div class="dropdown dropdown-c">
                 <a href="#" class="logged-user" data-toggle="dropdown">
-                    <img src="../img/img1.jpg" alt="">
+                    <img src="~Content/img/img1.jpg" alt="">
                     <span>@data.Email</span>
                     <i class="fa fa-angle-down"></i>
                 </a>
@@ -185,7 +185,7 @@
     <div class="container">
         <ul class="nav">
             <li class="nav-item  active">
-                <a class="nav-link" href="/HR/DashBoard">
+                <a class="nav-link" href="/Department/DashBoard">
                     <i class="icon ion-ios-home-outline"></i>
                     <span>Dashboard</span>
                 </a>
@@ -202,9 +202,10 @@
                 <div class="sub-item">
                     <ul>
                         <li class="active">@Html.ActionLink("Open Tickets", "Create", "Categories")</li>
+                       
+                        <li>@Html.ActionLink("Responded Tickets", "Create", "Nationalities")</li>
                         
-                        <li>@Html.ActionLink("Closed Tickets", "Create", "Positions")</li>
-
+                       
                     </ul>
                 </div>
                 <!-- dropdown-menu -->

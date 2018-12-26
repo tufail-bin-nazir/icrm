@@ -52,7 +52,7 @@ namespace icrm.RepositoryImpl
         public IPagedList<Feedback> search(DateTime d1, DateTime d2,int pageIndex, int pageSize)
         {
             var param1 = new SqlParameter();
-            param1.ParameterName = "@Date";
+            param1.ParameterName = "@Date1";
            
             param1.SqlDbType = SqlDbType.DateTime;
             param1.SqlValue = d1;
@@ -63,7 +63,7 @@ namespace icrm.RepositoryImpl
             param2.SqlValue = d2;
 
             var result = db.Feedbacks.SqlQuery("searchcriteria @Date1,@Date2", param1, param2).ToPagedList(pageIndex, pageSize);
-
+            
             return result;
           //  return db.Feedbacks.OrderByDescending(x => x.user.Id).Where(x => x.title.StartsWith(search) || search == null).ToPagedList(pageIndex, pageSize);
         }

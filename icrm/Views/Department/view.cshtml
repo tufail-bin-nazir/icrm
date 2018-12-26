@@ -9,15 +9,6 @@
 @{
     var data = (ApplicationUser)ViewData["user"];
 
-    var list = new SelectList(new[]
-{
-    new { Value = "Open", Name = "Open" },
-    new { Value = "Resolved", Name = "Resolved" },
-    new { Value = "Closed", Name = "Closed" },
-},
-"Value", "Name", 1);
-    ViewData["list"] = list;
-
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +20,7 @@
     <!-- Meta -->
     <meta name="description" content="feedback managment system.">
     <meta name="author" content="feedback">
-    <title>Create Tickets</title>
+    <title>Response Tickets</title>
     <!-- vendor css -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
@@ -41,37 +32,43 @@
     <link rel="stylesheet" href="~/Content/css/slim.css">
 </head>
 <body>
-    @Html.Partial("_HRMenu")
+    @Html.Partial("_DepartmentMenu")
     <!-- slim-navbar -->
     <div class="slim-mainpanel">
         <div class="container">
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Create Tickets</li>
+                    <li class="breadcrumb-item active" aria-current="page"> VIEW TICKET</li>
                 </ol>
-                <h6 class="slim-pagetitle">CREATE TICKET</h6>
+                <h6 class="slim-pagetitle"> VIEW 
+                </h6>
             </div>
             <!-- slim-pageheader -->
-            @using (Html.BeginForm("assign", "HR", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            @using (Html.BeginForm("response", "Department", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
 
                 @Html.AntiForgeryToken()
                 <div class="section-wrapper">
-                    <label class="section-title">CREATING TICKETS BY HR</label>
+                    <label class="section-title">
+                        VIEW TICKET
+                    </label>
 
-                    <p class="mg-b-20 mg-sm-b-40"></p>
+                   
                     <div class="form-layout">
-                        <span class="tx-success">@TempData["displayMsg"]</span>
+                        <span class="text-success">@TempData["displayMsg"]</span>
                         @Html.HiddenFor(model => model.id, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.status, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.createDate, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.user.LastName, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
-
-
+                        @Html.HiddenFor(model => model.departmentID, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.priorityId, new { @class = "form-control" })
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
@@ -129,8 +126,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Nationality: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.NationalityId, new { @readonly = "readonly", @class = "form-control" })
-
+                                    @Html.TextBoxFor(model => model.user.Id, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -164,8 +160,8 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.departmentID,
-                          new SelectList(ViewBag.Departmn,
-                        "Id", "FirstName"), "Choose Department", new { @class = "form-control select2" })
+new SelectList(ViewBag.Departmn,
+"Id", "FirstName"), "Choose Department", new { disabled = "disabled", @class = "form-control select2" })
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -173,8 +169,8 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.categoryId,
-                           new SelectList(ViewBag.Categories,
-                         "Id", "name"), "Choose Category", new { @class = "form-control select2" })
+new SelectList(ViewBag.Categories,
+"Id", "name"), "Choose Category", new { disabled = "disabled", @class = "form-control select2" })
                                 </div>
                             </div>
 
@@ -183,8 +179,8 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Priority: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.priorityId,
-                           new SelectList(ViewBag.Priorities,
-                         "Id", "priorityId"), "Choose Priority", new { @class = "form-control select2" })
+new SelectList(ViewBag.Priorities,
+"Id", "priorityId"), "Choose Priority", new { disabled = "disabled", @class = "form-control select2" })
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -204,38 +200,23 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Download</label>
                                     @Html.HiddenFor(m => m.attachment)
-                              <a href="~/Images/@Url.Content(Model.attachment)" target="_blank" style="height:200px;width:200px;"><i class="fa fa-download"></i></a>
+                                    <a href="~/Images/@Url.Content(Model.attachment)" target="_blank"><i class="fa fa-download"></i> </a>
 
                                 </div>
+
                             </div>
                             <!-- col-4 -->
 
-
-                        </div>
-                        @if (Model.departmentID != null)
-                        {
-                            <div class="row mg-b-25">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Choose Action</label>
-                                        @Html.DropDownListFor(m => m.status, ViewData["list"] as SelectList)
-                                    </div>
-                                </div>
-                                <!-- col-4 -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Comment</label>
-                                        @Html.TextAreaFor(m => m.response, new { @class = "form-control" })
-
-
-                                    </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Response:</label>
+                                    @Html.TextAreaFor(m => m.response, new { @class = "form-control" })
                                 </div>
                             </div>
-
-                        }
+                        </div>
                         <!-- row -->
                         <div class="form-layout-footer">
-                            <input type="submit" value="Assign Department" class="btn btn-primary bd-0" />
+                            <input type="submit" class="btn btn-primary bd-0" />
                             <button class="btn btn-secondary bd-0">Cancel</button>
                         </div>
                         <!-- form-layout-footer -->
@@ -245,93 +226,93 @@
             }
             <!-- container -->
         </div>
+    </div>
+    <!-- slim-mainpanel -->
+    <div class="slim-footer">
+        <div class="container">
+            <p>Copyright 2018 &copy; All Rights Reserved. </p>
         </div>
-        <!-- slim-mainpanel -->
-        <div class="slim-footer">
-            <div class="container">
-                <p>Copyright 2018 &copy; All Rights Reserved. </p>
-            </div>
-            <!-- container -->
-        </div>
-        <!-- slim-footer -->
-        <script src="~/Content/lib/jquery/js/jquery.js"></script>
-        <script src="~/Content/lib/popper.js/js/popper.js"></script>
-        <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
-        <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
-        <script src="~/Content/lib/moment/js/moment.js"></script>
-        <script src="~/Content/lib/jquery-ui/js/jquery-ui.js"></script>
-        <script src="~/Content/lib/jquery-toggles/js/toggles.min.js"></script>
-        <script src="~/Content/lib/jt.timepicker/js/jquery.timepicker.js"></script>
-        <script src="~/Content/lib/spectrum/js/spectrum.js"></script>
-        <script src="~/Content/lib/jquery.maskedinput/js/jquery.maskedinput.js"></script>
-        <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
-        <script src="~/Content/js/slim.js"></script>
-        <script>
-            $(function () {
-                'use strict'
+        <!-- container -->
+    </div>
+    <!-- slim-footer -->
+    <script src="~/Content/lib/jquery/js/jquery.js"></script>
+    <script src="~/Content/lib/popper.js/js/popper.js"></script>
+    <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
+    <script src="~/Content/lib/moment/js/moment.js"></script>
+    <script src="~/Content/lib/jquery-ui/js/jquery-ui.js"></script>
+    <script src="~/Content/lib/jquery-toggles/js/toggles.min.js"></script>
+    <script src="~/Content/lib/jt.timepicker/js/jquery.timepicker.js"></script>
+    <script src="~/Content/lib/spectrum/js/spectrum.js"></script>
+    <script src="~/Content/lib/jquery.maskedinput/js/jquery.maskedinput.js"></script>
+    <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
+    <script src="~/Content/js/slim.js"></script>
+    <script>
+        $(function () {
+            'use strict'
 
-                // Toggles
-                $('.toggle').toggles({
-                    on: true,
-                    height: 26
-                });
-
-                // Input Masks
-                $('#dateMask').mask('99/99/9999');
-                $('#phoneMask').mask('(999) 999-9999');
-                $('#ssnMask').mask('999-99-9999');
-
-                // Time Picker
-                $('#tpBasic').timepicker();
-                $('#tp2').timepicker({
-                    'scrollDefault': 'now'
-                });
-                $('#tp3').timepicker();
-
-                $('#setTimeButton').on('click', function () {
-                    $('#tp3').timepicker('setTime', new Date());
-                });
-
-                // Color picker
-                $('#colorpicker').spectrum({
-                    color: '#17A2B8'
-                });
-
-                $('#showAlpha').spectrum({
-                    color: 'rgba(23,162,184,0.5)',
-                    showAlpha: true
-                });
-
-                $('#showPaletteOnly').spectrum({
-                    showPaletteOnly: true,
-                    showPalette: true,
-                    color: '#DC3545',
-                    palette: [
-                        ['#1D2939', '#fff', '#0866C6', '#23BF08', '#F49917'],
-                        ['#DC3545', '#17A2B8', '#6610F2', '#fa1e81', '#72e7a6']
-                    ]
-                });
-
+            // Toggles
+            $('.toggle').toggles({
+                on: true,
+                height: 26
             });
 
-            $(function () {
-                'use strict'
+            // Input Masks
+            $('#dateMask').mask('99/99/9999');
+            $('#phoneMask').mask('(999) 999-9999');
+            $('#ssnMask').mask('999-99-9999');
 
-                // Datepicker
-                $('.fc-datepicker').datepicker({
-                    showOtherMonths: true,
-                    selectOtherMonths: true,
-                    dateFormat: 'dd-mm-yy'
-                });
+            // Time Picker
+            $('#tpBasic').timepicker();
+            $('#tp2').timepicker({
+                'scrollDefault': 'now'
+            });
+            $('#tp3').timepicker();
 
-                $('#datepickerNoOfMonths').datepicker({
-                    showOtherMonths: true,
-                    selectOtherMonths: true,
-                    numberOfMonths: 2
-                });
-
+            $('#setTimeButton').on('click', function () {
+                $('#tp3').timepicker('setTime', new Date());
             });
 
-        </script>
+            // Color picker
+            $('#colorpicker').spectrum({
+                color: '#17A2B8'
+            });
+
+            $('#showAlpha').spectrum({
+                color: 'rgba(23,162,184,0.5)',
+                showAlpha: true
+            });
+
+            $('#showPaletteOnly').spectrum({
+                showPaletteOnly: true,
+                showPalette: true,
+                color: '#DC3545',
+                palette: [
+                    ['#1D2939', '#fff', '#0866C6', '#23BF08', '#F49917'],
+                    ['#DC3545', '#17A2B8', '#6610F2', '#fa1e81', '#72e7a6']
+                ]
+            });
+
+        });
+
+        $(function () {
+            'use strict'
+
+            // Datepicker
+            $('.fc-datepicker').datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                dateFormat: 'dd-mm-yy'
+            });
+
+            $('#datepickerNoOfMonths').datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                numberOfMonths: 2
+            });
+
+        });
+
+    </script>
 </body>
 </html>

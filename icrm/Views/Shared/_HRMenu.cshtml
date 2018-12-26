@@ -202,14 +202,25 @@
                 <div class="sub-item">
                     <ul>
                         <li class="active">@Html.ActionLink("Open Tickets", "Create", "Categories")</li>
-                        
+                        <li>@Html.ActionLink("Resolved Tickets", "Create", "Locations")</li>
+                        <li>@Html.ActionLink("Assigned Tickets", "Create", "SubLocations")</li>
+                        <li>@Html.ActionLink("Responded Tickets", "Create", "Nationalities")</li>
                         <li>@Html.ActionLink("Closed Tickets", "Create", "Positions")</li>
-
+                       
                     </ul>
                 </div>
                 <!-- dropdown-menu -->
             </li>
-           
+            <li class="nav-item">
+                <a class="nav-link" href="#" >
+                    <i class="icon ion-ios-chatboxes-outline"></i>
+                    <span>Chat</span>
+                </a>
+                <div class="sub-item">
+                   
+                </div>
+                <!-- dropdown-menu -->
+            </li>
         </ul>
     </div>
     <!-- container -->
