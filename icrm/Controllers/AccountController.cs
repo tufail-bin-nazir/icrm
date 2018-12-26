@@ -171,18 +171,7 @@ namespace icrm.Controllers
             ApplicationDbContext db = new ApplicationDbContext();
            // var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
           //  var role = roleManager.FindByName("Department").Users.First();
-           
-
-            ViewBag.Locationlist=db.Locations.ToList();
-            ViewBag.Positionlist=db.Positions.ToList();
-            ViewBag.Nationalitylist=db.Nationalities.ToList();
-            ViewBag.Nationalitylist = db.Nationalities.ToList();
-            ViewBag.Jobtitlelist = db.JobTitles.ToList();
-            //ViewBag.Departmentlist = db.Users.Where(u => u.Roles.Any(s => s.RoleId ==role.RoleId));
-            ViewBag.CostCenterlist = db.CostCenters.ToList();
-            ViewBag.Religionlist = db.Religions.ToList();
-
-            return View();
+           return View();
         }
 
         //
@@ -203,10 +192,7 @@ namespace icrm.Controllers
                 var user = new ApplicationUser { UserName = model.Email,
                     FirstName = model.FirstName, LastName = model.LastName ,
                     Email = model.Email, PhoneNumber = model.PhoneNumber,
-                    LocationId = model.LocationId, SubLocationId = model.SubLocationId,
-                    PositionId = model.PositionId, NationalityId = model.NationalityId,
-                    DepartmentId = model.DepartmentId, PayScaleTypeId = model.PayScaleTypeId,
-                    EmployeeHireDate = DateTime.Today, ReligionId = model.ReligionId };
+                    EmployeeHireDate = DateTime.Today};
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
