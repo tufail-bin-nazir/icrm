@@ -120,8 +120,8 @@ namespace icrm.Controllers
 
         [HttpPost]
         public JsonResult getSublocations(int? id) {
-            Debug.WriteLine(db.SubLocations.Where(s => s.locationId == id).Count()+"9090090909090909090909099");
-           return Json(db.SubLocations.Where(s => s.locationId == id).ToList());
+            Debug.WriteLine(db.SubLocations.Where(s => s.Location.Id == id).Count()+"9090090909090909090909099");
+           return Json(db.SubLocations.Where(s => s.Location.Id == id).ToList());
         }
 
         protected override void Dispose(bool disposing)

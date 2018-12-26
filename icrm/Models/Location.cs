@@ -13,6 +13,6 @@ namespace icrm.Models
         [Required]
         public string name { get; set; }
 
-        public IEnumerable<SubLocation> subLocations { get; set; }
+        public virtual IEnumerable<SubLocation> SubLocations { get; set; }
     }
 }

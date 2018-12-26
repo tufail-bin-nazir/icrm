@@ -65,7 +65,7 @@
                                     @Html.EditorFor(x => x.SubLocation.name, new { @class = "form-control", placeholder = "Enter SubLocation Name", Required = "true" })
 
                                     <label class="form-control-label">Location Name <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.SubLocation.locationId,
+                                    @Html.DropDownListFor(m => m.SubLocation.LocationId,
                                        new SelectList(ViewBag.Locationlist,
                                           "Id", "name"),"Choose Location", new { @class = "form-control select2"})
 

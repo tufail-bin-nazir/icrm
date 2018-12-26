@@ -19,38 +19,38 @@ namespace icrm.Models
 
         public int EmployeeId { get; set; }
 
-        public int LocationId { get; set; }
+        public int? LocationId { get; set; }
 
         public virtual Location Location { get; set; }
 
-        public int SubLocationId { get; set; }
+        public int? SubLocationId { get; set; }
 
         public virtual SubLocation SubLocation { get; set; }
 
-        public int PositionId { get; set; }
+        public int? PositionId { get; set; }
 
         public virtual Position Position { get; set; }
 
-        public int NationalityId { get; set; }
+        public int? NationalityId { get; set; }
 
         public Nationality Nationality { get; set; }
 
-        public int DepartmentId { get; set; }
+        public int? DepartmentId { get; set; }
 
         public virtual Department Department { get; set; }
 
-        public int CostCenterId { get; set; }
+        public int? CostCenterId { get; set; }
 
         public virtual CostCenter CostCenter { get; set; }
 
-        public int PayScaleTypeId { get; set; }
+        public int? PayScaleTypeId { get; set; }
 
         public virtual PayScaleType PayScaleType { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime? EmployeeHireDate { get; set; }
 
-        public int ReligionId { get; set; }
+        public int? ReligionId { get; set; }
 
         public virtual Religion Religion { get; set; }
 

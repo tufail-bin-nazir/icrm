@@ -10,8 +10,8 @@ namespace icrm.Models
         [Required]
         public string name { get; set; }
  
-        [Required]
-        public int locationId { get; set; }
+        
+        public int? LocationId { get; set; }
 
         public virtual Location  Location{ get; set; }
     }
