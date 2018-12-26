@@ -55,8 +55,14 @@
                 <label class="section-title">Admin / Category</label>
                 @using (Html.BeginForm())
                 {
+                    @Html.ValidationSummary()
                     @Html.AntiForgeryToken()
-                    @Html.HiddenFor(x=>x.Category.Id)
+
+                    if (ViewBag.Status == "Update")
+                    {
+                        @Html.HiddenFor(x => x.Category.Id)
+                    }
+
                     <div class="form-layout">
                         <div class="row mg-b-25">
 
@@ -89,7 +95,7 @@
                     </div>
 
                 }
-                </div>
+            </div>
 
             <div class="row row-xs mg-t-10">
                 <div class="col-lg-12">

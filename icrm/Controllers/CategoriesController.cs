@@ -57,6 +57,7 @@ namespace icrm.Controllers
                 return RedirectToAction("Create");
             }
 
+            @ViewBag.Status = "Add";
             return View("CreateList", new CategoryViewModel { Categories = db.Categories.ToList() });
         }
 
