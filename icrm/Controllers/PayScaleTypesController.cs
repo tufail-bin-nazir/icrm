@@ -38,7 +38,8 @@ namespace icrm.Controllers
         // GET: PayScaleTypes/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.Status = "Add";
+            return View("CreateList", new PayScaleTypeViewModel { PayScaleTypes = db.PayScaleTypes.ToList()});
         }
 
         // POST: PayScaleTypes/Create
@@ -52,10 +53,11 @@ namespace icrm.Controllers
             {
                 db.PayScaleTypes.Add(payScaleType);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
-            return View(payScaleType);
+            ViewBag.Status = "Add";
+            return View("CreateList", new PayScaleTypeViewModel { PayScaleTypes = db.PayScaleTypes.ToList() });
         }
 
         // GET: PayScaleTypes/Edit/5
@@ -70,7 +72,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(payScaleType);
+            ViewBag.Status = "Update";
+            return View("CreateList", new PayScaleTypeViewModel {PayScaleType = payScaleType, PayScaleTypes = db.PayScaleTypes.ToList() });
         }
 
         // POST: PayScaleTypes/Edit/5
@@ -84,9 +87,10 @@ namespace icrm.Controllers
             {
                 db.Entry(payScaleType).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
-            return View(payScaleType);
+            ViewBag.Status = "Update";
+            return View("CreateList", new PayScaleTypeViewModel { PayScaleTypes = db.PayScaleTypes.ToList() });
         }
 
         // GET: PayScaleTypes/Delete/5
@@ -101,7 +105,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(payScaleType);
+            ViewBag.Status = "Delete";
+            return View("CreateList", new PayScaleTypeViewModel {PayScaleType = payScaleType, PayScaleTypes = db.PayScaleTypes.ToList() });
         }
 
         // POST: PayScaleTypes/Delete/5
@@ -112,7 +117,7 @@ namespace icrm.Controllers
             PayScaleType payScaleType = db.PayScaleTypes.Find(id);
             db.PayScaleTypes.Remove(payScaleType);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Create");
         }
 
         protected override void Dispose(bool disposing)

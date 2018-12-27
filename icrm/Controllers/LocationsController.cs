@@ -39,6 +39,7 @@ namespace icrm.Controllers
         // GET: Locations/Create
         public ActionResult Create()
         {
+            ViewBag.Status = "Add";
             return View("CreateList", new LocationViewModel { Locations = db.Locations.ToList()});
         }
 
@@ -55,7 +56,7 @@ namespace icrm.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Create");
             }
-
+            ViewBag.Status = "Add";
             return View("CreateList", new LocationViewModel { Locations = db.Locations.ToList() });
         }
 
@@ -71,7 +72,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(location);
+            ViewBag.Status = "Update";
+            return View("CreateList", new LocationViewModel {Location = location, Locations = db.Locations.ToList() });
         }
 
         // POST: Locations/Edit/5
@@ -85,9 +87,10 @@ namespace icrm.Controllers
             {
                 db.Entry(location).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
-            return View(location);
+            ViewBag.Status = "Update";
+            return View("CreateList", new LocationViewModel { Locations = db.Locations.ToList() });
         }
 
         // GET: Locations/Delete/5
@@ -102,7 +105,9 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(location);
+            @ViewBag.Status = "Delete";
+            return View("CreateList", new LocationViewModel {Location = location, Locations = db.Locations.ToList() });
+
         }
 
         // POST: Locations/Delete/5
@@ -113,7 +118,7 @@ namespace icrm.Controllers
             Location location = db.Locations.Find(id);
             db.Locations.Remove(location);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Create");
         }
 
         protected override void Dispose(bool disposing)

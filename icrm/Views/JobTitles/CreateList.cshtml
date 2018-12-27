@@ -55,6 +55,13 @@
                 <label class="section-title">Admin / Job Titles</label>
                 @using (Html.BeginForm())
                 {
+
+                    if (ViewBag.Status == "Update")
+                    {
+                        @Html.HiddenFor(x => x.jobTitle.Id)
+                    }
+
+                    @Html.ValidationSummary()
                     @Html.AntiForgeryToken()
 
                     <div class="form-layout">
@@ -82,20 +89,20 @@
                         <!-- row -->
 
                         <div class="form-layout-footer">
-                            <button class="btn btn-primary bd-0">Submit Form</button>
+                            <button class="btn btn-primary bd-0">@ViewBag.Status</button>
                             <button class="btn btn-secondary bd-0">Cancel</button>
                         </div>
                         <!-- form-layout-footer -->
                     </div>
 
                 }
-                </div>
+            </div>
 
             <div class="row row-xs mg-t-10">
                 <div class="col-lg-12">
                     <div class="card card-table">
                         <div class="card-header">
-                            <h6 class="slim-card-title">Category List</h6>
+                            <h6 class="slim-card-title">Job Title List</h6>
                         </div>
                         <!-- card-header -->
                         <div class="table-responsive">
@@ -112,18 +119,20 @@
 
                                     @foreach (var item in Model.jobTitles)
                                     {
-                                        <tr>
-                                            <td class="pd-l-20">
-                                                1
-                                            </td>
-                                            <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.name</a>
+                                    <tr>
+                                        <td class="pd-l-20">
+                                            1
+                                        </td>
+                                        <td>
+                                            <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.name</a>
 
-                                            </td>
-                                            <td class="tx-12">
-                                                <i class="fa fa-edit"> | </i> <i class="fa fa-eye"> </i> |  <i class="fa fa-trash"> </i>
-                                            </td>
-                                            </tr>
+                                        </td>
+                                        <td class="tx-12">
+                                            <a href="@Url.Action("edit",new {id = item.Id })"> <i class="fa fa-edit"> </i> </a>
+                                            <a href="@Url.Action("Delete",new {id = item.Id })"> <i class="fa fa-trash"> </i> </a>
+
+                                        </td>
+                                    </tr>
                                             }
                                     </tbody>
                             </table>

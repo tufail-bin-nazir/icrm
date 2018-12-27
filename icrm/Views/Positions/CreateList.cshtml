@@ -55,6 +55,12 @@
                 <label class="section-title">Admin / Positions</label>
                 @using (Html.BeginForm())
                 {
+                    if (ViewBag.Status == "Update")
+                    {
+                        @Html.HiddenFor(x => x.Position.Id)
+                    }
+
+                    @Html.ValidationSummary()
                     @Html.AntiForgeryToken()
 
                     <div class="form-layout">
@@ -82,20 +88,20 @@
                         <!-- row -->
 
                         <div class="form-layout-footer">
-                            <button class="btn btn-primary bd-0">Submit Form</button>
+                            <button class="btn btn-primary bd-0">@ViewBag.Status</button>
                             <button class="btn btn-secondary bd-0">Cancel</button>
                         </div>
                         <!-- form-layout-footer -->
                     </div>
 
                 }
-                </div>
+            </div>
 
             <div class="row row-xs mg-t-10">
                 <div class="col-lg-12">
                     <div class="card card-table">
                         <div class="card-header">
-                            <h6 class="slim-card-title">Category List</h6>
+                            <h6 class="slim-card-title">Position List</h6>
                         </div>
                         <!-- card-header -->
                         <div class="table-responsive">
@@ -121,7 +127,9 @@
 
                                             </td>
                                             <td class="tx-12">
-                                                <i class="fa fa-edit"> | </i> <i class="fa fa-eye"> </i> |  <i class="fa fa-trash"> </i>
+                                                <a href="@Url.Action("edit",new {id = item.Id })"> <i class="fa fa-edit"> </i> </a>
+                                                <a href="@Url.Action("Delete",new {id = item.Id })"> <i class="fa fa-trash"> </i> </a>
+
                                             </td>
                                             </tr>
                                             }

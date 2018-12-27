@@ -90,6 +90,7 @@ namespace icrm.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Create");
             }
+            ViewBag.Status = "Update";
             return View("CreateList", new CategoryViewModel {  Categories = db.Categories.ToList() });
         }
 

@@ -38,7 +38,8 @@ namespace icrm.Controllers
         // GET: Departments/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.Status = "Add";
+            return View("CreateList", new DepartmentsViewModel {Departments = db.Departments.ToList()});
         }
 
         // POST: Departments/Create
@@ -52,10 +53,11 @@ namespace icrm.Controllers
             {
                 db.Departments.Add(department);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
-            return View(department);
+            ViewBag.Status = "Add";
+            return View("CreateList", new DepartmentsViewModel { Departments = db.Departments.ToList() });
         }
 
         // GET: Departments/Edit/5
@@ -70,7 +72,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(department);
+            ViewBag.Status = "Update";
+            return View("CreateList", new DepartmentsViewModel {Department = department, Departments = db.Departments.ToList() });
         }
 
         // POST: Departments/Edit/5
@@ -84,9 +87,10 @@ namespace icrm.Controllers
             {
                 db.Entry(department).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
-            return View(department);
+            ViewBag.Status = "Update";
+            return View("CreateList", new DepartmentsViewModel { Departments = db.Departments.ToList() });
         }
 
         // GET: Departments/Delete/5
@@ -101,7 +105,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(department);
+            ViewBag.Status = "Delete";
+            return View("CreateList", new DepartmentsViewModel {Department = department, Departments = db.Departments.ToList() });
         }
 
         // POST: Departments/Delete/5
@@ -112,7 +117,7 @@ namespace icrm.Controllers
             Department department = db.Departments.Find(id);
             db.Departments.Remove(department);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Create");
         }
 
         protected override void Dispose(bool disposing)

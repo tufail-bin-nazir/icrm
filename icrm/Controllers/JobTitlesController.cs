@@ -39,7 +39,8 @@ namespace icrm.Controllers
         // GET: JobTitles/Create
         public ActionResult Create()
         {
-             
+
+            ViewBag.Status = "Add";
             return View("CreateList",new JobTitlesViewModel { jobTitles = db.JobTitles.ToList()});
         }
 
@@ -56,7 +57,7 @@ namespace icrm.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Create");
             }
-
+            ViewBag.Status = "Add";
             return View("CreateList", new JobTitlesViewModel { jobTitles = db.JobTitles.ToList() });
         }
 
@@ -72,7 +73,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(jobTitle);
+            ViewBag.Status = "Update";
+            return View("CreateList", new JobTitlesViewModel {jobTitle = jobTitle,  jobTitles = db.JobTitles.ToList() });
         }
 
         // POST: JobTitles/Edit/5
@@ -86,9 +88,10 @@ namespace icrm.Controllers
             {
                 db.Entry(jobTitle).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
-            return View(jobTitle);
+            ViewBag.Status = "Update";
+            return View("CreateList", new JobTitlesViewModel { jobTitles = db.JobTitles.ToList() });
         }
 
         // GET: JobTitles/Delete/5
@@ -103,7 +106,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(jobTitle);
+            ViewBag.Status = "Delete";
+            return View("CreateList", new JobTitlesViewModel {jobTitle = jobTitle, jobTitles = db.JobTitles.ToList() });
         }
 
         // POST: JobTitles/Delete/5
@@ -114,7 +118,7 @@ namespace icrm.Controllers
             JobTitle jobTitle = db.JobTitles.Find(id);
             db.JobTitles.Remove(jobTitle);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Create");
         }
 
         protected override void Dispose(bool disposing)

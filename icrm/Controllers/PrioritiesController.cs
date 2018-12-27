@@ -39,6 +39,7 @@ namespace icrm.Controllers
         // GET: Priorities/Create
         public ActionResult Create()
         {
+            ViewBag.Status = "Add";
             return View("CreateList",new PrioritiesViewModel { Priorities = db.Priorities.ToList()});
         }
 
@@ -55,7 +56,7 @@ namespace icrm.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Create");
             }
-
+            ViewBag.Status = "Add";
             return View("CreateList", new PrioritiesViewModel { Priorities = db.Priorities.ToList() });
         }
 
@@ -71,7 +72,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(priority);
+            ViewBag.Status = "Update";
+            return View("CreateList", new PrioritiesViewModel {Priority = priority, Priorities = db.Priorities.ToList() });
         }
 
         // POST: Priorities/Edit/5
@@ -85,9 +87,10 @@ namespace icrm.Controllers
             {
                 db.Entry(priority).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
-            return View(priority);
+            ViewBag.Status = "Update";
+            return View("CreateList", new PrioritiesViewModel { Priorities = db.Priorities.ToList() });
         }
 
         // GET: Priorities/Delete/5
@@ -102,7 +105,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(priority);
+            ViewBag.Status = "Delete";
+            return View("CreateList", new PrioritiesViewModel {Priority = priority, Priorities = db.Priorities.ToList() });
         }
 
         // POST: Priorities/Delete/5
@@ -113,7 +117,7 @@ namespace icrm.Controllers
             Priority priority = db.Priorities.Find(id);
             db.Priorities.Remove(priority);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Create");
         }
 
         protected override void Dispose(bool disposing)

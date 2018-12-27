@@ -39,6 +39,7 @@ namespace icrm.Controllers
         // GET: Religions/Create
         public ActionResult Create()
         {
+            ViewBag.Status = "Add";
             return View("CreateList", new ReligionViewModel { Religions = db.Religions.ToList()});
         }
 
@@ -56,6 +57,7 @@ namespace icrm.Controllers
                 return RedirectToAction("Create");
             }
 
+            ViewBag.Status = "Add";
             return View("CreateList", new ReligionViewModel { Religions = db.Religions.ToList() });
         }
 
@@ -71,7 +73,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(religion);
+            ViewBag.Status = "Update";
+            return View("CreateList", new ReligionViewModel {Religion = religion, Religions = db.Religions.ToList() });
         }
 
         // POST: Religions/Edit/5
@@ -85,9 +88,10 @@ namespace icrm.Controllers
             {
                 db.Entry(religion).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
-            return View(religion);
+            ViewBag.Status = "Update";
+            return View("CreateList", new ReligionViewModel { Religions = db.Religions.ToList() });
         }
 
         // GET: Religions/Delete/5
@@ -102,7 +106,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(religion);
+            ViewBag.Status = "Delete";
+            return View("CreateList", new ReligionViewModel {Religion = religion, Religions = db.Religions.ToList() });
         }
 
         // POST: Religions/Delete/5
@@ -113,7 +118,7 @@ namespace icrm.Controllers
             Religion religion = db.Religions.Find(id);
             db.Religions.Remove(religion);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Create");
         }
 
         protected override void Dispose(bool disposing)

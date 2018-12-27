@@ -40,6 +40,7 @@ namespace icrm.Controllers
         // GET: Nationalities/Create
         public ActionResult Create()
         {
+            @ViewBag.Status = "Add";
             return View("CreateList",new NationalitiesViewModel { Nationalities = db.Nationalities.ToList()});
         }
 
@@ -57,6 +58,7 @@ namespace icrm.Controllers
                 return RedirectToAction("Create");
             }
 
+            @ViewBag.Status = "Add";
             return View("CreateList", new NationalitiesViewModel { Nationalities = db.Nationalities.ToList() });
         }
 
@@ -72,7 +74,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(nationality);
+            @ViewBag.Status = "Update";
+            return View("CreateList", new NationalitiesViewModel { Nationality = nationality, Nationalities = db.Nationalities.ToList() });
         }
 
         // POST: Nationalities/Edit/5
@@ -86,9 +89,10 @@ namespace icrm.Controllers
             {
                 db.Entry(nationality).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
-            return View(nationality);
+            @ViewBag.Status = "Update";
+            return View("CreateList", new NationalitiesViewModel { Nationalities = db.Nationalities.ToList() });
         }
 
         // GET: Nationalities/Delete/5
@@ -103,7 +107,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(nationality);
+            @ViewBag.Status = "Delete";
+            return View("CreateList", new NationalitiesViewModel { Nationality = nationality, Nationalities = db.Nationalities.ToList() });
         }
 
         // POST: Nationalities/Delete/5
@@ -114,7 +119,7 @@ namespace icrm.Controllers
             Nationality nationality = db.Nationalities.Find(id);
             db.Nationalities.Remove(nationality);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Create");
         }
 
         protected override void Dispose(bool disposing)

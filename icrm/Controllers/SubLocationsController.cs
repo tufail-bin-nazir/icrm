@@ -39,6 +39,7 @@ namespace icrm.Controllers
         // GET: SubLocations/Create
         public ActionResult Create()
         {
+            @ViewBag.Status = "Add";
             ViewBag.Locationlist = db.Locations.ToList();
             return View("CreateList", new SubLocationViewModel { SubLocations = db.SubLocations.ToList()});
         }
@@ -57,8 +58,9 @@ namespace icrm.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Create");
             }
-
-            return View("CreateList", new SubLocationViewModel { SubLocations = db.SubLocations.ToList() });
+            @ViewBag.Status = "Add";
+            ViewBag.Locationlist = db.Locations.ToList();
+           return View("CreateList", new SubLocationViewModel { SubLocations = db.SubLocations.ToList() });
         }
 
         // GET: SubLocations/Edit/5
@@ -73,7 +75,9 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(subLocation);
+            ViewBag.Status = "Update";
+            ViewBag.Locationlist = db.Locations.ToList();
+            return View("CreateList", new SubLocationViewModel { SubLocation = subLocation, SubLocations = db.SubLocations.ToList() });
         }
 
         // POST: SubLocations/Edit/5
@@ -87,9 +91,11 @@ namespace icrm.Controllers
             {
                 db.Entry(subLocation).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
-            return View(subLocation);
+            ViewBag.Status = "Update";
+            ViewBag.Locationlist = db.Locations.ToList();
+           return View("CreateList", new SubLocationViewModel { SubLocations = db.SubLocations.ToList() });
         }
 
         // GET: SubLocations/Delete/5
@@ -104,7 +110,9 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(subLocation);
+            ViewBag.Status = "Delete";
+            ViewBag.Locationlist = db.Locations.ToList();
+            return View("CreateList", new SubLocationViewModel { SubLocation = subLocation, SubLocations = db.SubLocations.ToList() });
         }
 
         // POST: SubLocations/Delete/5
@@ -115,7 +123,7 @@ namespace icrm.Controllers
             SubLocation subLocation = db.SubLocations.Find(id);
             db.SubLocations.Remove(subLocation);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Create");
         }
 
         [HttpPost]

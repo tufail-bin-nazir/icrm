@@ -1,4 +1,5 @@
-﻿@model icrm.Models.ReligionViewModel
+﻿
+@model icrm.Models.DepartmentsViewModel
 @{
     Layout = null;
 }
@@ -40,35 +41,35 @@
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Create Religion</li>
+                    <li class="breadcrumb-item active" aria-current="page">Create Department</li>
                 </ol>
-                <h6 class="slim-pagetitle">Create Religion</h6>
+                <h6 class="slim-pagetitle">Create Department</h6>
             </div>
             <!-- slim-pageheader -->
 
             <div class="section-wrapper">
-                <label class="section-title">Creating Religions</label>
+                <label class="section-title">Creating Departments</label>
                 <p class="mg-b-20 mg-sm-b-40"></p>
 
 
-                <label class="section-title">Admin / Religion</label>
+                <label class="section-title">Admin / Department</label>
                 @using (Html.BeginForm())
                 {
-                    if (ViewBag.Status == "Update")
-                    {
-                        @Html.HiddenFor(x => x.Religion.Id)
-                    }
-
                     @Html.ValidationSummary()
                     @Html.AntiForgeryToken()
+
+                    if (ViewBag.Status == "Update")
+                    {
+                        @Html.HiddenFor(x => x.Department.Id)
+                    }
 
                     <div class="form-layout">
                         <div class="row mg-b-25">
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Religion: <span class="tx-danger">*</span></label>
-                                    @Html.EditorFor(x => x.Religion.name, new { @class = "form-control", placeholder = "Enter Religion", Required = "true" })
+                                    <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
+                                    @Html.EditorFor(x => x.Department.name, new { @class = "form-control", placeholder = "Enter Department", Required = "true" })
 
                                 </div>
                             </div>
@@ -100,7 +101,7 @@
                 <div class="col-lg-12">
                     <div class="card card-table">
                         <div class="card-header">
-                            <h6 class="slim-card-title">Religion List</h6>
+                            <h6 class="slim-card-title">Department List</h6>
                         </div>
                         <!-- card-header -->
                         <div class="table-responsive">
@@ -115,22 +116,22 @@
                                 </thead>
                                 <tbody>
 
-                                    @foreach (var item in Model.Religions)
+                                    @foreach (var item in Model.Departments)
                                     {
-                                    <tr>
-                                        <td class="pd-l-20">
-                                            1
-                                        </td>
-                                        <td>
-                                            <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.name</a>
+                                        <tr>
+                                            <td class="pd-l-20">
+                                                1
+                                            </td>
+                                            <td>
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.name</a>
 
-                                        </td>
-                                        <td class="tx-12">
-                                            <a href="@Url.Action("edit",new {id = item.Id })"> <i class="fa fa-edit"> </i> </a>
-                                            <a href="@Url.Action("Delete",new {id = item.Id })"> <i class="fa fa-trash"> </i> </a>
-
-                                        </td>
-                                    </tr>
+                                            </td>
+                                            <td class="tx-12">
+                                                <a href="@Url.Action("edit",new {id = item.Id })"> <i class="fa fa-edit"> </i> </a>
+                                                <a href="@Url.Action("Delete",new {id = item.Id })"> <i class="fa fa-trash"> </i> </a>
+                                               
+                                            </td>
+                                            </tr>
                                             }
                                     </tbody>
                             </table>
