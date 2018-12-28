@@ -43,9 +43,9 @@ namespace icrm.RepositoryImpl
 
         }
 
-        public IPagedList<Feedback> getAllOpen(int pageIndex, int pageSize)
+        public IPagedList<Feedback> getAllAssigned(int pageIndex, int pageSize)
         {
-            return db.Feedbacks.Where(m=>m.status=="Open").OrderByDescending(m => m.user.Id).ToPagedList(pageIndex, pageSize);
+            return db.Feedbacks.Where(m=>m.status=="Open" && m.departmentID !=null && m.response ==null).OrderByDescending(m => m.user.Id).ToPagedList(pageIndex, pageSize);
 
         }
 
@@ -74,14 +74,36 @@ namespace icrm.RepositoryImpl
 
         }
 
-        public IPagedList<Feedback> getAllWithDepartment(string departId, int pageIndex, int pageSize)
+        public IPagedList<Feedback> getAllOpenWithDepartment(string usrid, int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID== departId).ToPagedList(pageIndex, pageSize);
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.userId== usrid && m.status=="Open" && m.departmentID != null && m.response==null).ToPagedList(pageIndex, pageSize);
         }
 
-        public IPagedList<Feedback> getAllOpenWithDepart(int pageIndex, int pageSize)
+        public IPagedList<Feedback> getAllRespondedWithDepartment(string usrid, int pageIndex, int pageSize)
         {
-            throw new NotImplementedException();
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.userId == usrid  && m.departmentID != null && m.response != null).ToPagedList(pageIndex, pageSize);
+        }
+
+        public IPagedList<Feedback> OpenWithoutDepart(int pageIndex, int pageSize)
+        {
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == null && m.response==null && m.status=="Open").ToPagedList(pageIndex, pageSize);
+
+        }
+
+        public IPagedList<Feedback> getAllResolved(int pageIndex, int pageSize)
+        {
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m =>  m.status == "Resolved").ToPagedList(pageIndex, pageSize);
+
+        }
+
+        public IPagedList<Feedback> getAllResponded(int pageIndex, int pageSize)
+        {
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID != null && m.response != null && m.status == "Open").ToPagedList(pageIndex, pageSize);
+        }
+
+        public IPagedList<Feedback> getAllClosed(int pageIndex, int pageSize)
+        {
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == "Closed").ToPagedList(pageIndex, pageSize);
         }
     }
 }

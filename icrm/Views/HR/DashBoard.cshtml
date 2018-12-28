@@ -222,8 +222,27 @@ new { Value = "Closed", Name = "Closed" },
                                             <td>@Html.DisplayFor(modelitem => item.Data.id)</td>
 
                                             <td>
-                                                <a href="@Url.Action("view", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                                @if (ViewBag.linkName == "openticket")
+                                                {
+                                                    <a href="@Url.Action("openview", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                                }
+                                                @if (ViewBag.linkName == "resolvedticket")
+                                                {
+                                                    <a href="@Url.Action("resolvedview", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                                }
+                                                @if (ViewBag.linkName == "respondedticket")
+                                                {
+                                                    <a href="@Url.Action("respondedview", "HR",new {id=item.Data.id })" class=" fa fa-edit"></a>
+                                                }
 
+                                                @if (ViewBag.linkName == "assignedticket")
+                                                {
+                                                    <a href="@Url.Action("assignedview", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                                }
+                                                @if (ViewBag.linkName == "closedticket")
+                                                {
+                                                    <a href="@Url.Action("closedview", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                                }
                                             </td>
                                             <td>
 

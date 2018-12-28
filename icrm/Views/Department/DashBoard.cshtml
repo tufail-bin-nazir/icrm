@@ -216,7 +216,16 @@ new { Value = "Closed", Name = "Closed" },
                                         </td>
                                         <td>@Html.DisplayFor(modelitem => item.Data.id)</td>
                                         <td>
-                                            <a href="@Url.Action("view", "Department",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                            @if (ViewBag.responded == "respondedlink")
+                                            {
+                                                <a href="@Url.Action("view", "Department", new { id = item.Data.id,name="respondedlink" })" class="fa fa-edit"></a>
+                                               
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("view", "Department", new { id = item.Data.id,name="simplelink" })" class="fa fa-edit"></a>
+                                              
+                                            }
 
 
 

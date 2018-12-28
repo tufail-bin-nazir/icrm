@@ -49,28 +49,38 @@ namespace icrm.Controllers
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-            IPagedList<Feedback> feedbackList = feedInterface.getAllOpen(pageIndex,pageSize);          
+            IPagedList<Feedback> feedbackList = feedInterface.OpenWithoutDepart(pageIndex,pageSize);          
             return View(feedbackList);
         }
 
 
         //HR Ticket Raise
         [HttpGet]
-        [Route("feedback/{id}")]
-        public ActionResult CreatetTicket()
+        [Route("hr/feedback/")]
+        public ActionResult Create()
         {
-            var departments = db.Users.Where(m => m.Roles.Any(s => s.RoleId == "fdc6f3b2-e87b-4719-909d-569ce5340854")).ToList();
+            
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+              var userRole = roleManager.FindByName("User").Users.First();
+            
+            var departRole = roleManager.FindByName("Department").Users.First();
+            Debug.WriteLine(userRole + "------------------iiiiii");
+
+            // var departments = db.Users.Where(m => m.Roles.Any(s => s.RoleId==departRole.RoleId)).ToList();
+
+            var departments = db.Departments.OrderByDescending(m=>m.name).ToList();
             var categories = db.Categories.OrderByDescending(m => m.name).ToList();
             var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-
-            Debug.WriteLine(user.Email+"ajjjajajajajjaaj");
-                ViewBag.Departmn = departments;
+           
+               ViewBag.Departmn = departments;
                 ViewBag.Categories = categories;
                 ViewBag.Priorities = priorities;
-      
-                return View();
+                ViewBag.EmployeeList = db.Users.Where(m => m.Roles.Any(s => s.RoleId==userRole.RoleId)).ToList();
+            Debug.WriteLine(db.Users.Where(m => m.Roles.Any(s => s.RoleId==userRole.RoleId)).ToList().Count() + "------icrm------------iiiiii");
+            return View();
             }
 
         
@@ -82,8 +92,7 @@ namespace icrm.Controllers
         [Route("feedback/{id}")]
         public ActionResult view(int? id)
         {
-            var departments = db.Users.Where(m => m.Roles.Any(s=>s.RoleId == "fdc6f3b2-e87b-4719-909d-569ce5340854")).ToList();
-            var categories = db.Categories.OrderByDescending(m => m.name).ToList();
+            var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
             var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();            
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
@@ -103,50 +112,430 @@ namespace icrm.Controllers
 
         }
 
+
+
+        [HttpPost]
+        [Route("hr/feedback/")]
+        public ActionResult Create(int? id,string submitButton, Feedback feedback, HttpPostedFileBase file)
+        {
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+
+            var userRole = roleManager.FindByName("User").Users.First();
+            var departments = db.Departments.OrderByDescending(m => m.name).ToList();
+            var categories = db.Categories.OrderByDescending(m => m.name).ToList();
+            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+
+            ViewBag.Departmn = departments;
+            ViewBag.EmployeeList = db.Users.Where(m => m.Roles.Any(s => s.RoleId == userRole.RoleId)).ToList();
+            ViewBag.Categories = categories;
+            ViewBag.Priorities = priorities;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+
+            if (feedback.userId == null) {
+                feedback.userId=user.Id;
+            }
+            
+            var fileSize = file.ContentLength;
+            if (fileSize > 10 * 1024 * 1024)
+            {
+
+                
+                TempData["Message"] = "File Size Limit Exceeds";
+                return View("Create", feedback);
+            }
+            else
+            {
+                switch (submitButton)
+                {
+                    case "Forward":
+                        if (feedback.departmentID != null && feedback.response == null)
+                        {
+                            if (ModelState.IsValid)
+                            {
+                                feedback.assignedBy = user.Id;
+                                feedback.assignedDate = DateTime.Today;
+                                if (file != null && file.ContentLength > 0)
+                                {
+
+                                    feedback.attachment = file.FileName;
+                                    file.SaveAs(Server.MapPath("~/Images/" + file.FileName));
+                                }
+                                feedInterface.Save(feedback);
+                                TempData["Message"] = "Feedback Saved";
+                               
+                            }
+                            else
+                            {
+                                ViewData["user"] = user;
+                                TempData["Message"] = "Fill feedback Properly";
+                                return View("Create", feedback);
+                            }
+                        }
+                        else
+                        {
+                            TempData["Message"] = "Either Select Department/Comment field should be empty";
+                            return View("Create", feedback);
+                        }
+                        return View("Create");
+
+
+                    case "Resolve":
+                        if (feedback.departmentID == null && feedback.response != null)
+                        {
+                            if (ModelState.IsValid)
+                            {
+                                
+                                if (file != null && file.ContentLength > 0)
+                                {
+
+                                    feedback.attachment = file.FileName;
+                                    file.SaveAs(Server.MapPath("~/Images/" + file.FileName));
+                                }
+                                feedInterface.Save(feedback);
+                                TempData["Message"] = "Feedback Saved";
+                                return RedirectToAction("Create");
+                            }
+                            else
+                            {
+                                ViewData["user"] = user;
+                                TempData["Message"] = "Fill feedback Properly";
+                                return View("Create", feedback);
+                            }
+
+                        }
+                        else
+                        {
+                            TempData["Message"] = "Response Field is Empty/ Clear department";
+                            return View("Create", feedback);
+                        }
+                      
+                    default:
+                        return RedirectToAction("Create");
+                     
+
+                }
+
+            }
+            
+
+        }
+
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("update/")]
+        public ActionResult update(Feedback feedback)
+        {
+            string type=Request.Form["typeoflink"];
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+
+            var userRole = roleManager.FindByName("User").Users.First();
+            var departments = db.Departments.OrderByDescending(m => m.name).ToList();
+            var categories = db.Categories.OrderByDescending(m => m.name).ToList();
+            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+
+            ViewBag.Departmn = departments;
+            ViewBag.EmployeeList = db.Users.Where(m => m.Roles.Any(s => s.RoleId == userRole.RoleId)).ToList();
+            ViewBag.Categories = categories;
+            ViewBag.Priorities = priorities;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            Feedback f = db.Feedbacks.Find(feedback.id);
+            f.status = feedback.status;
+            
+            if (feedback.status == "Closed") {
+                f.closedDate = DateTime.Today;
+            }
+           
+            switch(type)
+            {
+                case "Resolvedtype":
+                    if (ModelState.IsValid)
+                    {
+
+                        db.Entry(f).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    @TempData["Message"] = "Updated";
+                    return View("resolvedview",feedback);
+                case "Respondedtype":
+                    if (ModelState.IsValid)
+                    {
+
+                        db.Entry(f).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    @TempData["Message"] = "Updated";
+                    return View("respondedview", feedback);
+                case "Assignedtype":
+                    f.response = feedback.response;
+                    f.responseDate = DateTime.Today;
+                    if (ModelState.IsValid)
+                    {
+
+                        db.Entry(f).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    @TempData["Message"] = "Updated";
+                    return View("assignedview", feedback);
+                 default:
+                    return View("Assignedtype", feedback);
+                  
+            }
+           
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("assigndepart/")]
-        public ActionResult assign(Feedback feedback)
+        public ActionResult assign(string submitButton,Feedback feedback)
         {
-            if (feedback.departmentID == null || feedback.categoryId==null || feedback.priorityId==null) {
-                TempData["displayMsg"] = "Enter Fields Properly";
-                return RedirectToAction("view",new { id=feedback.id});
-            }
-
+            Debug.WriteLine(submitButton+"------------------");
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             feedback.assignedBy = user.Id;
             feedback.assignedDate = DateTime.Today;
-            feedback.userDepartment = db.Users.Find(feedback.departmentID);
+           
             feedback.user = db.Users.Find(feedback.userId);
-
-            if (ModelState.IsValid)
-            {                
-                db.Entry(feedback).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["displayMsg"] ="Department assigned to  FeedBack ";
-                return RedirectToAction("view",new { id = feedback.id });
-            }
-            else
+            switch (submitButton)
             {
-                 TempData["displayMsg"] = "Enter Fields Properly";
-                return RedirectToAction("view", new { id = feedback.id });
-                
+                case "Forward":
+                    if (feedback.departmentID != null && feedback.response == null)
+                    {
+                        feedback.department = db.Departments.Find(feedback.departmentID);
+                        if (ModelState.IsValid)
+                        {
+                            feedback.assignedBy = user.Id;
+                            feedback.assignedDate = DateTime.Today;
+
+                            db.Entry(feedback).State = EntityState.Modified;
+                            db.SaveChanges();
+                            TempData["Message"] = "Feedback Forwarded";
+
+                        }
+                        else
+                        {
+                            ViewData["user"] = user;
+                            TempData["Message"] = "Fill feedback Properly";
+                            return RedirectToAction("view", new { id = feedback.id });
+                        }
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Either Select Department or Comment field should be empty";
+                        return RedirectToAction("view", new { id = feedback.id });
+                    }
+                    return RedirectToAction("view", new { id = feedback.id });
+
+
+                case "Resolve":
+                    if (feedback.departmentID == null && feedback.response != null)
+                    {
+                        if (ModelState.IsValid)
+                        {
+
+
+                            db.Entry(feedback).State = EntityState.Modified;
+                            db.SaveChanges();
+                            TempData["Message"] = "Feedback Resolved";
+                            return RedirectToAction("view", new { id = feedback.id });
+                        }
+                        else
+                        {
+                          
+                            TempData["Message"] = "Fill feedback Properly";
+                            return RedirectToAction("view", new { id = feedback.id });
+                        }
+
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Either Empty Response Field or Deselect department";
+                        return RedirectToAction("view", new { id = feedback.id });
+                    }
+
+                default:
+                    return RedirectToAction("view", new { id = feedback.id });
+
+
             }
+
 
         }
-
-        
-        public ActionResult open(int? page)
+        public ActionResult open(int? page, string id)
         {
+            ViewBag.linkName = id;
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-            IPagedList<Feedback> feedbackList = feedInterface.getAllOpenWithDepart(pageIndex, pageSize);
-            return View(feedbackList);
+            IPagedList<Feedback> feedbackList = feedInterface.OpenWithoutDepart(pageIndex, pageSize);
+            return View("Dashboard", feedbackList);
         }
 
+        public ActionResult assigned(int? page, string id)
+        {
+            ViewBag.linkName = id;
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            IPagedList<Feedback> feedbackList = feedInterface.getAllAssigned(pageIndex, pageSize);
+            return View("Dashboard",feedbackList);
+        }
+
+        public ActionResult resolved(int? page,string id)
+        {
+            ViewBag.linkName = id;
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            IPagedList<Feedback> feedbackList = feedInterface.getAllResolved(pageIndex, pageSize);
+            return View("Dashboard", feedbackList);
+        }
+
+        public ActionResult responded(int? page, string id)
+        {
+            ViewBag.linkName = id;
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            IPagedList<Feedback> feedbackList = feedInterface.getAllResponded(pageIndex, pageSize);
+            return View("Dashboard", feedbackList);
+        }
+
+        public ActionResult Closed(int? page, string id)
+        {
+            ViewBag.linkName = id;
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            IPagedList<Feedback> feedbackList = feedInterface.getAllClosed(pageIndex, pageSize);
+            return View("Dashboard", feedbackList);
+        }
+        //  <a href = "@Url.Action("view", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
+
+
+
+
+        public ActionResult openview(int? id)
+        {
+            var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
+            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            if (id == null)
+            {
+                ViewBag.ErrorMsg = "FeedBack not found";
+                return RedirectToAction("list");
+            }
+            else
+            {
+                ViewBag.Departmn = departments;
+                ViewBag.Categories = categories;
+                ViewBag.Priorities = priorities;
+                Feedback f = feedInterface.Find(id);
+                return View("view",f);
+            }
+        }
+        public ActionResult resolvedview(int? id)
+        {
+            var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
+            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            if (id == null)
+            {
+                ViewBag.ErrorMsg = "FeedBack not found";
+                return RedirectToAction("list");
+            }
+            else
+            {
+                ViewBag.Departmn = departments;
+                ViewBag.Categories = categories;
+                ViewBag.Priorities = priorities;
+                Feedback f = feedInterface.Find(id);
+                return View(f);
+            }
+        }
+
+
+        public ActionResult assignedview(int? id)
+        {
+            var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
+            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            if (id == null)
+            {
+                ViewBag.ErrorMsg = "FeedBack not found";
+                return RedirectToAction("list");
+            }
+            else
+            {
+                ViewBag.Departmn = departments;
+                ViewBag.Categories = categories;
+                ViewBag.Priorities = priorities;
+                Feedback f = feedInterface.Find(id);
+                return View(f);
+            }
+        }
+
+
+        public ActionResult respondedview(int? id)
+        {
+            var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
+            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            if (id == null)
+            {
+                ViewBag.ErrorMsg = "FeedBack not found";
+                return RedirectToAction("list");
+            }
+            else
+            {
+                ViewBag.Departmn = departments;
+                ViewBag.Categories = categories;
+                ViewBag.Priorities = priorities;
+                Feedback f = feedInterface.Find(id);
+                return View(f);
+            }
+        }
+
+
+        public ActionResult closedview(int? id)
+        {
+            var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
+            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            if (id == null)
+            {
+                ViewBag.ErrorMsg = "FeedBack not found";
+                return RedirectToAction("list");
+            }
+            else
+            {
+                ViewBag.Departmn = departments;
+                ViewBag.Categories = categories;
+                ViewBag.Priorities = priorities;
+                Feedback f = feedInterface.Find(id);
+                return View(f);
+            }
+        }
     }
 }
