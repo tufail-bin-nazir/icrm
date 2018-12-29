@@ -49,22 +49,44 @@ namespace icrm.RepositoryImpl
 
         }
 
-        public IPagedList<Feedback> search(DateTime d1, DateTime d2,int pageIndex, int pageSize)
+        public IEnumerable<Feedback> searchlist(DateTime d1, DateTime d2) {
+
+            
+            IEnumerable<Feedback> feedbacks = db.Feedbacks.ToList();
+            var query = from f in feedbacks
+                        where (f.createDate >= d1 && f.createDate <= d2)
+                        select f;
+            return query.ToList();
+                        
+
+        }
+        public IPagedList<Feedback> search(string status,string d1, string d2,int pageIndex, int pageSize)
         {
             var param1 = new SqlParameter();
-            param1.ParameterName = "@Date1";
-           
-            param1.SqlDbType = SqlDbType.DateTime;
+            param1.ParameterName = "@D1";
+         
+            param1.SqlDbType = SqlDbType.VarChar;
             param1.SqlValue = d1;
 
             var param2 = new SqlParameter();
-            param2.ParameterName = "@Date2";
-            param2.SqlDbType = SqlDbType.DateTime;
+            param2.ParameterName = "@D2";
+            param2.SqlDbType = SqlDbType.VarChar;
             param2.SqlValue = d2;
 
-            var result = db.Feedbacks.SqlQuery("searchcriteria @Date1,@Date2", param1, param2).ToPagedList(pageIndex, pageSize);
+            var param3 = new SqlParameter();
+            param1.ParameterName = "@Status";
+
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = status;
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("search @D1,@D2,@Status", param1, param2,param3).ToList();
+            foreach (var r in result) {
+                feedlist.Add(r);
+                System.Diagnostics.Debug.WriteLine(r.id+ "llllllllllllllllllll");
+            }
             
-            return result;
+            return feedlist.ToPagedList(pageIndex,pageSize);
           //  return db.Feedbacks.OrderByDescending(x => x.user.Id).Where(x => x.title.StartsWith(search) || search == null).ToPagedList(pageIndex, pageSize);
         }
 
@@ -74,6 +96,11 @@ namespace icrm.RepositoryImpl
 
         }
 
+        public IEnumerable<Feedback> getAllOpen()
+        {
+            return db.Feedbacks.OrderByDescending(m => m.user.Id).Where(m=>m.status=="Open").ToList();
+
+        }
         public IPagedList<Feedback> getAllOpenWithDepartment(string usrid, int pageIndex, int pageSize)
         {
             return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.userId== usrid && m.status=="Open" && m.departmentID != null && m.response==null).ToPagedList(pageIndex, pageSize);
@@ -105,5 +132,14 @@ namespace icrm.RepositoryImpl
         {
             return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == "Closed").ToPagedList(pageIndex, pageSize);
         }
+        public IEnumerable<Feedback> getAllClosed()
+        {
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == "Closed").ToList();
+        }
+        public IEnumerable<Feedback> getAllResolved()
+        {
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m =>  m.status == "Resolved").ToList();
+        }
+
     }
 }

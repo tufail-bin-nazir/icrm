@@ -43,7 +43,11 @@ namespace icrm.Controllers
 
         // GET: HR DAshboard
         public ActionResult DashBoard(int? page)
-        {      
+        {
+            ViewBag.TotalTickets = feedInterface.getAll().Count();
+            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
+            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
+            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
@@ -369,6 +373,10 @@ namespace icrm.Controllers
         }
         public ActionResult open(int? page, string id)
         {
+            ViewBag.TotalTickets = feedInterface.getAll().Count();
+            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
+            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
+            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
             ViewBag.linkName = id;
             int pageSize = 10;
             int pageIndex = 1;
@@ -381,6 +389,10 @@ namespace icrm.Controllers
 
         public ActionResult assigned(int? page, string id)
         {
+            ViewBag.TotalTickets = feedInterface.getAll().Count();
+            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
+            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
+            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
             ViewBag.linkName = id;
             int pageSize = 10;
             int pageIndex = 1;
@@ -393,6 +405,10 @@ namespace icrm.Controllers
 
         public ActionResult resolved(int? page,string id)
         {
+            ViewBag.TotalTickets = feedInterface.getAll().Count();
+            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
+            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
+            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
             ViewBag.linkName = id;
             int pageSize = 10;
             int pageIndex = 1;
@@ -405,6 +421,10 @@ namespace icrm.Controllers
 
         public ActionResult responded(int? page, string id)
         {
+            ViewBag.TotalTickets = feedInterface.getAll().Count();
+            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
+            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
+            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
             ViewBag.linkName = id;
             int pageSize = 10;
             int pageIndex = 1;
@@ -417,6 +437,10 @@ namespace icrm.Controllers
 
         public ActionResult Closed(int? page, string id)
         {
+            ViewBag.TotalTickets = feedInterface.getAll().Count();
+            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
+            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
+            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
             ViewBag.linkName = id;
             int pageSize = 10;
             int pageIndex = 1;

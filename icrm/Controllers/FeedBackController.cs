@@ -167,7 +167,7 @@ namespace icrm.Controllers
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
 
-           IPagedList<Feedback> feedbacks=feedInterface.search(d1,d2, pageIndex, pageSize);
+          // IPagedList<Feedback> feedbacks=feedInterface.search(d1,d2, pageIndex, pageSize);
             return View("dashboard");
 
         }
