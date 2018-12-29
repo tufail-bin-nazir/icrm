@@ -27,6 +27,7 @@ namespace icrm.Models
         public string userId { get; set; }
         public virtual ApplicationUser user { get; set; }
 
+
         public int? departmentID { get; set; }
         public virtual Department department { get; set; }
 
