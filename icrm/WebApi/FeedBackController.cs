@@ -110,9 +110,10 @@ namespace icrm.WebApi
         }
 
         //[HttpGet]
-        //public IHttpActionResult GetFeedbacks() {
+        //public IHttpActionResult GetFeedbacks()
+        //{
         //    var query = from f in feedInterface.getAll()
-        //                select new { f.email, f.contactNo };
+        //                select new { f.user.Email, f.user.PhoneNumber };
         //    return Ok(query.ToList());
 
         //}
