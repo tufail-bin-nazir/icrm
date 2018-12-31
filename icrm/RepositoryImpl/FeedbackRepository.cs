@@ -60,7 +60,7 @@ namespace icrm.RepositoryImpl
                         
 
         }
-        public IPagedList<Feedback> search(string status,string d1, string d2,int pageIndex, int pageSize)
+        public IPagedList<Feedback> search(string d1, string d2, string status, string id,int pageIndex, int pageSize)
         {
             var param1 = new SqlParameter();
             param1.ParameterName = "@D1";
@@ -73,21 +73,25 @@ namespace icrm.RepositoryImpl
             param2.SqlDbType = SqlDbType.VarChar;
             param2.SqlValue = d2;
 
-            var param3 = new SqlParameter();
-            param1.ParameterName = "@Status";
 
-            param1.SqlDbType = SqlDbType.VarChar;
-            param1.SqlValue = status;
+            var param3 = new SqlParameter();
+            param3.ParameterName = "@Status";
+            param3.SqlDbType = SqlDbType.VarChar;
+            param3.SqlValue = status;
+
+
+            var param4 = new SqlParameter();
+            param4.ParameterName = "@id";
+            param4.SqlDbType = SqlDbType.VarChar;
+            param4.SqlValue = id;
 
             List<Feedback> feedlist = new List<Feedback>();
-            var result = db.Feedbacks.SqlQuery("search @D1,@D2,@Status", param1, param2,param3).ToList();
+            var result = db.Feedbacks.SqlQuery("search @D1,@D2,@Status,@id", param1, param2, param3, param4).ToList();
             foreach (var r in result) {
                 feedlist.Add(r);
-                System.Diagnostics.Debug.WriteLine(r.id+ "llllllllllllllllllll");
             }
             
             return feedlist.ToPagedList(pageIndex,pageSize);
-          //  return db.Feedbacks.OrderByDescending(x => x.user.Id).Where(x => x.title.StartsWith(search) || search == null).ToPagedList(pageIndex, pageSize);
         }
 
         public IEnumerable<Feedback> getAll()
@@ -141,5 +145,35 @@ namespace icrm.RepositoryImpl
             return db.Feedbacks.OrderByDescending(m => m.id).Where(m =>  m.status == "Resolved").ToList();
         }
 
+        public IPagedList<Feedback> searchHR(string d1, string d2, string status, int pageIndex, int pageSize)
+        {
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@D1";
+
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = d1;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@D2";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = d2;
+
+
+            var param3 = new SqlParameter();
+            param3.ParameterName = "@Status";
+            param3.SqlDbType = SqlDbType.VarChar;
+            param3.SqlValue = status;
+
+
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("searchHR @D1,@D2,@Status", param1, param2, param3).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToPagedList(pageIndex, pageSize);
+        }
     }
 }

@@ -13,6 +13,7 @@ using icrm.RepositoryImpl;
 using System.Data.Entity;
 using System.Net;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Globalization;
 
 namespace icrm.Controllers
 {
@@ -44,6 +45,7 @@ namespace icrm.Controllers
         // GET: HR DAshboard
         public ActionResult DashBoard(int? page)
         {
+            ViewBag.linkName = "openticket";
             ViewBag.TotalTickets = feedInterface.getAll().Count();
             ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
             ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
@@ -71,7 +73,6 @@ namespace icrm.Controllers
             var departRole = roleManager.FindByName("Department").Users.First();
             Debug.WriteLine(userRole + "------------------iiiiii");
 
-            // var departments = db.Users.Where(m => m.Roles.Any(s => s.RoleId==departRole.RoleId)).ToList();
 
             var departments = db.Departments.OrderByDescending(m=>m.name).ToList();
             var categories = db.Categories.OrderByDescending(m => m.name).ToList();
@@ -83,7 +84,6 @@ namespace icrm.Controllers
                 ViewBag.Categories = categories;
                 ViewBag.Priorities = priorities;
                 ViewBag.EmployeeList = db.Users.Where(m => m.Roles.Any(s => s.RoleId==userRole.RoleId)).ToList();
-            Debug.WriteLine(db.Users.Where(m => m.Roles.Any(s => s.RoleId==userRole.RoleId)).ToList().Count() + "------icrm------------iiiiii");
             return View();
             }
 
@@ -371,6 +371,51 @@ namespace icrm.Controllers
 
 
         }
+
+        [HttpPost]
+        [Route("hr/search/")]
+        public ActionResult search(int? page)
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewBag.TotalTickets = feedInterface.getAll().Count();
+            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
+            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
+            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
+            ViewBag.Status = Request.Form["Status"];
+            string status = Request.Form["Status"]; ;
+            switch (status)
+            {
+                case "Open":
+                    ViewBag.linkName = "openticket";
+                    break;
+                case "Resolved":
+                    ViewBag.linkName = "resolvedticket";
+                    break;
+                case "Closed":
+                    ViewBag.linkName = "closedticket";
+                    break;
+                default:
+                    ViewBag.linkName = "openticket";
+                    break;
+            }
+            string d3 = Request.Form["date22"];
+
+            string dd = Request.Form["date1"];
+
+            DateTime dt = DateTime.ParseExact(dd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            DateTime dt2 = DateTime.ParseExact(d3, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
+            ViewBag.showDate = Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff");
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            ViewData["user"] = user;
+            IPagedList<Feedback> feedbacks = feedInterface.searchHR(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), status, pageIndex, pageSize);
+            return View("DashBoard", feedbacks);
+
+        }
+
+
         public ActionResult open(int? page, string id)
         {
             ViewBag.TotalTickets = feedInterface.getAll().Count();
