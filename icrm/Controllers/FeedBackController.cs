@@ -16,6 +16,7 @@ using icrm.RepositoryImpl;
 using System.Data.SqlClient;
 using System.Data;
 using System.Globalization;
+using System.IO;
 
 namespace icrm.Controllers
 {
@@ -111,7 +112,8 @@ namespace icrm.Controllers
                 if (file != null && file.ContentLength > 0) {
                     
                     feedback.attachment = file.FileName;
-                    file.SaveAs(Server.MapPath(icrm.Models.Constants.PATH + file.FileName));
+                   string filename= Path.Combine(icrm.Models.Constants.PATH, file.FileName);
+                    file.SaveAs(filename);
                 }
                     feedInterface.Save(feedback);
                 TempData["Message"] = "Feedback Saved";

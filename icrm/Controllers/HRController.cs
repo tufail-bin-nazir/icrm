@@ -14,6 +14,7 @@ using System.Data.Entity;
 using System.Net;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Globalization;
+using System.IO;
 
 namespace icrm.Controllers
 {
@@ -163,7 +164,8 @@ namespace icrm.Controllers
                                 {
 
                                     feedback.attachment = file.FileName;
-                                    file.SaveAs(Server.MapPath(icrm.Models.Constants.PATH + file.FileName));
+                                    string filename = Path.Combine(icrm.Models.Constants.PATH, file.FileName);
+                                    file.SaveAs(filename);
                                 }
                                 feedInterface.Save(feedback);
                                 TempData["Message"] = "Feedback Saved";
@@ -194,7 +196,8 @@ namespace icrm.Controllers
                                 {
 
                                     feedback.attachment = file.FileName;
-                                    file.SaveAs(Server.MapPath(icrm.Models.Constants.PATH + file.FileName));
+                                    string filename = Path.Combine(icrm.Models.Constants.PATH, file.FileName);
+                                    file.SaveAs(filename);
                                 }
                                 feedInterface.Save(feedback);
                                 TempData["Message"] = "Feedback Saved";
