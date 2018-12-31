@@ -27,8 +27,9 @@ namespace icrm.Models
         public string userId { get; set; }
         public virtual ApplicationUser user { get; set; }
 
-        public string departmentID { get; set; }
-        public virtual ApplicationUser userDepartment { get; set; }
+
+        public int? departmentID { get; set; }
+        public virtual Department department { get; set; }
 
         public string status { get; set; }
 
@@ -55,6 +56,8 @@ namespace icrm.Models
 
         public string response { get; set; }
 
+        public string submittedById { get; set; }
+        public virtual ApplicationUser submittedBy { get; set; }
 
     }
 }

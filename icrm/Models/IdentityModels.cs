@@ -33,7 +33,7 @@ namespace icrm.Models
 
         public int? NationalityId { get; set; }
 
-        public Nationality Nationality { get; set; }
+        public virtual Nationality Nationality { get; set; }
 
         public int? DepartmentId { get; set; }
 

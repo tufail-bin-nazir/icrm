@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -43,23 +44,49 @@ namespace icrm.Controllers
         // GET: Agent
         public ActionResult DashBoard(int? page)
         {
-
+            ViewBag.TotalTickets = feedInterface.getAll().Count();
+            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
+            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
+            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-            IPagedList<Feedback> feedbackList = feedInterface.getAllWithDepartment(user.Id,pageIndex, pageSize);
+            IPagedList<Feedback> feedbackList = feedInterface.getAllOpenWithDepartment(user.Id,pageIndex, pageSize);
+
             return View(feedbackList);
         }
 
 
 
+        // GET: Agent
+        public ActionResult responded(int? page)
+        {
+            ViewBag.TotalTickets = feedInterface.getAll().Count();
+            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
+            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
+            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
+
+            ViewBag.responded = "respondedlink";
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            IPagedList<Feedback> feedbackList = feedInterface.getAllRespondedWithDepartment(user.Id, pageIndex, pageSize);
+            return View("Dashboard",feedbackList);
+        }
+        
+
         [HttpGet]
         [Route("view/{id}")]
-        public ActionResult view(int? id)
+        public ActionResult view(string name, int? id)
         {
-            var departments = db.Users.Where(m => m.Roles.Any(s => s.RoleId == "fdc6f3b2-e87b-4719-909d-569ce5340854")).ToList();
+            ViewBag.viewlink = name;
+
+
+            var departments = db.Departments.OrderByDescending(m => m.name).ToList();
             var categories = db.Categories.OrderByDescending(m => m.name).ToList();
             var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
             var user = UserManager.FindById(User.Identity.GetUserId());
@@ -91,10 +118,12 @@ namespace icrm.Controllers
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-            feedback.responseDate = DateTime.Today;
+            Feedback f = db.Feedbacks.Find(feedback.id);
+            f.responseDate = DateTime.Today;
+            f.response = feedback.response;
             if (ModelState.IsValid)
             {
-                db.Entry(feedback).State = EntityState.Modified;
+                db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();             
                 return RedirectToAction("DashBoard");
             }
@@ -106,6 +135,28 @@ namespace icrm.Controllers
             }
 
         }
+        [HttpPost]
+        [Route("search/")]
+        public ActionResult search(int? page)
+        {
+            ViewBag.Status = Request.Form["Status"];
+            string status= Request.Form["Status"]; ;
+            string d3 = Request.Form["date22"];
 
+            string dd = Request.Form["date1"];
+
+            DateTime dt = DateTime.ParseExact(dd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+           DateTime dt2= DateTime.ParseExact(d3, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+           
+            ViewBag.showDate = Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff");
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            IPagedList<Feedback> feedbacks = feedInterface.search(status,Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), pageIndex, pageSize);
+            return View("DashBoard",feedbacks);
+
+        }
     }
 }

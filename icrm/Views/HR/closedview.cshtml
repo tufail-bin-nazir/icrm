@@ -165,7 +165,7 @@
                                     <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.departmentID,
                           new SelectList(ViewBag.Departmn,
-                        "Id", "name"), "Choose Department", new { @class = "form-control select2" })
+                        "Id", "name"), "Choose Department", new { @readonly = "readonly", @class = "form-control select2" })
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -174,7 +174,7 @@
                                     <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.categoryId,
                            new SelectList(ViewBag.Categories,
-                         "Id", "name"), "Choose Category", new { @class = "form-control select2" })
+                         "Id", "name"), "Choose Category", new { @readonly = "readonly", @class = "form-control select2" })
                                 </div>
                             </div>
 
@@ -184,7 +184,7 @@
                                     <label class="form-control-label">Priority: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.priorityId,
                            new SelectList(ViewBag.Priorities,
-                         "Id", "priorityId"), "Choose Priority", new { @class = "form-control select2" })
+                         "Id", "priorityId"), "Choose Priority", new { @readonly = "readonly", @class = "form-control select2" })
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -217,7 +217,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Choose Action</label>
-                                        @Html.DropDownListFor(m => m.status, ViewData["list"] as SelectList, new { @class = "form-control", id = "statusfield" })
+                                        @Html.DropDownListFor(m => m.status, ViewData["list"] as SelectList, new { @readonly = "readonly", @class = "form-control", id = "statusfield" })
                                     </div>
                                     <label class="text-danger" id="statuscheck" ></label>
                                 </div>
@@ -225,7 +225,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Comment</label>
-                                        @Html.TextAreaFor(m => m.response, new { @class = "form-control" })
+                                        @Html.TextAreaFor(m => m.response, new { @readonly = "readonly", @class = "form-control" })
 
 
                                     </div>
@@ -234,10 +234,7 @@
 
                         
                         <!-- row -->
-                        <div class="form-layout-footer">
-                            <input type="submit" value="Forward" name="submitButton" id="forward" class="btn btn-primary bd-0" />
-                            <input type="submit" value="Resolve" name="submitButton" id="resolve" class="btn btn-primary bd-0" />
-                        </div>
+                      
                         <!-- form-layout-footer -->
                     </div>
 
