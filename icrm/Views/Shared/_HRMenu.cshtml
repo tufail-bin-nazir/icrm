@@ -201,12 +201,13 @@
                 </a>
                 <div class="sub-item">
                     <ul>
+                        <li class="active">@Html.ActionLink("Create Ticket", "Create", "HR")</li>
                         <li class="active">@Html.ActionLink("Open Tickets", "open", "HR", new { id = "openticket" }, null)</li>
-                        <li>@Html.ActionLink("Resolved Tickets", "resolved", "HR",new { id="resolvedticket"},null)</li>
+                        <li>@Html.ActionLink("Resolved Tickets", "resolved", "HR", new { id = "resolvedticket" }, null)</li>
                         <li>@Html.ActionLink("Assigned Tickets", "assigned", "HR", new { id = "assignedticket" }, null)</li>
                         <li>@Html.ActionLink("Responded Tickets", "responded", "HR", new { id = "respondedticket" }, null)</li>
                         <li>@Html.ActionLink("Closed Tickets", "Closed", "HR", new { id = "closedticket" }, null)</li>
-                       
+
                     </ul>
                 </div>
                 <!-- dropdown-menu -->
