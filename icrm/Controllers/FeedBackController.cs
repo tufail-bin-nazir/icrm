@@ -106,16 +106,20 @@ namespace icrm.Controllers
                 TempData["Message"] = "File Size Limit Exceeds";
                 return View("add", feedback);
             }
-
+            string filename=null;
             if (ModelState.IsValid)
             {
                 if (file != null && file.ContentLength > 0) {
+
+                    String ext = Path.GetExtension(file.FileName);
+                     filename= $@"{Guid.NewGuid()}" + ext;
+                    feedback.attachment = filename;
                     
-                    feedback.attachment = file.FileName;
-                   string filename= Path.Combine(icrm.Models.Constants.PATH, file.FileName);
-                    file.SaveAs(filename);
+                    
+                    file.SaveAs(Path.Combine(icrm.Models.Constants.PATH, filename));
                 }
                     feedInterface.Save(feedback);
+                TempData["Path"] = filename;
                 TempData["Message"] = "Feedback Saved";
                 return RedirectToAction("add");
             }

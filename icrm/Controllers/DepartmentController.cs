@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -277,6 +278,19 @@ namespace icrm.Controllers
                 Feedback f = feedInterface.Find(id);
                 return View(f);
             }
+        }
+
+
+        public void DownloadFile(string filename)
+        {
+            string myfile = Models.Constants.PATH + filename;
+
+            var fi = new FileInfo(myfile);
+            Response.Clear();
+            Response.ContentType = "application/octet-stream";
+            Response.AddHeader("Content-Disposition", "attachment; filename=" + fi.Name);
+            Response.WriteFile(myfile);
+            Response.End();
         }
     }
 }

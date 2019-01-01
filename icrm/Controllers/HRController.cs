@@ -158,14 +158,15 @@ namespace icrm.Controllers
                         {
                             if (ModelState.IsValid)
                             {
+                                string filename = null;
                                 feedback.assignedBy = user.Id;
                                 feedback.assignedDate = DateTime.Today;
                                 if (file != null && file.ContentLength > 0)
                                 {
-
-                                    feedback.attachment = file.FileName;
-                                    string filename = Path.Combine(icrm.Models.Constants.PATH, file.FileName);
-                                    file.SaveAs(filename);
+                                    String ext = Path.GetExtension(file.FileName);
+                                    filename = $@"{Guid.NewGuid()}" + ext;
+                                    feedback.attachment = filename;
+                                    file.SaveAs(Path.Combine(icrm.Models.Constants.PATH, filename));
                                 }
                                 feedInterface.Save(feedback);
                                 TempData["Message"] = "Feedback Saved";
@@ -191,13 +192,13 @@ namespace icrm.Controllers
                         {
                             if (ModelState.IsValid)
                             {
-                                
+                                String filename = null;
                                 if (file != null && file.ContentLength > 0)
                                 {
-
-                                    feedback.attachment = file.FileName;
-                                    string filename = Path.Combine(icrm.Models.Constants.PATH, file.FileName);
-                                    file.SaveAs(filename);
+                                    String ext = Path.GetExtension(file.FileName);
+                                    filename = $@"{Guid.NewGuid()}" + ext;
+                                    feedback.attachment = filename;
+                                    file.SaveAs(Path.Combine(icrm.Models.Constants.PATH, filename));
                                 }
                                 feedInterface.Save(feedback);
                                 TempData["Message"] = "Feedback Saved";
@@ -498,13 +499,13 @@ namespace icrm.Controllers
             IPagedList<Feedback> feedbackList = feedInterface.getAllClosed(pageIndex, pageSize);
             return View("Dashboard", feedbackList);
         }
-        //  <a href = "@Url.Action("view", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
 
 
 
 
         public ActionResult openview(int? id)
         {
+            
             var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
             var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
             var user = UserManager.FindById(User.Identity.GetUserId());
@@ -609,5 +610,20 @@ namespace icrm.Controllers
                 return View(f);
             }
         }
+
+
+        public void DownloadFile(string filename)
+        {
+            string myfile = Models.Constants.PATH + filename;
+            
+            var fi = new FileInfo(myfile);
+            Response.Clear();
+            Response.ContentType = "application/octet-stream";
+            Response.AddHeader("Content-Disposition", "attachment; filename=" + fi.Name);
+            Response.WriteFile(myfile);
+            Response.End();
+        }
+
+        
     }
 }
