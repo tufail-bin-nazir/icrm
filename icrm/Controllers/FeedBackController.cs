@@ -138,7 +138,7 @@ namespace icrm.Controllers
 
         [HttpGet]
         [Route("viewfeedback/{id}")]
-        public ActionResult view(int? id)
+        public ActionResult view(string id)
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;

@@ -12,7 +12,7 @@ namespace icrm.RepositoryInterface
     interface IFeedback : IDisposable
     {
         void Save(Feedback feedback);
-        Feedback Find(int? id);
+        Feedback Find(string id);
         IPagedList<Feedback> Pagination(int pageIndex, int pageSize,string userId);
         IPagedList<Feedback> getAllAssigned(int pageIndex, int pageSize);
         IPagedList<Feedback> search(string d1,string d2,string status,string id,int pageIndex, int pageSize);

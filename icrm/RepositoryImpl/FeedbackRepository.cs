@@ -31,7 +31,7 @@ namespace icrm.RepositoryImpl
 
         }
 
-        public Feedback Find(int? id)
+        public Feedback Find(string id)
         {
             return db.Feedbacks.Find(id);
         }

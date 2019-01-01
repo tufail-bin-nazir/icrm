@@ -69,11 +69,11 @@ namespace icrm.Controllers
             
 
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
-              var userRole = roleManager.FindByName("User").Users.First();
-            
-            var departRole = roleManager.FindByName("Department").Users.First();
-            Debug.WriteLine(userRole + "------------------iiiiii");
-
+              var userRole = roleManager.FindByName("User").Users.FirstOrDefault();
+            if (userRole!=null) {
+                ViewBag.EmployeeList = db.Users.Where(m => m.Roles.Any(s => s.RoleId == userRole.RoleId)).ToList();
+                }
+           
 
             var departments = db.Departments.OrderByDescending(m=>m.name).ToList();
             var categories = db.Categories.OrderByDescending(m => m.name).ToList();
@@ -84,7 +84,6 @@ namespace icrm.Controllers
                ViewBag.Departmn = departments;
                 ViewBag.Categories = categories;
                 ViewBag.Priorities = priorities;
-                ViewBag.EmployeeList = db.Users.Where(m => m.Roles.Any(s => s.RoleId==userRole.RoleId)).ToList();
             return View();
             }
 
@@ -95,7 +94,7 @@ namespace icrm.Controllers
 
         [HttpGet]
         [Route("feedback/{id}")]
-        public ActionResult view(int? id)
+        public ActionResult view(string id)
         {
             var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
             var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();            
@@ -503,9 +502,11 @@ namespace icrm.Controllers
 
 
 
-        public ActionResult openview(int? id)
+        public ActionResult openview(string  id)
         {
             
+             
+           
             var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
             var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
             var user = UserManager.FindById(User.Identity.GetUserId());
@@ -520,11 +521,12 @@ namespace icrm.Controllers
                 ViewBag.Departmn = departments;
                 ViewBag.Categories = categories;
                 ViewBag.Priorities = priorities;
+               
                 Feedback f = feedInterface.Find(id);
                 return View("view",f);
             }
         }
-        public ActionResult resolvedview(int? id)
+        public ActionResult resolvedview(string id)
         {
             var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
             var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
@@ -546,7 +548,7 @@ namespace icrm.Controllers
         }
 
 
-        public ActionResult assignedview(int? id)
+        public ActionResult assignedview(string id)
         {
             var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
             var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
@@ -568,7 +570,7 @@ namespace icrm.Controllers
         }
 
 
-        public ActionResult respondedview(int? id)
+        public ActionResult respondedview(string id)
         {
             var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
             var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
@@ -590,7 +592,7 @@ namespace icrm.Controllers
         }
 
 
-        public ActionResult closedview(int? id)
+        public ActionResult closedview(string id)
         {
             var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
             var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();

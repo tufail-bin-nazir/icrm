@@ -75,20 +75,22 @@
                     @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
 
-
+@if (ViewBag.EmployeeList != null)
+{
                     <div class="row mg-b-25">
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">Employee ID: <span class="tx-danger">*</span></label>
                                 @Html.DropDownListFor(m => m.userId,
-                       new SelectList(ViewBag.EmployeeList,
-                     "Id", "EmployeeId"),"Select Employee", new { @class = "form-control select2",id="empID" })
+new SelectList(ViewBag.EmployeeList,
+"Id", "EmployeeId"), "Select Employee", new { @class = "form-control select2", id = "empID" })
                             </div>
                         </div>
                         <!-- col-4 -->
                         <!-- col-4 -->
                         <!-- col-4 -->
                     </div>
+}
                     <!-- row -->
                     <!-- form-layout-footer -->
 

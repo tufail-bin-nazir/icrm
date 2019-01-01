@@ -8,12 +8,16 @@ namespace icrm.Models
     public class Feedback
     {
         public Feedback() {
-           
+
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuwxyz0123456789";
+            id= new string(Enumerable.Repeat(chars, 6)
+              .Select(s => s[random.Next(s.Length)]).ToArray()) + "-" + DateTime.Today.Day + "-" + DateTime.Today.Month + "-" + DateTime.Today.Year;
 
             createDate = DateTime.Today;
             status = "Open";
         }
-        public int id { get; set; }
+        public string id { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         public string title { get; set; }
