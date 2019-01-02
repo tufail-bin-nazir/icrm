@@ -75,7 +75,7 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Employee ID: <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(x => x.EmployeeId, new { @class = "form-control", placeholder = "Enter EmployeeID" })
-                                    
+
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
@@ -115,6 +115,13 @@
                                     @Html.TextBoxFor(x => x.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password" })
                                 </div>
                             </div><!-- col-4 -->
+                            @if(ViewBag.rolename == "Department"){
+                            <div class="col-sm">
+                                @Html.DropDownListFor(m => m.DepartmentId,
+                                    new SelectList(ViewBag.DepartmentList,
+                                       "Id", "name"),"Choose Department", new { @class = "form-control select2", @id="location"})
+                            </div>
+                            }
 
 
                         </div><!-- row -->

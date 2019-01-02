@@ -54,6 +54,10 @@ namespace icrm.Models
 
         public virtual Religion Religion { get; set; }
 
+        public int? JobTitleId { get; set; }
+
+        public virtual JobTitle JobTitle { get; set; }
+
         public bool? status { get; set; }
 
         public bool? available { get; set; }

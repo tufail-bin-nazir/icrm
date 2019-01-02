@@ -48,12 +48,13 @@ namespace icrm.Controllers
         [HttpGet]
         public ActionResult AddUser(string id)
         {
-
+            ApplicationDbContext context = new ApplicationDbContext();
             ViewBag.rolename = id;
             if (Request.Cookies["sucess"] != null) {
                 Response.SetCookie(new HttpCookie("sucess", "") { Expires = DateTime.Now.AddDays(-1) });
                 ViewBag.message = "User Saved Sucessfully";
             }
+            ViewBag.DepartmentList = context.Departments.ToList();
                 return View();
         }
 
@@ -73,6 +74,7 @@ namespace icrm.Controllers
                     LastName = model.LastName,
                     Email = model.Email,
                     PhoneNumber = model.PhoneNumber,
+                    DepartmentId = model.DepartmentId
                    
                 };
 
