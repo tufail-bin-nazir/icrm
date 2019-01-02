@@ -166,6 +166,7 @@
                         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, null))
                         {
                             @Html.AntiForgeryToken()
+                            <input type="hidden" name="username" value="@System.Web.HttpContext.Current.User.Identity.Name" />
                             <input class="icon ion-forward" type="submit" value="Sign Out" />
                         }
 

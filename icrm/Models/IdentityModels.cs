@@ -54,7 +54,9 @@ namespace icrm.Models
 
         public virtual Religion Religion { get; set; }
 
+        public bool? status { get; set; }
 
+        public bool? available { get; set; }
 
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

@@ -87,10 +87,16 @@ namespace icrm.Controllers
             {
                 case SignInStatus.Success:
                     {
+                        
                         IdentityUser user = UserManager.FindByEmail(model.Email);
                         var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
                         var roleManager = new RoleManager<IdentityRole>(roleStore);
-
+                        ApplicationUser appuser = UserManager.FindByName(model.Email);
+                        appuser.status = true;
+                        appuser.available = true;
+                        UserManager.Update(appuser);
+                       
+                        
                         if (UserManager.IsInRole(user.Id, roleManager.FindByName("User").Name))
                         {
                             return RedirectToAction("DashBoard", "User");
@@ -433,8 +439,12 @@ namespace icrm.Controllers
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LogOff()
+        public ActionResult LogOff(string username)
         {
+            ApplicationUser appuser = UserManager.FindByName(username);
+            appuser.status = false;
+            appuser.available = false;
+            UserManager.Update(appuser);
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Login", "Account");
         }
