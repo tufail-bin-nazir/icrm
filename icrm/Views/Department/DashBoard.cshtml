@@ -13,14 +13,6 @@
 }
 @{
     var data = (ApplicationUser)ViewData["user"];
-    var list = new SelectList(new[]
-{
-new { Value = "Open", Name = "Open" },
-new { Value = "Resolved", Name = "Resolved" },
-new { Value = "Closed", Name = "Closed" },
-},
-"Value", "Name", 1);
-    ViewData["list"] = list;
 }
 
 <!DOCTYPE html>
@@ -137,7 +129,7 @@ new { Value = "Closed", Name = "Closed" },
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">Status: <span class="tx-danger">*</span></label>
-                                @Html.DropDownList("status", ViewData["list"] as SelectList, new { @class = "form-control select2",name="Status" })
+                                @Html.DropDownList("status", new SelectList(ViewBag.Status), new { @class = "form-control select2",name="Status" })
 
                             </div>
                         </div>
@@ -150,7 +142,7 @@ new { Value = "Closed", Name = "Closed" },
                                         <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
                                     </div>
                                 </div>
-                                <input type="text" class="form-control date hasDatepicker" name="date1" placeholder="MM-DD-YYYY" id="dp1545306018953">
+                                <input type="text" class="form-control date hasDatepicker" required name="date1" placeholder="MM-DD-YYYY" id="dp1545306018953">
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -161,7 +153,7 @@ new { Value = "Closed", Name = "Closed" },
                                         <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
                                     </div>
                                 </div>
-                                <input type="text" class="form-control date hasDatepicker" name="date22" placeholder="MM-DD-YYYY" id="dp1545306018953">
+                                <input type="text" class="form-control date hasDatepicker" required name="date22" placeholder="MM-DD-YYYY" id="dp1545306018953">
                             </div>
                         </div>
                         <!-- col-4 -->

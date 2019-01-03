@@ -9,14 +9,7 @@
 @{
     var data = (ApplicationUser)ViewData["user"];
 
-    var list = new SelectList(new[]
-{
-    new { Value = "Open", Name = "Open" },
-    new { Value = "Resolved", Name = "Resolved" },
-    new { Value = "Closed", Name = "Closed" },
-},
-"Value", "Name", 1);
-    ViewData["list"] = list;
+ 
 
 }
 <!DOCTYPE html>
@@ -53,6 +46,7 @@
                 <h6 class="slim-pagetitle">CREATE TICKET</h6>
             </div>
             <!-- slim-pageheader -->
+            @Html.ValidationSummary()
             @using (Html.BeginForm("assign", "HR", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
 
@@ -212,29 +206,28 @@
 
 
                         </div>
-                        
-                            <div class="row mg-b-25">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Choose Action</label>
-                                        @Html.DropDownListFor(m => m.status, ViewData["list"] as SelectList, new { @readonly = "readonly", @class = "form-control", id = "statusfield" })
-                                    </div>
-                                    <label class="text-danger" id="statuscheck" ></label>
+
+                        <div class="row mg-b-25">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Choose Action</label>
+                                    @Html.DropDownListFor(m => m.status, new SelectList(ViewBag.Status), new { @readonly = "readonly", @class = "form-control", id = "statusfield" })
                                 </div>
-                                <!-- col-4 -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Comment</label>
-                                        @Html.TextAreaFor(m => m.response, new { @readonly = "readonly", @class = "form-control" })
+                                <label class="text-danger" id="statuscheck"></label>
+                            </div>
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Comment</label>
+                                    @Html.TextAreaFor(m => m.response, new { @readonly = "readonly", @class = "form-control" })
 
 
-                                    </div>
                                 </div>
                             </div>
+                        </div>
 
-                        
+
                         <!-- row -->
-                      
                         <!-- form-layout-footer -->
                     </div>
 

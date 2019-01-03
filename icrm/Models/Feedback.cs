@@ -62,7 +62,8 @@ namespace icrm.Models
         public DateTime? closedDate { get; set; }
 
         public string response { get; set; }
-
+        public string responseById { get; set; }
+        public virtual ApplicationUser responseBy { get; set; }
         public string submittedById { get; set; }
         public virtual ApplicationUser submittedBy { get; set; }
 

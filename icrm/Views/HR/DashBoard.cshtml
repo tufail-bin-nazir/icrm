@@ -13,14 +13,8 @@
 }
 @{
     var data = (ApplicationUser)ViewData["user"];
-    var list = new SelectList(new[]
-{
-new { Value = "Open", Name = "Open" },
-new { Value = "Resolved", Name = "Resolved" },
-new { Value = "Closed", Name = "Closed" },
-},
-"Value", "Name", 1);
-    ViewData["list"] = list;
+ 
+ 
 
 }
 
@@ -139,7 +133,7 @@ new { Value = "Closed", Name = "Closed" },
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Status: <span class="tx-danger">*</span></label>
-                                    @Html.DropDownList("status", ViewData["list"] as SelectList, new { @class = "form-control select2", name = "Status" })
+                                    @Html.DropDownList("status", new SelectList(ViewBag.Status), new { @class = "form-control select2", name = "Status" })
 
                                 </div>
                             </div>

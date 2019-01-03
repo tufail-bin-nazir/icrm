@@ -107,12 +107,15 @@ namespace icrm.RepositoryImpl
         }
         public IPagedList<Feedback> getAllOpenWithDepartment(string usrid, int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.userId== usrid && m.status=="Open" && m.departmentID != null && m.response==null).ToPagedList(pageIndex, pageSize);
+            ApplicationUser user = db.Users.Find(usrid);
+
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID== user.DepartmentId && m.status=="Open" && m.departmentID != null && m.response==null && m.responseById==null).ToPagedList(pageIndex, pageSize);
         }
 
         public IPagedList<Feedback> getAllRespondedWithDepartment(string usrid, int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.userId == usrid  && m.departmentID != null && m.response != null).ToPagedList(pageIndex, pageSize);
+            ApplicationUser user = db.Users.Find(usrid);
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == user.DepartmentId && m.departmentID != null && m.response != null && m.responseById==usrid).ToPagedList(pageIndex, pageSize);
         }
 
         public IPagedList<Feedback> OpenWithoutDepart(int pageIndex, int pageSize)

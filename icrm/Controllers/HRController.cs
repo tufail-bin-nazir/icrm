@@ -15,12 +15,15 @@ using System.Net;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Globalization;
 using System.IO;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace icrm.Controllers
 {
     [Authorize(Roles = "HR")]
     public class HRController : Controller
     {
+        
 
         private ApplicationUserManager _userManager;
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -28,6 +31,7 @@ namespace icrm.Controllers
        
 
         public HRController() {
+            ViewBag.Status = Models.Constants.statusList;
             feedInterface = new FeedbackRepository();
            
         }
@@ -253,7 +257,7 @@ namespace icrm.Controllers
             ViewData["user"] = user;
             Feedback f = db.Feedbacks.Find(feedback.id);
             f.status = feedback.status;
-            
+            Debug.WriteLine(feedback.status + "kkkkkkkkkk");
             if (feedback.status == "Closed") {
                 f.closedDate = DateTime.Today;
             }
@@ -281,6 +285,7 @@ namespace icrm.Controllers
                 case "Assignedtype":
                     f.response = feedback.response;
                     f.responseDate = DateTime.Today;
+
                     if (ModelState.IsValid)
                     {
 
@@ -414,6 +419,7 @@ namespace icrm.Controllers
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             ViewData["user"] = user;
             IPagedList<Feedback> feedbacks = feedInterface.searchHR(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), status, pageIndex, pageSize);
+            ViewBag.Status = Models.Constants.statusList;
             return View("DashBoard", feedbacks);
 
         }
@@ -504,9 +510,16 @@ namespace icrm.Controllers
 
         public ActionResult openview(string  id)
         {
-            
-             
-           
+
+
+
+           /* var param = new SqlParameter();
+            param.ParameterName = "@TotalCount";
+            param.SqlDbType = SqlDbType.Int;
+            param.Direction = System.Data.ParameterDirection.Output;
+            var result = db.Feedbacks.SqlQuery("getIDS @TotalCount", param).First();
+            ViewBag.fff = Convert.ToInt32(param.Value);*/
+
             var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
             var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
             var user = UserManager.FindById(User.Identity.GetUserId());
@@ -525,6 +538,8 @@ namespace icrm.Controllers
                 Feedback f = feedInterface.Find(id);
                 return View("view",f);
             }
+
+
         }
         public ActionResult resolvedview(string id)
         {

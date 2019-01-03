@@ -53,6 +53,7 @@
                 <h6 class="slim-pagetitle">CREATE TICKET</h6>
             </div>
             <!-- slim-pageheader -->
+            @Html.ValidationSummary()
             @using (Html.BeginForm("Create", "HR", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
             {
 
@@ -64,35 +65,35 @@
                         <p class="mg-b-20 mg-sm-b-40"></p>
                         <span class="tx-success">
                             @TempData["Message"]
-                    </span>
-                    @Html.HiddenFor(model => model.submittedById, new {  @class = "form-control", id = "submittedBy" })
+                        </span>
+                        @Html.HiddenFor(model => model.submittedById, new { @class = "form-control", id = "submittedBy" })
 
 
 
-                    <input type="hidden" id="hrdetail" value="@data.Id" />
-                    @Html.HiddenFor(model => model.userId, new { @class = "form-control",id="userID"})
-                    @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
-                    @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
-                    @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
+                        <input type="hidden" id="hrdetail" value="@data.Id" />
+                        @Html.HiddenFor(model => model.userId, new { @class = "form-control", id = "userID" })
+                        @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
 
-@if (ViewBag.EmployeeList != null)
-{
-                    <div class="row mg-b-25">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">Employee ID: <span class="tx-danger">*</span></label>
-                                @Html.DropDownListFor(m => m.userId,
-new SelectList(ViewBag.EmployeeList,
-"Id", "EmployeeId"), "Select Employee", new { @class = "form-control select2", id = "empID" })
+                        @if (ViewBag.EmployeeList != null)
+                        {
+                            <div class="row mg-b-25">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Employee ID: <span class="tx-danger">*</span></label>
+                                        @Html.DropDownListFor(m => m.userId,
+        new SelectList(ViewBag.EmployeeList,
+        "Id", "EmployeeId"), "Select Employee", new { @class = "form-control select2", id = "empID" })
+                                    </div>
+                                </div>
+                                <!-- col-4 -->
+                                <!-- col-4 -->
+                                <!-- col-4 -->
                             </div>
-                        </div>
-                        <!-- col-4 -->
-                        <!-- col-4 -->
-                        <!-- col-4 -->
-                    </div>
-}
-                    <!-- row -->
-                    <!-- form-layout-footer -->
+                        }
+                        <!-- row -->
+                        <!-- form-layout-footer -->
 
                     </div>
 
@@ -111,7 +112,7 @@ new SelectList(ViewBag.EmployeeList,
                             <div class="col-lg-4">
                                 <div class="form-group mg-b-10-force">
                                     <label class="form-control-label">Description: <span class="tx-danger">*</span></label>
-                                    @Html.TextAreaFor(model => model.description, new {  @class = "form-control" })
+                                    @Html.TextAreaFor(model => model.description, new { @class = "form-control" })
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -167,31 +168,31 @@ new SelectList(ViewBag.EmployeeList,
 
 
                         </div>
-                       
-                            <div class="row mg-b-25">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Choose Action</label>
-                                        @Html.DropDownListFor(m => m.status, ViewData["list"] as SelectList)
-                                    </div>
-                                </div>
-                                <!-- col-4 -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Comment</label>
-                                        @Html.TextAreaFor(m => m.response, new { @class = "form-control" })
 
-
-                                    </div>
+                        <div class="row mg-b-25">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Choose Action</label>
+                                    @Html.DropDownListFor(m => m.status, new SelectList(ViewBag.Status))
                                 </div>
                             </div>
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Comment</label>
+                                    @Html.TextAreaFor(m => m.response, new { @class = "form-control" })
 
-                        
+
+                                </div>
+                            </div>
+                        </div>
+
+
                         <!-- row -->
-                            <div class="form-layout-footer">
-                                <input type="submit" value="Forward" name="submitButton" class="btn btn-primary bd-0" />
-                                <input type="submit" value="Resolve" name="submitButton" class="btn btn-primary bd-0" />
-                            </div>
+                        <div class="form-layout-footer">
+                            <input type="submit" value="Forward" name="submitButton" class="btn btn-primary bd-0" />
+                            <input type="submit" value="Resolve" name="submitButton" class="btn btn-primary bd-0" />
+                        </div>
                         <!-- form-layout-footer -->
                     </div>
 

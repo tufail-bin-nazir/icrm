@@ -27,6 +27,7 @@ namespace icrm.Controllers
 
         public DepartmentController()
         {
+            ViewBag.Status = Models.Constants.statusList;
             feedInterface = new FeedbackRepository();
 
         }
@@ -62,7 +63,7 @@ namespace icrm.Controllers
 
 
 
-        // GET: Agent
+     
         public ActionResult responded(int? page)
         {
             ViewBag.TotalTickets = feedInterface.getAll().Count();
@@ -121,8 +122,15 @@ namespace icrm.Controllers
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             Feedback f = db.Feedbacks.Find(feedback.id);
-            f.responseDate = DateTime.Today;
-            f.response = feedback.response;
+            
+            
+            if (feedback.response != null) {
+                f.response = feedback.response;
+                f.responseById = user.Id;
+                f.responseBy = db.Users.Find(user.Id);
+                f.responseDate = DateTime.Today;
+            }
+            
             if (ModelState.IsValid)
             {
                 db.Entry(f).State = EntityState.Modified;
@@ -175,6 +183,7 @@ namespace icrm.Controllers
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             ViewData["user"] = user;
             IPagedList<Feedback> feedbacks = feedInterface.search(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"),status,user.Id, pageIndex, pageSize);
+            ViewBag.Status = Models.Constants.statusList;
             return View("DashBoard",feedbacks);
 
         }
