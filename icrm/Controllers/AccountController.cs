@@ -95,8 +95,8 @@ namespace icrm.Controllers
                         appuser.status = true;
                         appuser.available = true;
                         UserManager.Update(appuser);
-                       
-                        
+                        Session["user"] = appuser;
+
                         if (UserManager.IsInRole(user.Id, roleManager.FindByName("User").Name))
                         {
                             return RedirectToAction("DashBoard", "User");
