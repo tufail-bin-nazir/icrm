@@ -160,7 +160,7 @@
                                 <div class="form-group">
                                     <label class="form-control-label"></label>
 
-                                    <input type="file" name="file">
+                                    <input type="file" name="file" required>
                                     @Html.ValidationMessageFor(model => model.attachment, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -174,6 +174,7 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Choose Action</label>
                                     @Html.DropDownListFor(m => m.status, new SelectList(ViewBag.Status), new { @class = "form-control", id = "statusfield" })
+                                    <label class="text-danger" id="statuscheck"></label>
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -191,7 +192,7 @@
                         <!-- row -->
                         <div class="form-layout-footer">
                             <input type="submit" value="Forward" id="forward" name="submitButton" class="btn btn-primary bd-0" />
-                            <input type="submit" value="Resolve" id="resolve" name="submitButton" class="btn btn-primary bd-0" />
+                            <input type="submit" value="Resolve" id="resolve"  name="submitButton" class="btn btn-primary bd-0" />
                         </div>
                         <!-- form-layout-footer -->
                     </div>
@@ -230,6 +231,7 @@
             });
 
             $('#resolve').click(function () {
+               
                 if ($('#statusfield').val() == "Resolved") {
                     $("#priorty").prop('required', false);
                     $("#category").prop('required', false);
