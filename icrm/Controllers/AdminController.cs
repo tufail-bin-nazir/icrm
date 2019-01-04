@@ -74,9 +74,11 @@ namespace icrm.Controllers
                     LastName = model.LastName,
                     Email = model.Email,
                     PhoneNumber = model.PhoneNumber,
-                    DepartmentId = model.DepartmentId
-                   
                 };
+
+                if (rolename.Equals("Department")) {
+                    user.DepartmentId = model.DepartmentId;
+                }
 
                 var result = UserManager.Create(user, model.Password);
                 if (result.Succeeded)
@@ -102,7 +104,10 @@ namespace icrm.Controllers
 
 
             // If we got this far, something failed, redisplay form
-            
+            if (rolename.Equals("Department")) {
+                ViewBag.DepartmentList = context.Departments.ToList();
+            }
+            ViewBag.rolename = rolename;
             return View("AddUser",model);
           
         }

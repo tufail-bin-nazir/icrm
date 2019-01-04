@@ -125,7 +125,7 @@
                 <label class="section-title">Search your tickets</label>
                 <p class="mg-b-20 mg-sm-b-40">On date criteria</p>
                 <div class="form-layout">
-
+                    <span class="text-danger">@TempData["DateMsg"]</span>
                     @using (Html.BeginForm("search", "HR", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
                     {
                         <div class="row mg-b-25">

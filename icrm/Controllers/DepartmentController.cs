@@ -43,55 +43,46 @@ namespace icrm.Controllers
             }
         }
 
-        // GET: Agent
+           /**********************DashBoard***********/
+
         public ActionResult DashBoard(int? page)
         {
-            ViewBag.linkName = "openticket";
-            ViewBag.TotalTickets = feedInterface.getAll().Count();
-            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
-            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
-            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
+            ViewBag.linkName = "openticket";         
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             IPagedList<Feedback> feedbackList = feedInterface.getAllOpenWithDepartment(user.Id,pageIndex, pageSize);
-
+            TicketCounts();
             return View(feedbackList);
         }
 
 
-
+        /**Responded Tickets*********************/
      
         public ActionResult responded(int? page)
-        {
-            ViewBag.TotalTickets = feedInterface.getAll().Count();
-            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
-            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
-            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
-
+        {        
             ViewBag.linkName = "respondedticket";
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
+            TicketCounts();
             IPagedList<Feedback> feedbackList = feedInterface.getAllRespondedWithDepartment(user.Id, pageIndex, pageSize);
             return View("Dashboard",feedbackList);
+
         }
         
+        /*******Department TicketView**************/ 
 
         [HttpGet]
         [Route("view/{id}")]
         public ActionResult view(string name, string id)
         {
             ViewBag.viewlink = name;
-
-
-            var departments = db.Departments.OrderByDescending(m => m.name).ToList();
-            var categories = db.Categories.OrderByDescending(m => m.name).ToList();
-            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+           
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             if (id == null)
@@ -101,18 +92,15 @@ namespace icrm.Controllers
             }
             else
             {
-                ViewBag.Departmn = departments;
-                ViewBag.Categories = categories;
-                ViewBag.Priorities = priorities;
+                getAttributeList();
                 Feedback f = feedInterface.Find(id);
-
-
                 return View(f);
             }
 
         }
 
 
+        /******** Response By Department User Post******/
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -121,16 +109,13 @@ namespace icrm.Controllers
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-            Feedback f = db.Feedbacks.Find(feedback.id);
-            
-            
+            Feedback f = db.Feedbacks.Find(feedback.id);           
             if (feedback.response != null) {
                 f.response = feedback.response;
                 f.responseById = user.Id;
                 f.responseBy = db.Users.Find(user.Id);
                 f.responseDate = DateTime.Today;
-            }
-            
+            }           
             if (ModelState.IsValid)
             {
                 db.Entry(f).State = EntityState.Modified;
@@ -141,74 +126,78 @@ namespace icrm.Controllers
             {
                 TempData["displayMsg"] = "Information is not Valid";
                 return RedirectToAction("view", new { name= "respondedview", id = feedback.id });
-
             }
 
         }
+
+        /******* Search in Department****/
         [HttpPost]
         [Route("search/")]
         public ActionResult search(int? page)
         {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            ViewBag.TotalTickets = feedInterface.getAll().Count();
-            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
-            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
-            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
-            ViewBag.Status = Request.Form["Status"];
-            string status= Request.Form["Status"]; ;
-            switch(status){
-                case "Open":
-                    ViewBag.linkName = "openticket";
-                break;
-                case "Resolved":
-                    ViewBag.linkName = "resolvedticket";
-                break;
-                case "Closed":
-                    ViewBag.linkName = "closedticket";
-                    break;
-                default:
-                    ViewBag.linkName = "openticket";
-                    break;
-            }
             string d3 = Request.Form["date22"];
-
             string dd = Request.Form["date1"];
+            if (d3.Equals("")|| dd.Equals(""))
+            {
+                TempData["DateMsg"] = "Select StartDate And EndDate";
+                return RedirectToAction("Dashboard");
+            }
+            else
+            {
+                var user = UserManager.FindById(User.Identity.GetUserId());
+                TicketCounts();
+                ViewBag.Status = Request.Form["Status"];
+                string status = Request.Form["Status"]; ;
+                switch (status)
+                {
+                    case "Open":
+                        ViewBag.linkName = "openticket";
+                        break;
+                    case "Resolved":
+                        ViewBag.linkName = "resolvedticket";
+                        break;
+                    case "Closed":
+                        ViewBag.linkName = "closedticket";
+                        break;
+                    default:
+                        ViewBag.linkName = "openticket";
+                        break;
+                }
 
-            DateTime dt = DateTime.ParseExact(dd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-           DateTime dt2= DateTime.ParseExact(d3, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-           
-            ViewBag.showDate = Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff");
-            int pageSize = 10;
-            int pageIndex = 1;
-            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
-            ViewData["user"] = user;
-            IPagedList<Feedback> feedbacks = feedInterface.search(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"),status,user.Id, pageIndex, pageSize);
-            ViewBag.Status = Models.Constants.statusList;
-            return View("DashBoard",feedbacks);
-
+                DateTime dt = DateTime.ParseExact(dd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                DateTime dt2 = DateTime.ParseExact(d3, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                ViewBag.showDate = Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff");
+                int pageSize = 10;
+                int pageIndex = 1;
+                pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+                ViewData["user"] = user;
+                IPagedList<Feedback> feedbacks = feedInterface.search(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), status, user.Id, pageIndex, pageSize);
+                ViewBag.Status = Models.Constants.statusList;
+                return View("DashBoard", feedbacks);
+            }
         }
+
+        /****** GET Open Tickets List ****/
 
         public ActionResult open(int? page, string id)
         {
-            ViewBag.TotalTickets = feedInterface.getAll().Count();
-            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
-            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
-            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
             ViewBag.linkName = id;
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
+            TicketCounts();
             IPagedList<Feedback> feedbackList = feedInterface.getAllOpenWithDepartment(user.Id.ToString(),pageIndex, pageSize);
             return View("Dashboard", feedbackList);
         }
 
 
+        /****** RespondedTickets List***********/
+
         public ActionResult respondedview(string id)
         {
-            var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
-            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+            
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             if (id == null)
@@ -218,19 +207,17 @@ namespace icrm.Controllers
             }
             else
             {
-                ViewBag.Departmn = departments;
-                ViewBag.Categories = categories;
-                ViewBag.Priorities = priorities;
+                getAttributeList();
                 Feedback f = feedInterface.Find(id);
                 return View(f);
             }
         }
 
+        /*******Get Open View*******/
 
         public ActionResult openview(string id)
         {
-            var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
-            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+            
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             if (id == null)
@@ -240,17 +227,16 @@ namespace icrm.Controllers
             }
             else
             {
-                ViewBag.Departmn = departments;
-                ViewBag.Categories = categories;
-                ViewBag.Priorities = priorities;
+                getAttributeList();
                 Feedback f = feedInterface.Find(id);
                 return View("view", f);
             }
         }
+
+        /****** Get Resolved Ticket View*****/
         public ActionResult resolvedview(string id)
         {
-            var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
-            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+           
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             if (id == null)
@@ -260,18 +246,17 @@ namespace icrm.Controllers
             }
             else
             {
-                ViewBag.Departmn = departments;
-                ViewBag.Categories = categories;
-                ViewBag.Priorities = priorities;
+                getAttributeList();
                 Feedback f = feedInterface.Find(id);
                 return View(f);
             }
         }
+
+        /***** Get Closed View*****/
 
         public ActionResult closedview(string id)
         {
-            var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
-            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+            
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             if (id == null)
@@ -281,14 +266,13 @@ namespace icrm.Controllers
             }
             else
             {
-                ViewBag.Departmn = departments;
-                ViewBag.Categories = categories;
-                ViewBag.Priorities = priorities;
+                getAttributeList();
                 Feedback f = feedInterface.Find(id);
                 return View(f);
             }
         }
-
+        
+        /*******************DOWNLOAD FILE********************/
 
         public void DownloadFile(string filename)
         {
@@ -300,6 +284,29 @@ namespace icrm.Controllers
             Response.AddHeader("Content-Disposition", "attachment; filename=" + fi.Name);
             Response.WriteFile(myfile);
             Response.End();
+        }
+
+
+        /****** Get Ticket Counts********/
+
+        public void TicketCounts() {
+            ViewBag.TotalTickets = feedInterface.getAll().Count();
+            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
+            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
+            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
+        }
+
+        /*****Get Attribute List***************/
+
+        public void getAttributeList() {
+            var departments = db.Departments.OrderByDescending(m => m.name).ToList();
+            var categories = db.Categories.OrderByDescending(m => m.name).ToList();
+            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+
+            ViewBag.Departmn = departments;
+            ViewBag.Categories = categories;
+            ViewBag.Priorities = priorities;
+
         }
     }
 }

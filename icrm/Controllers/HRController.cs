@@ -51,10 +51,7 @@ namespace icrm.Controllers
         public ActionResult DashBoard(int? page)
         {
             ViewBag.linkName = "openticket";
-            ViewBag.TotalTickets = feedInterface.getAll().Count();
-            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
-            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
-            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
+            TicketCounts();
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
@@ -65,43 +62,27 @@ namespace icrm.Controllers
         }
 
 
-        //HR Ticket Raise
+        /*************** Get HR Ticket Raise by HR****************/
         [HttpGet]
         [Route("hr/feedback/")]
         public ActionResult Create()
         {
-            
-
-            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
               var userRole = roleManager.FindByName("User").Users.FirstOrDefault();
             if (userRole!=null) {
                 ViewBag.EmployeeList = db.Users.Where(m => m.Roles.Any(s => s.RoleId == userRole.RoleId)).ToList();
-                }
-           
-
-            var departments = db.Departments.OrderByDescending(m=>m.name).ToList();
-            var categories = db.Categories.OrderByDescending(m => m.name).ToList();
-            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+              }         
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-           
-               ViewBag.Departmn = departments;
-                ViewBag.Categories = categories;
-                ViewBag.Priorities = priorities;
+            getAttributeList();
             return View();
             }
 
-        
-
-
-
-
+        /*****************FeedBack View**********************/
         [HttpGet]
         [Route("feedback/{id}")]
         public ActionResult view(string id)
-        {
-            var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
-            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();            
+        {           
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             if (id == null)
@@ -111,9 +92,7 @@ namespace icrm.Controllers
             }
             else
             {
-                ViewBag.Departmn = departments;
-                ViewBag.Categories = categories;
-                ViewBag.Priorities = priorities;
+                getAttributeList();
                 Feedback f = feedInterface.Find(id);
                 return View(f);
             }
@@ -121,22 +100,15 @@ namespace icrm.Controllers
         }
 
 
-
+        /************HR FeedBack Post*******************/
         [HttpPost]
         [Route("hr/feedback/")]
         public ActionResult Create(int? id,string submitButton, Feedback feedback, HttpPostedFileBase file)
         {
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
-
-            var userRole = roleManager.FindByName("User").Users.First();
-            var departments = db.Departments.OrderByDescending(m => m.name).ToList();
-            var categories = db.Categories.OrderByDescending(m => m.name).ToList();
-            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
-
-            ViewBag.Departmn = departments;
+            var userRole = roleManager.FindByName("User").Users.First();    
             ViewBag.EmployeeList = db.Users.Where(m => m.Roles.Any(s => s.RoleId == userRole.RoleId)).ToList();
-            ViewBag.Categories = categories;
-            ViewBag.Priorities = priorities;
+            getAttributeList();
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
 
@@ -233,7 +205,7 @@ namespace icrm.Controllers
         }
 
 
-
+        /*****************Change Status By HR in FeedBack*********************/
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -241,23 +213,14 @@ namespace icrm.Controllers
         public ActionResult update(Feedback feedback)
         {
             string type=Request.Form["typeoflink"];
-
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
-
             var userRole = roleManager.FindByName("User").Users.First();
-            var departments = db.Departments.OrderByDescending(m => m.name).ToList();
-            var categories = db.Categories.OrderByDescending(m => m.name).ToList();
-            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
-
-            ViewBag.Departmn = departments;
+            getAttributeList();
             ViewBag.EmployeeList = db.Users.Where(m => m.Roles.Any(s => s.RoleId == userRole.RoleId)).ToList();
-            ViewBag.Categories = categories;
-            ViewBag.Priorities = priorities;
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             Feedback f = db.Feedbacks.Find(feedback.id);
             f.status = feedback.status;
-            Debug.WriteLine(feedback.status + "kkkkkkkkkk");
             if (feedback.status == "Closed") {
                 f.closedDate = DateTime.Today;
             }
@@ -271,8 +234,8 @@ namespace icrm.Controllers
                         db.Entry(f).State = EntityState.Modified;
                         db.SaveChanges();
                     }
-                    @TempData["Message"] = "Updated";
-                    return View("resolvedview",feedback);
+                          @TempData["Message"] = "Updated";
+                     return View("resolvedview",feedback);
                 case "Respondedtype":
                     if (ModelState.IsValid)
                     {
@@ -280,7 +243,7 @@ namespace icrm.Controllers
                         db.Entry(f).State = EntityState.Modified;
                         db.SaveChanges();
                     }
-                    @TempData["Message"] = "Updated";
+                         @TempData["Message"] = "Updated";
                     return View("respondedview", feedback);
                 case "Assignedtype":
                     f.response = feedback.response;
@@ -292,7 +255,7 @@ namespace icrm.Controllers
                         db.Entry(f).State = EntityState.Modified;
                         db.SaveChanges();
                     }
-                    @TempData["Message"] = "Updated";
+                         @TempData["Message"] = "Updated";
                     return View("assignedview", feedback);
                  default:
                     return View("Assignedtype", feedback);
@@ -301,18 +264,17 @@ namespace icrm.Controllers
            
         }
 
+        /**************ASSIGN DEPARTMENT************************/
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("assigndepart/")]
         public ActionResult assign(string submitButton,Feedback feedback)
         {
-            Debug.WriteLine(submitButton+"------------------");
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             feedback.assignedBy = user.Id;
-            feedback.assignedDate = DateTime.Today;
-           
+            feedback.assignedDate = DateTime.Today;         
             feedback.user = db.Users.Find(feedback.userId);
             switch (submitButton)
             {
@@ -324,11 +286,9 @@ namespace icrm.Controllers
                         {
                             feedback.assignedBy = user.Id;
                             feedback.assignedDate = DateTime.Today;
-
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
                             TempData["Message"] = "Feedback Forwarded";
-
                         }
                         else
                         {
@@ -339,7 +299,7 @@ namespace icrm.Controllers
                     }
                     else
                     {
-                        TempData["Message"] = "Either Select Department or Comment field should be empty";
+                        TempData["Message"] = "Select Department & Comment Field Should be Empty";
                         return RedirectToAction("view", new { id = feedback.id });
                     }
                     return RedirectToAction("view", new { id = feedback.id });
@@ -350,16 +310,13 @@ namespace icrm.Controllers
                     {
                         if (ModelState.IsValid)
                         {
-
-
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
                             TempData["Message"] = "Feedback Resolved";
                             return RedirectToAction("view", new { id = feedback.id });
                         }
                         else
-                        {
-                          
+                        {                         
                             TempData["Message"] = "Fill feedback Properly";
                             return RedirectToAction("view", new { id = feedback.id });
                         }
@@ -367,7 +324,7 @@ namespace icrm.Controllers
                     }
                     else
                     {
-                        TempData["Message"] = "Either Empty Response Field or Deselect department";
+                        TempData["Message"] = "Response Field should not be empty & Deselect department";
                         return RedirectToAction("view", new { id = feedback.id });
                     }
 
@@ -380,57 +337,60 @@ namespace icrm.Controllers
 
         }
 
+        /****************************SEARCH BY HR**************************/
         [HttpPost]
         [Route("hr/search/")]
         public ActionResult search(int? page)
         {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            ViewBag.TotalTickets = feedInterface.getAll().Count();
-            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
-            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
-            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
-            ViewBag.Status = Request.Form["Status"];
-            string status = Request.Form["Status"]; ;
-            switch (status)
-            {
-                case "Open":
-                    ViewBag.linkName = "openticket";
-                    break;
-                case "Resolved":
-                    ViewBag.linkName = "resolvedticket";
-                    break;
-                case "Closed":
-                    ViewBag.linkName = "closedticket";
-                    break;
-                default:
-                    ViewBag.linkName = "openticket";
-                    break;
-            }
             string d3 = Request.Form["date22"];
-
             string dd = Request.Form["date1"];
+            if (d3.Equals("") || dd.Equals(""))
+            {
+                TempData["DateMsg"] = "Select StartDate And EndDate";
+                return RedirectToAction("Dashboard");
+            }
+            else
+            {
+                var user = UserManager.FindById(User.Identity.GetUserId());
+                TicketCounts();
+                ViewBag.Status = Request.Form["Status"];
+                string status = Request.Form["Status"]; ;
+                switch (status)
+                {
+                    case "Open":
+                        ViewBag.linkName = "openticket";
+                        break;
+                    case "Resolved":
+                        ViewBag.linkName = "resolvedticket";
+                        break;
+                    case "Closed":
+                        ViewBag.linkName = "closedticket";
+                        break;
+                    default:
+                        ViewBag.linkName = "openticket";
+                        break;
+                }
 
-            DateTime dt = DateTime.ParseExact(dd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-            DateTime dt2 = DateTime.ParseExact(d3, "dd-MM-yyyy", CultureInfo.InvariantCulture);
 
-            ViewBag.showDate = Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff");
-            int pageSize = 10;
-            int pageIndex = 1;
-            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
-            ViewData["user"] = user;
-            IPagedList<Feedback> feedbacks = feedInterface.searchHR(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), status, pageIndex, pageSize);
-            ViewBag.Status = Models.Constants.statusList;
-            return View("DashBoard", feedbacks);
+                DateTime dt = DateTime.ParseExact(dd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                DateTime dt2 = DateTime.ParseExact(d3, "dd-MM-yyyy", CultureInfo.InvariantCulture);
 
+                ViewBag.showDate = Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff");
+                int pageSize = 10;
+                int pageIndex = 1;
+                pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+                ViewData["user"] = user;
+                IPagedList<Feedback> feedbacks = feedInterface.searchHR(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), status, pageIndex, pageSize);
+                ViewBag.Status = Models.Constants.statusList;
+                return View("DashBoard", feedbacks);
+            }
         }
 
+        /*****************OPEN TICKETS LIST********************/
 
         public ActionResult open(int? page, string id)
         {
-            ViewBag.TotalTickets = feedInterface.getAll().Count();
-            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
-            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
-            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
+            TicketCounts();
             ViewBag.linkName = id;
             int pageSize = 10;
             int pageIndex = 1;
@@ -443,10 +403,7 @@ namespace icrm.Controllers
 
         public ActionResult assigned(int? page, string id)
         {
-            ViewBag.TotalTickets = feedInterface.getAll().Count();
-            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
-            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
-            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
+            TicketCounts();
             ViewBag.linkName = id;
             int pageSize = 10;
             int pageIndex = 1;
@@ -457,12 +414,11 @@ namespace icrm.Controllers
             return View("Dashboard",feedbackList);
         }
 
+        /*****************RESOLVED TICKETS LIST********************/
+
         public ActionResult resolved(int? page,string id)
         {
-            ViewBag.TotalTickets = feedInterface.getAll().Count();
-            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
-            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
-            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
+            TicketCounts();
             ViewBag.linkName = id;
             int pageSize = 10;
             int pageIndex = 1;
@@ -473,12 +429,12 @@ namespace icrm.Controllers
             return View("Dashboard", feedbackList);
         }
 
+
+        /*****************RESPONDED TICKETS LIST********************/
+
         public ActionResult responded(int? page, string id)
         {
-            ViewBag.TotalTickets = feedInterface.getAll().Count();
-            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
-            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
-            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
+            TicketCounts();
             ViewBag.linkName = id;
             int pageSize = 10;
             int pageIndex = 1;
@@ -489,12 +445,11 @@ namespace icrm.Controllers
             return View("Dashboard", feedbackList);
         }
 
+        /*****************CLOSED TICKETS LIST********************/
+
         public ActionResult Closed(int? page, string id)
         {
-            ViewBag.TotalTickets = feedInterface.getAll().Count();
-            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
-            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
-            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
+            TicketCounts();
             ViewBag.linkName = id;
             int pageSize = 10;
             int pageIndex = 1;
@@ -507,21 +462,10 @@ namespace icrm.Controllers
 
 
 
+        /*****************VIEW OPEN  TICKET********************/
 
         public ActionResult openview(string  id)
-        {
-
-
-
-           /* var param = new SqlParameter();
-            param.ParameterName = "@TotalCount";
-            param.SqlDbType = SqlDbType.Int;
-            param.Direction = System.Data.ParameterDirection.Output;
-            var result = db.Feedbacks.SqlQuery("getIDS @TotalCount", param).First();
-            ViewBag.fff = Convert.ToInt32(param.Value);*/
-
-            var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
-            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+        {           
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             if (id == null)
@@ -531,20 +475,16 @@ namespace icrm.Controllers
             }
             else
             {
-                ViewBag.Departmn = departments;
-                ViewBag.Categories = categories;
-                ViewBag.Priorities = priorities;
-               
+                getAttributeList();              
                 Feedback f = feedInterface.Find(id);
                 return View("view",f);
             }
-
-
         }
+
+        /*****************VIEW RESOLVED  TICKET********************/
+
         public ActionResult resolvedview(string id)
-        {
-            var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
-            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+        {           
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             if (id == null)
@@ -554,19 +494,16 @@ namespace icrm.Controllers
             }
             else
             {
-                ViewBag.Departmn = departments;
-                ViewBag.Categories = categories;
-                ViewBag.Priorities = priorities;
+                getAttributeList();
                 Feedback f = feedInterface.Find(id);
                 return View(f);
             }
         }
 
+        /*****************VIEW ASSIGNED  TICKET********************/
 
         public ActionResult assignedview(string id)
-        {
-            var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
-            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+        {          
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             if (id == null)
@@ -576,19 +513,17 @@ namespace icrm.Controllers
             }
             else
             {
-                ViewBag.Departmn = departments;
-                ViewBag.Categories = categories;
-                ViewBag.Priorities = priorities;
+                getAttributeList();
                 Feedback f = feedInterface.Find(id);
                 return View(f);
             }
         }
 
+
+        /*****************VIEW RESPONDED  TICKET********************/
 
         public ActionResult respondedview(string id)
-        {
-            var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
-            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+        {          
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             if (id == null)
@@ -598,19 +533,16 @@ namespace icrm.Controllers
             }
             else
             {
-                ViewBag.Departmn = departments;
-                ViewBag.Categories = categories;
-                ViewBag.Priorities = priorities;
+                getAttributeList();
                 Feedback f = feedInterface.Find(id);
                 return View(f);
             }
         }
 
+        /*****************VIEW CLOSED  TICKET********************/
 
         public ActionResult closedview(string id)
-        {
-            var departments = db.Departments.OrderByDescending(m => m.name).ToList(); var categories = db.Categories.OrderByDescending(m => m.name).ToList();
-            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+        {           
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             if (id == null)
@@ -620,19 +552,17 @@ namespace icrm.Controllers
             }
             else
             {
-                ViewBag.Departmn = departments;
-                ViewBag.Categories = categories;
-                ViewBag.Priorities = priorities;
+                getAttributeList();
                 Feedback f = feedInterface.Find(id);
                 return View(f);
             }
         }
 
+        /*************DOWNLOAD ATTACHMENT*********/
 
         public void DownloadFile(string filename)
         {
-            string myfile = Models.Constants.PATH + filename;
-            
+            string myfile = Models.Constants.PATH + filename;        
             var fi = new FileInfo(myfile);
             Response.Clear();
             Response.ContentType = "application/octet-stream";
@@ -641,6 +571,27 @@ namespace icrm.Controllers
             Response.End();
         }
 
-        
+        /****** Get Ticket Counts********/
+        public void TicketCounts()
+        {
+            ViewBag.TotalTickets = feedInterface.getAll().Count();
+            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
+            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
+            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
+        }
+
+
+        /*****Get Attribute List***************/
+        public void getAttributeList()
+        {
+            var departments = db.Departments.OrderByDescending(m => m.name).ToList();
+            var categories = db.Categories.OrderByDescending(m => m.name).ToList();
+            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+            ViewBag.Departmn = departments;
+            ViewBag.Categories = categories;
+            ViewBag.Priorities = priorities;
+
+        }
+
     }
 }

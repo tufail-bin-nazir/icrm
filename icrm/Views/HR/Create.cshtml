@@ -130,7 +130,7 @@
                                     <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.categoryId,
                            new SelectList(ViewBag.Categories,
-                         "Id", "name"), "Choose Category", new { @class = "form-control select2" })
+                         "Id", "name"), "Choose Category", new { @class = "form-control select2",id="category" })
                                 </div>
                             </div>
 
@@ -140,7 +140,7 @@
                                     <label class="form-control-label">Priority: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.priorityId,
                            new SelectList(ViewBag.Priorities,
-                         "Id", "priorityId"), "Choose Priority", new { @class = "form-control select2" })
+                         "Id", "priorityId"), "Choose Priority", new { @class = "form-control select2",id="priorty" })
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -173,7 +173,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Choose Action</label>
-                                    @Html.DropDownListFor(m => m.status, new SelectList(ViewBag.Status))
+                                    @Html.DropDownListFor(m => m.status, new SelectList(ViewBag.Status), new { @class = "form-control", id = "statusfield" })
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -190,8 +190,8 @@
 
                         <!-- row -->
                         <div class="form-layout-footer">
-                            <input type="submit" value="Forward" name="submitButton" class="btn btn-primary bd-0" />
-                            <input type="submit" value="Resolve" name="submitButton" class="btn btn-primary bd-0" />
+                            <input type="submit" value="Forward" id="forward" name="submitButton" class="btn btn-primary bd-0" />
+                            <input type="submit" value="Resolve" id="resolve" name="submitButton" class="btn btn-primary bd-0" />
                         </div>
                         <!-- form-layout-footer -->
                     </div>
@@ -222,6 +222,29 @@
         <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
         <script src="~/Content/js/slim.js"></script>
         <script>
+
+            $('#forward').click(function () {
+                $("#priorty").prop('required', true);
+                $("#category").prop('required', true);
+
+            });
+
+            $('#resolve').click(function () {
+                if ($('#statusfield').val() == "Resolved") {
+                    $("#priorty").prop('required', false);
+                    $("#category").prop('required', false);
+                    return true;
+                }
+
+                else {
+                    $('#statuscheck').text("Set status Resolved");
+                    $("#priorty").prop('required', false);
+                    $("#category").prop('required', false);
+                    return false;
+
+                }
+
+            });
 
             var employeid = $('#empID').val();
             if (employeid == "") {

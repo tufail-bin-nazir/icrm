@@ -277,6 +277,8 @@
 
                 else {
                     $('#statuscheck').text("Set status Resolved");
+                    $("#priorty").prop('required', false);
+                    $("#category").prop('required', false);
                     return false;
 
                 }
