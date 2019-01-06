@@ -40,9 +40,11 @@ namespace icrm.Controllers
             return View();
         }
 
+        [HttpPost]
         public ActionResult updateProfile(UserProfileViewModel userProfile) {
             var user = UserManager.FindById(User.Identity.GetUserId());
             user.LocationId = userProfile.LocationId;
+            user.SubLocationId = userProfile.SubLocationId;
             user.PositionId = userProfile.PositionId;
             user.NationalityId = userProfile.NationalityId;
             user.JobTitleId = userProfile.JobTitleId;
@@ -51,7 +53,7 @@ namespace icrm.Controllers
             user.ReligionId = userProfile.ReligionId;
             UserManager.Update(user);
 
-            return RedirectToAction("UserProfile",userProfile);
+            return RedirectToAction("Index");
 
 
         }
