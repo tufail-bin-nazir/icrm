@@ -9,23 +9,29 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Diagnostics;
+using icrm.RepositoryInterface;
+using icrm.RepositoryImpl;
 
 namespace icrm.Controllers
 {
     [Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
-       
+        private IFeedback feedInterface;
+
         private ApplicationUserManager _userManager;
 
         public ActionResult Dashboard()
         {
+            TicketCounts();
             return View();
         }
 
 
         public AdminController()
-        {}
+        {
+            feedInterface = new FeedbackRepository();
+        }
         public AdminController(ApplicationUserManager userManager)
         {
             this._userManager = userManager;    
@@ -126,7 +132,17 @@ namespace icrm.Controllers
             
             return View(db.Users.ToList());
         }
+
+        /****** Get Ticket Counts********/
+        public void TicketCounts()
+        {
+            ViewBag.TotalTickets = feedInterface.getAll().Count();
+            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
+            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
+            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
+        }
     }
+
 
    
 }
