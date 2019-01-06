@@ -219,7 +219,7 @@ new SelectList(ViewBag.Priorities,
                                     <label class="form-control-label">Choose Action @Model.status</label>
                                     @*@Html.DropDownListFor(m => m.status, new SelectList(s,
                          "Text", "Value"), new { @readonly = "readonly", @class = "form-control select2",id="statusfield"})*@
-                                    <select name="@Model.status" id="statusfield" class = "form-control select2">
+                                    <select name="status" id="statusfield" class = "form-control select2">
 
                                         @if (Model.status == "Open")
                                         {

@@ -213,7 +213,7 @@
                                     <label class="form-control-label">Choose Action</label>
                                     @**  @Html.DropDownListFor(m => m.status, new SelectList(ViewBag.Status), new { @class = "form-control", id = "statusfield" })
                                     *@
-                                    <select name="@Model.status" id="statusfield" class="form-control select2">
+                                    <select name="status" id="statusfield" class="form-control select2">
 
                                         @if (Model.status == "Open")
                                         {
