@@ -17,6 +17,7 @@ using System.Globalization;
 using System.IO;
 using System.Data.SqlClient;
 using System.Data;
+using System.Data.Entity.Core.Objects;
 
 namespace icrm.Controllers
 {
@@ -117,10 +118,11 @@ namespace icrm.Controllers
             }
             
             var fileSize = file.ContentLength;
-            if (fileSize > 10 * 1024 * 1024)
+            if (fileSize > 2100000)
             {
 
                 
+
                 TempData["Message"] = "File Size Limit Exceeds";
                 return View("Create", feedback);
             }
@@ -465,7 +467,15 @@ namespace icrm.Controllers
         /*****************VIEW OPEN  TICKET********************/
 
         public ActionResult openview(string  id)
-        {           
+        {
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@TotalCount";
+            param2.SqlDbType = SqlDbType.Int;
+            var resil = db.Feedbacks.SqlQuery("totalRecords @TotalCount OUTPUT", param2);
+            
+
+            Debug.WriteLine( param2.Value);
+            ViewBag.fff = param2.Value;
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             if (id == null)
