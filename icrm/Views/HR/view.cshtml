@@ -211,7 +211,30 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Choose Action</label>
-                                    @Html.DropDownListFor(m => m.status, new SelectList(ViewBag.Status), new { @class = "form-control", id = "statusfield" })
+                                    <select name="@Model.status" id="statusfield" class="form-control select2">
+
+                                        @if (Model.status == "Open")
+                                        {
+                                            <option selected value="Open">Open</option>
+                                            <option value="Resolved">Resolved</option>
+                                            <option value="Closed">Closed</option>
+                                        }
+                                        else if (Model.status == "Closed")
+                                        {
+                                            <option value="Open">Open</option>
+                                            <option value="Resolved">Resolved</option>
+                                            <option selected value="Closed">Closed</option>
+                                        }
+                                        else
+                                        {
+
+                                            <option value="Open">Open</option>
+                                            <option selected value="Resolved">Resolved</option>
+                                            <option value="Closed">Closed</option>
+                                        }
+
+
+                                    </select>
                                 </div>
                                 <label class="text-danger" id="statuscheck"></label>
                             </div>
@@ -225,7 +248,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        @ViewBag.fff
 
                         <!-- row -->
                         <div class="form-layout-footer">

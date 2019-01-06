@@ -211,7 +211,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Choose Action</label>
-                                    @Html.DropDownListFor(m => m.status, new SelectList(ViewBag.Status), new { disabled = "disabled", @class = "form-control", id = "statusfield" })
+                                    @Html.TextBoxFor(m => m.status, new { disabled = "disabled", @class = "form-control", id = "statusfield" })
                                 </div>
                                 <label class="text-danger" id="statuscheck"></label>
                             </div>
