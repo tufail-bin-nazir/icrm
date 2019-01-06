@@ -44,6 +44,7 @@ namespace icrm.Controllers
         public ActionResult updateProfile(UserProfileViewModel userProfile) {
             var user = UserManager.FindById(User.Identity.GetUserId());
             user.LocationId = userProfile.LocationId;
+            user.SubLocationId = userProfile.SubLocationId;
             user.PositionId = userProfile.PositionId;
             user.NationalityId = userProfile.NationalityId;
             user.JobTitleId = userProfile.JobTitleId;
