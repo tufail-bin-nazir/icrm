@@ -198,6 +198,7 @@ namespace icrm.Controllers
                 var user = new ApplicationUser { UserName = model.Email,
                     FirstName = model.FirstName, LastName = model.LastName ,
                     Email = model.Email, PhoneNumber = model.PhoneNumber,
+                    EmployeeId = model.EmployeeId,
                     EmployeeHireDate = DateTime.Today};
 
                 var result = await UserManager.CreateAsync(user, model.Password);

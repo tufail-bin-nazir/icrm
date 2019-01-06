@@ -57,7 +57,7 @@ namespace icrm.WebApi
             var Name1 = User.Identity.Name;
            Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
            Feedback feedBack = new Feedback { title = feedBackmodel.Title, attachment = $@"{Guid.NewGuid()}." + ext, description = feedBackmodel.Description, userId = user.Result.Id };
-            string path = @"F:\Files\"+ feedBack.attachment;
+            string path = Constants.PATH + feedBack.attachment;
             if (!File.Exists(path))
             {
                FileStream fileStream =  File.Create(path);
@@ -108,6 +108,44 @@ namespace icrm.WebApi
                     return string.Empty;
             }
         }
+
+        [HttpGet]
+        //Get /api/ FeedBackApi
+        public IHttpActionResult  FeedBackslist()
+        {
+          
+                var Name1 = User.Identity.Name;
+            Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
+
+            
+            var Query = from f in feedInterface.getAll()
+                   
+                        where f.userId == user.Result.Id
+                        select new { f.title, f.description ,f.createDate,f.user.EmployeeId,f.status,};
+
+
+            if (Query != null)
+            {
+                return Ok(Query.ToList());
+
+            }
+            else
+            {
+                return BadRequest("List Not Found");
+            }
+
+           
+        }
+
+
+     
+       
+        
+      
+
+
+
+
 
         //[HttpGet]
         //public IHttpActionResult GetFeedbacks()

@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace icrm.Controllers
 {
-    [Authorize(Roles = "User")]
+    [Authorize]
     public class UserProfileController : Controller
     {
         private ApplicationUserManager _userManager;
