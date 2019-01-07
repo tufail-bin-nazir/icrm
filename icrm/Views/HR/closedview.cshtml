@@ -9,7 +9,13 @@
 @{
     var data = (ApplicationUser)ViewData["user"];
 
- 
+    List<SelectListItem> s = new List<SelectListItem>();
+
+    s.Add(new SelectListItem { Text = "Open", Value = "Open" });
+    s.Add(new SelectListItem { Text = "Closed", Value = "Closed" });
+    s.Add(new SelectListItem { Text = "Resolved", Value = "Resolved" });
+
+    ViewData["Status"] = s;
 
 }
 <!DOCTYPE html>
@@ -158,8 +164,8 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.departmentID,
-                          new SelectList(ViewBag.Departmn,
-                        "Id", "name"), "Choose Department", new { @readonly = "readonly", @class = "form-control select2" })
+new SelectList(ViewBag.Departmn,
+"Id", "name"), "Choose Department", new { @readonly = "readonly", @class = "form-control select2" })
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -167,8 +173,8 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.categoryId,
-                           new SelectList(ViewBag.Categories,
-                         "Id", "name"), "Choose Category", new { @readonly = "readonly", @class = "form-control select2" })
+new SelectList(ViewBag.Categories,
+"Id", "name"), "Choose Category", new { @readonly = "readonly", @class = "form-control select2" })
                                 </div>
                             </div>
 
@@ -177,8 +183,8 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Priority: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.priorityId,
-                           new SelectList(ViewBag.Priorities,
-                         "Id", "priorityId"), "Choose Priority", new { @readonly = "readonly", @class = "form-control select2" })
+new SelectList(ViewBag.Priorities,
+"Id", "priorityId"), "Choose Priority", new { @readonly = "readonly", @class = "form-control select2" })
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -198,7 +204,7 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Download</label>
                                     @Html.HiddenFor(m => m.attachment)
-                                    <a href="@Url.Action("DownloadFile", "HR",new { filename=Model.attachment})" target="_blank" style="height:200px;width:200px;"><i class="fa fa-download"></i></a>
+                                    <a href="@Url.Action("DownloadFile", "HR", new { filename = Model.attachment })" target="_blank" style="height:200px;width:200px;"><i class="fa fa-download"></i></a>
 
                                 </div>
                             </div>
@@ -210,8 +216,33 @@
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Choose Action</label>
-                                    @Html.DropDownListFor(m => m.status, new SelectList(ViewBag.Status), new { @readonly = "readonly", @class = "form-control", id = "statusfield" })
+                                    <label class="form-control-label">Choose Action @Model.status</label>
+                                    @*@Html.DropDownListFor(m => m.status, new SelectList(s,
+                         "Text", "Value"), new { @readonly = "readonly", @class = "form-control select2",id="statusfield"})*@
+                                    <select name="status" id="statusfield" class = "form-control select2">
+
+                                        @if (Model.status == "Open")
+                                        {
+                                            <option selected value="Open">Open</option>
+                                            <option value="Resolved">Resolved</option>
+                                            <option value="Closed">Closed</option>
+                                        }
+                                        else if (Model.status == "Closed")
+                                        {
+                                            <option  value="Open">Open</option>
+                                            <option value="Resolved">Resolved</option>
+                                            <option selected value="Closed">Closed</option>
+                                        }
+                                        else
+                                        {
+
+                                            <option  value="Open">Open</option>
+                                            <option selected value="Resolved">Resolved</option>
+                                            <option value="Closed">Closed</option>
+                                        }
+                                        
+
+                                    </select>
                                 </div>
                                 <label class="text-danger" id="statuscheck"></label>
                             </div>

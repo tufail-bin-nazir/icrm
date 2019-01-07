@@ -107,8 +107,11 @@ namespace icrm.Controllers
         public ActionResult Create(int? id,string submitButton, Feedback feedback, HttpPostedFileBase file)
         {
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
-            var userRole = roleManager.FindByName("User").Users.First();    
-            ViewBag.EmployeeList = db.Users.Where(m => m.Roles.Any(s => s.RoleId == userRole.RoleId)).ToList();
+            if (roleManager.FindByName("User").Users.FirstOrDefault() != null)
+            {
+                var userRole = roleManager.FindByName("User").Users.First();
+                ViewBag.EmployeeList = db.Users.Where(m => m.Roles.Any(s => s.RoleId == userRole.RoleId)).ToList();
+            }
             getAttributeList();
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
@@ -216,9 +219,13 @@ namespace icrm.Controllers
         {
             string type=Request.Form["typeoflink"];
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
-            var userRole = roleManager.FindByName("User").Users.First();
+            if (roleManager.FindByName("User").Users.FirstOrDefault() != null)
+            {
+                var userRole = roleManager.FindByName("User").Users.First();
+                ViewBag.EmployeeList = db.Users.Where(m => m.Roles.Any(s => s.RoleId == userRole.RoleId)).ToList();
+
+            }
             getAttributeList();
-            ViewBag.EmployeeList = db.Users.Where(m => m.Roles.Any(s => s.RoleId == userRole.RoleId)).ToList();
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             Feedback f = db.Feedbacks.Find(feedback.id);
