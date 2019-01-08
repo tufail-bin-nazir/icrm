@@ -46,26 +46,34 @@ namespace icrm.WebApi
         [HttpPost]
         public IHttpActionResult PostFeedback(FeedBackViewModel feedBackmodel) {
 
+            Feedback feedBack = null;
+            var Name1 = User.Identity.Name;
+            Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
-          
-            //getting extension of the base 64 file
-            String ext = GetFileExtension(feedBackmodel.Attachment);
-
-            var Name1 = User.Identity.Name;
-           Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
-           Feedback feedBack = new Feedback { title = feedBackmodel.Title, attachment = $@"{Guid.NewGuid()}." + ext, description = feedBackmodel.Description, userId = user.Result.Id };
-            string path = Constants.PATH + feedBack.attachment;
-            if (!File.Exists(path))
+            if ( feedBackmodel.Attachment != null)
             {
-               FileStream fileStream =  File.Create(path);
-                fileStream.Close();
+                String ext = GetFileExtension(feedBackmodel.Attachment);
+
+               
+                feedBack = new Feedback { title = feedBackmodel.Title, attachment = $@"{Guid.NewGuid()}." + ext, description = feedBackmodel.Description, userId = user.Result.Id };
+                string path = Constants.PATH + feedBack.attachment;
+                if (!File.Exists(path))
+                {
+                    FileStream fileStream = File.Create(path);
+                    fileStream.Close();
+                }
+
+                File.WriteAllBytes(path, getfile(feedBackmodel.Attachment));
+            }
+            //getting extension of the base 64 file
+            else {
+                feedBack = new Feedback { title = feedBackmodel.Title, description = feedBackmodel.Description, userId = user.Result.Id };
+
             }
 
-            File.WriteAllBytes(path, getfile(feedBackmodel.Attachment));
-            
             feedInterface.Save(feedBack);
             return Ok(feedBack);
 
