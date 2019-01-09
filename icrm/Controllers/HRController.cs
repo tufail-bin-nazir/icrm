@@ -119,18 +119,29 @@ namespace icrm.Controllers
             if (feedback.userId == null) {
                 feedback.userId=user.Id;
             }
-            
-            var fileSize = file.ContentLength;
-            if (fileSize > 2100000)
+
+            if (file != null)
             {
-
-                
-
-                TempData["Message"] = "File Size Limit Exceeds";
-                return View("Create", feedback);
+                var fileSize = file.ContentLength;
+                if (fileSize > 2100000)
+                {
+                    TempData["Message"] = "File Size Limit Exceeds";
+                    return View("Create", feedback);
+                }
+                else
+                {
+                    string filename = null;
+                    String ext = Path.GetExtension(file.FileName);
+                    filename = $@"{Guid.NewGuid()}" + ext;
+                    feedback.attachment = filename;
+                    file.SaveAs(Path.Combine(icrm.Models.Constants.PATH, filename));
+                }
             }
+
             else
             {
+                feedback.attachment = null;
+            }
                 switch (submitButton)
                 {
                     case "Forward":
@@ -138,16 +149,10 @@ namespace icrm.Controllers
                         {
                             if (ModelState.IsValid)
                             {
-                                string filename = null;
+                                
                                 feedback.assignedBy = user.Id;
                                 feedback.assignedDate = DateTime.Today;
-                                if (file != null && file.ContentLength > 0)
-                                {
-                                    String ext = Path.GetExtension(file.FileName);
-                                    filename = $@"{Guid.NewGuid()}" + ext;
-                                    feedback.attachment = filename;
-                                    file.SaveAs(Path.Combine(icrm.Models.Constants.PATH, filename));
-                                }
+                                
                                 feedInterface.Save(feedback);
                                 TempData["Message"] = "Feedback Saved";
                                
@@ -172,14 +177,10 @@ namespace icrm.Controllers
                         {
                             if (ModelState.IsValid)
                             {
-                                String filename = null;
-                                if (file != null && file.ContentLength > 0)
-                                {
-                                    String ext = Path.GetExtension(file.FileName);
-                                    filename = $@"{Guid.NewGuid()}" + ext;
-                                    feedback.attachment = filename;
-                                    file.SaveAs(Path.Combine(icrm.Models.Constants.PATH, filename));
-                                }
+
+                            feedback.submittedById = user.Id;
+                            feedback.assignedBy = null;
+                            feedback.assignedDate = null;
                                 feedInterface.Save(feedback);
                                 TempData["Message"] = "Feedback Saved";
                                 return RedirectToAction("Create");
@@ -204,14 +205,13 @@ namespace icrm.Controllers
 
                 }
 
-            }
+            
             
 
         }
 
 
         /*****************Change Status By HR in FeedBack*********************/
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("update/")]
@@ -230,7 +230,7 @@ namespace icrm.Controllers
             ViewData["user"] = user;
             Feedback f = db.Feedbacks.Find(feedback.id);
             f.status = feedback.status;
-            if (feedback.status == "Closed") {
+            if (feedback.status == "Closed") {                  
                 f.closedDate = DateTime.Today;
             }
            
@@ -282,8 +282,7 @@ namespace icrm.Controllers
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-            feedback.assignedBy = user.Id;
-            feedback.assignedDate = DateTime.Today;         
+                   
             feedback.user = db.Users.Find(feedback.userId);
             switch (submitButton)
             {
@@ -319,6 +318,9 @@ namespace icrm.Controllers
                     {
                         if (ModelState.IsValid)
                         {
+                            feedback.assignedBy = null;
+                            feedback.assignedDate = null;
+                            feedback.submittedById = user.Id;
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
                             TempData["Message"] = "Feedback Resolved";
@@ -610,5 +612,12 @@ namespace icrm.Controllers
 
         }
 
+
+
+        [HttpPost]
+        public JsonResult getEmpDetails(string id)
+        {
+            return Json(db.Users.Where(u => u.Id == id).FirstOrDefault());
+        }
     }
 }

@@ -16459,7 +16459,7 @@ textarea.parsley-success:focus {
         font-size: 20px;
         line-height: 0;
         margin-right: 8px;
-        color: #1b84e7;
+        color: #ffce00;
         width: 18px;
         text-align: center;
         transition: all 0.2s ease-in-out;
@@ -16904,7 +16904,7 @@ textarea.parsley-success:focus {
     .slim-navbar .nav-link .icon {
         font-size: 24px;
         line-height: 0;
-        color: #1b84e7;
+        color: #ffce00;
     }
 
 @media (min-width: 992px) {
@@ -17012,7 +17012,7 @@ textarea.parsley-success:focus {
     }
 
         .slim-navbar .sub-item ul a:hover, .slim-navbar .sub-item ul a:focus {
-            color: #1b84e7;
+            color: #ffce00;
             background-color: #f2f4f6;
         }
 
