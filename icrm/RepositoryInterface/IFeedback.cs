@@ -28,6 +28,7 @@ namespace icrm.RepositoryInterface
         IEnumerable<Feedback> getAllClosed();
         IEnumerable<Feedback> getAllResolved();
         IEnumerable<Feedback> getAllResponded();
+        IEnumerable<Feedback> OpenWithoutDepart();
         IEnumerable<Feedback> searchlist(DateTime d1, DateTime d2);
        
         IPagedList<Feedback> searchHR(string v1, string v2, string status, int pageIndex, int pageSize);

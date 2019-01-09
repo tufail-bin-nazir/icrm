@@ -189,5 +189,10 @@ namespace icrm.RepositoryImpl
         {
             return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID != null && m.response != null && m.status == "Open").ToList();
         }
+
+        public IEnumerable<Feedback> OpenWithoutDepart()
+        {
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == null && m.response == null && m.status == "Open").ToList();
+        }
     }
 }
