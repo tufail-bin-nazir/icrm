@@ -176,7 +176,11 @@ namespace icrm.Controllers
                         if (feedback.departmentID == null && feedback.response != null)
                         {
                             if (ModelState.IsValid)
-                            {                              
+                            {
+
+                            feedback.submittedById = user.Id;
+                            feedback.assignedBy = null;
+                            feedback.assignedDate = null;
                                 feedInterface.Save(feedback);
                                 TempData["Message"] = "Feedback Saved";
                                 return RedirectToAction("Create");
@@ -279,8 +283,7 @@ namespace icrm.Controllers
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-            feedback.assignedBy = user.Id;
-            feedback.assignedDate = DateTime.Today;         
+                   
             feedback.user = db.Users.Find(feedback.userId);
             switch (submitButton)
             {
@@ -316,6 +319,9 @@ namespace icrm.Controllers
                     {
                         if (ModelState.IsValid)
                         {
+                            feedback.assignedBy = null;
+                            feedback.assignedDate = null;
+                            feedback.submittedById = user.Id;
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
                             TempData["Message"] = "Feedback Resolved";
