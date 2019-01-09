@@ -46,7 +46,9 @@ namespace icrm.WebApi
             feedInterface = new FeedbackRepository();
         }
 
-
+        /// <summary>
+        /// /////////////////////////////////////************* HrTicketslist *****************/////////////////
+        /// </summary>
         [HttpGet]
         [Route("api/HR/HrTicketslist")]
         public IHttpActionResult HrTicketslist()
@@ -65,13 +67,15 @@ namespace icrm.WebApi
             }
             else
             {
-
+                
                 return BadRequest("hr list not found");
 
             }
 
         }
-
+        /// <summary>
+        /// /////////////////////////////////////************* HrTicket by id *****************/////////////////
+        /// </summary>
 
         [HttpGet]
         [Route("api/HR/HrTicket/{id}")]
@@ -97,7 +101,9 @@ namespace icrm.WebApi
 
             }
         }
-
+        /// <summary>
+        /// /////////////////////////////////////************* GetFile *****************/////////////////
+        /// </summary>
         [HttpGet]
         [Route("api/HR/getFile/{filename}")]
         public IHttpActionResult getFile(string filename)
@@ -120,7 +126,9 @@ namespace icrm.WebApi
             }
         }
 
-
+        /// <summary>
+        /// /////////////////////////////////////*************Resolve By Id *****************/////////////////
+        /// </summary>
         [HttpPost]
         [Route("api/HR/Resolve/{id}")]
         public IHttpActionResult Resolve(string Id, Feedback feedback)
@@ -478,7 +486,12 @@ namespace icrm.WebApi
                 return BadRequest("User list  not found");
 
             }
-
         }
+
+
+       
+       
+
+
     }
 }
