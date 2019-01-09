@@ -40,7 +40,7 @@ namespace icrm.Models
 
         public string status { get; set; }
 
-        public Boolean satisfaction { get; set; }
+        public string satisfaction { get; set; }
 
         public string attachment { get; set; }
 
