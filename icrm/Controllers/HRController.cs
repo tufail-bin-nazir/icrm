@@ -119,18 +119,29 @@ namespace icrm.Controllers
             if (feedback.userId == null) {
                 feedback.userId=user.Id;
             }
-            
-            var fileSize = file.ContentLength;
-            if (fileSize > 2100000)
+
+            if (file != null)
             {
-
-                
-
-                TempData["Message"] = "File Size Limit Exceeds";
-                return View("Create", feedback);
+                var fileSize = file.ContentLength;
+                if (fileSize > 2100000)
+                {
+                    TempData["Message"] = "File Size Limit Exceeds";
+                    return View("Create", feedback);
+                }
+                else
+                {
+                    string filename = null;
+                    String ext = Path.GetExtension(file.FileName);
+                    filename = $@"{Guid.NewGuid()}" + ext;
+                    feedback.attachment = filename;
+                    file.SaveAs(Path.Combine(icrm.Models.Constants.PATH, filename));
+                }
             }
+
             else
             {
+                feedback.attachment = null;
+            }
                 switch (submitButton)
                 {
                     case "Forward":
@@ -138,16 +149,10 @@ namespace icrm.Controllers
                         {
                             if (ModelState.IsValid)
                             {
-                                string filename = null;
+                                
                                 feedback.assignedBy = user.Id;
                                 feedback.assignedDate = DateTime.Today;
-                                if (file != null && file.ContentLength > 0)
-                                {
-                                    String ext = Path.GetExtension(file.FileName);
-                                    filename = $@"{Guid.NewGuid()}" + ext;
-                                    feedback.attachment = filename;
-                                    file.SaveAs(Path.Combine(icrm.Models.Constants.PATH, filename));
-                                }
+                                
                                 feedInterface.Save(feedback);
                                 TempData["Message"] = "Feedback Saved";
                                
@@ -171,15 +176,7 @@ namespace icrm.Controllers
                         if (feedback.departmentID == null && feedback.response != null)
                         {
                             if (ModelState.IsValid)
-                            {
-                                String filename = null;
-                                if (file != null && file.ContentLength > 0)
-                                {
-                                    String ext = Path.GetExtension(file.FileName);
-                                    filename = $@"{Guid.NewGuid()}" + ext;
-                                    feedback.attachment = filename;
-                                    file.SaveAs(Path.Combine(icrm.Models.Constants.PATH, filename));
-                                }
+                            {                              
                                 feedInterface.Save(feedback);
                                 TempData["Message"] = "Feedback Saved";
                                 return RedirectToAction("Create");
@@ -204,7 +201,7 @@ namespace icrm.Controllers
 
                 }
 
-            }
+            
             
 
         }
@@ -610,5 +607,12 @@ namespace icrm.Controllers
 
         }
 
+
+
+        [HttpPost]
+        public JsonResult getEmpDetails(string id)
+        {
+            return Json(db.Users.Where(u => u.Id == id).FirstOrDefault());
+        }
     }
 }
