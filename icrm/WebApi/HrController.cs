@@ -147,6 +147,10 @@ namespace icrm.WebApi
             }
         }
 
+        /// <summary>
+        /// /////////////////////////////////////*************Priority*****************/////////////////
+        /// </summary>
+
         [HttpGet]
         [Route("api/HR/priority")]
         public IHttpActionResult priority()
@@ -169,7 +173,9 @@ namespace icrm.WebApi
             }
         }
 
-
+        /// <summary>
+        /// /////////////////////////////////////*************catagorey*****************/////////////////
+        /// </summary>
 
         [HttpGet]
         [Route("api/HR/catagorey")]
@@ -190,6 +196,10 @@ namespace icrm.WebApi
 
             }
         }
+
+        /// <summary>
+        /// /////////////////////////////////////*************Department*****************/////////////////
+        /// </summary>
 
 
         [HttpGet]
@@ -212,6 +222,10 @@ namespace icrm.WebApi
             }
         }
 
+
+        /// <summary>
+        /// /////////////////////////////////////*************forwardTicket*****************/////////////////
+        /// </summary>
 
         [HttpPost]
         [Route("api/HR/forwardTicket/{id}")]
@@ -240,6 +254,10 @@ namespace icrm.WebApi
         }
 
 
+        /// <summary>
+        /// /////////////////////////////////////*************Departmentlist*****************/////////////////
+        /// </summary>
+
         [HttpGet]
         [Route("api/HR/Departmentlist")]
         public IHttpActionResult Departmentlist()
@@ -267,6 +285,9 @@ namespace icrm.WebApi
             }
 
         }
+        /// <summary>
+        /// /////////////////////////////////////*************DepartmentbyId*****************/////////////////
+        /// </summary>
 
 
         [HttpGet]
@@ -294,6 +315,9 @@ namespace icrm.WebApi
 
         }
 
+        /// <summary>
+        /// ////////////////////////******************* updateTicketDepartment***************////////////////////
+        /// </summary>
 
         [HttpPost]
         [Route("api/HR/updateTicketDepartment/{id}")]
@@ -318,7 +342,10 @@ namespace icrm.WebApi
 
             }
         }
-
+        /// <summary>
+        /// ////////////////////////////****************RespondedTicketList*******************////////////////////////////
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet]
         [Route("api/HR/respondedTicketList")]
@@ -343,6 +370,9 @@ namespace icrm.WebApi
             }
 
         }
+        /// <summary>
+        ////////////////////////////////////**************** respondedTicketItem*************/////////////////
+        /// </summary>
 
 
         [HttpGet]
@@ -371,7 +401,7 @@ namespace icrm.WebApi
         }
 
         /// <summary>
-        ////////////////////////// update Ticket which is responded////////////////////////
+        //////////////////////////*************** update Ticket which is responded***************////////////////////////
         /// </summary>
        
 
@@ -400,7 +430,7 @@ namespace icrm.WebApi
         }
 
         /// <summary>
-        ////////////////////////////// closed list//////////////////////////////////////////////////////////// 
+        //////////////////////////////**************** closed list****************//////////////////////////////////////////////////////////// 
         /// </summary>
         /// <returns></returns>
 
@@ -424,8 +454,31 @@ namespace icrm.WebApi
                 return BadRequest("No closed list  found");
 
             }
+        }
+        /// <summary>
+        /// ///////////////////*********************** userTicketView************//////////////////////////////////
+        /// </summary>
+       
+        [HttpGet]
+        [Route("api/HR/userTicketView/{id}")]
+        public IHttpActionResult userTicketView(string id)
+        {
+            var f = db.Feedbacks.Find(id);
+                   
+
+            if (f != null)
+            {
+                //var obj =new {f.createDate, f.title, f.description, f.response, f.satisfaction, f.status }.ToString();
+                return Ok(new { f.createDate, f.title, f.description, f.response, f.satisfaction, f.status});
+
+            }
+            else
+            {
+
+                return BadRequest("User list  not found");
+
+            }
 
         }
-
     }
 }

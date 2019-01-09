@@ -129,7 +129,7 @@ namespace icrm.WebApi
             var Query = from f in feedInterface.getAll()
                    
                         where f.userId == user.Result.Id
-                        select new { f.title, f.description ,f.createDate,f.user.EmployeeId,f.status,};
+                        select new { f.id,f.title, f.description ,f.createDate,f.user.EmployeeId,f.status,};
 
 
             if (Query != null)
