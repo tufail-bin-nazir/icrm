@@ -30,9 +30,16 @@
                         {
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="username" value="@System.Web.HttpContext.Current.User.Identity.Name" />
-                            <input class="icon ion-forward" type="submit" value="Sign Out" />
+                            <a href="#" class="nav-link">
+
+                                <i class="icon ion-forward"></i><input class="nav-link" style="background: transparent;
+               text-decoration: none;
+               cursor: pointer; border:none;" type="submit" value="Sign Out" />
+                            </a>
+
+
                         }
-                       
+
 
                     </nav>
                 </div>
