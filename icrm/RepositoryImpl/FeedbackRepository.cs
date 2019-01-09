@@ -93,7 +93,7 @@ namespace icrm.RepositoryImpl
             
             return feedlist.ToPagedList(pageIndex,pageSize);
         }
-
+      
         public IEnumerable<Feedback> getAll()
         {
             return db.Feedbacks.OrderByDescending(m => m.user.Id).ToList();
@@ -177,6 +177,17 @@ namespace icrm.RepositoryImpl
             }
 
             return feedlist.ToPagedList(pageIndex, pageSize);
+        }
+
+       
+        public IEnumerable<Feedback> getAllAssigned()
+        {
+            return db.Feedbacks.Where(m => m.status == "Open" && m.departmentID != null && m.response == null).OrderByDescending(m => m.user.Id).ToList();
+        }
+
+        public IEnumerable<Feedback> getAllResponded()
+        {
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID != null && m.response != null && m.status == "Open").ToList();
         }
     }
 }

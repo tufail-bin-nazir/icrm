@@ -33,7 +33,7 @@ namespace icrm.WebApi
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
-            var user = new ApplicationUser { UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName, Email = model.Email, PhoneNumber = model.PhoneNumber};
+            var user = new ApplicationUser { EmployeeId = model.EmployeeId, UserName = model.Email, FirstName = model.FirstName, LastName = model.LastName, Email = model.Email, PhoneNumber = model.PhoneNumber};
 
             var result = await UserManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
@@ -41,7 +41,7 @@ namespace icrm.WebApi
                 return Ok();
             }
             else {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
             
 
