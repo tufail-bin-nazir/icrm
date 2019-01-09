@@ -159,7 +159,7 @@
                                     <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.departmentID,
                           new SelectList(ViewBag.Departmn,
-                        "Id", "name"), "Choose Department", new { @readonly = "readonly", @class = "form-control select2" })
+                        "Id", "name"), "Choose Department", new { @readonly = "readonly", disabled="disabled", @class = "form-control select2" })
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -168,7 +168,7 @@
                                     <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.categoryId,
                            new SelectList(ViewBag.Categories,
-                         "Id", "name"), "Choose Category", new { @readonly = "readonly", @class = "form-control select2" })
+                         "Id", "name"), "Choose Category", new { @readonly = "readonly", disabled = "disabled", @class = "form-control select2" })
                                 </div>
                             </div>
 
@@ -178,7 +178,7 @@
                                     <label class="form-control-label">Priority: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.priorityId,
                            new SelectList(ViewBag.Priorities,
-                         "Id", "priorityId"), "Choose Priority", new { @readonly = "readonly", @class = "form-control select2" })
+                         "Id", "priorityId"), "Choose Priority", new { @readonly = "readonly", disabled = "disabled", @class = "form-control select2" })
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -242,7 +242,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Comment</label>
-                                    @Html.TextAreaFor(m => m.response, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.TextAreaFor(m => m.response, new { @class = "form-control",id="resolvecomment" })
 
 
                                 </div>
@@ -253,7 +253,7 @@
                         <!-- row -->
                         <div class="form-layout-footer">
                             <input type="hidden" value="Resolvedtype" name="typeoflink" />
-                            <input type="submit" value="Submit" class="btn btn-primary bd-0" />
+                            <input type="submit" value="Submit" class="btn btn-primary bd-0" id="SubmitBtn" />
                         </div>
                         <!-- form-layout-footer -->
                     </div>
@@ -284,6 +284,20 @@
         <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
         <script src="~/Content/js/slim.js"></script>
         <script>
+            $('#SubmitBtn').click(function () {
+
+                if ($('#statusfield').val() == "Resolved" && $('#resolvecomment').val()!="") {
+
+                    return true;
+                }
+                else {
+                    $('#statuscheck').text("Set status Resolve & Fill Comment");
+                    return false;
+
+                }
+            });
+
+
             $('#resolve').click(function () {
                 if ($('#statusfield').val() == "Resolved") {
 

@@ -212,7 +212,6 @@ namespace icrm.Controllers
 
 
         /*****************Change Status By HR in FeedBack*********************/
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("update/")]
@@ -231,7 +230,7 @@ namespace icrm.Controllers
             ViewData["user"] = user;
             Feedback f = db.Feedbacks.Find(feedback.id);
             f.status = feedback.status;
-            if (feedback.status == "Closed") {
+            if (feedback.status == "Closed") {                  
                 f.closedDate = DateTime.Today;
             }
            
