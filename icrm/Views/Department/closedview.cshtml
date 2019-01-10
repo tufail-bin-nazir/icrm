@@ -199,20 +199,22 @@
 
 
                     <div class="form-layout">
+
+                        @if (Model.attachment != null)
+                        {
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Download</label>
                                     @Html.HiddenFor(m => m.attachment)
-                                    <a href="@Url.Action("DownloadFile", "Department",new { filename=Model.attachment})" target="_blank" style="height:200px;width:200px;"><i class="fa fa-download"></i></a>
+                                    <a href="@Url.Action("DownloadFile", "Department", new { filename = Model.attachment })" target="_blank" style="height:200px;width:200px;"><i class="fa fa-download"></i></a>
 
                                 </div>
                             </div>
                             <!-- col-4 -->
-
-
+                            
                         </div>
-
+                        }
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
