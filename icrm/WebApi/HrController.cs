@@ -36,7 +36,7 @@ namespace icrm.WebApi
                 return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
             private set
-            {
+            {                                                                                                                                                                                       
                 _userManager = value;
             }
         }
@@ -54,9 +54,7 @@ namespace icrm.WebApi
         public IHttpActionResult HrTicketslist()
         {
 
-            var Query = from f in feedInterface.getAllOpen()
-
-                        where f.status == "Open"
+            var Query = from f in feedInterface.OpenWithoutDepart()
                         select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
 
             if (Query != null)
@@ -488,9 +486,34 @@ namespace icrm.WebApi
             }
         }
 
+        /// <summary>
+        /// //////////////////////////********************update satisfaction***************//////////////////////
+        /// </summary>
+        [HttpPost]
+        [Route("api/HR/updatesatisfaction/{id}")]
+        public IHttpActionResult updatesatisfaction(string Id, Feedback feedback)
+        {
+            Feedback f = db.Feedbacks.Find(Id);
 
-       
-       
+            if (f == null)
+            {
+
+                return BadRequest(" id not found");
+
+            }
+
+            else
+            {
+                f.satisfaction = feedback.satisfaction;
+                db.Entry(f).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return Ok();
+
+            }
+        }
+
+
 
 
     }

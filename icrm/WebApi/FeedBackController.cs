@@ -58,7 +58,7 @@ namespace icrm.WebApi
                 String ext = GetFileExtension(feedBackmodel.Attachment);
 
                
-                feedBack = new Feedback { title = feedBackmodel.Title, attachment = $@"{Guid.NewGuid()}." + ext, description = feedBackmodel.Description, userId = user.Result.Id };
+                feedBack = new Feedback { title = feedBackmodel.Title, attachment = $@"{Guid.NewGuid()}." + ext, description = feedBackmodel.Description,userId = user.Result.Id };
                 string path = Constants.PATH + feedBack.attachment;
                 if (!File.Exists(path))
                 {
