@@ -64,7 +64,7 @@
                         @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
-
+                        @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
 
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
@@ -160,6 +160,8 @@
                                     @Html.DropDownListFor(m => m.departmentID,
                           new SelectList(ViewBag.Departmn,
                         "Id", "name"), "Choose Department", new { @readonly = "readonly", disabled = "disabled", @class = "form-control select2" })
+                                    @Html.HiddenFor(model => model.departmentID, new { @class = "form-control" })
+
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -169,6 +171,8 @@
                                     @Html.DropDownListFor(m => m.categoryId,
                            new SelectList(ViewBag.Categories,
                          "Id", "name"), "Choose Category", new { @readonly = "readonly", disabled = "disabled", @class = "form-control select2" })
+                                    @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
+
                                 </div>
                             </div>
 
@@ -179,6 +183,8 @@
                                     @Html.DropDownListFor(m => m.priorityId,
                            new SelectList(ViewBag.Priorities,
                          "Id", "priorityId"), "Choose Priority", new { @readonly = "readonly",disabled = "disabled", @class = "form-control select2" })
+                                    @Html.HiddenFor(model => model.priorityId, new { @class = "form-control" })
+
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -213,6 +219,8 @@
                                     <label class="form-control-label">Choose Action</label>
                                     @**  @Html.DropDownListFor(m => m.status, new SelectList(ViewBag.Status), new { @class = "form-control", id = "statusfield" })
                                     *@
+                                    @Html.HiddenFor(model => model.status, new { @class = "form-control" })
+
                                     <select name="status" disabled id="statusfield" class="form-control select2">
 
                                         @if (Model.status == "Open")
@@ -255,7 +263,6 @@
                         <!-- row -->
                         <div class="form-layout-footer">
                             <input type="hidden" value="Assignedtype" name="typeoflink" />
-
                             <!--<input type="submit" value="submit" class="btn btn-primary bd-0" />-->
                         </div>
                         <!-- form-layout-footer -->

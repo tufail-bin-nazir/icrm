@@ -119,7 +119,8 @@ namespace icrm.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(f).State = EntityState.Modified;
-                db.SaveChanges();             
+                db.SaveChanges();
+                TempData["displayMsg"] = "FeedBacK Updated";
                 return RedirectToAction("DashBoard");
             }
             else

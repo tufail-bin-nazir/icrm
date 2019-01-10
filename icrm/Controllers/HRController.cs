@@ -292,8 +292,11 @@ namespace icrm.Controllers
                         feedback.department = db.Departments.Find(feedback.departmentID);
                         if (ModelState.IsValid)
                         {
-                            feedback.assignedBy = user.Id;
-                            feedback.assignedDate = DateTime.Today;
+                            if (feedback.assignedDate == null)
+                            {
+                                feedback.assignedBy = user.Id;
+                                feedback.assignedDate = DateTime.Today;
+                            }
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
                             TempData["Message"] = "Feedback Forwarded";
@@ -307,7 +310,7 @@ namespace icrm.Controllers
                     }
                     else
                     {
-                        TempData["Message"] = "Select Department & Comment Field Should be Empty";
+                        TempData["Message"] = "Select Department/ Comment Field Should be Empty";
                         return RedirectToAction("view", new { id = feedback.id });
                     }
                     return RedirectToAction("view", new { id = feedback.id });
@@ -335,7 +338,7 @@ namespace icrm.Controllers
                     }
                     else
                     {
-                        TempData["Message"] = "Response Field should not be empty & Deselect department";
+                        TempData["Message"] = "Response Field should not be empty / Deselect department";
                         return RedirectToAction("view", new { id = feedback.id });
                     }
 

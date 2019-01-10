@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="~/Content/css/slim.css">
 </head>
 <body>
-    @Html.Partial("_HRMenu")
+    @Html.Partial("_DepartmentMenu")
     <!-- slim-navbar -->
     <div class="slim-mainpanel">
         <div class="container">
@@ -159,7 +159,9 @@
                                     <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.departmentID,
                           new SelectList(ViewBag.Departmn,
-                        "Id", "name"), "Choose Department", new { @readonly = "readonly", @class = "form-control select2" })
+                        "Id", "name"), "Choose Department", new { diabled="disabled", @readonly = "readonly", @class = "form-control select2" })
+                                    @Html.HiddenFor(model => model.departmentID, new { @class = "form-control" })
+
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -168,7 +170,9 @@
                                     <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.categoryId,
                            new SelectList(ViewBag.Categories,
-                         "Id", "name"), "Choose Category", new { @readonly = "readonly", @class = "form-control select2" })
+                         "Id", "name"), "Choose Category", new { disabled="disabled", @readonly = "readonly", @class = "form-control select2" })
+                                    @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
+
                                 </div>
                             </div>
 
@@ -178,7 +182,9 @@
                                     <label class="form-control-label">Priority: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.priorityId,
                            new SelectList(ViewBag.Priorities,
-                         "Id", "priorityId"), "Choose Priority", new { @readonly = "readonly", @class = "form-control select2" })
+                         "Id", "priorityId"), "Choose Priority", new {disabled="disabled", @readonly = "readonly", @class = "form-control select2" })4
+                                    @Html.HiddenFor(model => model.priorityId, new { @class = "form-control" })
+
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -212,6 +218,8 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Choose Action</label>
                                     @Html.TextBoxFor(m => m.status, new { disabled = "disabled", @class = "form-control", id = "statusfield" })
+                                    @Html.HiddenFor(model => model.status, new { @class = "form-control" })
+
                                 </div>
                                 <label class="text-danger" id="statuscheck"></label>
                             </div>

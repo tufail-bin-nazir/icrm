@@ -164,6 +164,8 @@
                                     @Html.DropDownListFor(m => m.departmentID,
     new SelectList(ViewBag.Departmn,
     "Id", "name"), "Choose Department", new { disabled = "disabled", @class = "form-control select2" })
+                                    @Html.HiddenFor(model => model.departmentID, new { @class = "form-control" })
+
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -173,6 +175,8 @@
                                     @Html.DropDownListFor(m => m.categoryId,
     new SelectList(ViewBag.Categories,
     "Id", "name"), "Choose Category", new { disabled = "disabled", @class = "form-control select2" })
+                                    @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
+
                                 </div>
                             </div>
 
@@ -183,6 +187,8 @@
                                     @Html.DropDownListFor(m => m.priorityId,
     new SelectList(ViewBag.Priorities,
     "Id", "priorityId"), "Choose Priority", new { disabled = "disabled", @class = "form-control select2" })
+                                    @Html.HiddenFor(model => model.priorityId, new { @class = "form-control" })
+
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -211,7 +217,8 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Status</label>
 
-                                    @Html.TextBoxFor(m => m.status, new { disabled = "disabled", @class = "form-control" })
+                                    @Html.TextBoxFor(m => m.status, new { @readonly = "readonly", @class = "form-control" })
+
 
                                 </div>
 

@@ -59,11 +59,15 @@
                         <span class="tx-success">@TempData["Message"]</span>
                         @Html.HiddenFor(model => model.id, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.user.LastName, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
+                       
+                        
+                        
+                        @Html.HiddenFor(model => model.submittedById, new { @class = "form-control" })
 
 
                         <div class="row mg-b-25">
@@ -153,36 +157,85 @@
                                     @Html.TextAreaFor(model => model.description, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
                             </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.departmentID,
-                          new SelectList(ViewBag.Departmn,
-                        "Id", "name"), "Choose Department", new { @class = "form-control select2" })
+
+                            @if (Model.departmentID != null)
+                            {
+                                <!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
+                                        @Html.DropDownListFor(m => m.departmentID,
+                              new SelectList(ViewBag.Departmn,
+                            "Id", "name"), "Choose Department", new { disabled="disabled", @class = "form-control select2" })
+                                        @Html.HiddenFor(model => model.departmentID, new { @class = "form-control" })
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.categoryId,
-                           new SelectList(ViewBag.Categories,
-                         "Id", "name"), "Choose Category", new { @class = "form-control select2",id="category" })
+                            }else
+                            
+                            {
+                                <!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
+                                        @Html.DropDownListFor(m => m.departmentID,
+                              new SelectList(ViewBag.Departmn,
+                            "Id", "name"), "Choose Department", new { @class = "form-control select2" })
+                                    </div>
                                 </div>
-                            </div>
+                            }
 
 
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Priority: <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.priorityId,
-                           new SelectList(ViewBag.Priorities,
-                         "Id", "priorityId"), "Choose Priority", new {  @class = "form-control select2", id="priorty" })
+                            @if (Model.categoryId == null)
+                            {
+                                <!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
+                                        @Html.DropDownListFor(m => m.categoryId,
+                            new SelectList(ViewBag.Categories,
+                          "Id", "name"), "Choose Category", new { @class = "form-control select2", id = "category" })
+                                    </div>
                                 </div>
-                            </div>
+                            }else
+                            {
+                                <!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
+                                        @Html.DropDownListFor(m => m.categoryId,
+                            new SelectList(ViewBag.Categories,
+                          "Id", "name"), "Choose Category", new { disabled="disabled", @class = "form-control select2", id = "category" })
+                                        @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            }
+
+                            @if (Model.priorityId == null)
+                            {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Priority: <span class="tx-danger">*</span></label>
+                                        @Html.DropDownListFor(m => m.priorityId,
+                   new SelectList(ViewBag.Priorities,
+                 "Id", "priorityId"), "Choose Priority", new { @class = "form-control select2", id = "priorty" })
+                                    </div>
+                                </div>
+                            }else
+                            {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Priority: <span class="tx-danger">*</span></label>
+                                        @Html.DropDownListFor(m => m.priorityId,
+                   new SelectList(ViewBag.Priorities,
+                 "Id", "priorityId"), "Choose Priority", new { disabled="disabled", @class = "form-control select2", id = "priorty" })
+                                        @Html.HiddenFor(model => model.priorityId, new { @class = "form-control" })
+
+                                    </div>
+                                </div>
+                            }
                             <!-- col-4 -->
                         </div>
+                            
                         <!-- row -->
                         <!-- form-layout-footer -->
                     </div>
@@ -238,23 +291,54 @@
                                 </div>
                                 <label class="text-danger" id="statuscheck"></label>
                             </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Comment</label>
-                                    @Html.TextAreaFor(m => m.response, new { @class = "form-control" })
+                            @if (Model.departmentID != null)
+                            {
 
 
+                                <!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Comment</label>
+                                        @Html.TextAreaFor(m => m.response, new { disabled = "disabled", @class = "form-control" })
+
+                                        @Html.HiddenFor(model => model.responseById, new { @class = "form-control" })
+                                        @Html.HiddenFor(model => model.responseDate, new { @class = "form-control" })
+                                        @Html.HiddenFor(model => model.response, new { @class = "form-control" })
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        @ViewBag.fff
 
-                        <!-- row -->
-                        <div class="form-layout-footer">
-                            <input type="submit" value="Forward" name="submitButton" id="forward" class="btn btn-primary bd-0" />
-                            <input type="submit" value="Resolve" name="submitButton" id="resolve" class="btn btn-primary bd-0" />
+                            }else
+                            {
+
+
+                                <!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Comment</label>
+                                        @Html.TextAreaFor(m => m.response, new { @class = "form-control" })
+
+
+                                    </div>
+                                </div>
+
+                            }
                         </div>
+
+                        @if (Model.departmentID == null)
+                        {
+                            <!-- row -->
+                            <div class="form-layout-footer">
+                                <input type="submit" value="Forward" name="submitButton" id="forward" class="btn btn-primary bd-0" />
+                                <input type="submit" value="Resolve" name="submitButton" id="resolve" class="btn btn-primary bd-0" />
+                            </div>
+                        }else
+                        {
+                            <!-- row -->
+                            <div class="form-layout-footer">
+                                <input type="submit" value="Forward" name="submitButton" id="forward" class="btn btn-primary bd-0" />
+                               
+                            </div>
+                        }
                         <!-- form-layout-footer -->
                     </div>
 
@@ -288,6 +372,10 @@
             $('#forward').click(function () {
                 $("#priorty").prop('required', true);
                 $("#category").prop('required', true);
+                if ($('#statusfield').val() == "Resolved") {
+                    $('#statuscheck').text("Set status either Open/Closed");
+                return false;
+               }
                
             });
 
