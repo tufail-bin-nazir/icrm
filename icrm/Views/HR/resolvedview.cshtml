@@ -292,6 +292,34 @@
         <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
         <script src="~/Content/js/slim.js"></script>
         <script>
+            $(document).ready(function () {
+                var navig = ["Dashboard", "Create", "HR", "Department", "Users"];
+                var url = window.location.href;
+                var page = new Array();
+                var page = url.split("/");
+                console.log(page[10])
+
+                if (page[3] == navig[0]) {
+        case navig[0]:
+
+
+                    break;
+                } else if ((page[3] == navig[1])) {
+                    $(".nav").find('.active').first().removeAttr("class", "active");
+                    $(".nav").find('.active').first().attr("class", "active");
+
+                } else {
+                    $(".nav").find('.active').first().removeAttr("class", "active");
+                    $(".nav").find("li:nth-child(2)").attr("class", "active");
+                }
+
+
+
+
+            });
+
+
+
             $('#SubmitBtn').click(function () {
 
                 if ($('#statusfield').val() == "Resolved" && $('#resolvecomment').val()!="") {
@@ -319,6 +347,14 @@
                 }
 
             });
+
+
+
+
+
+
+
+
 
             $(function () {
 
