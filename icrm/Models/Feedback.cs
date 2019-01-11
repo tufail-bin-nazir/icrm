@@ -66,7 +66,9 @@ namespace icrm.Models
         public virtual ApplicationUser responseBy { get; set; }
         public string submittedById { get; set; }
         public virtual ApplicationUser submittedBy { get; set; }
+        public int? typeId { get; set; }
 
-        
+        public virtual FeedBackType type { get; set; }
+
     }
 }

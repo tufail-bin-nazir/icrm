@@ -176,6 +176,15 @@
                     <div class="row mg-b-25">
                         <div class="col-lg-4">
                             <div class="form-group">
+                                <label class="form-control-label">Type: <span class="tx-danger">*</span></label>
+                                @Html.DropDownListFor(model => model.typeId,
+  new SelectList(ViewBag.typeList, "Id", "name"), "Choose", new { @class = "form-control select2" })
+
+                              
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
                                 <label class="form-control-label">Title: <span class="tx-danger">*</span></label>
                                 @Html.TextBoxFor(model => model.title, new { @class = "form-control" })
                             </div>
@@ -217,59 +226,59 @@
                         </div>
                         <!-- col-4 -->
                     </div>
-                    <!-- row -->
-                    <!-- form-layout-footer -->
-                </div>
-
-
-
-                <label class="section-title">Attachment</label>
-
-
-                <div class="form-layout">
-                    <div class="row mg-b-25">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label"></label>
-
-                                <input type="file" name="file">
-                                @Html.ValidationMessageFor(model => model.attachment, "", new { @class = "text-danger" })
-                            </div>
+                            <!-- row -->
+                            <!-- form-layout-footer -->
                         </div>
-                        <!-- col-4 -->
 
 
-                    </div>
 
-                    <div class="row mg-b-25">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">Choose Action</label>
-                                @Html.DropDownListFor(m => m.status, new SelectList(ViewBag.Status), new { @class = "form-control", id = "statusfield" })
-                                <label class="text-danger" id="statuscheck"></label>
-                            </div>
-                        </div>
-                        <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">Comment</label>
-                                @Html.TextAreaFor(m => m.response, new { @class = "form-control" })
+                        <label class="section-title">Attachment</label>
+
+
+                        <div class="form-layout">
+                            <div class="row mg-b-25">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label"></label>
+
+                                        <input type="file" name="file">
+                                        @Html.ValidationMessageFor(model => model.attachment, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <!-- col-4 -->
 
 
                             </div>
+
+                            <div class="row mg-b-25">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Choose Action</label>
+                                        @Html.DropDownListFor(m => m.status, new SelectList(ViewBag.Status), new { @class = "form-control", id = "statusfield" })
+                                        <label class="text-danger" id="statuscheck"></label>
+                                    </div>
+                                </div>
+                                <!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Comment</label>
+                                        @Html.TextAreaFor(m => m.response, new { @class = "form-control" })
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- row -->
+                            <div class="form-layout-footer">
+                                <input type="submit" value="Forward/Create" id="forward" name="submitButton" class="btn btn-primary bd-0" />
+                                <input type="submit" value="Resolve" id="resolve" name="submitButton" class="btn btn-primary bd-0" />
+                            </div>
+                            <!-- form-layout-footer -->
                         </div>
+
                     </div>
-
-
-                    <!-- row -->
-                    <div class="form-layout-footer">
-                        <input type="submit" value="Forward/Create" id="forward" name="submitButton" class="btn btn-primary bd-0" />
-                        <input type="submit" value="Resolve" id="resolve" name="submitButton" class="btn btn-primary bd-0" />
-                    </div>
-                    <!-- form-layout-footer -->
-                </div>
-
-            </div>
             }
             <!-- container -->
         </div>

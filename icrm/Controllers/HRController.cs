@@ -146,7 +146,7 @@ namespace icrm.Controllers
             }
                 switch (submitButton)
                 {
-                    case "Forward":
+                    case "Forward/Create":
                         if (feedback.departmentID != null && feedback.response == null)
                         {
                             if (ModelState.IsValid)
@@ -665,6 +665,7 @@ namespace icrm.Controllers
             ViewBag.Departmn = departments;
             ViewBag.Categories = categories;
             ViewBag.Priorities = priorities;
+            ViewBag.typeList = db.FeedbackTypes.OrderBy(m => m.Id).ToList();
 
         }
 
