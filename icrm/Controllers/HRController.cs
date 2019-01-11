@@ -18,6 +18,8 @@ using System.IO;
 using System.Data.SqlClient;
 using System.Data;
 using System.Data.Entity.Core.Objects;
+using Microsoft.Office.Interop.Excel;
+using System.Net.Http;
 
 namespace icrm.Controllers
 {
@@ -354,10 +356,63 @@ namespace icrm.Controllers
         /****************************SEARCH BY HR**************************/
         [HttpPost]
         [Route("hr/search/")]
-        public ActionResult search(int? page)
+        public ActionResult search(int? page, string export)
         {
             string d3 = Request.Form["date22"];
             string dd = Request.Form["date1"];
+            DateTime dt = DateTime.ParseExact(dd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            DateTime dt2 = DateTime.ParseExact(d3, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+            string status = Request.Form["Status"]; ;
+            if (export != null) {
+                IEnumerable<Feedback> feedbacks = feedInterface.searchHR(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), status);
+                Application application = new Application();
+                Workbook workbook = application.Workbooks.Add(System.Reflection.Missing.Value);
+                Worksheet worksheet = workbook.ActiveSheet;
+
+                worksheet.Cells[1, 1] = "Ticket ID";
+                worksheet.Cells[1, 2] = "Title";
+                worksheet.Cells[1, 3] = "Incident Type";
+                worksheet.Cells[1, 4] = "Status";
+                worksheet.Cells[1, 5] = "Description";
+                worksheet.Cells[1, 6] = "Name";
+                worksheet.Cells[1, 7] = "Email ID";
+                worksheet.Cells[1, 8] = "Phone Number";
+              
+
+                int row = 2;
+                foreach (var item in feedbacks)
+                {
+                    worksheet.Cells[row, 1] = item.id;
+                    worksheet.Cells[row, 2] = item.title;
+                    worksheet.Cells[row, 3] = "";
+                    worksheet.Cells[row, 4] = item.status;
+                    worksheet.Cells[row, 5] = item.description;
+                    worksheet.Cells[row, 6] = item.user.FirstName;
+                    worksheet.Cells[row, 7] = item.user.Email;
+                    worksheet.Cells[row, 8] = item.user.PhoneNumber;
+                   
+
+
+                    row++;
+                }
+                workbook.SaveAs("D:\\tempex/myreport.xlsx");
+
+                //workbook.Close();
+                string tempPath = AppDomain.CurrentDomain.BaseDirectory + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + DateTime.Now.Millisecond + "_temp";
+                workbook.SaveAs(tempPath, workbook.FileFormat);
+                tempPath = workbook.FullName;
+                workbook.Close();
+                byte[] result = System.IO.File.ReadAllBytes(tempPath);
+                System.IO.File.Delete(tempPath);
+
+                this.Response.AddHeader("Content-Disposition", "Employees.xls");
+                this.Response.ContentType = "application/vnd.ms-excel";
+
+                return File(result, "application/vnd.ms-excel");
+
+
+            }
+
             if (d3.Equals("") || dd.Equals(""))
             {
                 TempData["DateMsg"] = "Select StartDate And EndDate";
@@ -368,7 +423,7 @@ namespace icrm.Controllers
                 var user = UserManager.FindById(User.Identity.GetUserId());
                 TicketCounts();
                 ViewBag.Status = Request.Form["Status"];
-                string status = Request.Form["Status"]; ;
+                
                 switch (status)
                 {
                     case "Open":
@@ -386,8 +441,6 @@ namespace icrm.Controllers
                 }
 
 
-                DateTime dt = DateTime.ParseExact(dd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-                DateTime dt2 = DateTime.ParseExact(d3, "dd-MM-yyyy", CultureInfo.InvariantCulture);
 
                 ViewBag.showDate = Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff");
                 int pageSize = 10;
