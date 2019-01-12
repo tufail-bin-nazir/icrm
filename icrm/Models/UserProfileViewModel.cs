@@ -7,6 +7,8 @@ namespace icrm.Models
 {
     public class UserProfileViewModel
     {
+      
+        public string PhoneNumber { get; set; }
         public int LocationId { get; set; }
         public int SubLocationId { get; set; }
         public int PositionId { get; set; }

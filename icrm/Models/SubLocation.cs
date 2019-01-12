@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace icrm.Models
 {
@@ -9,10 +10,11 @@ namespace icrm.Models
 
         [Required]
         public string name { get; set; }
- 
-        
+
+       
         public int? LocationId { get; set; }
 
+        [JsonIgnore]
         public virtual Location  Location{ get; set; }
     }
 }

@@ -47,7 +47,8 @@ namespace icrm.WebApi
             {
                 return Ok();
             }
-            else {
+            else
+            {
                 return BadRequest();
             }
             

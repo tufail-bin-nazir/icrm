@@ -82,6 +82,8 @@ namespace icrm.Models
             Database.SetInitializer<ApplicationDbContext>(new MyDBInitializer());
         }
 
+       
+
         public DbSet<Models.Feedback> Feedbacks { get; set; }
 
       

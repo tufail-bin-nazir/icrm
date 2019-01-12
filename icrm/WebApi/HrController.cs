@@ -15,6 +15,7 @@ using icrm.RepositoryImpl;
 using System.Net.Http.Headers;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 
 namespace icrm.WebApi
 {
@@ -46,7 +47,7 @@ namespace icrm.WebApi
             feedInterface = new FeedbackRepository();
         }
 
-        /// <summary>
+        //1/ <summary>
         /// /////////////////////////////////////************* HrTicketslist *****************/////////////////
         /// </summary>
         [HttpGet]
@@ -71,7 +72,7 @@ namespace icrm.WebApi
             }
 
         }
-        /// <summary>
+        //2/ <summary>
         /// /////////////////////////////////////************* HrTicket by id *****************/////////////////
         /// </summary>
 
@@ -99,7 +100,7 @@ namespace icrm.WebApi
 
             }
         }
-        /// <summary>
+        //3/ <summary>
         /// /////////////////////////////////////************* GetFile *****************/////////////////
         /// </summary>
         [HttpGet]
@@ -107,7 +108,7 @@ namespace icrm.WebApi
         public IHttpActionResult getFile(string filename)
         {
             Feedback f = feedInterface.Find(filename);
-            string path = Constants.PATH + f.attachment;
+            string path = Models.Constants.PATH + f.attachment;
 
             if (path != null)
             {
@@ -124,7 +125,7 @@ namespace icrm.WebApi
             }
         }
 
-        /// <summary>
+        //4/ <summary>
         /// /////////////////////////////////////*************Resolve By Id *****************/////////////////
         /// </summary>
         [HttpPost]
@@ -153,7 +154,7 @@ namespace icrm.WebApi
             }
         }
 
-        /// <summary>
+        //5/ <summary>
         /// /////////////////////////////////////*************Priority*****************/////////////////
         /// </summary>
 
@@ -179,7 +180,7 @@ namespace icrm.WebApi
             }
         }
 
-        /// <summary>
+        //6/ <summary>
         /// /////////////////////////////////////*************catagorey*****************/////////////////
         /// </summary>
 
@@ -203,7 +204,7 @@ namespace icrm.WebApi
             }
         }
 
-        /// <summary>
+        //7/ <summary>
         /// /////////////////////////////////////*************Department*****************/////////////////
         /// </summary>
 
@@ -229,7 +230,7 @@ namespace icrm.WebApi
         }
 
 
-        /// <summary>
+        //8/ <summary>
         /// /////////////////////////////////////*************forwardTicket*****************/////////////////
         /// </summary>
 
@@ -260,7 +261,7 @@ namespace icrm.WebApi
         }
 
 
-        /// <summary>
+        //9/ <summary>
         /// /////////////////////////////////////*************Departmentlist*****************/////////////////
         /// </summary>
 
@@ -279,7 +280,7 @@ namespace icrm.WebApi
 
             if (Query != null)
             {
-
+                
                 return Ok(Query.ToList());
 
             }
@@ -291,7 +292,7 @@ namespace icrm.WebApi
             }
 
         }
-        /// <summary>
+        //10/ <summary>
         /// /////////////////////////////////////*************DepartmentbyId*****************/////////////////
         /// </summary>
 
@@ -321,7 +322,7 @@ namespace icrm.WebApi
 
         }
 
-        /// <summary>
+        //11/ <summary>
         /// ////////////////////////******************* updateTicketDepartment***************////////////////////
         /// </summary>
 
@@ -348,7 +349,7 @@ namespace icrm.WebApi
 
             }
         }
-        /// <summary>
+        //12/ <summary>
         /// ////////////////////////////****************RespondedTicketList*******************////////////////////////////
         /// </summary>
         /// <returns></returns>
@@ -376,7 +377,7 @@ namespace icrm.WebApi
             }
 
         }
-        /// <summary>
+        //13/ <summary>
         ////////////////////////////////////**************** respondedTicketItem*************/////////////////
         /// </summary>
 
@@ -406,7 +407,7 @@ namespace icrm.WebApi
 
         }
 
-        /// <summary>
+        //14/ <summary>
         //////////////////////////*************** update Ticket which is responded***************////////////////////////
         /// </summary>
        
@@ -435,7 +436,7 @@ namespace icrm.WebApi
             }
         }
 
-        /// <summary>
+        //15/ <summary>
         //////////////////////////////**************** closed list****************//////////////////////////////////////////////////////////// 
         /// </summary>
         /// <returns></returns>
@@ -461,7 +462,7 @@ namespace icrm.WebApi
 
             }
         }
-        /// <summary>
+        //16/ <summary>
         /// ///////////////////*********************** userTicketView************//////////////////////////////////
         /// </summary>
        
@@ -486,7 +487,7 @@ namespace icrm.WebApi
             }
         }
 
-        /// <summary>
+        //17/ <summary>
         /// //////////////////////////********************update satisfaction***************//////////////////////
         /// </summary>
         [HttpPost]
@@ -494,7 +495,6 @@ namespace icrm.WebApi
         public IHttpActionResult updatesatisfaction(string Id, Feedback feedback)
         {
             Feedback f = db.Feedbacks.Find(Id);
-
             if (f == null)
             {
 
@@ -511,6 +511,357 @@ namespace icrm.WebApi
                 return Ok();
 
             }
+        }
+
+
+        //18/ <summary>
+        /// ********************************************   Resolved tickets Here ***************************////
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/HR/Resolved")]
+        public IHttpActionResult Resolved()
+        {
+
+            var Query = from f in feedInterface.getAllResolved()
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, f.user.FirstName, f.user.Email, f.category, f.priority, };
+
+            if (Query != null)
+            {
+
+                return Ok(Query.ToList());
+
+            }
+            else
+            {
+
+                return BadRequest("No Resolved list  found");
+
+            }
+        }
+
+
+        //19/ <summary>
+        /// ********************************************   update  Resolve  by id  ***************************////
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/HR/updateResolve/{id}")]
+        public IHttpActionResult updateResolve(string Id, Feedback feedback)
+        {
+            Feedback f = db.Feedbacks.Find(Id);
+
+            if (f == null)
+            {
+
+                return BadRequest(" id not found");
+
+            }
+
+            else
+            {
+                f.status = feedback.status;
+                db.Entry(f).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return Ok();
+
+            }
+        }
+
+
+
+
+        //20/ <summary>
+        /// ******************************************** Departments list    ***************************////
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/HR/departments/list")]
+        public IHttpActionResult departments()
+        {
+
+            var entity = db.Departments.ToList();
+
+            if (entity != null)
+            {
+                return Ok(entity.ToList());
+
+            }
+            else
+            {
+
+                return BadRequest(" Departments list not found");
+
+            }
+        }
+
+
+
+
+        //21/ <summary>
+        /// ********************************************  Religion List    ***************************////
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/HR/Religion/list")]
+        public IHttpActionResult Religion()
+        {
+
+            var entity = db.Religions.ToList();
+
+            if (entity != null)
+            {
+                return Ok(entity.ToList());
+
+            }
+            else
+            {
+
+                return BadRequest(" Religion list  not found");
+
+            }
+        }
+
+
+        //22/ <summary>
+        /// ********************************************  Nationalities list   ***************************////
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/HR/nationalities/list")]
+        public IHttpActionResult nationalities()
+        {
+
+            var entity = db.Nationalities.ToList();
+
+            if (entity != null)
+            {
+                return Ok(entity.ToList());
+
+            }
+            else
+            {
+
+                return BadRequest(" Nationalities list not found");
+
+            }
+        }
+
+        //23/ <summary>
+        /// ******************************************** Positions list    ***************************////
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/HR/Positions/list")]
+        public IHttpActionResult Positions()
+        {
+
+            var entity = db.Positions.ToList();
+
+            if (entity != null)
+            {
+                return Ok(entity.ToList());
+
+            }
+            else
+            {
+
+                return BadRequest(" Positions list not found");
+
+            }
+        }
+
+
+        //24/ <summary>
+        /// ********************************************  Locations list   ***************************////
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/HR/Locations/list")]
+        public IHttpActionResult Locations()
+        {
+
+            var entity = db.Locations.ToList();
+
+            if (entity != null)
+            {
+                return Ok(entity.ToList());
+
+            }
+            else
+            {
+
+                return BadRequest(" Locations list not found");
+
+            }
+        }
+
+
+        //25/ <summary>
+        /// ********************************************  SubLocations list   ***************************////
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/HR/SubLocations/list")]
+        public IHttpActionResult SubLocations()
+        {
+
+            var entity = db.SubLocations.ToList();
+             
+            if (entity != null)
+            {
+               
+                return Ok(entity.ToList());
+
+            }
+            else
+            {
+
+                return BadRequest(" SubLocations List  not found");
+
+            }
+        }
+
+
+
+        //26/ <summary>
+        /// ******************************************** JobTitles  ***************************////
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/HR/jobTitles/list")]
+        public IHttpActionResult jobTitles()
+        {
+
+            var entity = db.JobTitles.ToList();
+
+            if (entity != null)
+            {
+                return Ok(entity.ToList());
+
+            }
+            else
+            {
+
+                return BadRequest(" JobTitles List  not found");
+
+            }
+        }
+
+        //27/ <summary>
+        /// ******************************************** PayScale list ***************************////
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/HR/payScale/list")]
+        public IHttpActionResult payScale()
+        {
+
+            var entity = db.PayScaleTypes.ToList();
+
+            if (entity != null)
+            {
+                return Ok(entity.ToList());
+
+            }
+            else
+            {
+
+                return BadRequest(" PayScale List  not found");
+
+            }
+        }
+
+
+        //28/ <summary>
+        /// ******************************************** Get Profile ***************************////
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/HR/getProfile")]
+        public IHttpActionResult getProfile()
+        {
+            var Name1 = User.Identity.Name;
+            Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
+        
+            if (user != null)
+            {
+
+                
+
+
+                return Ok(new { user.Result.FirstName, user.Result.LastName, user.Result.Email, user.Result.EmployeeId, user.Result.PhoneNumber,
+                                 user.Result.JobTitle,user.Result.Location,user.Result.Department,user.Result.Religion,user.Result.Nationality,
+                                 user.Result.PayScaleType,user.Result.Position,user.Result.SubLocation});
+                          
+            }
+            else
+            {
+
+                return BadRequest(" Profile not found");
+
+            }
+
+        }
+
+
+        //29/ <summary>
+        /// ******************************************** update Profile by id ***************************////
+        /// </summary>
+        /// <returns></returns>
+
+        [HttpPost]
+        [Route("api/HR/updateProfile")]
+        public IHttpActionResult updateProfile(UserProfileViewModel model)
+        {
+            var Name1 = User.Identity.Name;
+            Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
+
+            if (user == null)
+               {
+
+                   return BadRequest(" not found");
+
+                }
+
+                else
+                {
+                user.Result.LocationId = model.LocationId;
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                return Ok();
+
+              }
+        }
+
+        //30/ <summary>
+        /// ////////////////////////////**************** Assigned Ticket List*******************////////////////////////////
+        /// </summary>
+        /// <returns></returns>
+
+        [HttpGet]
+        [Route("api/HR/assignedTicketList")]
+        public IHttpActionResult assignedTicketList()
+        {
+
+            var Query = from f in feedInterface.getAllAssigned()
+
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
+
+            if (Query != null)
+            {
+
+                return Ok(Query.ToList());
+
+            }
+            else
+            {
+
+                return BadRequest(" Assigned List not found");
+
+            }
+
         }
 
 
