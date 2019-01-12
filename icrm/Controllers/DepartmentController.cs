@@ -132,12 +132,12 @@ namespace icrm.Controllers
         }
 
         /******* Search in Department****/
-        [HttpPost]
-        [Route("search/")]
-        public ActionResult search(int? page)
+        [HttpGet]
+        [Route("department/search/")]
+        public ActionResult search(int? page,string status,string date22,string date1,string export)
         {
-            string d3 = Request.Form["date22"];
-            string dd = Request.Form["date1"];
+            string d3 = date22;
+            string dd = date1;
             if (d3.Equals("")|| dd.Equals(""))
             {
                 TempData["DateMsg"] = "Select StartDate And EndDate";
@@ -145,28 +145,33 @@ namespace icrm.Controllers
             }
             else
             {
+                DateTime dt = DateTime.ParseExact(dd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                DateTime dt2 = DateTime.ParseExact(d3, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+
+
+                ViewBag.Search = export;
+                ViewBag.statuss = status;
+                ViewBag.startDate = date1;
+                ViewBag.endDate = date22;
                 var user = UserManager.FindById(User.Identity.GetUserId());
                 TicketCounts();
-                ViewBag.Status = Request.Form["Status"];
-                string status = Request.Form["Status"]; ;
                 switch (status)
                 {
                     case "Open":
                         ViewBag.linkName = "openticket";
                         break;
-                    case "Resolved":
-                        ViewBag.linkName = "resolvedticket";
-                        break;
                     case "Closed":
                         ViewBag.linkName = "closedticket";
                         break;
+                    case "Resolved":
+                        ViewBag.linkName = "resolvedticket";
+                        break;
+                    case "Rejected":
+                        ViewBag.linkName = "rejectedticket";
+                        break;
                     default:
-                        ViewBag.linkName = "openticket";
                         break;
                 }
-
-                DateTime dt = DateTime.ParseExact(dd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-                DateTime dt2 = DateTime.ParseExact(d3, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                 ViewBag.showDate = Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff");
                 int pageSize = 10;
                 int pageIndex = 1;
@@ -180,9 +185,9 @@ namespace icrm.Controllers
 
         /****** GET Open Tickets List ****/
 
-        public ActionResult open(int? page, string id)
+        public ActionResult open(int? page)
         {
-            ViewBag.linkName = id;
+            ViewBag.linkName = "openticket";
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;

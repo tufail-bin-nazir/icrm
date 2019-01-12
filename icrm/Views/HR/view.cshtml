@@ -146,6 +146,12 @@
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
+                                    <label class="form-control-label">Type: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.type.name, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
                                     <label class="form-control-label">Title: <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(model => model.title, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
@@ -170,8 +176,9 @@
                                         @Html.HiddenFor(model => model.departmentID, new { @class = "form-control" })
                                     </div>
                                 </div>
-                            }else
-                            
+                            }
+                            else
+
                             {
                                 <!-- col-4 -->
                                 <div class="col-lg-4">
@@ -196,7 +203,8 @@
                           "Id", "name"), "Choose Category", new { @class = "form-control select2", id = "category" })
                                     </div>
                                 </div>
-                            }else
+                            }
+                            else
                             {
                                 <!-- col-4 -->
                                 <div class="col-lg-4">
@@ -220,7 +228,8 @@
                  "Id", "priorityId"), "Choose Priority", new { @class = "form-control select2", id = "priorty" })
                                     </div>
                                 </div>
-                            }else
+                            }
+                            else
                             {
                                 <div class="col-lg-4">
                                     <div class="form-group">

@@ -128,7 +128,7 @@
                 </p>
                 <div class="form-layout">
                     <span class="text-danger">@TempData["DateMsg"]</span>
-                    @using (Html.BeginForm("search", "Department", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("search", "Department", FormMethod.Get, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
                     {
                         <div class="row mg-b-25">
 
@@ -148,7 +148,7 @@
                                             <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control date hasDatepicker" required name="date1" placeholder="MM-DD-YYYY" id="dp1545306018953">
+                                    <input type="text" class="form-control date hasDatepicker" value="@ViewBag.startDate" name="date1" placeholder="MM-DD-YYYY" id="dp1545306018953">
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -159,7 +159,7 @@
                                             <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
                                         </div>
                                     </div>
-                                    <input type="text" class="form-control date hasDatepicker" required name="date22" placeholder="MM-DD-YYYY" id="dp1545306018953">
+                                    <input type="text" class="form-control date hasDatepicker" value="@ViewBag.endDate" name="date22" placeholder="MM-DD-YYYY" id="dp1545306018953">
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -167,7 +167,7 @@
 
                         <!-- row -->
                         <div class="form-layout-footer">
-                            <button class="btn btn-primary bd-0">Submit Form</button>
+                            <button class="btn btn-primary bd-0" name="export" value="search">Submit </button>
                             <button class="btn btn-secondary bd-0">Cancel</button>
                         </div>
                     }
@@ -229,7 +229,7 @@
                                                     <a href="@Url.Action("respondedview", "Department",new {id=item.Data.id })" class=" fa fa-edit"></a>
                                                 }
 
-                                               
+
                                                 @if (ViewBag.linkName == "closedticket")
                                                 {
                                                     <a href="@Url.Action("closedview", "Department",new {id=item.Data.id })" class="fa fa-edit"></a>
@@ -253,22 +253,119 @@
                             </table>
                         </div>
                         <!-- table-responsive -->
-                        <div class="pagination-wrapper">
+                        @if (ViewBag.linkName == "openticket" && ViewBag.Search == null)
+                        {
                             <div class="pagination-wrapper">
                                 <div id='Paging' style="text-align:center">
                                     Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
                                     of @Model.PageCount
                                     <ul class="pagination pagination-circle mg-b-0">
 
-                                        <li class="page-item">
-                                            @Html.PagedListPager(Model, page => Url.Action("dashboard", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("open", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
 
                                         </li>
 
                                     </ul>
-                                </div>  
+                                </div>
                             </div>
-                        </div>
+                        }
+                        @if (ViewBag.linkName == "openticket" && ViewBag.Search != null)
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("search", new { page, status = ViewBag.statuss, date22 = ViewBag.endDate, date1 = ViewBag.startDate, export = "search" }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+
+
+                        @if (ViewBag.linkName == "resolvedticket" && ViewBag.Search != null)
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("search", new { page, status = ViewBag.statuss, date22 = ViewBag.endDate, date1 = ViewBag.startDate, export = "search" }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+
+                        @if (ViewBag.linkName == "respondedticket")
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("responded", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+
+
+
+                        @if (ViewBag.linkName == "closedticket" && ViewBag.Search != null)
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("search", new { page, status = ViewBag.statuss, date22 = ViewBag.endDate, date1 = ViewBag.startDate, export = "search" }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+
+                        @if (ViewBag.linkName == "rejectedticket" && ViewBag.Search != null)
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("search", new { page, status = ViewBag.statuss, date22 = ViewBag.endDate, date1 = ViewBag.startDate, export = "search" }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
                         <!-- pagination-wrapper -->
 
                     </div>
