@@ -16,7 +16,7 @@
             <!-- dropdown -->
             <div class="dropdown dropdown-c">
                 <a href="#" class="logged-user" data-toggle="dropdown">
-                    <img src="../img/img1.jpg" alt="">
+                    <img src="~/Content/img/boss.png" alt="">
                     <span>@data.Email</span>
                     <i class="fa fa-angle-down"></i>
                 </a>
@@ -79,6 +79,7 @@
                         <li>@Html.ActionLink("Assigned Tickets", "assigned", "HR", new { id = "assignedticket" }, null)</li>
                         <li>@Html.ActionLink("Responded Tickets", "responded", "HR", new { id = "respondedticket" }, null)</li>
                         <li>@Html.ActionLink("Closed Tickets", "Closed", "HR", new { id = "closedticket" }, null)</li>
+                        <li>@Html.ActionLink("Rejected Tickets", "Rejected", "HR", new { id = "rejectedticket" }, null)</li>
 
                     </ul>
                 </div>

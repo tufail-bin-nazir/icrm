@@ -139,7 +139,7 @@
 
                     </div>
 
-                    <label class="section-title">Issue / Incident</label>
+                    <label class="section-title">FeedBack / Complaint</label>
 
 
                     <div class="form-layout">
@@ -164,6 +164,8 @@
                                     @Html.DropDownListFor(m => m.departmentID,
     new SelectList(ViewBag.Departmn,
     "Id", "name"), "Choose Department", new { disabled = "disabled", @class = "form-control select2" })
+                                    @Html.HiddenFor(model => model.departmentID, new { @class = "form-control" })
+
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -173,6 +175,8 @@
                                     @Html.DropDownListFor(m => m.categoryId,
     new SelectList(ViewBag.Categories,
     "Id", "name"), "Choose Category", new { disabled = "disabled", @class = "form-control select2" })
+                                    @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
+
                                 </div>
                             </div>
 
@@ -183,6 +187,8 @@
                                     @Html.DropDownListFor(m => m.priorityId,
     new SelectList(ViewBag.Priorities,
     "Id", "priorityId"), "Choose Priority", new { disabled = "disabled", @class = "form-control select2" })
+                                    @Html.HiddenFor(model => model.priorityId, new { @class = "form-control" })
+
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -198,40 +204,44 @@
 
                     <div class="form-layout">
                         <div class="row mg-b-25">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Download</label>
-                                    @Html.HiddenFor(m => m.attachment)
-                                    <a href="@Url.Action("DownloadFile", "Department",new { filename=Model.attachment})" target="_blank" style="height:200px;width:200px;"><i class="fa fa-download"></i></a>
+                            @if (Model.attachment != null)
+                            {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Download</label>
+                                        @Html.HiddenFor(m => m.attachment)
+                                        <a href="@Url.Action("DownloadFile", "Department", new { filename = Model.attachment })" target="_blank" style="height:200px;width:200px;"><i class="fa fa-download"></i></a>
 
+                                    </div>
+
+                                </div>
+                            }
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Status</label>
+
+                                        @Html.TextBoxFor(m => m.status, new { @readonly = "readonly", @class = "form-control" })
+
+
+                                    </div>
+
+                                </div><!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Response:</label>
+                                        @if (ViewBag.viewlink == "respondedlink")
+                                        {
+                                            @Html.TextAreaFor(m => m.response, new { @readonly = "readonly", @class = "form-control" })
+                                        }
+                                        else
+                                        {
+                                            @Html.TextAreaFor(m => m.response, new { @class = "form-control" })
+
+                                        }
+                                    </div>
                                 </div>
 
                             </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Status</label>
-
-                                    @Html.TextBoxFor(m => m.status, new { disabled = "disabled", @class = "form-control" })
-
-                                </div>
-
-                            </div><!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Response:</label>
-                                    @if (ViewBag.viewlink == "respondedlink")
-                                    {
-                                        @Html.TextAreaFor(m => m.response, new { @readonly = "readonly", @class = "form-control" })
-                                    }
-                                    else
-                                    {
-                                        @Html.TextAreaFor(m => m.response, new { @class = "form-control" })
-
-                                    }
-                                </div>
-                            </div>
-
-                        </div>
 
                         <!-- row -->
                         <div class="form-layout-footer">

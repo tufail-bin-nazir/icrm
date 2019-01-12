@@ -18,6 +18,10 @@ using System.IO;
 using System.Data.SqlClient;
 using System.Data;
 using System.Data.Entity.Core.Objects;
+using Microsoft.Office.Interop.Excel;
+using System.Net.Http;
+using System.Web.UI.WebControls;
+using System.Web.UI;
 
 namespace icrm.Controllers
 {
@@ -144,7 +148,7 @@ namespace icrm.Controllers
             }
                 switch (submitButton)
                 {
-                    case "Forward":
+                    case "Forward/Create":
                         if (feedback.departmentID != null && feedback.response == null)
                         {
                             if (ModelState.IsValid)
@@ -292,8 +296,11 @@ namespace icrm.Controllers
                         feedback.department = db.Departments.Find(feedback.departmentID);
                         if (ModelState.IsValid)
                         {
-                            feedback.assignedBy = user.Id;
-                            feedback.assignedDate = DateTime.Today;
+                            if (feedback.assignedDate == null)
+                            {
+                                feedback.assignedBy = user.Id;
+                                feedback.assignedDate = DateTime.Today;
+                            }
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
                             TempData["Message"] = "Feedback Forwarded";
@@ -307,7 +314,7 @@ namespace icrm.Controllers
                     }
                     else
                     {
-                        TempData["Message"] = "Select Department & Comment Field Should be Empty";
+                        TempData["Message"] = "Select Department/ Comment Field Should be Empty";
                         return RedirectToAction("view", new { id = feedback.id });
                     }
                     return RedirectToAction("view", new { id = feedback.id });
@@ -335,9 +342,31 @@ namespace icrm.Controllers
                     }
                     else
                     {
-                        TempData["Message"] = "Response Field should not be empty & Deselect department";
+                        TempData["Message"] = "Response Field should not be empty / Deselect department";
                         return RedirectToAction("view", new { id = feedback.id });
                     }
+                  case "Rejected":
+                    if (feedback.departmentID == null && feedback.response == null) {
+                        if (ModelState.IsValid)
+                        {
+                            feedback.submittedById = user.Id;           //----------------later will use this to check rejectedby
+                            feedback.status = "Rejected";
+                            db.Entry(feedback).State = EntityState.Modified;
+                            db.SaveChanges();
+                            TempData["Message"] = "Feedback Rejected";
+                            return RedirectToAction("DashBoard");
+                        }
+                        else {
+                            TempData["Message"] = "FeedBack Information is not Valid";
+                            return RedirectToAction("view", new { id = feedback.id });
+                        }
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Response & Deaprtment Field should be empty";
+                        return RedirectToAction("view", new { id = feedback.id });
+                    }
+
 
                 default:
                     return RedirectToAction("view", new { id = feedback.id });
@@ -349,12 +378,13 @@ namespace icrm.Controllers
         }
 
         /****************************SEARCH BY HR**************************/
-        [HttpPost]
+        [HttpGet]
         [Route("hr/search/")]
-        public ActionResult search(int? page)
+        public ActionResult search(int? page, string status, string date22, string date1, string export)
         {
-            string d3 = Request.Form["date22"];
-            string dd = Request.Form["date1"];
+            
+            string d3 = date22;
+            string dd = date1;
             if (d3.Equals("") || dd.Equals(""))
             {
                 TempData["DateMsg"] = "Select StartDate And EndDate";
@@ -362,47 +392,119 @@ namespace icrm.Controllers
             }
             else
             {
-                var user = UserManager.FindById(User.Identity.GetUserId());
-                TicketCounts();
-                ViewBag.Status = Request.Form["Status"];
-                string status = Request.Form["Status"]; ;
-                switch (status)
-                {
-                    case "Open":
-                        ViewBag.linkName = "openticket";
-                        break;
-                    case "Resolved":
-                        ViewBag.linkName = "resolvedticket";
-                        break;
-                    case "Closed":
-                        ViewBag.linkName = "closedticket";
-                        break;
-                    default:
-                        ViewBag.linkName = "openticket";
-                        break;
-                }
-
-
                 DateTime dt = DateTime.ParseExact(dd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
                 DateTime dt2 = DateTime.ParseExact(d3, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+              
+                if (export == "excel")
+                {
+                    IEnumerable<Feedback> feedbacks = feedInterface.searchHR(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), status);
+                    //Application application = new Application();
+                    //Workbook workbook = application.Workbooks.Add(System.Reflection.Missing.Value);
+                    //Worksheet worksheet = workbook.ActiveSheet;
 
-                ViewBag.showDate = Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff");
-                int pageSize = 10;
-                int pageIndex = 1;
-                pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
-                ViewData["user"] = user;
-                IPagedList<Feedback> feedbacks = feedInterface.searchHR(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), status, pageIndex, pageSize);
-                ViewBag.Status = Models.Constants.statusList;
-                return View("DashBoard", feedbacks);
+                    //worksheet.Cells[1, 1] = "Ticket ID";
+                    //worksheet.Cells[1, 2] = "Title";
+                    //worksheet.Cells[1, 3] = "Incident Type";
+                    //worksheet.Cells[1, 4] = "Status";
+                    //worksheet.Cells[1, 5] = "Description";
+                    //worksheet.Cells[1, 6] = "Name";
+                    //worksheet.Cells[1, 7] = "Email ID";
+                    //worksheet.Cells[1, 8] = "Phone Number";
+
+
+                    //int row = 2;
+                    //foreach (var item in feedbacks)
+                    //{
+                    //    worksheet.Cells[row, 1] = item.id;
+                    //    worksheet.Cells[row, 2] = item.title;
+                    //    worksheet.Cells[row, 3] = "";
+                    //    worksheet.Cells[row, 4] = item.status;
+                    //    worksheet.Cells[row, 5] = item.description;
+                    //    worksheet.Cells[row, 6] = item.user.FirstName;
+                    //    worksheet.Cells[row, 7] = item.user.Email;
+                    //    worksheet.Cells[row, 8] = item.user.PhoneNumber;
+
+
+
+                    //    row++;
+                    //}
+                    //workbook.SaveAs("D:\\tempex/myreport.xlsx");
+
+                    ////workbook.Close();
+                    //string tempPath = AppDomain.CurrentDomain.BaseDirectory + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + DateTime.Now.Millisecond + "_temp";
+                    //workbook.SaveAs(tempPath, workbook.FileFormat);
+                    //tempPath = workbook.FullName;
+                    //workbook.Close();
+                    //byte[] result = System.IO.File.ReadAllBytes(tempPath);
+                    //System.IO.File.Delete(tempPath);
+
+                    //this.Response.AddHeader("Content-Disposition", "Employees.xls");
+                    //this.Response.ContentType = "application/vnd.ms-excel";
+
+                    //return File(result, "application/vnd.ms-excel");
+
+                    var grid = new GridView();
+                    grid.DataSource = feedbacks;
+                    grid.DataBind();
+
+                    Response.ClearContent();
+                    Response.AddHeader("content-disposition", "attachement; filename=data.xls");
+                    Response.ContentType = "application/excel";
+                    StringWriter sw = new StringWriter();
+                    HtmlTextWriter htw = new HtmlTextWriter(sw);
+                    grid.RenderControl(htw);
+                    Response.Output.Write(sw.ToString());
+                    Response.Flush();
+                    Response.End();
+                    return View();
+
+                }
+                else
+                {
+                    ViewBag.Search = export;
+                    ViewBag.statuss = status;
+                    ViewBag.startDate = date1;
+                    ViewBag.endDate = date22;
+                    var user = UserManager.FindById(User.Identity.GetUserId());
+                    TicketCounts();
+
+
+                    switch (status)
+                    {
+                        case "Open":
+                            ViewBag.linkName = "openticket";
+                            break;
+                        case "Closed":
+                            ViewBag.linkName = "closedticket";
+                            break;
+                        case "Resolved":
+                            ViewBag.linkName = "resolvedticket";
+                            break;
+                        case "Rejected":
+                            ViewBag.linkName = "rejectedticket";
+
+                            break;
+                        default:
+                            break;
+                    }
+                    ViewBag.showDate = Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff");
+                    int pageSize = 10;
+                    int pageIndex = 1;
+                    pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+                    ViewData["user"] = user;
+                    IPagedList<Feedback> feedbacks = feedInterface.searchHR(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), status, pageIndex, pageSize);
+                    ViewBag.Status = Models.Constants.statusList;
+                    return View("DashBoard", feedbacks);
+                }
             }
         }
 
         /*****************OPEN TICKETS LIST********************/
 
-        public ActionResult open(int? page, string id)
+        public ActionResult open(int? page)
         {
             TicketCounts();
-            ViewBag.linkName = id;
+            ViewBag.linkName = "openticket";
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
@@ -412,25 +514,25 @@ namespace icrm.Controllers
             return View("Dashboard", feedbackList);
         }
 
-        public ActionResult assigned(int? page, string id)
+        public ActionResult assigned(int? page)
         {
             TicketCounts();
-            ViewBag.linkName = id;
+            ViewBag.linkName = "assignedticket";
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             IPagedList<Feedback> feedbackList = feedInterface.getAllAssigned(pageIndex, pageSize);
-            return View("Dashboard",feedbackList);
+            return View("Dashboard", feedbackList);
         }
 
         /*****************RESOLVED TICKETS LIST********************/
 
-        public ActionResult resolved(int? page,string id)
+        public ActionResult resolved(int? page)
         {
             TicketCounts();
-            ViewBag.linkName = id;
+            ViewBag.linkName = "resolvedticket";
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
@@ -443,10 +545,10 @@ namespace icrm.Controllers
 
         /*****************RESPONDED TICKETS LIST********************/
 
-        public ActionResult responded(int? page, string id)
+        public ActionResult responded(int? page)
         {
             TicketCounts();
-            ViewBag.linkName = id;
+            ViewBag.linkName = "respondedticket";
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
@@ -458,10 +560,10 @@ namespace icrm.Controllers
 
         /*****************CLOSED TICKETS LIST********************/
 
-        public ActionResult Closed(int? page, string id)
+        public ActionResult Closed(int? page)
         {
             TicketCounts();
-            ViewBag.linkName = id;
+            ViewBag.linkName = "closedticket";
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
@@ -471,7 +573,20 @@ namespace icrm.Controllers
             return View("Dashboard", feedbackList);
         }
 
+        /*****************REJECTED TICKETS LIST********************/
 
+        public ActionResult Rejected(int? page)
+        {
+            TicketCounts();
+            ViewBag.linkName = "rejectedticket";
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            IPagedList<Feedback> feedbackList = feedInterface.getAllRejected(pageIndex, pageSize);
+            return View("Dashboard", feedbackList);
+        }
 
         /*****************VIEW OPEN  TICKET********************/
 
@@ -609,6 +724,7 @@ namespace icrm.Controllers
             ViewBag.Departmn = departments;
             ViewBag.Categories = categories;
             ViewBag.Priorities = priorities;
+            ViewBag.typeList = db.FeedbackTypes.OrderBy(m => m.Id).ToList();
 
         }
 

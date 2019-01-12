@@ -179,7 +179,39 @@ namespace icrm.RepositoryImpl
             return feedlist.ToPagedList(pageIndex, pageSize);
         }
 
-       
+
+        public IEnumerable<Feedback> searchHR(string d1, string d2, string status)
+        {
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@D1";
+
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = d1;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@D2";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = d2;
+
+
+            var param3 = new SqlParameter();
+            param3.ParameterName = "@Status";
+            param3.SqlDbType = SqlDbType.VarChar;
+            param3.SqlValue = status;
+
+
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("searchHR @D1,@D2,@Status", param1, param2, param3).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToList();
+        }
+
+
         public IEnumerable<Feedback> getAllAssigned()
         {
             return db.Feedbacks.Where(m => m.status == "Open" && m.departmentID != null && m.response == null).OrderByDescending(m => m.user.Id).ToList();
@@ -193,6 +225,12 @@ namespace icrm.RepositoryImpl
         public IEnumerable<Feedback> OpenWithoutDepart()
         {
             return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == null && m.response == null && m.status == "Open").ToList();
+        }
+
+        public IPagedList<Feedback> getAllRejected(int pageIndex, int pageSize)
+        {
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == "Rejected").ToPagedList(pageIndex,pageSize);
+
         }
     }
 }

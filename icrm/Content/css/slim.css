@@ -1,7 +1,7 @@
 /*
-* Slim v1.0.0 (https://themepixels.me/slim)
-* Copyright 2018 ThemePixels
-* Licensed under ThemeForest License
+* ICRM 2.0 v1.0.0 
+* Copyright 2018 
+* 
 *
 * ---------- TABLE OF CONTENTS ----------
 *
@@ -273,7 +273,7 @@ a {
 }
 
     a:hover {
-        color: #115da4;
+        color: #c20d00;
         text-decoration: none;
     }
 
@@ -2503,8 +2503,8 @@ fieldset:disabled a.btn {
     .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
     .show > .btn-primary.dropdown-toggle {
         color: #fff;
-        background-color: #146abb;
-        border-color: #1363b0;
+        background-color: #ffce00;
+        border-color: #ffce00;
     }
 
         .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
@@ -19353,7 +19353,7 @@ textarea.parsley-success:focus {
 
 @media (min-width: 576px) {
     .messages-list {
-        bottom: 90px;
+        bottom: 25px;
         border: 1px solid #ced4da;
         border-left: 0;
     }
@@ -19611,10 +19611,11 @@ textarea.parsley-success:focus {
 
     .message-body .media-list .msg p {
         padding: 12px 15px;
-        background-color: #4662D4;
+        background-color: #9e9e9e;
         color: #fff;
         display: inline-block;
         margin-bottom: 0;
+        border-radius: 10px;
     }
 
 .message-body .media-list .reverse {
