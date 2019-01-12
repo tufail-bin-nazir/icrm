@@ -147,7 +147,8 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Type: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.type.name, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.TextBox("typeoffeedback" , Model.type.name, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.HiddenFor(model => model.typeId, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -338,10 +339,11 @@
                         @if (Model.departmentID == null)
                         {
                             <!-- row -->
-                            <div class="form-layout-footer">
-                                <input type="submit" value="Forward" name="submitButton" id="forward" class="btn btn-primary bd-0" />
-                                <input type="submit" value="Resolve" name="submitButton" id="resolve" class="btn btn-primary bd-0" />
-                            </div>
+                        <div class="form-layout-footer">
+                            <input type="submit" value="Forward" name="submitButton" id="forward" class="btn btn-primary bd-0" />
+                            <input type="submit" value="Resolve" name="submitButton" id="resolve" class="btn btn-primary bd-0" />
+                            <input type="submit" value="Rejected" name="submitButton" id="rejected" class="btn btn-secondary bd-0" />
+                        </div>
                         }else
                         {
                             <!-- row -->

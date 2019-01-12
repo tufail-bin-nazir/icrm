@@ -349,23 +349,7 @@
                         }
 
 
-                        @if (ViewBag.linkName == "rejectedticket" && ViewBag.Search != null)
-                        {
-                            <div class="pagination-wrapper">
-                                <div id='Paging' style="text-align:center">
-                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
-                                    of @Model.PageCount
-                                    <ul class="pagination pagination-circle mg-b-0">
-
-                                        <li class="page-item ">
-                                            @Html.PagedListPager(Model, page => Url.Action("search", new { page, status = ViewBag.statuss, date22 = ViewBag.endDate, date1 = ViewBag.startDate, export = "search" }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
-
-                                        </li>
-
-                                    </ul>
-                                </div>
-                            </div>
-                        }
+                      
                         <!-- pagination-wrapper -->
 
                     </div>

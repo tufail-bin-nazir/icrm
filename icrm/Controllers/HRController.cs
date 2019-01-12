@@ -343,6 +343,28 @@ namespace icrm.Controllers
                         TempData["Message"] = "Response Field should not be empty / Deselect department";
                         return RedirectToAction("view", new { id = feedback.id });
                     }
+                  case "Rejected":
+                    if (feedback.departmentID == null && feedback.response == null) {
+                        if (ModelState.IsValid)
+                        {
+                            feedback.submittedById = user.Id;           //----------------later will use this to check rejectedby
+                            feedback.status = "Rejected";
+                            db.Entry(feedback).State = EntityState.Modified;
+                            db.SaveChanges();
+                            TempData["Message"] = "Feedback Rejected";
+                            return RedirectToAction("DashBoard");
+                        }
+                        else {
+                            TempData["Message"] = "FeedBack Information is not Valid";
+                            return RedirectToAction("view", new { id = feedback.id });
+                        }
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Response & Deaprtment Field should be empty";
+                        return RedirectToAction("view", new { id = feedback.id });
+                    }
+
 
                 default:
                     return RedirectToAction("view", new { id = feedback.id });
@@ -443,6 +465,7 @@ namespace icrm.Controllers
                             break;
                         case "Rejected":
                             ViewBag.linkName = "rejectedticket";
+
                             break;
                         default:
                             break;
@@ -533,7 +556,20 @@ namespace icrm.Controllers
             return View("Dashboard", feedbackList);
         }
 
+        /*****************REJECTED TICKETS LIST********************/
 
+        public ActionResult Rejected(int? page)
+        {
+            TicketCounts();
+            ViewBag.linkName = "rejectedticket";
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            IPagedList<Feedback> feedbackList = feedInterface.getAllRejected(pageIndex, pageSize);
+            return View("Dashboard", feedbackList);
+        }
 
         /*****************VIEW OPEN  TICKET********************/
 

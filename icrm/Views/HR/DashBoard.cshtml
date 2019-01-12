@@ -123,13 +123,16 @@
 
             <br><br>
             <div class="section-wrapper">
+                <span class="text-success"> @TempData["Message"]</span>
                 <label class="section-title">Search your tickets</label>
                 <p class="mg-b-20 mg-sm-b-40">On date criteria</p>
                 <div class="form-layout">
                     <span class="text-danger">
                         @TempData["DateMsg"]
-                                      
-                                    </span>
+                       
+
+                    </span>
+
                     @using (Html.BeginForm("search", "HR", FormMethod.Get, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
                     {
                         <div class="row mg-b-25">
@@ -238,6 +241,10 @@
                                                     <a href="@Url.Action("assignedview", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
                                                 }
                                                 @if (ViewBag.linkName == "closedticket")
+                                                {
+                                                    <a href="@Url.Action("closedview", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                                }
+                                                @if (ViewBag.linkName == "rejectedticket")
                                                 {
                                                     <a href="@Url.Action("closedview", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
                                                 }

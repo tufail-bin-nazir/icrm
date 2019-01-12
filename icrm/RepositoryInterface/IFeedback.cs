@@ -32,5 +32,6 @@ namespace icrm.RepositoryInterface
         IEnumerable<Feedback> searchlist(DateTime d1, DateTime d2);
         IEnumerable<Feedback> searchHR(string d1, string d2, string status);
         IPagedList<Feedback> searchHR(string v1, string v2, string status, int pageIndex, int pageSize);
+        IPagedList<Feedback> getAllRejected(int pageIndex, int pageSize);
     }
 }

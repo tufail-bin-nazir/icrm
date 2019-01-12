@@ -226,5 +226,11 @@ namespace icrm.RepositoryImpl
         {
             return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == null && m.response == null && m.status == "Open").ToList();
         }
+
+        public IPagedList<Feedback> getAllRejected(int pageIndex, int pageSize)
+        {
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == "Rejected").ToPagedList(pageIndex,pageSize);
+
+        }
     }
 }
