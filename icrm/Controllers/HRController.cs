@@ -20,6 +20,8 @@ using System.Data;
 using System.Data.Entity.Core.Objects;
 using Microsoft.Office.Interop.Excel;
 using System.Net.Http;
+using System.Web.UI.WebControls;
+using System.Web.UI;
 
 namespace icrm.Controllers
 {
@@ -374,50 +376,65 @@ namespace icrm.Controllers
                 if (export == "excel")
                 {
                     IEnumerable<Feedback> feedbacks = feedInterface.searchHR(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), status);
-                    Application application = new Application();
-                    Workbook workbook = application.Workbooks.Add(System.Reflection.Missing.Value);
-                    Worksheet worksheet = workbook.ActiveSheet;
+                    //Application application = new Application();
+                    //Workbook workbook = application.Workbooks.Add(System.Reflection.Missing.Value);
+                    //Worksheet worksheet = workbook.ActiveSheet;
 
-                    worksheet.Cells[1, 1] = "Ticket ID";
-                    worksheet.Cells[1, 2] = "Title";
-                    worksheet.Cells[1, 3] = "Incident Type";
-                    worksheet.Cells[1, 4] = "Status";
-                    worksheet.Cells[1, 5] = "Description";
-                    worksheet.Cells[1, 6] = "Name";
-                    worksheet.Cells[1, 7] = "Email ID";
-                    worksheet.Cells[1, 8] = "Phone Number";
-
-
-                    int row = 2;
-                    foreach (var item in feedbacks)
-                    {
-                        worksheet.Cells[row, 1] = item.id;
-                        worksheet.Cells[row, 2] = item.title;
-                        worksheet.Cells[row, 3] = "";
-                        worksheet.Cells[row, 4] = item.status;
-                        worksheet.Cells[row, 5] = item.description;
-                        worksheet.Cells[row, 6] = item.user.FirstName;
-                        worksheet.Cells[row, 7] = item.user.Email;
-                        worksheet.Cells[row, 8] = item.user.PhoneNumber;
+                    //worksheet.Cells[1, 1] = "Ticket ID";
+                    //worksheet.Cells[1, 2] = "Title";
+                    //worksheet.Cells[1, 3] = "Incident Type";
+                    //worksheet.Cells[1, 4] = "Status";
+                    //worksheet.Cells[1, 5] = "Description";
+                    //worksheet.Cells[1, 6] = "Name";
+                    //worksheet.Cells[1, 7] = "Email ID";
+                    //worksheet.Cells[1, 8] = "Phone Number";
 
 
+                    //int row = 2;
+                    //foreach (var item in feedbacks)
+                    //{
+                    //    worksheet.Cells[row, 1] = item.id;
+                    //    worksheet.Cells[row, 2] = item.title;
+                    //    worksheet.Cells[row, 3] = "";
+                    //    worksheet.Cells[row, 4] = item.status;
+                    //    worksheet.Cells[row, 5] = item.description;
+                    //    worksheet.Cells[row, 6] = item.user.FirstName;
+                    //    worksheet.Cells[row, 7] = item.user.Email;
+                    //    worksheet.Cells[row, 8] = item.user.PhoneNumber;
 
-                        row++;
-                    }
-                    workbook.SaveAs("D:\\tempex/myreport.xlsx");
 
+
+                    //    row++;
+                    //}
+                    //workbook.SaveAs("D:\\tempex/myreport.xlsx");
+
+                    ////workbook.Close();
+                    //string tempPath = AppDomain.CurrentDomain.BaseDirectory + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + DateTime.Now.Millisecond + "_temp";
+                    //workbook.SaveAs(tempPath, workbook.FileFormat);
+                    //tempPath = workbook.FullName;
                     //workbook.Close();
-                    string tempPath = AppDomain.CurrentDomain.BaseDirectory + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second + DateTime.Now.Millisecond + "_temp";
-                    workbook.SaveAs(tempPath, workbook.FileFormat);
-                    tempPath = workbook.FullName;
-                    workbook.Close();
-                    byte[] result = System.IO.File.ReadAllBytes(tempPath);
-                    System.IO.File.Delete(tempPath);
+                    //byte[] result = System.IO.File.ReadAllBytes(tempPath);
+                    //System.IO.File.Delete(tempPath);
 
-                    this.Response.AddHeader("Content-Disposition", "Employees.xls");
-                    this.Response.ContentType = "application/vnd.ms-excel";
+                    //this.Response.AddHeader("Content-Disposition", "Employees.xls");
+                    //this.Response.ContentType = "application/vnd.ms-excel";
 
-                    return File(result, "application/vnd.ms-excel");
+                    //return File(result, "application/vnd.ms-excel");
+
+                    var grid = new GridView();
+                    grid.DataSource = feedbacks;
+                    grid.DataBind();
+
+                    Response.ClearContent();
+                    Response.AddHeader("content-disposition", "attachement; filename=data.xls");
+                    Response.ContentType = "application/excel";
+                    StringWriter sw = new StringWriter();
+                    HtmlTextWriter htw = new HtmlTextWriter(sw);
+                    grid.RenderControl(htw);
+                    Response.Output.Write(sw.ToString());
+                    Response.Flush();
+                    Response.End();
+                    return View();
 
                 }
                 else
