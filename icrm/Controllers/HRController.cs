@@ -449,6 +449,8 @@ namespace icrm.Controllers
 
                     Response.ClearContent();
                     Response.AddHeader("content-disposition", "attachement; filename=data.xls");
+                    Response.ContentEncoding = System.Text.Encoding.Unicode;
+                    Response.BinaryWrite(System.Text.Encoding.Unicode.GetPreamble());
                     Response.ContentType = "application/excel";
                     StringWriter sw = new StringWriter();
                     HtmlTextWriter htw = new HtmlTextWriter(sw);
