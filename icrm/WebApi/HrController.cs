@@ -16,6 +16,7 @@ using System.Net.Http.Headers;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
+using System.Diagnostics;
 
 namespace icrm.WebApi
 {
@@ -56,7 +57,7 @@ namespace icrm.WebApi
         {
 
             var Query = from f in feedInterface.OpenWithoutDepart()
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
 
             if (Query != null)
             {
@@ -85,7 +86,7 @@ namespace icrm.WebApi
             var Query = from f in feedInterface.getAllOpen()
 
                         where f.id == id
-                        select new { f.id, f.title, f.attachment, f.description, f.user.EmployeeId, f.user.Email, f.user.FirstName };
+                        select new { f.id, f.title, f.attachment, f.description, f.user.EmployeeId, f.user.Email, f.user.FirstName,f.type.name};
 
             if (Query != null)
             {
@@ -275,8 +276,8 @@ namespace icrm.WebApi
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
             var Query = from f in feedInterface.getAllOpen()
 
-                        where f.departmentID==user.Result.DepartmentId
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId};
+                        where f.departmentID == user.Result.DepartmentId & f.response == ""
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
 
             if (Query != null)
             {
@@ -295,8 +296,6 @@ namespace icrm.WebApi
         //10/ <summary>
         /// /////////////////////////////////////*************DepartmentbyId*****************/////////////////
         /// </summary>
-
-
         [HttpGet]
         [Route("api/HR/DepartmentbyId/{id}")]
         public IHttpActionResult DepartmentbyId(string id)
@@ -305,7 +304,7 @@ namespace icrm.WebApi
             var Query = from f in feedInterface.getAllOpen()
 
                         where f.id == id
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,f.user.FirstName,f.user.Email,f.category,f.priority,};
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,f.user.FirstName,f.user.Email,f.category,f.priority,f.type.name};
 
             if (Query != null)
             {
@@ -323,7 +322,7 @@ namespace icrm.WebApi
         }
 
         //11/ <summary>
-        /// ////////////////////////******************* updateTicketDepartment***************////////////////////
+        /// ////////////////////////******************* update Ticket Department***************////////////////////
         /// </summary>
 
         [HttpPost]
@@ -476,7 +475,7 @@ namespace icrm.WebApi
             if (f != null)
             {
                 //var obj =new {f.createDate, f.title, f.description, f.response, f.satisfaction, f.status }.ToString();
-                return Ok(new { f.createDate, f.title, f.description, f.response, f.satisfaction, f.status});
+                return Ok(new { f.createDate, f.title, f.description, f.response, f.satisfaction, f.status,f.type.name});
 
             }
             else
@@ -793,7 +792,7 @@ namespace icrm.WebApi
 
                 return Ok(new { user.Result.FirstName, user.Result.LastName, user.Result.Email, user.Result.EmployeeId, user.Result.PhoneNumber,
                                  user.Result.JobTitle,user.Result.Location,user.Result.Department,user.Result.Religion,user.Result.Nationality,
-                                 user.Result.PayScaleType,user.Result.Position,user.Result.SubLocation});
+                                 user.Result.PayScaleType,user.Result.Position,user.Result.SubLocation,});
                           
             }
             else
@@ -818,6 +817,7 @@ namespace icrm.WebApi
             var Name1 = User.Identity.Name;
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
 
+            Debug.WriteLine("location id: " + model.LocationId);
             if (user == null)
                {
 
@@ -828,8 +828,15 @@ namespace icrm.WebApi
                 else
                 {
                 user.Result.LocationId = model.LocationId;
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
+                user.Result.JobTitleId = model.JobTitleId;
+                user.Result.DepartmentId = model.DepartmentId;
+                user.Result.SubLocationId = model.SubLocationId;
+                user.Result.ReligionId = model.ReligionId;
+                user.Result.NationalityId = model.NationalityId;
+                user.Result.PayScaleTypeId = model.PayScaleTypeId;
+                user.Result.PositionId = model.PositionId;
+
+                UserManager.Update(user.Result);
                 return Ok();
 
               }
@@ -839,7 +846,6 @@ namespace icrm.WebApi
         /// ////////////////////////////**************** Assigned Ticket List*******************////////////////////////////
         /// </summary>
         /// <returns></returns>
-
         [HttpGet]
         [Route("api/HR/assignedTicketList")]
         public IHttpActionResult assignedTicketList()
@@ -853,7 +859,6 @@ namespace icrm.WebApi
             {
 
                 return Ok(Query.ToList());
-
             }
             else
             {
@@ -864,7 +869,32 @@ namespace icrm.WebApi
 
         }
 
+        //31/ <summary>
+        /// ////////////////////////////**************** FeedBackTypes Ticket List *******************////////////////////////////
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        [HttpGet]
+        [Route("api/HR/feedBackType/list")]
+        public IHttpActionResult feedBackType()
+        {
 
+            var entity = db.FeedbackTypes.ToList();
+
+            if (entity != null)
+            {
+                return Ok(entity.ToList());
+
+            }
+            else
+            {
+
+                return BadRequest(" FeedbackTypes  not found");
+
+            }
+        }
+
+     
 
 
     }
