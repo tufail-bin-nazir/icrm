@@ -58,82 +58,79 @@
                     <div class="form-layout">
                         <div class="row mg-b-25">
 
-                            <div class="row row-xs mg-b-10">
-
-
-                                <div class="col-sm">
+                            <div class="col-lg-4">
+                                <div class="form-group">
                                     @Html.DropDownListFor(m => m.LocationId,
                                         new SelectList(ViewBag.Locationlist,
                                            "Id", "name"),"Choose Location", new { @class = "form-control select2", @id="location"})
                                 </div>
-
+                            </div>
                                 <div class="col-sm">
                                     <select name="SubLocationId" id="sublocation" class="form-control select2">
                                         <option value="">Select SubLocation</option>
                                     </select>
                                 </div>
-                            </div>
 
-                            <div class="row row-xs mg-b-10">
 
-                                <div class="col-sm">
-
-                                    @Html.DropDownListFor(m => m.PositionId,
-                                        new SelectList(ViewBag.Positionlist,
-                                           "Id", "name"),"Choose Position", new { @class = "form-control select2"})
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        @Html.DropDownListFor(m => m.PositionId,
+                                            new SelectList(ViewBag.Positionlist,
+                                               "Id", "name"),"Choose Position", new { @class = "form-control select2"})
+                                    </div>
                                 </div>
-
-                                <div class="col-sm">
-                                    @Html.DropDownListFor(m => m.NationalityId,
-                                        new SelectList(ViewBag.Nationalitylist,
-                                           "Id", "name"),"Choose Nationality", new { @class = "form-control select2"})
-                                </div>
-
-
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        @Html.DropDownListFor(m => m.NationalityId,
+                                            new SelectList(ViewBag.Nationalitylist,
+                                               "Id", "name"),"Choose Nationality", new { @class = "form-control select2"})
+                                    </div>
                             </div>
 
 
-                            <div class="row row-xs mg-b-10">
 
-                                <div class="col-sm">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
 
-                                    @Html.DropDownListFor(m => m.JobTitleId,
-                                        new SelectList(ViewBag.Jobtitlelist,
-                                           "Id", "name"),"Choose Job Title", new { @class = "form-control select2"})
-                                </div>
-
-                                <div class="col-sm">
-                                    @Html.DropDownListFor(m => m.DepartmentId,
-                                        new SelectList(ViewBag.Departmentlist,
-                                           "Id", "name"),"Choose Department", new { @class = "form-control select2"})
-                                </div>
-
-
+                                        @Html.DropDownListFor(m => m.JobTitleId,
+                                            new SelectList(ViewBag.Jobtitlelist,
+                                               "Id", "name"),"Choose Job Title", new { @class = "form-control select2"})
+                                    </div>
                             </div>
 
-
-                            <div class="row row-xs mg-b-10">
-
-                                <div class="col-sm">
-
-                                    @Html.DropDownListFor(m => m.PayScaleTypeId,
-                                        new SelectList(ViewBag.PayScaleTypeList,
-                                           "Id", "name"),"Choose PayScale Type", new { @class = "form-control select2"})
-                                </div>
-
-                                <div class="col-sm">
-                                    @Html.DropDownListFor(m => m.ReligionId,
-                                        new SelectList(ViewBag.Religionlist,
-                                           "Id", "name"),"Choose Religion", new { @class = "form-control select2"})
-                                </div>
-
-
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        @Html.DropDownListFor(m => m.DepartmentId,
+                                            new SelectList(ViewBag.Departmentlist,
+                                               "Id", "name"),"Choose Department", new { @class = "form-control select2"})
+                                    </div>
                             </div>
 
 
 
 
-                        </div><!-- row -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+
+                                        @Html.DropDownListFor(m => m.PayScaleTypeId,
+                                            new SelectList(ViewBag.PayScaleTypeList,
+                                               "Id", "name"),"Choose PayScale Type", new { @class = "form-control select2"})
+                                    </div>
+                                    </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        @Html.DropDownListFor(m => m.ReligionId,
+                                            new SelectList(ViewBag.Religionlist,
+                                               "Id", "name"),"Choose Religion", new { @class = "form-control select2"})
+                                    </div>
+
+
+                                </div>
+
+
+
+
+                                </div><!-- row -->
 
                         <div class="form-layout-footer">
                             <button class="btn btn-primary bd-0">Submit Form</button>
