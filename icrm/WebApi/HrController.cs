@@ -386,7 +386,7 @@ namespace icrm.WebApi
         public IHttpActionResult respondedTicketItem(string id)
         {
 
-            var Query = from f in feedInterface.getAllOpen()
+            var Query = from f in feedInterface.getAllResponded()
 
                         where f.id == id
                         select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, f.user.FirstName, f.user.Email,f.response ,f.category, f.priority, };
