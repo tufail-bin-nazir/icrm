@@ -16,7 +16,7 @@
     <meta name="description" content="feedback managment system.">
     <meta name="author" content="feedback">
 
-    <title>Create Category</title>
+    <title>Create SubLocation</title>
 
     <!-- vendor css -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -47,7 +47,7 @@
             <!-- slim-pageheader -->
 
             <div class="section-wrapper">
-                <label class="section-title">Creating SubLocatio</label>
+                <label class="section-title">Creating SubLocation</label>
                 <p class="mg-b-20 mg-sm-b-40"></p>
 
 
@@ -69,19 +69,23 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">SubLocation Name: <span class="tx-danger">*</span></label>
-                                    @Html.EditorFor(x => x.SubLocation.name, new { @class = "form-control", placeholder = "Enter SubLocation Name", Required = "true" })
+                                    @Html.TextBoxFor(x => x.SubLocation.name, new { @class = "form-control", placeholder = "Enter SubLocation Name", Required = "true" })
 
-                                    <label class="form-control-label">Location Name <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.SubLocation.LocationId,
-                                       new SelectList(ViewBag.Locationlist,
-                                          "Id", "name"),"Choose Location", new { @class = "form-control select2"})
-
-
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- col-4 -->
-                            <!-- col-4 -->
-                        </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Location Name <span class="tx-danger">*</span></label>
+                                            @Html.DropDownListFor(m => m.SubLocation.LocationId,
+                                               new SelectList(ViewBag.Locationlist,
+                                                  "Id", "name"),"Choose Location", new { @class = "form-control select2"})
+
+
+                                        </div>
+                                    </div>
+                                    <!-- col-4 -->
+                                    <!-- col-4 -->
+                                </div>
                         <!-- row -->
                         <!-- form-layout-footer -->
                     </div>
