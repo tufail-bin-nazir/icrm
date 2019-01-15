@@ -1,0 +1,30 @@
+﻿
+@model icrm.Models.UploadFile
+
+
+@{
+    ViewBag.Title = "Upload Excel File";
+}
+<h2>Upload an Excel File</h2>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary("", new { @class = "text-danger" });
+        <div class="form-group">
+            @Html.LabelFor(model => model.ExcelFile, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ExcelFile, new { type = "file", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ExcelFile, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

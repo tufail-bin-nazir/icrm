@@ -13,6 +13,8 @@ namespace icrm.Models
         [Required]
         public string name { get; set; }
 
+        public int departmntNumber { get; set; }
+
         public IEnumerable<ApplicationUser> Users { get; set; }
 
     }
