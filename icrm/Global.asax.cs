@@ -12,6 +12,7 @@ namespace icrm
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -20,6 +21,14 @@ namespace icrm
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             System.Data.Entity.Database.SetInitializer(new MyDBInitializer());
+        }
+
+        protected static void Session_End(object Sender, EventArgs e)
+        {
+            //ApplicationUser user = db
+            /*LoggedInUsers member = AccountController.OnlineUsers.Find(m => m.MemberName == HttpContext.Current.User.Identity.Name);
+            if (member != null)
+                AccountController.OnlineUsers.Remove(member);*/
         }
     }
 }

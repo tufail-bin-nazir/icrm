@@ -97,6 +97,9 @@ namespace icrm.Models
         public DbSet<Models.JobTitle> JobTitles { get; set; }
         public DbSet<Models.CostCenter> CostCenters { get; set; }
         public DbSet<Models.Religion> Religions { get; set; }
+        public DbSet<Models.Chat> Chat { get; set; }
+        public DbSet<Models.Message> Message { get; set; }
+        public DbSet<Models.ChatRequest> ChatRequest { get; set; }
 
         public static ApplicationDbContext Create()
         {

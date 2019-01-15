@@ -1,0 +1,459 @@
+﻿@using System.Activities.Statements
+@using icrm.Models
+@{
+    Layout = null;
+}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Meta -->
+    <meta name="description" content="feedback managment system.">
+    <meta name="author" content="feedback">
+    <title>Feedback</title>
+    <!-- vendor css -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    <link href="~/Content/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet" />
+    <!--  @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+     @Styles.Render("~/resources/css")
+      @Scripts.Render("~/resources/js")-->
+    <!-- Slim CSS -->
+    <link rel="stylesheet" href="~/Content/css/slim.css">
+</head>
+<body>
+    @Html.Partial("_HRMenu")
+
+    <div class="slim-mainpanel">
+        <div class="container container-messages">
+            <div class="messages-left">
+                <div class="slim-pageheader">
+                    <h6 class="slim-pagetitle">Messages</h6>
+                    <a href="default.htm" class="messages-compose"><i class="icon ion-compose"></i></a>
+                </div><!-- slim-pageheader -->
+                <div class="messages-list clk">
+                    @foreach (var item in ViewBag.Messages)
+                    {
+                        <a href="#" class="media" id="chatlist@(item.Chat.Id)">
+                            <div class="media-left">
+                                <img src="~/Content/img/img2.jpg" alt="">
+                                <span class="square-10 bg-success"></span>
+                            </div><!-- media-left -->
+                            <div class="media-body">
+                                <div>
+                                    <h6>@item.Chat.UserOne.FirstName @item.Chat.UserOne.LastName</h6>
+                                    <p id="latestmsg@(item.Chat.Id)">@item.Text</p>
+                                    <input type="hidden" class="chatId" value="@(item.Chat.Id)" />
+                                </div>
+                                <div id="msgCount@(item.Chat.Id)">
+                                    <span>@item.RecieveTime.ToString("MM/dd/yyyy hh:mm tt")</span>
+                                </div>
+                            </div><!-- media-body -->
+                        </a>
+
+                    }
+                    <!-- media -->
+                    <!--<a href="#" class="media unread">
+                        <div class="media-left">
+                            <img src="../resources/img/img4.jpg" alt="">
+                            <span class="square-10 bg-success"></span>
+                        </div>
+                        <div class="media-body">
+                            <div>
+                                <h6>Joyce Chua</h6>
+                                <p>To an English person, it will seem like simplified english...</p>
+                            </div>
+                            <div>
+                                <span>Dec 14</span>
+                                <span>1</span>
+                            </div>
+                        </div>
+                    </a>-->
+                    <!-- media -->
+                    <!-- media -->
+                </div><!-- messages-list -->
+                <div class="messages-left-footer">
+                    <button class="btn btn-slim btn-uppercase-sm btn-block">Close Chat</button>
+                </div><!-- messages-left-footer -->
+            </div><!-- messages-left -->
+            <div class="messages-right d-none d-lg-block" style="display: none !important">
+                <div class="message-header">
+                    <a href="default.htm" class="message-back"><i class="fa fa-angle-left"></i></a>
+                    <div class="media">
+                        <img src="~/Content/img/img4.jpg" alt="">
+                        <div class="media-body">
+                            <h6 id="currentusername">Joyce Chua</h6>
+                            @*<p>Last seen: 2 hours ago</p>*@
+                            <input type="hidden" id="chatId" value="" />
+                        </div><!-- media-body -->
+                    </div><!-- media -->
+                    <div class="message-option">
+                        <div class="d-none d-sm-flex">
+                            <a href="default.htm"><i class="icon ion-ios-telephone-outline"></i></a>
+                            <a href="default.htm"><i class="icon ion-ios-videocam-outline"></i></a>
+                            <a href="default.htm"><i class="icon ion-ios-gear-outline"></i></a>
+                            <a href="default.htm"><i class="icon ion-ios-information-outline"></i></a>
+                        </div>
+                        <div class="d-sm-none">
+                            <a href="default.htm"><i class="icon ion-more"></i></a>
+                        </div>
+
+                    </div>
+                </div><!-- message-header -->
+                <div class="message-body">
+                    <div class="media-list">
+                        <!--<div class="media">
+                            <img src="../resources/img/img1.jpg" alt="">
+                            <div class="media-body">
+                                <div class="msg">
+                                    <p>Hi, there?</p>
+                                </div>
+                                <div class="msg">
+                                    <p>Are you ready for our party tonight?</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="media-body reverse">
+                                <div class="msg">
+                                    <p>So this is where you plan to do it?</p>
+                                </div>
+                            </div>
+                            <img src="../resources/img/img4.jpg" class="wd-50 rounded-circle" alt="">
+                        </div>
+                        <div class="media">
+                            <img src="../resources/img/img1.jpg" alt="">
+                            <div class="media-body">
+                                <div class="msg">
+                                    <p>As good a place as any.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="media-body reverse">
+                                <div class="msg">
+                                    <p>At least have the balls to call this what it is: murder. You really believe if you walk back onto that farm alone, no me, no Randall... </p>
+                                </div>
+                                <div class="msg">
+                                    <p>You really believe they're gonna buy whatever bullshit story you cook up?</p>
+                                </div>
+                            </div>
+                            <img src="../resources/img/img4.jpg" class="wd-50 rounded-circle" alt="">
+                        </div>
+                        <div class="media">
+                            <img src="../resources/img/img1.jpg" alt="">
+                            <div class="media-body">
+                                <div class="msg">
+                                    <p>That's just it, it ain't no story. I saw that prisoner shoot you down. I ran after him, I snapped his neck. It ain't gonna be easy, but Lori and Carl, they'll get over you. They done it before. They just gonna have to.</p>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div><!-- media-list -->
+                </div><!-- message-body -->
+                <div class="message-footer">
+                    <div class="row row-sm">
+                        <div class="col-9 col-sm-8 col-xl-9">
+                            <input type="text" id="txtmsg" class="form-control" placeholder="Type something here...">
+                        </div><!-- col-8 -->
+                        <div class="col-3 col-sm-4 col-xl-3 tx-right">
+                            <div class="d-none d-sm-block">
+                                <a href="default.htm"><i class="icon ion-happy-outline"></i></a>
+                                <a href="default.htm"><i class="icon ion-ios-game-controller-b-outline"></i></a>
+                                <a href="default.htm"><i class="icon ion-ios-camera-outline"></i></a>
+                                <a href="default.htm"><i class="icon ion-ios-mic-outline"></i></a>
+                            </div>
+                            <div class="d-sm-none">
+                                <a href="default.htm"><i class="icon ion-more"></i></a>
+                                <input type="hidden" id="username" value="@System.Web.HttpContext.Current.User.Identity.Name" />
+
+
+                            </div>
+                        </div><!-- col-4 -->
+                    </div><!-- row -->
+                </div><!-- message-footer -->
+            </div><!-- messages-right -->
+        </div><!-- container -->
+    </div><!-- slim-mainpanel -->
+    <script src="~/Content/lib/jquery/js/jquery.js"></script>
+    <script src="~/Content/lib/popper.js/js/popper.js"></script>
+    <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
+    <script src="~/Content/lib/d3/js/d3.js"></script>
+    <script src="~/Content/lib/rickshaw/js/rickshaw.min.js"></script>
+    <script src="~/Content/lib/Flot/js/jquery.flot.js"></script>
+    <script src="~/Content/lib/Flot/js/jquery.flot.resize.js"></script>
+    <script src="~/Content/lib/peity/js/jquery.peity.js"></script>
+    <script src="~/Content/js/slim.js"></script>
+    <script src="~/Content/js/ResizeSensor.js"></script>
+    <script src="~/Content/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
+    <script>
+        $(function () {
+            'use script';
+
+            const ps = new PerfectScrollbar('.message-body', {
+                wheelSpeed: 2,
+                wheelPropagation: true,
+                minScrollbarLength: 20
+            });
+            const pss = new PerfectScrollbar('.clk', {
+                wheelSpeed: 2,
+                wheelPropagation: true,
+                minScrollbarLength: 20
+            });
+
+            //  $('.messages-list, .message-body').scrollTop(1000).perfectScrollbar('update');
+            $('.messages-list, .message-body').scrollTop($(".media-list").prop("scrollHeight"));
+
+
+            $(".ps__scrollbar-y ").css({ "width": "9px" });
+
+            $('.messages-list .media').on('click',
+                function (e) {
+                    e.preventDefault();
+                    $('.messages-right').removeClass('d-none');
+                });
+
+            $('.message-back').on('click',
+                function (e) {
+                    e.preventDefault();
+                    $('.messages-right').addClass('d-none');
+                });
+        });
+
+
+
+
+
+
+
+    </script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var msgStore = {};
+        var page = 1;
+        $("#txtmsg").keypress(function(event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                send();
+            }
+        });
+
+
+        setInterval(function() {
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                data: '{}',
+                url: "@Url.Action("receive")",
+                    dataType: "json",
+                    success: function(response) {
+                        console.log("passs");
+                        if (response == null) {
+                            console.log("---null----------");
+                            return false;
+                        }
+                        console.log(response.Text);
+                        //console.log($('#chatlist' + sender + '.media'));
+                        //console.log('sender is here ' + $('#chatlist'+sender+'.media').length > 0 + '===and is active ' + $('.activechat').attr('id') == 'chatlist'+sender);
+
+                        console.log('0---0-0-0');
+                        var s = $('#chatlist' + response.ChatId);
+                        console.log(s);
+                        console.log($('#chatlist' + response.ChatId).length);
+                        console.log('after----0---0-0-0');
+                        if ($('#chatlist' + response.ChatId).length > 0 &&
+                            $('#chatId').val() == response.ChatId) {
+                            console.log('sender is here and is active');
+                            $('.media-list')
+                                .append(
+                                    '<div class="media-body" style="margin-top:5px"><div class="msg"><p>' +
+                                    response.Text +
+                                    '</p></div></div>');
+                            $('.messages-list, .message-body').scrollTop($(".media-list").prop("scrollHeight"));
+                            $('#latestmsg' + $('#chatId').val()).text(response.Text);
+                        } else {
+                            /*console.log('sender is here ' + $('#chatlist' + sender + '.media').length >
+                                0 + '===but  is not active ' + $('.activechat').attr('id') ==
+                                'chatlist' + sender);*/
+
+                            if ($('#chatlist' + response.ChatId).length > 0 &&
+                                $('#chatId').val() != response.ChatId) {
+
+                                console.log(msgStore[response.ChatId] + "-----sender is here but is not active");
+                                if (msgStore[response.ChatId] == null) {
+                                    console.log('sender is null')
+                                    msgStore[response.ChatId] = [];
+                                    msgStore[response.ChatId].push(response.Text);
+                                    if ($('#msgCount' + response.ChatId + '>span').length < 2) {
+                                        $('#msgCount' + response.ChatId).append('<span>' + msgStore[response.ChatId].length + '</span>');
+                                        $('#latestmsg' + response.ChatId).text(response.Text);
+                                    } else {
+                                        
+                                        $('#msgCount' + response.ChatId).children('span').eq(1).text(msgStore[response.ChatId].length);
+                                        $('#latestmsg' + response.ChatId).text(response.Text);
+
+                                    }
+                                } else {
+                                    console.log('sender is not null so pushing messages')
+                                    msgStore[response.ChatId].push(response.Text);
+                                    $('#msgCount' + response.ChatId).children('span').eq(1).text(msgStore[response.ChatId].length);
+                                    $('#latestmsg' + response.ChatId).text(response.Text);
+
+                                }
+                            } else {
+                                console.log('sender is not in chatlist')
+
+                                msgStore[response.ChatId] = [];
+                                msgStore[response.ChatId].push(response.Text);
+                                $('.messages-list').prepend('<a href="#" class="media" id="chatlist' +
+                                    response.ChatId +
+                                    '"><div class="media-left"><img src="/Content/img/img2.jpg" alt=""><span class="square-10 bg-success"></span></div><div class="media-body"><div><h6>' +
+                                    response.Sender.FirstName+" "+response.Sender.LastName +
+                                    '</h6><p id="latestmsg"'+
+                                    response.ChatId +
+                                    '>'+
+                                    response.Text +
+                                    '</p> <input type="hidden" class="chatId" value="'+response.ChatId+'" /></div><div id="msgCount' +
+                                    response.ChatId +
+                                    '"><span>'+parseJsonDate(response.RecieveTime)+'</span><span>' +
+                                    msgStore[response.ChatId].length +
+                                    '</span></div></div></a>');
+                            }
+
+                            function parseJsonDate(jsonDateString) {
+                                moment().format();
+                                return moment(new Date(parseInt(jsonDateString.replace('/Date(', '')))).format('h:mm A');
+                            }
+                        }
+                    },
+                    error: function(response) {
+                    }
+
+                });
+
+            },
+            2000);
+
+        function send() {
+            var message = $("#txtmsg").val();
+            var newmsg = '<div class="media-body reverse" style="margin-top:5px"><div class="msg"><p>' +
+                message +
+                '</p></div></div>'
+            $('.media-list').append(newmsg);
+            $('.messages-list, .message-body').scrollTop($(".media-list").prop("scrollHeight"));
+            newmsg = false;
+            $("#txtmsg").val("");
+            $('#latestmsg' + $('#chatId').val()).text(message);
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: '{"text":"' + message + '","chatId":"' + $('#chatId').val() + '"}',
+                url: "@Url.Action("sendmsg")",
+                dataType: "json",
+                success: function(response) {
+                    console.log('response=> ' + response);
+
+                },
+                error: function(response) {
+                    console.log('-in erorororr')
+                }
+            });
+        }
+
+        //$('a.media').click(function () {
+        //    $('.media-list').empty();
+        //    $('.activechat').removeClass('activechat');
+        //    $(this).addClass('activechat');
+        //    $('.messages-right').attr('style', '');
+        //    var sender = $(this).find('h6').html();
+        //    var messages = msgStore[sender];
+        //    console.log('messages----' + messages);
+        //    for (var i = 0;i < messages.length; i++)
+        //    {
+        //        $('.media-list')
+        //            .append(
+        //                '<div class="media"><div class="media-body"><div class="msg"><p>' + messages[i] + '</p></div></div></div>');
+
+        //    }
+        //    msgStore[sender] = [];
+        //    $('#msgCount' + sender + ' span:last').remove();
+        //}); +
+
+
+
+        $(document).on('click',
+            '.media',
+            function(e) {
+                $('#chatId').val($(this).find('.chatId').val());
+                $(this).find('#msgCount' + $(this).find('.chatId').val()).children('span').eq(1).remove();
+                console.log('in event ');
+                e.preventDefault();
+                console.log($(this).find('h6').text());
+                console.log($(this).find('img').attr('src'));
+                $('.messages-right').css('display', '');
+                $('.messages-right').find('h6').text($(this).find('h6').text());
+                $('.messages-right').find('img').prop('src', $(this).find('img').attr('src'));
+
+                console.log('here is message pages----' +page);
+                $('.media-list').empty();
+                var url = "/chat/" + $('#chatId').val() + "/messages/" +1;
+                     $.get(url, function(response) {
+                         for (var i = 0; i < response.length; i++) {
+                             if (response[i].Sender.UserName == $('#username').val()) {
+                                 var mymsg = '<div class="media-body reverse" style="margin-top:5px"><div class="msg"><p>' +
+                                     response[i].Text +
+                                     '</p></div></div>';
+                                 $('.media-list').prepend(mymsg);
+                             } else {
+                                 var othersmsg = '<div class="media-body" style="margin-top:5px"><div class="msg"><p>' +
+                                     response[i].Text +
+                                     '</p></div></div>';
+                                 $('.media-list').prepend(othersmsg);
+                             }
+                         }
+                         $('.messages-list, .message-body').scrollTop($(".media-list").prop("scrollHeight"));
+                         page = page + 1;
+                     });
+
+            });
+
+        $('.btn-uppercase-sm').click(function() {
+            $('.messages-right').attr('style', 'display: none !important');
+            var url = "@Url.Action("CloseChat")";
+            $.get(url, function(data) {
+                console.log('-----------closed chat--------');
+            });
+        });
+        const container = document.querySelector('.message-body');
+        container.addEventListener('ps-y-reach-start', (event) => {
+            var url = "/chat/" + $('#chatId').val() + "/messages/" +page;
+            $.get(url, function(response) {
+                for (var i = 0; i < response.length; i++) {
+                    if (response[i].Sender.UserName == $('#username').val()) {
+                        var mymsg = '<div class="media-body reverse" style="margin-top:5px"><div class="msg"><p>' +
+                            response[i].Text +
+                            '</p></div></div>';
+                        $('.media-list').prepend(mymsg);
+                    } else {
+                        var othersmsg = '<div class="media-body" style="margin-top:5px"><div class="msg"><p>' +
+                            response[i].Text +
+                            '</p></div></div>';
+                        $('.media-list').prepend(othersmsg);
+                    }
+                    console.log('---it shudnt be here');
+                    $('.message-body').scrollTop(100);
+                }
+
+                page = page + 1;
+            });
+        });
+    });
+
+
+
+    </script>
+</body>
