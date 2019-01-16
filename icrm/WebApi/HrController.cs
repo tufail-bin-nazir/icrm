@@ -894,7 +894,30 @@ namespace icrm.WebApi
             }
         }
 
-     
+        [HttpGet]
+        [Route("api/HR/hrAssignedList")]
+        public IHttpActionResult hrAssignedList()
+        {
+
+            var Query = from f in feedInterface.getAllAssigned()
+
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
+
+            if (Query != null)
+            {
+
+                return Ok(Query.ToList());
+            }
+            else
+            {
+
+                return BadRequest(" Assigned List not found");
+
+            }
+
+        }
+
+
 
 
     }

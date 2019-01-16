@@ -345,7 +345,7 @@ namespace icrm.Controllers
                         TempData["Message"] = "Response Field should not be empty / Deselect department";
                         return RedirectToAction("view", new { id = feedback.id });
                     }
-                  case "Rejected":
+                  case "Reject":
                     if (feedback.departmentID == null && feedback.response == null) {
                         if (ModelState.IsValid)
                         {
@@ -736,6 +736,13 @@ namespace icrm.Controllers
         public JsonResult getEmpDetails(string id)
         {
             return Json(db.Users.Where(u => u.Id == id).FirstOrDefault());
+        }
+
+
+        public ViewResult charts()
+        {
+
+            return View("DataCharts");
         }
     }
 }
