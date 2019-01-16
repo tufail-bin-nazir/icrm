@@ -49,7 +49,12 @@
                                     <input type="hidden" class="chatId" value="@(item.Chat.Id)" />
                                 </div>
                                 <div id="msgCount@(item.Chat.Id)">
-                                    <span>@item.RecieveTime.ToString("MM/dd/yyyy hh:mm tt")</span>
+                                    <span>
+                                        @if (item.RecieveTime != null)
+                                        {
+                                            @item.RecieveTime.ToString("MM/dd/yyyy hh:mm tt");
+                                        }
+                                    </span>
                                 </div>
                             </div><!-- media-body -->
                         </a>

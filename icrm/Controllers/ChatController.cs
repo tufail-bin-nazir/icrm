@@ -151,10 +151,10 @@ namespace icrm.Controllers
         [HttpGet]
         public JsonResult CloseChat()
         {
-            ApplicationUser user = (ApplicationUser) Session["user"];
-            Debug.Print(user.UserName+"--------here is user");
-            user.available = true;
-            if (userService.Update(user))
+            ApplicationUser user1 = (ApplicationUser) Session["user"];
+            ApplicationUser user2 = userService.findUserOnId(user1.Id);
+            user2.available = true;
+            if (userService.Update(user2))
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
             }

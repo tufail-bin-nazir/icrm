@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -13,7 +15,7 @@ using Constants = icrm.Models.Constants;
 
 namespace icrm.RepositoryImpl
 {
-    public class UserRepository : UserInterface
+    public class UserRepository : UserInterface,IDisposable
     {
         ApplicationDbContext db = new ApplicationDbContext();
         private RoleManager<IdentityRole> roleManager;
