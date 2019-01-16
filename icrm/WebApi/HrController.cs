@@ -893,37 +893,28 @@ namespace icrm.WebApi
             }
         }
 
-        //32/ <summary>
-        /// ////////////////////////////**************** departmentResponded Ticket List *******************////////////////////////////
-        /// </summary>
-        /// <returns></returns>
-        /// 
+        [HttpGet]
+        [Route("api/HR/hrAssignedList")]
+        public IHttpActionResult hrAssignedList()
+        {
 
-        //[HttpGet]
-        //[Route("api/HR/departmentResponded")]
-        //public IHttpActionResult departmentResponded()
-        //{
+            var Query = from f in feedInterface.getAllAssigned()
 
-        //    var Name1 = User.Identity.Name;
-        //    Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
-        //    var Query = from f in feedInterface.getAllRespondedWithDepartment()
-        //               where f.departmentID==user.Id
-        //                select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
 
-        //    if (Query != null)
-        //    {
+            if (Query != null)
+            {
 
-        //        return Ok(Query.ToList());
+                return Ok(Query.ToList());
+            }
+            else
+            {
 
-        //    }
-        //    else
-        //    {
+                return BadRequest(" Assigned List not found");
 
-        //        return BadRequest("RespondedTicketList not found");
+            }
 
-        //    }
-
-        //}
+        }
 
 
     }
