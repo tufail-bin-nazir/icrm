@@ -35,8 +35,10 @@
                     <a href="default.htm" class="messages-compose"><i class="icon ion-compose"></i></a>
                 </div><!-- slim-pageheader -->
                 <div class="messages-list clk">
-                    @foreach (var item in ViewBag.Messages)
+                   @if(ViewBag.Messages != null){ 
+                    foreach (var item in ViewBag.Messages)
                     {
+                        if(item != null){ 
                         <a href="#" class="media" id="chatlist@(item.Chat.Id)">
                             <div class="media-left">
                                 <img src="~/Content/img/img2.jpg" alt="">
@@ -58,8 +60,9 @@
                                 </div>
                             </div><!-- media-body -->
                         </a>
-
-                    }
+                           }
+                       }
+                   }
                     <!-- media -->
                     <!--<a href="#" class="media unread">
                         <div class="media-left">
