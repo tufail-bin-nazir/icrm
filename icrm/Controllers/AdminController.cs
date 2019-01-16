@@ -142,6 +142,11 @@ namespace icrm.Controllers
             ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
             ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
         }
+
+        public ViewResult charts() {
+
+            return View("Charts");
+        }
     }
 
 

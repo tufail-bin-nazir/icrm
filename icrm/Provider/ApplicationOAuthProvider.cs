@@ -56,6 +56,7 @@ namespace icrm.Provider
             foreach (IdentityUserRole r in user.Roles)
             {
                 context.AdditionalResponseParameters.Add("Roles", roleManager.FindById(r.RoleId).Name);
+                context.AdditionalResponseParameters.Add("UserName", user.FirstName);
             }
            
            return Task.FromResult<object>(null);

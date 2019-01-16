@@ -1,0 +1,119 @@
+﻿@{
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <!-- Meta -->
+    <!-- Meta -->
+    <meta name="description" content="feedback managment system.">
+    <meta name="author" content="feedback">
+
+    <title>ICRM 2.0 </title>
+
+    <!-- vendor css -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+
+    <!-- Slim CSS -->
+    <link rel="stylesheet" href="~/Content/css/slim.css">
+
+</head>
+
+<body>
+    @Html.Partial("_HRMenu")
+    <!-- slim-navbar -->
+
+    <div class="slim-mainpanel">
+        <div class="container">
+            <div class="slim-pageheader">
+                <ol class="breadcrumb slim-breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Charts</li>
+                </ol>
+                <h6 class="slim-pagetitle">Flot Charts</h6>
+            </div>
+            <!-- slim-pageheader -->
+
+
+            <div class="section-wrapper mg-t-20">
+                <label class="section-title">Pie Chart</label>
+                <p class="mg-b-20 mg-sm-b-40">Labels can be hidden if the slice is less than a given percentage of the pie.</p>
+
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="bd pd-20">
+                            <div id="flotPie1" class="ht-200 ht-sm-300"></div>
+                        </div>
+                    </div>
+                    <!-- col-6 -->
+                    <div class="col-xl-6 mg-t-20 mg-xl-t-0">
+                        <div class="bd pd-20">
+                            <div id="flotPie2" class="ht-200 ht-sm-300"></div>
+                        </div>
+                    </div>
+                    <!-- col-6 -->
+                </div>
+                <!-- row -->
+            </div>
+            <!-- section-wrapper -->
+
+            <div class="section-wrapper">
+                <label class="section-title">Bar Chart</label>
+                <p class="mg-b-20 mg-sm-b-40">Below is the basic bar chart example.</p>
+
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="bd pd-t-30 pd-b-20 pd-x-20"><canvas id="chartBar1" height="200"></canvas></div>
+                    </div>
+                    <!-- col-6 -->
+                    <div class="col-xl-6">
+                        <div class="bd pd-t-30 pd-b-20 pd-x-20"><canvas id="chartBar2" height="200"></canvas></div>
+                    </div>
+                    <!-- col-6 -->
+                </div>
+                <!-- row -->
+            </div>
+            <!-- section-wrapper -->
+            <!-- section-wrapper -->
+
+        </div>
+        <!-- container -->
+    </div>
+    <!-- slim-mainpanel -->
+
+    <div class="slim-footer">
+        <div class="container">
+            <p>Copyright 2018 &copy; All Rights Reserved. Slim Dashboard Template</p>
+            <p>Designed by: <a href="default.htm">ThemePixels</a></p>
+        </div>
+        <!-- container -->
+    </div>
+    <!-- slim-footer -->
+
+    <script src="~/Content/lib/jquery/js/jquery.js"></script>
+    <script src="~/Content/lib/popper.js/js/popper.js"></script>
+    <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
+    <script src="~/Content/lib/Flot/js/jquery.flot.js"></script>
+    <script src="~/Content/lib/Flot/js/jquery.flot.pie.js"></script>
+    <script src="~/Content/lib/Flot/js/jquery.flot.resize.js"></script>
+    <script src="~/Content/lib/flot-spline/js/jquery.flot.spline.js"></script>
+    <script src="~/Content/lib/chart.js/js/Chart.js"></script>
+
+
+    <script src="~/Content/js/slim.js"></script>
+    <script src="~/Content/js/chart.chartjs.js"></script>
+    <script src="~/Content/js/chart.flot.js"></script>
+</body>
+
+</html>

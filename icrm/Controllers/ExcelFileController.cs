@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -192,8 +195,14 @@ namespace icrm.Controllers
                             }
                             
                             context.Users.Add(user);
-                            context.SaveChanges();
-                            x++;
+                            try {
+                                context.SaveChanges();
+                            }
+                            catch (DbEntityValidationException ex)
+                                    {
+                                  Debug.WriteLine(ex.Message);
+                            }
+                              x++;
                         }
 
                        
@@ -213,5 +222,7 @@ namespace icrm.Controllers
             }
             return View();
         }
+
+
     }
 }

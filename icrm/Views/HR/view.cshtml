@@ -118,8 +118,8 @@
                             <!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Position: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.Position.name, new { @readonly = "readonly", @class = "form-control" })
+                                    <label class="form-control-label">JobTitle: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.user.JobTitle.name, new { @readonly = "readonly", @class = "form-control" })
 
                                 </div>
                             </div>
@@ -342,7 +342,7 @@
                         <div class="form-layout-footer">
                             <input type="submit" value="Forward" name="submitButton" id="forward" class="btn btn-primary bd-0" />
                             <input type="submit" value="Resolve" name="submitButton" id="resolve" class="btn btn-primary bd-0" />
-                            <input type="submit" value="Rejected" name="submitButton" id="rejected" class="btn btn-secondary bd-0" />
+                            <input type="submit" value="Reject" name="submitButton" id="rejected" class="btn btn-secondary bd-0" />
                         </div>
                         }else
                         {
