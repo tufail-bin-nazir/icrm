@@ -49,10 +49,7 @@ namespace icrm.RepositoryImpl
         public List<Message> getChatListOfHrWithLastMessage(string id)
         {
             List<Message> messages = db.Message.Include("Chat").GroupBy(m => m.ChatId).Select(m=>m.Where(x => x.Chat.UserOneId == id || x.Chat.UserTwoId == id).OrderByDescending(x=>x.Id).FirstOrDefault()).ToList();
-            foreach (var VARIABLE in messages)
-            {
-                Debug.Print(VARIABLE.Text+"---Txt------"+VARIABLE.RecieveTime+"-----ChatId-----"+VARIABLE.ChatId);
-            }
+            
 
             return messages;
         }
