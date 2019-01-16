@@ -58,12 +58,7 @@ namespace icrm.Controllers
             ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
 
             List<Message> messages = messageService.getChatListOfHrWithLastMessage(user.Id);
-            Debug.Print("---heklololddksnk-------------");
-            Debug.Print(messages.Count + "-----COunt--++---");
-            foreach (var message in messages)
-            {
-               Debug.Print(message.Chat.UserOne.UserName + "------qwuwe------" + message.Chat.UserTwo.UserName + "---userone----" + message.Text + "----chat2---"+message.RecieveTime);
-            }
+
             ViewBag.Messages = messages;
             return View();
         }
