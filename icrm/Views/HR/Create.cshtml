@@ -148,7 +148,7 @@
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Position: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">JobTitle: <span class="tx-danger">*</span></label>
                                 @Html.TextBox("EmpPosition","", new { @readonly = "readonly", @class = "form-control", id= "EmpPosition" })
 
                             </div>
@@ -328,7 +328,7 @@
                             $('#EmpPNo').val(response.PhoneNumber);
                             $('#EmpLocation').val(response.Location.name);
                             $('#EmpSubLocation').val(response.SubLocation.name);
-                            $('#EmpPosition').val(response.Position.name);
+                            $('#EmpPosition').val(response.JobTitle.name);
                             $('#EmpNationality').val(response.Nationality.name);
 
                         },
