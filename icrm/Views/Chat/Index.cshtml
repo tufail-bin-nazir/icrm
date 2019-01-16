@@ -1,33 +1,26 @@
-﻿@{
-    ViewBag.Title = "DashBoard";
-}
-
+﻿@using System.Activities.Statements
+@using icrm.Models;
 @{
     Layout = null;
 }
-
-
-
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <!-- Meta -->
     <meta name="description" content="feedback managment system.">
     <meta name="author" content="feedback">
-
     <title>Feedback</title>
     <!-- vendor css -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
-    <link href="../lib/rickshaw/css/rickshaw.min.css" rel="stylesheet">
+    <link href="~/Content/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet" />
+
     <!-- Slim CSS -->
     <link rel="stylesheet" href="~/Content/css/slim.css">
 </head>
-<body class="dashboard-3">
+<body>
     <div class="slim-header">
         <div class="container">
             <div class="slim-header-left">
@@ -42,7 +35,7 @@
                     <a href="default.htm" class="header-notification" data-toggle="dropdown">
                         <i class="icon ion-ios-bolt-outline"></i>
                     </a>
-                    <div class="dropdown-menu">
+                    <div class="dropdown-menu dropdown-menu-right">
                         <div class="dropdown-menu-header">
                             <h6 class="dropdown-menu-title">Activity Logs</h6>
                             <div>
@@ -99,7 +92,7 @@
                         <i class="icon ion-ios-bell-outline"></i>
                         <span class="indicator"></span>
                     </a>
-                    <div class="dropdown-menu">
+                    <div class="dropdown-menu dropdown-menu-right">
                         <div class="dropdown-menu-header">
                             <h6 class="dropdown-menu-title">Notifications</h6>
                             <div>
@@ -111,7 +104,7 @@
                             <!-- loop starts here -->
                             <a href="default.htm" class="dropdown-link">
                                 <div class="media">
-                                    <img src="~/Content/img/img8.jpg" alt="">
+                                    <img src="../resources/img/img8.jpg" alt="">
                                     <div class="media-body">
                                         <p><strong>Suzzeth Bungaos</strong> tagged you and 18 others in a post.</p>
                                         <span>October 03, 2017 8:45am</span>
@@ -121,7 +114,7 @@
                             <!-- loop ends here -->
                             <a href="default.htm" class="dropdown-link">
                                 <div class="media">
-                                    <img src="~/Content/img/img9.jpg" alt="">
+                                    <img src="../resources/img/img9.jpg" alt="">
                                     <div class="media-body">
                                         <p><strong>Mellisa Brown</strong> appreciated your work <strong>The Social Network</strong></p>
                                         <span>October 02, 2017 12:44am</span>
@@ -130,7 +123,7 @@
                             </a>
                             <a href="default.htm" class="dropdown-link read">
                                 <div class="media">
-                                    <img src="~/Content/img/img10.jpg" alt="">
+                                    <img src="../resources/img/img10.jpg" alt="">
                                     <div class="media-body">
                                         <p>20+ new items added are for sale in your <strong>Sale Group</strong></p>
                                         <span>October 01, 2017 10:20pm</span>
@@ -139,7 +132,7 @@
                             </a>
                             <a href="default.htm" class="dropdown-link read">
                                 <div class="media">
-                                    <img src="~/Content/img/img2.jpg" alt="">
+                                    <img src="../resources/img/img2.jpg" alt="">
                                     <div class="media-body">
                                         <p><strong>Julius Erving</strong> wants to connect with you on your conversation with <strong>Ronnie Mara</strong></p>
                                         <span>October 01, 2017 6:08pm</span>
@@ -154,16 +147,14 @@
                 </div><!-- dropdown -->
                 <div class="dropdown dropdown-c">
                     <a href="#" class="logged-user" data-toggle="dropdown">
-                        <img src="~/Content/img/img1.jpg" alt="">
-                        <span>
-                            @ViewBag.Email
-                        </span>
+                        <img src="../resources/img/img1.jpg" alt="">
+                        <span>Katherine</span>
                         <i class="fa fa-angle-down"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <nav class="nav">
                             <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
-                            <a href="@Url.Action("index","userprofile")" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>
+                            <a href="page-edit-profile.html" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>
                             <a href="page-activity.html" class="nav-link"><i class="icon ion-ios-bolt"></i> Activity Log</a>
                             <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>
                             <a href="page-signin.html" class="nav-link"><i class="icon ion-forward"></i> Sign Out</a>
@@ -176,7 +167,7 @@
     <div class="slim-navbar">
         <div class="container">
             <ul class="nav">
-                <li class="nav-item with-sub active">
+                <li class="nav-item with-sub">
                     <a class="nav-link" href="#">
                         <i class="icon ion-ios-home-outline"></i>
                         <span>Dashboard</span>
@@ -336,11 +327,10 @@
                         </ul>
                     </div><!-- dropdown-menu -->
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="page-messages.html">
                         <i class="icon ion-ios-chatboxes-outline"></i>
                         <span>Messages</span>
-                        <span class="square-8"></span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -353,76 +343,342 @@
         </div><!-- container -->
     </div><!-- slim-navbar -->
     <div class="slim-mainpanel">
-        <div class="container">
-            <div class="slim-pageheader">
-                <ol class="breadcrumb slim-breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                </ol>
-                <h6 class="slim-pagetitle">Welcome back, User</h6>
-            </div><!-- slim-pageheader -->
-            <div class="row row-xs">
-                <div class="col-sm-6 col-lg-4">
-                    <div class="card card-status">
-                        <div class="media">
-                            <i class="icon ion-ios-chatboxes-outline tx-purple"></i>
+        <div class="container container-messages">
+        @if (ViewBag.Friends != null)
+        {
+            <div class="messages-left">
+                <div class="slim-pageheader">
+                    <h6 class="slim-pagetitle">Messages</h6>
+                    <a href="default.htm" class="messages-compose"><i class="icon ion-compose"></i></a>
+                </div><!-- slim-pageheader -->
+                <div class="messages-list clk">
+
+                    @foreach (var item in ViewBag.Friends)
+                    {
+                    <a href="#" class="media" id="chatlist@(item.UserName)">
+                        <div class="media-left">
+                            <img src="../resources/img/img2.jpg" alt="">
+                            <span class="square-10 bg-success"></span>
+                        </div><!-- media-left -->
+                        <div class="media-body">
+                            <div>
+                                <h6>@item.UserName</h6>
+                                <p id="latestmsg@(item.UserName)">The new common language will be more simple and regular...</p>
+                            </div>
+                            <div id="msgCount@(item.UserName)">
+                                <span>Dec 14</span>
+                            </div>
+                        </div><!-- media-body -->
+                    </a>
+                    }
+
+                    <!-- media -->
+                </div><!-- messages-list -->
+                <div class="messages-left-footer">
+                    <button class="btn btn-slim btn-uppercase-sm btn-block">Load Older Messages</button>
+                </div><!-- messages-left-footer -->
+            </div>
+
+        }<!-- messages-left -->
+            <div class="messages-right d-none d-lg-block" style="left: 0px;">
+                <div class="message-header" >
+                    <a href="default.htm" class="message-back"><i class="fa fa-angle-left"></i></a>
+                    <div class="media">
+                       <img src="../resources/img/img4.jpg" alt="">
+                        <div class="media-body">
+                            <h6 id="currentusername">HR Department</h6>
+                            <p>Last seen: 2 hours ago</p>
+                        </div><!-- media-body -->
+                    </div><!-- media -->
+                    <div class="message-option">
+                        <div class="d-none d-sm-flex">
+                            <a href="default.htm"><i class="icon ion-ios-telephone-outline"></i></a>
+                            <a href="default.htm"><i class="icon ion-ios-videocam-outline"></i></a>
+                            <a href="default.htm"><i class="icon ion-ios-gear-outline"></i></a>
+                            <a href="default.htm"><i class="icon ion-ios-information-outline"></i></a>
+                        </div>
+                        <div class="d-sm-none">
+                            <a href="default.htm"><i class="icon ion-more"></i></a>
+                        </div>
+
+                    </div>
+                </div><!-- message-header -->
+                <div class="message-body">
+                    <div class="media-list">
+                        <!--<div class="media">
+                            <img src="../resources/img/img1.jpg" alt="">
                             <div class="media-body">
-                                <h1>@Html.ActionLink("Chat", "Index", "Chat",null,null)</h1>
-                                <p>Users Online</p>
-                            </div><!-- media-body -->
-                        </div><!-- media -->
-                    </div><!-- card -->
-                </div><!-- col-3 -->
-                <div class="col-sm-6 col-lg-4 mg-t-10 mg-sm-t-0">
-                    <div class="card card-status">
+                                <div class="msg">
+                                    <p>Hi, there?</p>
+                                </div>
+                                <div class="msg">
+                                    <p>Are you ready for our party tonight?</p>
+                                </div>
+                            </div>
+                        </div>
                         <div class="media">
-                            <i class="icon ion-ios-email-outline tx-teal"></i>
-                            <div class="media-body">
-                                <h1>@Html.ActionLink("Feedback","dashboard","FeedBack")</h1>
-                                <p>Compliments/Complaints</p>
-                            </div><!-- media-body -->
-                        </div><!-- media -->
-                    </div><!-- card -->
-                </div><!-- col-3 -->
-
-
-
-                <div class="col-sm-6 col-lg-4 mg-t-10 mg-lg-t-0">
-                    <div class="card card-status">
+                            <div class="media-body reverse">
+                                <div class="msg">
+                                    <p>So this is where you plan to do it?</p>
+                                </div>
+                            </div>
+                            <img src="../resources/img/img4.jpg" class="wd-50 rounded-circle" alt="">
+                        </div>
                         <div class="media">
-                            <i class="icon ion-ios-analytics-outline tx-pink"></i>
+                            <img src="../resources/img/img1.jpg" alt="">
                             <div class="media-body">
-                                <h1>2,942</h1>
-                                <p>Total analytics</p>
-                            </div><!-- media-body -->
-                        </div><!-- media -->
-                    </div><!-- card -->
-                </div><!-- col-3 -->
-            </div><!-- row -->
-
+                                <div class="msg">
+                                    <p>As good a place as any.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="media">
+                            <div class="media-body reverse">
+                                <div class="msg">
+                                    <p>At least have the balls to call this what it is: murder. You really believe if you walk back onto that farm alone, no me, no Randall... </p>
+                                </div>
+                                <div class="msg">
+                                    <p>You really believe they're gonna buy whatever bullshit story you cook up?</p>
+                                </div>
+                            </div>
+                            <img src="../resources/img/img4.jpg" class="wd-50 rounded-circle" alt="">
+                        </div>
+                        <div class="media">
+                            <img src="../resources/img/img1.jpg" alt="">
+                            <div class="media-body">
+                                <div class="msg">
+                                    <p>That's just it, it ain't no story. I saw that prisoner shoot you down. I ran after him, I snapped his neck. It ain't gonna be easy, but Lori and Carl, they'll get over you. They done it before. They just gonna have to.</p>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div><!-- media-list -->
+                </div><!-- message-body -->
+                <div class="message-footer">
+                    <div class="row row-sm">
+                        <div class="col-9 col-sm-8 col-xl-9">
+                            <input type="text" id="txtmsg" class="form-control" placeholder="Type something here...">
+                        </div><!-- col-8 -->
+                        <div class="col-3 col-sm-4 col-xl-3 tx-right">
+                            <div class="d-none d-sm-block">
+                                <a href="default.htm"><i class="icon ion-happy-outline"></i></a>
+                                <a href="default.htm"><i class="icon ion-ios-game-controller-b-outline"></i></a>
+                                <a href="default.htm"><i class="icon ion-ios-camera-outline"></i></a>
+                                <a href="default.htm"><i class="icon ion-ios-mic-outline"></i></a>
+                            </div>
+                            <div class="d-sm-none">
+                                <a href="default.htm"><i class="icon ion-more"></i></a>
+                                <p id="c">@HttpContext.Current.User.Identity.Name</p>
+                                <input type="hidden" id="chatId" value=""/>
+                            </div>
+                        </div><!-- col-4 -->
+                    </div><!-- row -->
+                </div><!-- message-footer -->
+            </div><!-- messages-right -->
         </div><!-- container -->
     </div><!-- slim-mainpanel -->
-    <div class="slim-footer" style="    position: fixed;
-    bottom: 0;
-    width: 100%;">
-        <div class="container">
-            <p>Copyright 2018 &copy; All Rights Reserved.</p>
+<script src="~/Content/lib/jquery/js/jquery.js"></script>
+<script src="~/Content/lib/popper.js/js/popper.js"></script>
+<script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
+<script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
+<script src="~/Content/lib/d3/js/d3.js"></script>
+<script src="~/Content/lib/rickshaw/js/rickshaw.min.js"></script>
+<script src="~/Content/lib/Flot/js/jquery.flot.js"></script>
+<script src="~/Content/lib/Flot/js/jquery.flot.resize.js"></script>
+<script src="~/Content/lib/peity/js/jquery.peity.js"></script>
+<script src="~/Content/js/slim.js"></script>
+<script src="~/Content/js/ResizeSensor.js"></script>
+<script src="~/Content/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
 
-        </div><!-- container -->
-    </div><!-- slim-footer -->
-    <script src="~/Content/lib/jquery/js/jquery.js"></script>
-    <script src="~/Content/lib/popper.js/js/popper.js"></script>
-    <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
-    <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
-    <script src="~/Content/lib/d3/js/d3.js"></script>
-    <script src="~/Content/lib/rickshaw/js/rickshaw.min.js"></script>
-    <script src="~/Content/lib/Flot/js/jquery.flot.js"></script>
-    <script src="~/Content/lib/Flot/js/jquery.flot.resize.js"></script>
-    <script src="~/Content/lib/peity/js/jquery.peity.js"></script>
-    <script src="~/Content/js/slim.js"></script>
-    <script src="~/Content/js/ResizeSensor.js"></script>
-    <script></script>
+<script>
+    $(function(){
+        'use script';
+        console.log($('.messages-list, .message-body').length+'--------------')
+        if ($('.messages-list, .message-body').length > 0) {
+            const ps = $('.messages-list, .message-body').perfectScrollbar();
+        
+            console.log(ps);
+            //  $('.messages-list, .message-body').scrollTop(1000).perfectScrollbar('update');
+            $('.messages-list, .message-body').scrollTop($(".media-list").prop("scrollHeight"));
+      
+      
+            $(".ps__scrollbar-y ").css({"width": "9px"});
+
+            $('.messages-list .media').on('click', function(e) {
+                e.preventDefault();
+                $('.messages-right').removeClass('d-none');
+            });
+
+            $('.message-back').on('click', function(e) {
+                e.preventDefault();
+                $('.messages-right').addClass('d-none');
+            });
+            }
+        });
+
+    
+    $(document).ready(function() {
+        $(document).on('click',
+            '.media',
+            function(e) {
+                console.log('in event ');
+                e.preventDefault();
+                console.log($(this).find('h6').text());
+                console.log($(this).find('img').attr('src'));
+
+                $('.messages-right').find('h6').text($(this).find('h6').text());
+                $('.messages-right').find('img').prop('src', $(this).find('img').attr('src'));
+            });
+
+      
+    
+    });
+
+    
+</script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var msgStore = {};
+            $("#txtmsg").keypress(function(event) {
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if (keycode == '13') {
+                    send();
+                }
+            });
+            //getmyfriends();
+
+            @*function getmyfriends() {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("friendlist")",
+                    contentType: "application/json; charset=utf-8",
+                    data: '{}',
+                    dataType: "json",
+                    success: function(r) {
+                        var ddlfrined = $("[id*=ddlfriend]");
+                        // ddlfrined.empty().append('<option selected="selected" value="0">select</option>');
+                        for (var i = 0; i < r.length; i++) {
+                            ddlfrined.append($("<option></option>").val(r[i].Value).html(r[i].Text));
+                        }
+                    },
+                    error: function(r) {
+                        alert("error");
+                    }
+                });
+            }*@
+
+            setInterval(function() {
+                    $.ajax({
+                        type: "GET",
+                        contentType: "application/json; charset=utf-8",
+                        data: '{}',
+                        url: "@Url.Action("receive")",
+                        dataType: "json",
+                        success: function (response) {
+                            console.log("response Text for User-----" + response.Text);
+                            
+                            $('.media-list')
+                                .append(
+                                    '<div class="media"><div class="media-body"><div class="msg"><p>' + response.Text + '</p></div></div></div>');
+                            $('.messages-list, .message-body').scrollTop($(".media-list").prop("scrollHeight"));
+
+
+                            /*console.log($('#chatlist' + sender + '.media'));
+                            console.log('sender is here ' + $('#chatlist'+sender+'.media').length > 0 + '===and is active ' + $('.activechat').attr('id') == 'chatlist'+sender);
+
+                            if ($('#chatlist' + sender + '.media').length > 0 && $('.activechat').attr('id') == 'chatlist' + sender) {
+                                console.log('sender is here and is active')
+                                $('.media-list')
+                                    .append(
+                                        '<div class="media"><div class="media-body"><div class="msg"><p>' + message + '</p></div></div></div>');
+                                $('.messages-list, .message-body').scrollTop($(".media-list").prop("scrollHeight"));
+                            }
+                            else {
+                                console.log('sender is here ' + $('#chatlist' + sender + '.media').length > 0 + '===but  is not active ' + $('.activechat').attr('id') == 'chatlist' + sender);
+
+                                if ($('#chatlist' + sender + '.media').length > 0 &&
+                                    $('.activechat').attr('id') != 'chatlist' + sender) {
+
+                                    console.log(msgStore[sender]+"-----sender is here but is not active")
+                                    if (msgStore[sender] == null) {
+                                        console.log('sender is null')
+                                        msgStore[sender] = [];
+                                        msgStore[sender].push(message);
+                                        if ($('#msgCount' + sender + '>span').length < 2) {
+                                            $('#msgCount' + sender).append('<span>' + msgStore[sender].length + '</span>');
+                                            $('#latestmsg' + sender).text(message);
+                                        } else {
+                                            $('#msgCount' + sender).children('span').eq(1).text(msgStore[sender].length);
+                                            $('#latestmsg' + sender).text(message);
+
+                                        }
+                                    } else {
+                                        console.log('sender is not null so pushing messages')
+                                        msgStore[sender].push(message);
+                                        $('#msgCount' + sender).children('span').eq(1).text(msgStore[sender].length);
+                                        $('#latestmsg' + sender).text(message);
+
+                                    }
+                                } else {
+                                    console.log('sender is not in chatlist')
+                                
+                                    msgStore[sender] = [];
+                                    msgStore[sender].push(message);
+                                    $('.messages-list').prepend('<a href="#" class="media" id="chatlist' + sender + '"><div class="media-left"><img src="../resources/img/img2.jpg" alt=""><span class="square-10 bg-success"></span></div><div class="media-body"><div><h6>' + sender + '</h6><p id="latestmsg"'+sender+'>' + message + '</p></div><div id="msgCount' + sender +'"><span>Dec 14</span><span>'+msgStore[sender].length+'</span></div></div></a>');
+                                }
+                    
+                            }*/
+                        },
+                        error:function (response) {
+                            console.log('==error in response of user===')
+                        }
+                    
+                    });
+
+                
+              
+            }, 2000);
+            function send() {
+                var message = $("#txtmsg").val();
+                var data = $("#divmsg").html();
+                //$("#divmsg").html(data + "<br>Me:" + message);
+                var newmsg = '<div class="media"><div class="media-body reverse"><div class="msg"><p>'+message+'</p></div></div></div>'
+                $('.media-list').append(newmsg);
+                $('.messages-list, .message-body').scrollTop($(".media-list").prop("scrollHeight"));
+                newmsg = false;
+                $("#txtmsg").val("");
+                $.ajax({
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"text":"' + message + '","chatId":"'+$('#chatId').val()+'"}',
+                    url: "@Url.Action("sendmsg")",
+                    dataType: "json",
+                    success: function (response) {
+                        $('#chatId').val('response');
+                    },
+                    error: function (response) {
+
+                    }
+                });
+            }
+
+            //$('a.media').click(function () {
+            //    $('.media-list').empty();
+            //    $('.activechat').removeClass('activechat');
+            //    $(this).addClass('activechat');
+            //    $('.messages-right').attr('style', '');
+            //    var sender = $(this).find('h6').html();
+            //    var messages = msgStore[sender];
+            //    console.log('messages----' + messages);
+            //    for (var i = 0;i < messages.length; i++)
+            //    {
+            //        $('.media-list')
+            //            .append(
+            //                '<div class="media"><div class="media-body"><div class="msg"><p>' + messages[i] + '</p></div></div></div>');
+                    
+            //    }
+            //    msgStore[sender] = [];
+            //    $('#msgCount' + sender + ' span:last').remove();
+            //});
+        });
+    </script>
 </body>
-</html>
-
-

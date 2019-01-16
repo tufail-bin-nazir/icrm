@@ -24,6 +24,7 @@ namespace icrm.RepositoryInterface
         IPagedList<Feedback> getAllResponded(int pageIndex, int pageSize);
         IPagedList<Feedback> getAllClosed(int pageIndex, int pageSize);
         IPagedList<Feedback> getAllRespondedWithDepartment(string id, int pageIndex, int pageSize);
+        IEnumerable<Feedback> getAllRespondedWithDepartment(string id);
         IEnumerable<Feedback> getAllOpen();
         IEnumerable<Feedback> getAllClosed();
         IEnumerable<Feedback> getAllResolved();

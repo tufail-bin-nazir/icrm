@@ -232,5 +232,13 @@ namespace icrm.RepositoryImpl
             return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == "Rejected").ToPagedList(pageIndex,pageSize);
 
         }
+
+      
+
+        public IEnumerable<Feedback> getAllRespondedWithDepartment(string usrid)
+        {
+            ApplicationUser user = db.Users.Find(usrid);
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == user.DepartmentId && m.departmentID != null && m.response != null && m.responseById == usrid).ToList();
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace icrm.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(icrm.Models.ApplicationDbContext context)

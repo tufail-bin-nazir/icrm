@@ -1,6 +1,8 @@
 ﻿@using icrm.Models;
+
 @{
     var data = (ApplicationUser)ViewData["user"];
+    ApplicationUser user = (ApplicationUser)Session["user"];
 }
 <div class="slim-header">
     <div class="container">
@@ -17,7 +19,7 @@
             <div class="dropdown dropdown-c">
                 <a href="#" class="logged-user" data-toggle="dropdown">
                     <img src="~/Content/img/boss.png" alt="">
-                    <span>@data.Email</span>
+                    <span>@user.UserName</span>
                     <i class="fa fa-angle-down"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
@@ -66,17 +68,6 @@
             </li>
 
 
-
-            <li class="nav-item">
-                <a class="nav-link" href="/HR/charts">
-                    <i class="icon ion-ios-home-outline"></i>
-                    <span>Reports</span>
-                </a>
-
-                <!-- sub-item -->
-            </li>
-
-
             <li class="nav-item with-sub ">
                 <a class="nav-link" href="#" data-toggle="dropdown">
                     <i class="icon ion-ios-gear-outline"></i>
@@ -97,12 +88,12 @@
                 <!-- dropdown-menu -->
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/Chat/HRChat">
                     <i class="icon ion-ios-chatboxes-outline"></i>
                     <span>Chat</span>
                 </a>
                 <div class="sub-item">
-
+                   
                 </div>
                 <!-- dropdown-menu -->
             </li>

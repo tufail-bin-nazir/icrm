@@ -244,7 +244,7 @@ namespace icrm.WebApi
             if (f == null)
             {
 
-                return BadRequest(" id not found");
+                return BadRequest(" Id not found");
 
             }
 
@@ -255,7 +255,6 @@ namespace icrm.WebApi
                 f.departmentID = feedback.departmentID;
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
-
                 return Ok();
 
             }
@@ -276,7 +275,7 @@ namespace icrm.WebApi
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
             var Query = from f in feedInterface.getAllOpen()
 
-                        where f.departmentID == user.Result.DepartmentId & f.response == ""
+                        where f.departmentID == user.Result.DepartmentId &&f.response==null
                         select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
 
             if (Query != null)
@@ -894,30 +893,37 @@ namespace icrm.WebApi
             }
         }
 
-        [HttpGet]
-        [Route("api/HR/hrAssignedList")]
-        public IHttpActionResult hrAssignedList()
-        {
+        //32/ <summary>
+        /// ////////////////////////////**************** departmentResponded Ticket List *******************////////////////////////////
+        /// </summary>
+        /// <returns></returns>
+        /// 
 
-            var Query = from f in feedInterface.getAllAssigned()
+        //[HttpGet]
+        //[Route("api/HR/departmentResponded")]
+        //public IHttpActionResult departmentResponded()
+        //{
 
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
+        //    var Name1 = User.Identity.Name;
+        //    Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
+        //    var Query = from f in feedInterface.getAllRespondedWithDepartment()
+        //               where f.departmentID==user.Id
+        //                select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
 
-            if (Query != null)
-            {
+        //    if (Query != null)
+        //    {
 
-                return Ok(Query.ToList());
-            }
-            else
-            {
+        //        return Ok(Query.ToList());
 
-                return BadRequest(" Assigned List not found");
+        //    }
+        //    else
+        //    {
 
-            }
+        //        return BadRequest("RespondedTicketList not found");
 
-        }
+        //    }
 
-
+        //}
 
 
     }
