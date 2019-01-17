@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
+using Microsoft.Owin;
 
 namespace icrm.Provider
 {
@@ -35,6 +36,11 @@ namespace icrm.Provider
                 ClaimsIdentity ident = await storeUserMgr.CreateIdentityAsync(user,
              "Custom");
 
+                ///// device code for user login ///////
+                IFormCollection parameters = await context.Request.ReadFormAsync();
+                var deviceId = parameters.Get("device_id");
+                user.DeviceCode = deviceId;
+                storeUserMgr.Update(user);
                 AuthenticationTicket ticket
                 = new AuthenticationTicket(ident, new AuthenticationProperties());
                 context.Validated(ticket);

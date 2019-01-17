@@ -62,6 +62,8 @@ namespace icrm.Models
 
         public bool? available { get; set; }
 
+        public string DeviceCode { get; set; }
+
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

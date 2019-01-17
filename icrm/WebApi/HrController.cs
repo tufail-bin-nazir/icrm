@@ -57,7 +57,7 @@ namespace icrm.WebApi
         {
 
             var Query = from f in feedInterface.OpenWithoutDepart()
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,f.user.FirstName};
 
             if (Query != null)
             {
@@ -276,7 +276,7 @@ namespace icrm.WebApi
             var Query = from f in feedInterface.getAllOpen()
 
                         where f.departmentID == user.Result.DepartmentId &&f.response==null
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,f.user.FirstName};
 
             if (Query != null)
             {
@@ -359,7 +359,7 @@ namespace icrm.WebApi
 
             var Query = from f in feedInterface.getAllResponded()
 
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,f.user.FirstName };
 
             if (Query != null)
             {
@@ -474,7 +474,7 @@ namespace icrm.WebApi
             if (f != null)
             {
                 //var obj =new {f.createDate, f.title, f.description, f.response, f.satisfaction, f.status }.ToString();
-                return Ok(new { f.createDate, f.title, f.description, f.response, f.satisfaction, f.status,f.type.name});
+                return Ok(new { f.createDate, f.title, f.description, f.response, f.satisfaction, f.status,f.type.name,f.user.FirstName});
 
             }
             else
@@ -852,7 +852,7 @@ namespace icrm.WebApi
 
             var Query = from f in feedInterface.getAllAssigned()
 
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,f.user.FirstName};
 
             if (Query != null)
             {
@@ -900,7 +900,7 @@ namespace icrm.WebApi
 
             var Query = from f in feedInterface.getAllAssigned()
 
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,f.user.FirstName };
 
             if (Query != null)
             {
@@ -909,13 +909,10 @@ namespace icrm.WebApi
             }
             else
             {
-
                 return BadRequest(" Assigned List not found");
 
             }
 
         }
-
-
     }
 }
