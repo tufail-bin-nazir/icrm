@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using icrm.Models;
 using icrm.RepositoryInterface;
 using Microsoft.AspNet.Identity;
@@ -55,5 +56,13 @@ namespace icrm.RepositoryImpl
                 return false;
             }
         }
+
+
+        public List<string> DeviceIds()
+        {
+            var roleId = roleManager.FindByName("User").Id;
+           return  db.Users.Where(u => u.Roles.Any(r => r.RoleId == roleId)).Select(u=>u.DeviceCode).ToList();
+        }
     }
+
 }
