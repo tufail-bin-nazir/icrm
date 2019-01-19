@@ -12,6 +12,16 @@ namespace icrm.RepositoryImpl
     {
         ApplicationDbContext db = new ApplicationDbContext();
 
+        public List<BroadcastMessage> FindAll()
+        {
+            return db.BroadcastMessage.OrderByDescending(b=>b.SentTime).ToList();
+        }
+
+        public BroadcastMessage FindOne(int? id)
+        {
+            return db.BroadcastMessage.Find(id);
+        }
+
         public bool Save(BroadcastMessage broadcastMessage)
         {
             try
@@ -27,5 +37,8 @@ namespace icrm.RepositoryImpl
                 return false;
             }
         }
+
+         
     }
+
 }

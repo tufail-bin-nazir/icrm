@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using icrm.Events;
 using Newtonsoft.Json;
@@ -16,7 +17,7 @@ namespace icrm.Models
     public class Notification
     {
 
-        public void OnMessageBroadcasted(object sender,BroadcastMessageEventArgs args)
+        public async void OnMessageBroadcasted(object sender,BroadcastMessageEventArgs args)
         {
             Debug.Print("-----------in notificationbroadcasting message-------");
             //RegisterId you got from Android Developer.
@@ -46,14 +47,14 @@ namespace icrm.Models
             };
 
             string postbody = JsonConvert.SerializeObject(postData).ToString();
-            string response = SendGCMNotification(Google_App_ID,Sender_ID, postbody);
+            string response = await SendGCMNotification(Google_App_ID,Sender_ID, postbody);
 
-
+            
             
 
         }
 
-        private string SendGCMNotification(string apiKey, string sender,string postData, string postDataContentType = "application/json")
+        private async Task<string> SendGCMNotification(string apiKey, string sender,string postData, string postDataContentType = "application/json")
         {
             ServicePointManager.ServerCertificateValidationCallback += new RemoteCertificateValidationCallback(ValidateServerCertificate);
 
@@ -73,8 +74,8 @@ namespace icrm.Models
             Request.Headers.Add(string.Format("Sender: id={0}", sender));
             Request.ContentLength = byteArray.Length;
 
-            Stream dataStream = Request.GetRequestStream();
-            dataStream.Write(byteArray, 0, byteArray.Length);
+            Stream dataStream =await Request.GetRequestStreamAsync();
+            await dataStream.WriteAsync(byteArray, 0, byteArray.Length);
             dataStream.Close();
 
             //  
@@ -82,7 +83,7 @@ namespace icrm.Models
             try
             {
               //  Debug.Print(Request.ToString()+"-----"+Request.GetResponse());
-                WebResponse Response = Request.GetResponse();
+                WebResponse Response = await Request.GetResponseAsync();
                 
                 HttpWebResponse HttpResponse = ((HttpWebResponse)Response);
                 if (HttpResponse.StatusCode.Equals(HttpStatusCode.Unauthorized) || HttpResponse.StatusCode.Equals(HttpStatusCode.Forbidden))
@@ -103,7 +104,7 @@ namespace icrm.Models
                 }
 
                 StreamReader Reader = new StreamReader(Response.GetResponseStream());
-                string responseLine = Reader.ReadToEnd();
+                string responseLine = await Reader.ReadToEndAsync();
                 Reader.Close();
 
                 return responseLine;

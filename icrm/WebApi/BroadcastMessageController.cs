@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Hosting;
 using System.Web.Http;
 using icrm.Events;
 using icrm.Models;
@@ -18,16 +19,11 @@ namespace icrm.WebApi
     public class BroadcastMessageController : ApiController
     {
         private BroadcastMessageInterface broadcastMessageService;
-        private BroadcastMessageEvent broadcastEvent;
-        private Notification notification;
-        private UserInterface userService;
+        private EventService eventService;
         public BroadcastMessageController()
         {
-            broadcastEvent = new BroadcastMessageEvent();
-            notification = new Notification();
             broadcastMessageService = new BroadcastMessageRepository();
-            userService = new UserRepository();
-            
+            eventService = new EventService();
         }
 
         private ApplicationUserManager _userManager;
@@ -44,7 +40,7 @@ namespace icrm.WebApi
         }
         [HttpPost]
         [Route("api/broadcast/message")]
-        public IHttpActionResult send([FromBody] BroadcastMessage broadcastMessage)
+        public  IHttpActionResult send([FromBody] BroadcastMessage broadcastMessage)
         {
             var Name1 = User.Identity.Name;
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
@@ -54,18 +50,29 @@ namespace icrm.WebApi
             broadcastMessage.SentTime=DateTime.Now;
             if (broadcastMessageService.Save(broadcastMessage))
             {
-                Debug.Print("sending messages after saving---------");
-                sendMessage(broadcastMessage);
-                Debug.Print("after sending-------");
+                 eventService.sendmessage(broadcastMessage);
             }
 
             return Ok();
         }
-
-         async void sendMessage(BroadcastMessage broadcastMessage)
+        [HttpGet]
+        [Route("api/broadcast/message/all")]
+        public IHttpActionResult FindAll()
         {
-            broadcastEvent.MessageBroadcasted += notification.OnMessageBroadcasted;
-            broadcastEvent.broadcast(broadcastMessage);
+            List<BroadcastMessage> broadcastMessages = broadcastMessageService.FindAll();
+            foreach (var VARIABLE in broadcastMessages)
+            {
+                Debug.Print("--"+VARIABLE.Text+"-----"+VARIABLE.SentTime);
+            }
+            return Ok(broadcastMessageService.FindAll());
         }
+
+        [HttpGet]
+        [Route("api/broadcast/message/{id}")]
+        public IHttpActionResult FindOne(int? id)
+        {
+            return Ok(broadcastMessageService.FindOne(id));
+        }
+
     }
 }
