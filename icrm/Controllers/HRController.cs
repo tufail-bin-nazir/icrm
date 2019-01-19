@@ -18,7 +18,6 @@ using System.IO;
 using System.Data.SqlClient;
 using System.Data;
 using System.Data.Entity.Core.Objects;
-using Microsoft.Office.Interop.Excel;
 using System.Net.Http;
 using System.Web.UI.WebControls;
 using System.Web.UI;
@@ -136,7 +135,8 @@ namespace icrm.Controllers
                 {
                     string filename = null;
                     String ext = Path.GetExtension(file.FileName);
-                    filename = $@"{Guid.NewGuid()}" + ext;
+                    Debug.Print(feedback.id+"-----feedbackId");
+                    filename = feedback.id + ext;
                     feedback.attachment = filename;
                     file.SaveAs(Path.Combine(icrm.Models.Constants.PATH, filename));
                 }

@@ -8,5 +8,6 @@ namespace icrm.RepositoryInterface
         IEnumerable<ApplicationUser> GetAllAvailableUsers(String role);
         ApplicationUser findUserOnId(string id);
         bool Update(ApplicationUser user);
+        List<string> DeviceIds();
     }
 }
