@@ -14,6 +14,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using icrm.Events;
 
 namespace icrm.WebApi
 {
@@ -21,12 +22,13 @@ namespace icrm.WebApi
     public class FeedBackApiController : ApiController
     {
         private IFeedback feedInterface;
-
+        private EventService eventService;
         private ApplicationUserManager _userManager;
 
         public FeedBackApiController()
         {
             feedInterface = new FeedbackRepository();
+            eventService = new EventService();
         }
 
 
@@ -79,6 +81,7 @@ namespace icrm.WebApi
             }
 
             feedInterface.Save(feedBack);
+            //eventService.notifyFeedback(feedBack);
             return Ok(feedBack.id);
 
         }

@@ -17,6 +17,8 @@ using System.Data.Entity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
 using System.Diagnostics;
+using icrm.Events;
+using Microsoft.Ajax.Utilities;
 
 namespace icrm.WebApi
 {
@@ -26,7 +28,7 @@ namespace icrm.WebApi
     public class HrApiController : ApiController
     {
         private IFeedback feedInterface;
-
+        private EventService eventService;
         ApplicationDbContext db = new ApplicationDbContext();
 
         private ApplicationUserManager _userManager;
@@ -46,6 +48,7 @@ namespace icrm.WebApi
         public HrApiController()
         {
             feedInterface = new FeedbackRepository();
+            eventService = new EventService();
         }
 
         //1/ <summary>
@@ -929,7 +932,7 @@ namespace icrm.WebApi
         {
 
             Feedback feedBack = db.Feedbacks.Find(file.id);
-            if (file.ImageSave != null)
+            if (!file.ImageSave.IsNullOrWhiteSpace())
             {
                 string ext = GetFileExtension(file.ImageSave);
                 feedBack.attachment = feedBack.id + "." + ext;
@@ -945,11 +948,13 @@ namespace icrm.WebApi
                 File.WriteAllBytes(path, getfile(file.ImageSave));
                 db.Entry(feedBack).State = EntityState.Modified;
                 db.SaveChanges();
+                eventService.notifyFeedback(feedBack);
                 return Ok();
 
             }
             else
             {
+                eventService.notifyFeedback(feedBack);
                 return BadRequest("file not found");
 
             }
