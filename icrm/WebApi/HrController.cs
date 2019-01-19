@@ -786,9 +786,6 @@ namespace icrm.WebApi
             if (user != null)
             {
 
-                
-
-
                 return Ok(new { user.Result.FirstName, user.Result.LastName, user.Result.Email, user.Result.EmployeeId, user.Result.PhoneNumber,
                                  user.Result.JobTitle,user.Result.Location,user.Result.Department,user.Result.Religion,user.Result.Nationality,
                                  user.Result.PayScaleType,user.Result.Position,user.Result.SubLocation,});
@@ -893,6 +890,11 @@ namespace icrm.WebApi
             }
         }
 
+        //32/ <summary>
+        /// ////////////////////////////**************** hr Assigned List *******************////////////////////////////
+        /// </summary>
+        /// <returns></returns>
+        /// 
         [HttpGet]
         [Route("api/HR/hrAssignedList")]
         public IHttpActionResult hrAssignedList()
@@ -912,7 +914,89 @@ namespace icrm.WebApi
                 return BadRequest(" Assigned List not found");
 
             }
+        }
+
+
+        //33/ <summary>
+        /// ////////////////////////////**************** image Save *******************////////////////////////////
+        /// </summary>
+        /// <returns></returns>
+        /// 
+
+        [HttpPost]
+        [Route("api/HR/imageSave")]
+        public IHttpActionResult imageSave([FromBody]SaveFile file)
+        {
+
+            Feedback feedBack = db.Feedbacks.Find(file.id);
+            if (file.ImageSave != null)
+            {
+                string ext = GetFileExtension(file.ImageSave);
+                feedBack.attachment = feedBack.id + "." + ext;
+                string path = Models.Constants.PATH + feedBack.attachment;
+               
+                
+                //if (!File.Exists(path))
+                //{
+                //    FileStream fileStream = File.Create(path);
+                //    fileStream.Close();
+                //}
+
+                File.WriteAllBytes(path, getfile(file.ImageSave));
+                db.Entry(feedBack).State = EntityState.Modified;
+                db.SaveChanges();
+                return Ok();
+
+            }
+            else
+            {
+                return BadRequest("file not found");
+
+            }
+          
+        }
+
+
+        private Byte[] getfile(string stringimage)
+        {
+            // Convert base 64 string to byte[]
+            byte[] file = Convert.FromBase64String(stringimage);
+            return file;
+
 
         }
+        private string GetFileExtension(string base64String)
+        {
+            var data = base64String.Substring(0, 5);
+
+            switch (data.ToUpper())
+            {
+                case "IVBOR":
+                    return "png";
+                case "/9J/4":
+                    return "jpg";
+                case "AAAAF":
+                    return "mp4";
+                case "JVBER":
+                    return "pdf";
+                case "AAABA":
+                    return "ico";
+                case "UMFYI":
+                    return "rar";
+                case "E1XYD":
+                    return "rtf";
+                case "U1PKC":
+                    return "txt";
+                case "MQOWM":
+                case "77U/M":
+                    return "srt";
+                default:
+                    return string.Empty;
+            }
+        }
+
+
+
+
     }
 }

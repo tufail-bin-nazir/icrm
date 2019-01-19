@@ -44,21 +44,24 @@ namespace icrm.WebApi
         }
 
         [HttpPost]
-        public IHttpActionResult PostFeedback(FeedBackViewModel feedBackmodel) {
+        public IHttpActionResult PostFeedback(FeedBackViewModel feedBackmodel)
+        {
 
             Feedback feedBack = null;
             var Name1 = User.Identity.Name;
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
-            if (!ModelState.IsValid) {
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
-            if ( feedBackmodel.Attachment != null)
+            if (feedBackmodel.Attachment != null)
             {
                 String ext = GetFileExtension(feedBackmodel.Attachment);
 
-               
-                feedBack = new Feedback { title = feedBackmodel.Title, attachment = $@"{Guid.NewGuid()}." + ext, description = feedBackmodel.Description,userId = user.Result.Id,typeId=feedBackmodel.Typeid};
+
+                feedBack = new Feedback { title = feedBackmodel.Title, description = feedBackmodel.Description, userId = user.Result.Id, typeId = feedBackmodel.Typeid };
+                feedBack.attachment = feedBack.id + "." + ext;
                 string path = Constants.PATH + feedBack.attachment;
                 if (!File.Exists(path))
                 {
@@ -69,21 +72,23 @@ namespace icrm.WebApi
                 File.WriteAllBytes(path, getfile(feedBackmodel.Attachment));
             }
             //getting extension of the base 64 file
-            else {
+            else
+            {
                 feedBack = new Feedback { title = feedBackmodel.Title, description = feedBackmodel.Description, userId = user.Result.Id, typeId = feedBackmodel.Typeid };
 
             }
 
             feedInterface.Save(feedBack);
-            return Ok(feedBack);
+            return Ok(feedBack.id);
 
         }
 
-        private Byte[] getfile(string stringimage) {
+        private Byte[] getfile(string stringimage)
+        {
             // Convert base 64 string to byte[]
             byte[] file = Convert.FromBase64String(stringimage);
             return file;
-           
+
 
         }
 
@@ -118,7 +123,6 @@ namespace icrm.WebApi
         }
 
 
-
         /// <summary>
         /// ////////////////////////////******************** FeedBackslist ****************/////////////
         /// </summary>
@@ -126,17 +130,15 @@ namespace icrm.WebApi
 
         [HttpGet]
         //Get /api/ FeedBackApi
-        public IHttpActionResult  FeedBackslist()
+        public IHttpActionResult FeedBackslist()
         {
-          
-                var Name1 = User.Identity.Name;
-            Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
 
-            
+            var Name1 = User.Identity.Name;
+            Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
             var Query = from f in feedInterface.getAll()
-                   
+
                         where f.userId == user.Result.Id
-                        select new { f.id,f.title, f.description ,f.createDate,f.user.EmployeeId,f.status,};
+                        select new { f.id, f.title, f.description, f.createDate, f.user.EmployeeId, f.status, };
 
 
             if (Query != null)
@@ -149,14 +151,14 @@ namespace icrm.WebApi
                 return BadRequest("List Not Found");
             }
 
-           
+
         }
 
 
-     
-       
-        
-      
+
+
+
+
 
 
 
