@@ -61,6 +61,7 @@ namespace icrm.WebApi
                 db.SaveChanges();
                 UserManager.AddToRole(user.Id, roleManager.FindByName("User").Name);
                 return Ok();
+
             }
         }
 
