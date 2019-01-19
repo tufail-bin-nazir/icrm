@@ -948,13 +948,13 @@ namespace icrm.WebApi
                 File.WriteAllBytes(path, getfile(file.ImageSave));
                 db.Entry(feedBack).State = EntityState.Modified;
                 db.SaveChanges();
-                eventService.notifyFeedback(feedBack);
+                //eventService.notifyFeedback(feedBack);
                 return Ok();
 
             }
             else
             {
-                eventService.notifyFeedback(feedBack);
+                //eventService.notifyFeedback(feedBack);
                 return BadRequest("file not found");
 
             }

@@ -81,7 +81,7 @@ namespace icrm.WebApi
             }
 
             feedInterface.Save(feedBack);
-            //eventService.notifyFeedback(feedBack);
+            eventService.notifyFeedback(feedBack);
             return Ok(feedBack.id);
 
         }
