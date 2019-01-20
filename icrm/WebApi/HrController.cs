@@ -303,7 +303,7 @@ namespace icrm.WebApi
             var Query = from f in feedInterface.getAllOpen()
 
                         where f.id == id
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,f.user.FirstName,f.user.Email,f.category,f.priority,f.type.name};
+                        select new { f.id, f.title,f.attachment, f.description, f.createDate, f.status, f.user.EmployeeId,f.user.FirstName,f.user.Email,f.category,f.priority,f.type.name};
 
             if (Query != null)
             {
@@ -934,14 +934,6 @@ namespace icrm.WebApi
                 string ext = GetFileExtension(file.ImageSave);
                 feedBack.attachment = feedBack.id + "." + ext;
                 string path = Models.Constants.PATH + feedBack.attachment;
-               
-                
-                //if (!File.Exists(path))
-                //{
-                //    FileStream fileStream = File.Create(path);
-                //    fileStream.Close();
-                //}
-
                 File.WriteAllBytes(path, getfile(file.ImageSave));
                 db.Entry(feedBack).State = EntityState.Modified;
                 db.SaveChanges();
@@ -955,7 +947,6 @@ namespace icrm.WebApi
             }
           
         }
-
 
         private Byte[] getfile(string stringimage)
         {
@@ -994,9 +985,5 @@ namespace icrm.WebApi
                     return string.Empty;
             }
         }
-
-
-
-
     }
 }

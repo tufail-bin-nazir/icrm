@@ -28,9 +28,6 @@ namespace icrm.WebApi
         {
             feedInterface = new FeedbackRepository();
         }
-
-
-
         public ApplicationUserManager UserManager
         {
             get
@@ -153,16 +150,6 @@ namespace icrm.WebApi
 
 
         }
-
-
-
-
-
-
-
-
-
-
 
         //[HttpGet]
         //public IHttpActionResult GetFeedbacks()
