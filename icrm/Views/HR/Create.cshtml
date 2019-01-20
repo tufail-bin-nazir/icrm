@@ -110,7 +110,7 @@
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Batch No: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">Badge No: <span class="tx-danger">*</span></label>
                                 @Html.TextBox("EmpBatchNo","", new { @readonly = "readonly", @class = "form-control", id="EmpBatch" })
                             </div>
                         </div>
@@ -322,8 +322,9 @@
                         url: "@Url.Action("getEmpDetails", "HR")",
                         dataType: "json",
                         success: function (response) {
+                           
                             $('#EmpName').val(response.UserName);
-                            $('#EmpBatch').val(response.Id);
+                            $('#EmpBatch').val(response.EmployeeId);
                             $('#EmpEmail').val(response.Email);
                             $('#EmpPNo').val(response.PhoneNumber);
                             $('#EmpLocation').val(response.Location.name);
