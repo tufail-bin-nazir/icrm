@@ -76,7 +76,7 @@ namespace icrm.Controllers
                 var user = new ApplicationUser
                 {
                     EmployeeId = model.EmployeeId,
-                    UserName = model.Email,
+                    UserName = Convert.ToString(model.EmployeeId),
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Email = model.Email,
