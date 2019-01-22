@@ -17,5 +17,6 @@ namespace icrm.Models
         public static string ASSIGNED = "Assigned";
         public static string RESPONDED = "Responded";
         public static string REJECTED = "Rejected";
+        public static string CLOSED = "Closed";
     }
 }
