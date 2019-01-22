@@ -122,65 +122,66 @@
             <!-- row -->
 
             <br><br>
-            <div class="section-wrapper">
-                <span class="text-success"> @TempData["Message"]</span>
-                <label class="section-title">Search your tickets</label>
-                <p class="mg-b-20 mg-sm-b-40">On date criteria</p>
-                <div class="form-layout">
-                    <span class="text-danger">
-                        @TempData["DateMsg"]
-                       
+                <div class="section-wrapper">
+                    <span class="text-success"> @TempData["Message"]</span>
+                    <span class="text-success"> @TempData["MessageSuccess"]</span>
+                    <label class="section-title">Search your tickets</label>
+                    <p class="mg-b-20 mg-sm-b-40">On date criteria</p>
+                    <div class="form-layout">
+                        <span class="text-danger">
+                            @TempData["DateMsg"]
 
-                    </span>
 
-                    @using (Html.BeginForm("search", "HR", FormMethod.Get, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
-                    {
-                        <div class="row mg-b-25">
+                        </span>
 
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Status: <span class="tx-danger">*</span></label>
-                                    @Html.DropDownList("status", new SelectList(ViewBag.Status), new { @class = "form-control select2", name = "Status" })
+                        @using (Html.BeginForm("search", "HR", FormMethod.Get, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                        {
+                            <div class="row mg-b-25">
 
-                                </div>
-                            </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Status: <span class="tx-danger">*</span></label>
+                                        @Html.DropDownList("status", new SelectList(ViewBag.Status), new { @class = "form-control select2", name = "Status" })
 
-                            <div class="col-lg-4">
-                                <label class="form-control-label">From: <span class="tx-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
-                                        </div>
                                     </div>
-                                    <input type="text" class="form-control date hasDatepicker" value="@ViewBag.startDate" name="date1" placeholder="MM-DD-YYYY" id="dp1545306018953">
                                 </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <label class="form-control-label">To : <span class="tx-danger">*</span></label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
-                                        </div>
-                                    </div>
-                                    <input type="text" class="form-control date hasDatepicker"  value="@ViewBag.endDate" name="date22" placeholder="MM-DD-YYYY" id="dp1545306018953">
-                                </div>
-                            </div>
-                            <!-- col-4 -->
-                        </div>
 
-                        <!-- row -->
-                        <div class="form-layout-footer">
-                            <button class="btn btn-primary bd-0" name="export" value="search">Submit </button>
-                            <button class="btn btn-secondary bd-0">Cancel</button>
-                            <button class="btn btn-secondary bd-0" name="export" value="excel">Export to Excel</button>
-                        </div>
-                    }
-                    <!-- form-layout-footer -->
+                                <div class="col-lg-4">
+                                    <label class="form-control-label">From: <span class="tx-danger">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control date hasDatepicker" value="@ViewBag.startDate" name="date1" placeholder="MM-DD-YYYY" id="dp1545306018953">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <label class="form-control-label">To : <span class="tx-danger">*</span></label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control date hasDatepicker" value="@ViewBag.endDate" name="date22" placeholder="MM-DD-YYYY" id="dp1545306018953">
+                                    </div>
+                                </div>
+                                <!-- col-4 -->
+                            </div>
+
+                            <!-- row -->
+                            <div class="form-layout-footer">
+                                <button class="btn btn-primary bd-0" name="export" value="search">Submit </button>
+                                <button class="btn btn-secondary bd-0">Cancel</button>
+                                <button class="btn btn-secondary bd-0" name="export" value="excel">Export to Excel</button>
+                            </div>
+                        }
+                        <!-- form-layout-footer -->
+                    </div>
+
                 </div>
-
-            </div>
 
 
             <div class="row row-xs mg-t-10">
@@ -248,7 +249,7 @@
                                             }
                                             @if (ViewBag.linkName == "rejectedticket")
                                             {
-                                                <a href="@Url.Action("closedview", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                                <a href="@Url.Action("rejectedview", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
                                             }
                                         </td>
                                         <td>

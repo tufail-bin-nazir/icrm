@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Constants = icrm.Models.Constants;
 
 namespace icrm.Controllers
 {
@@ -109,25 +110,46 @@ namespace icrm.Controllers
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-            Feedback f = db.Feedbacks.Find(feedback.id);           
-            if (feedback.response != null) {
-                f.response = feedback.response;
-                f.responseById = user.Id;
-                f.responseBy = db.Users.Find(user.Id);
-                f.responseDate = DateTime.Today;
-            }           
-            if (ModelState.IsValid)
+            Feedback f = db.Feedbacks.Find(feedback.id);
+
+            List<Comments> cc = new List<Comments>();
+           
+            if (Request.Form["responsee"] != "")
             {
-                db.Entry(f).State = EntityState.Modified;
+
+
+                Comments c = new Comments();
+                c.text = Request.Form["responsee"];
+                c.commentedById = user.Id;
+                c.feedbackId = feedback.id;
+                db.comments.Add(c);
                 db.SaveChanges();
-                TempData["displayMsg"] = "FeedBacK Updated";
-                return RedirectToAction("DashBoard");
+
+                f.checkStatus = Constants.RESPONDED;
+                // f.response = cc;
+                // f.response = feedback.response;
+                //f.responseById = user.Id;
+                //f.responseBy = db.Users.Find(user.Id);
+                //f.responseDate = DateTime.Today;
+
+                if (ModelState.IsValid)
+                {
+
+                    db.Entry(f).State = EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["displayMsg"] = "FeedBacK Updated";
+                    ViewData["decide"] = db.comments.Where(m => m.feedbackId == feedback.id).ToList();
+                    return RedirectToAction("DashBoard");
+                }
+                else
+                {
+                    TempData["displayMsg"] = "Information is not Valid";
+                    ViewData["decide"] = db.comments.Where(m => m.feedbackId == feedback.id).ToList();
+                    return RedirectToAction("view", new { name = "respondedview", id = feedback.id });
+                }
             }
-            else
-            {
-                TempData["displayMsg"] = "Information is not Valid";
-                return RedirectToAction("view", new { name= "respondedview", id = feedback.id });
-            }
+            TempData["displayMsg"] = "Response field is empty";
+            return RedirectToAction("view", new { name = "respondedview", id = feedback.id });
 
         }
 
@@ -205,6 +227,8 @@ namespace icrm.Controllers
         {
             
             var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["commentList"] = db.comments.Where(m => m.feedbackId ==id).ToList();
+
             ViewData["user"] = user;
             if (id == null)
             {
@@ -223,7 +247,11 @@ namespace icrm.Controllers
 
         public ActionResult openview(string id)
         {
-            
+
+            ViewData["decide"]= db.comments.Where(m => m.feedbackId ==id).ToList();
+            ViewData["commentList"] = db.comments.Where(m => m.feedbackId == id).ToList();
+
+            ViewBag.co = db.comments.Where(m => m.feedbackId == id).ToList().Count();
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             if (id == null)
@@ -244,6 +272,8 @@ namespace icrm.Controllers
         {
            
             var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["commentList"] = db.comments.Where(m => m.feedbackId == id).ToList();
+
             ViewData["user"] = user;
             if (id == null)
             {
@@ -264,6 +294,8 @@ namespace icrm.Controllers
         {
             
             var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["commentList"] = db.comments.Where(m => m.feedbackId == id).ToList();
+
             ViewData["user"] = user;
             if (id == null)
             {

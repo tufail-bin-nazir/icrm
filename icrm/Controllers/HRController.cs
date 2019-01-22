@@ -21,6 +21,8 @@ using System.Data.Entity.Core.Objects;
 using System.Net.Http;
 using System.Web.UI.WebControls;
 using System.Web.UI;
+using Constants = icrm.Models.Constants;
+using Comments = icrm.Models.Comments;
 
 namespace icrm.Controllers
 {
@@ -149,16 +151,18 @@ namespace icrm.Controllers
                 switch (submitButton)
                 {
                     case "Forward/Create":
-                        if (feedback.departmentID != null && feedback.response == null)
+                        if (feedback.departmentID != null && Request.Form["responsee"] == "")
                         {
+
                             if (ModelState.IsValid)
                             {
                                 
                                 feedback.assignedBy = user.Id;
                                 feedback.assignedDate = DateTime.Today;
+                                feedback.checkStatus = Constants.ASSIGNED;
                                 
                                 feedInterface.Save(feedback);
-                                TempData["Message"] = "Feedback Saved";
+                                TempData["MessageSuccess"] = "Feedback Saved";
                                
                             }
                             else
@@ -170,23 +174,33 @@ namespace icrm.Controllers
                         }
                         else
                         {
-                            TempData["Message"] = "Either Select Department/Comment field should be empty";
+                            TempData["Message"] = "Select Department & Comment field should be empty";
                             return View("Create", feedback);
                         }
                         return View("Create");
 
 
                     case "Resolve":
-                        if (feedback.departmentID == null && feedback.response != null)
+                        if (feedback.departmentID == null && Request.Form["responsee"] != "")
                         {
+
                             if (ModelState.IsValid)
                             {
-
                             feedback.submittedById = user.Id;
                             feedback.assignedBy = null;
                             feedback.assignedDate = null;
-                                feedInterface.Save(feedback);
-                                TempData["Message"] = "Feedback Saved";
+                            feedback.checkStatus = Constants.RESOLVED;                       
+                            feedInterface.Save(feedback);
+                            
+
+                            Comments c = new Comments();
+                            c.text = Request.Form["responsee"];
+                            c.commentedById = user.Id;
+                            c.feedbackId = feedback.id;
+                            db.comments.Add(c);
+                            db.SaveChanges();
+
+                            TempData["MessageSuccess"] = "Feedback Saved";
                                 return RedirectToAction("Create");
                             }
                             else
@@ -199,7 +213,7 @@ namespace icrm.Controllers
                         }
                         else
                         {
-                            TempData["Message"] = "Response Field is Empty/ Clear department";
+                            TempData["Message"] = "Please enter comment field & Department should be Empty";
                             return View("Create", feedback);
                         }
                       
@@ -234,7 +248,7 @@ namespace icrm.Controllers
             ViewData["user"] = user;
             Feedback f = db.Feedbacks.Find(feedback.id);
             f.status = feedback.status;
-            if (feedback.status == "Closed") {                  
+            if (feedback.status == "Closed") {
                 f.closedDate = DateTime.Today;
             }
            
@@ -243,34 +257,45 @@ namespace icrm.Controllers
                 case "Resolvedtype":
                     if (ModelState.IsValid)
                     {
-
+                        f.checkStatus = Constants.RESOLVED;
                         db.Entry(f).State = EntityState.Modified;
                         db.SaveChanges();
                     }
-                          @TempData["Message"] = "Updated";
+                          @TempData["MessageSuccess"] = "Updated";
                      return View("resolvedview",feedback);
                 case "Respondedtype":
                     if (ModelState.IsValid)
                     {
-
+                        f.checkStatus = Constants.RESPONDED;
                         db.Entry(f).State = EntityState.Modified;
                         db.SaveChanges();
                     }
-                         @TempData["Message"] = "Updated";
+                     @TempData["MessageSuccess"] = "Updated";
+                    ViewData["commentList"] = db.comments.Where(m => m.feedbackId == feedback.id).ToList();
                     return View("respondedview", feedback);
                 case "Assignedtype":
-                    f.response = feedback.response;
-                    f.responseDate = DateTime.Today;
+                    //f.response = feedback.response;
+                   // f.responseDate = DateTime.Today;
 
                     if (ModelState.IsValid)
                     {
-
+                        f.checkStatus = Constants.ASSIGNED;
                         db.Entry(f).State = EntityState.Modified;
                         db.SaveChanges();
                     }
-                         @TempData["Message"] = "Updated";
+                         @TempData["MessageSuccess"] = "Updated";
                     return View("assignedview", feedback);
-                 default:
+
+                case "Rejectedtype":
+                    if (ModelState.IsValid)
+                    {
+                        f.checkStatus = Constants.REJECTED;
+                        db.Entry(f).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    @TempData["MessageSuccess"] = "Updated";
+                    return View("rejectedview", feedback);
+                default:
                     return View("Assignedtype", feedback);
                   
             }
@@ -291,19 +316,22 @@ namespace icrm.Controllers
             switch (submitButton)
             {
                 case "Forward":
-                    if (feedback.departmentID != null && feedback.response == null)
+                    if (feedback.departmentID != null && Request.Form["responsee"] == "")
                     {
                         feedback.department = db.Departments.Find(feedback.departmentID);
+                        feedback.checkStatus = Constants.ASSIGNED;
                         if (ModelState.IsValid)
                         {
+                            
                             if (feedback.assignedDate == null)
                             {
                                 feedback.assignedBy = user.Id;
                                 feedback.assignedDate = DateTime.Today;
+                                
                             }
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
-                            TempData["Message"] = "Feedback Forwarded";
+                            TempData["MessageSuccess"] = "Feedback Forwarded";
                         }
                         else
                         {
@@ -314,23 +342,30 @@ namespace icrm.Controllers
                     }
                     else
                     {
-                        TempData["Message"] = "Select Department/ Comment Field Should be Empty";
+                        TempData["Message"] = "Select Department & Comment Field Should be Empty";
                         return RedirectToAction("view", new { id = feedback.id });
                     }
                     return RedirectToAction("view", new { id = feedback.id });
 
 
                 case "Resolve":
-                    if (feedback.departmentID == null && feedback.response != null)
+                    if (feedback.departmentID == null && Request.Form["responsee"] != "")
                     {
                         if (ModelState.IsValid)
                         {
+                            Comments c = new Comments();
+                            c.text = Request.Form["responsee"];
+                            c.commentedById = user.Id;
+                            c.feedbackId = feedback.id;
+                            db.comments.Add(c);
+                            db.SaveChanges();
                             feedback.assignedBy = null;
                             feedback.assignedDate = null;
                             feedback.submittedById = user.Id;
+                            feedback.checkStatus = Constants.RESOLVED;
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
-                            TempData["Message"] = "Feedback Resolved";
+                            TempData["MessageSuccess"] = "Feedback Resolved";
                             return RedirectToAction("view", new { id = feedback.id });
                         }
                         else
@@ -342,18 +377,25 @@ namespace icrm.Controllers
                     }
                     else
                     {
-                        TempData["Message"] = "Response Field should not be empty / Deselect department";
+                        TempData["Message"] = "Please fill comment field & Department should be empty";
                         return RedirectToAction("view", new { id = feedback.id });
                     }
                   case "Reject":
-                    if (feedback.departmentID == null && feedback.response == null) {
+                    if (feedback.departmentID == null && Request.Form["responsee"] != "") {
                         if (ModelState.IsValid)
                         {
+                            Comments c = new Comments();
+                            c.text = Request.Form["responsee"];
+                            c.commentedById = user.Id;
+                            c.feedbackId = feedback.id;
+                            db.comments.Add(c);
+                            db.SaveChanges();
                             feedback.submittedById = user.Id;           //----------------later will use this to check rejectedby
-                            feedback.status = "Rejected";
+                                                                        // feedback.status = "Rejected";
+                            feedback.checkStatus = Constants.REJECTED;
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
-                            TempData["Message"] = "Feedback Rejected";
+                            TempData["MessageSuccess"] = "Feedback Rejected";
                             return RedirectToAction("DashBoard");
                         }
                         else {
@@ -363,7 +405,7 @@ namespace icrm.Controllers
                     }
                     else
                     {
-                        TempData["Message"] = "Response & Deaprtment Field should be empty";
+                        TempData["Message"] = "Comment should not be empty & Department should be empty";
                         return RedirectToAction("view", new { id = feedback.id });
                     }
 
@@ -384,6 +426,7 @@ namespace icrm.Controllers
         {
             
             string d3 = date22;
+            
             string dd = date1;
             if (d3.Equals("") || dd.Equals(""))
             {
@@ -516,6 +559,21 @@ namespace icrm.Controllers
             return View("Dashboard", feedbackList);
         }
 
+
+
+        public ActionResult openAll(int? page)
+        {
+            TicketCounts();
+            ViewBag.linkName = "openticket";
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            IPagedList<Feedback> feedbackList = feedInterface.OpenWithoutDepart(pageIndex, pageSize);
+            return View("Dashboard", feedbackList);
+        }
+
         public ActionResult assigned(int? page)
         {
             TicketCounts();
@@ -598,7 +656,8 @@ namespace icrm.Controllers
             param2.ParameterName = "@TotalCount";
             param2.SqlDbType = SqlDbType.Int;
             var resil = db.Feedbacks.SqlQuery("totalRecords @TotalCount OUTPUT", param2);
-            
+
+            ViewData["commentList"] = db.comments.Where(m => m.feedbackId == id).ToList();
 
             Debug.WriteLine( param2.Value);
             ViewBag.fff = param2.Value;
@@ -623,6 +682,7 @@ namespace icrm.Controllers
         {           
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
+            ViewData["commentList"] = db.comments.Where(m => m.feedbackId == id).ToList();
             if (id == null)
             {
                 ViewBag.ErrorMsg = "FeedBack not found";
@@ -642,6 +702,8 @@ namespace icrm.Controllers
         {          
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
+            ViewData["commentList"] = db.comments.Where(m => m.feedbackId == id).ToList();
+
             if (id == null)
             {
                 ViewBag.ErrorMsg = "FeedBack not found";
@@ -662,6 +724,8 @@ namespace icrm.Controllers
         {          
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
+            ViewData["commentList"] = db.comments.Where(m => m.feedbackId == id).ToList();
+
             if (id == null)
             {
                 ViewBag.ErrorMsg = "FeedBack not found";
@@ -681,6 +745,30 @@ namespace icrm.Controllers
         {           
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
+            ViewData["commentList"] = db.comments.Where(m => m.feedbackId == id).ToList();
+
+            if (id == null)
+            {
+                ViewBag.ErrorMsg = "FeedBack not found";
+                return RedirectToAction("list");
+            }
+            else
+            {
+                getAttributeList();
+                Feedback f = feedInterface.Find(id);
+                return View(f);
+            }
+        }
+
+
+        /*****************VIEW REJECTED  TICKET********************/
+
+        public ActionResult rejectedview(string id)
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            ViewData["commentList"] = db.comments.Where(m => m.feedbackId == id).ToList();
+
             if (id == null)
             {
                 ViewBag.ErrorMsg = "FeedBack not found";
@@ -744,5 +832,163 @@ namespace icrm.Controllers
 
             return View("DataCharts");
         }
+
+
+        /**************REJECT ACTION************************/
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("rejected/action/")]
+        public ActionResult feedbackupdate(string submitButton, Feedback feedback)
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+
+            feedback.user = db.Users.Find(feedback.userId);
+            switch (submitButton)
+            {
+                case "Forward":
+                    if (feedback.departmentID != null && Request.Form["responsee"] == "")
+                    {
+                        feedback.department = db.Departments.Find(feedback.departmentID);
+                        feedback.checkStatus = Constants.ASSIGNED;
+                        if (ModelState.IsValid)
+                        {
+                            if (feedback.assignedDate == null)
+                            {
+                                feedback.assignedBy = user.Id;
+                                feedback.assignedDate = DateTime.Today;
+                            
+                            }
+                            db.Entry(feedback).State = EntityState.Modified;
+                            db.SaveChanges();
+                            TempData["MessageSuccess"] = "Feedback Forwarded";
+                        }
+                        else
+                        {
+                            ViewData["user"] = user;
+                            TempData["Message"] = "Fill feedback Properly";
+                            return RedirectToAction("rejectedview", new { id = feedback.id });
+                        }
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Select Department/ Comment Field Should be Empty";
+                        return RedirectToAction("rejectedview", new { id = feedback.id });
+                    }
+                    return RedirectToAction("rejectedview", new { id = feedback.id });
+
+
+                case "Resolve":
+                    if (feedback.departmentID == null && Request.Form["responsee"] != "")
+                    {
+                        feedback.checkStatus = Constants.RESOLVED;
+                        if (ModelState.IsValid)
+                        {
+                            Comments c = new Comments();
+                            c.text = Request.Form["responsee"];
+                            c.commentedById = user.Id;
+                            c.feedbackId = feedback.id;
+                            db.comments.Add(c);
+                            db.SaveChanges();
+                            feedback.assignedBy = null;
+                            feedback.assignedDate = null;
+                            feedback.submittedById = user.Id;
+                            db.Entry(feedback).State = EntityState.Modified;
+                            db.SaveChanges();
+                            TempData["MessageSuccess"] = "Feedback Resolved";
+                            return RedirectToAction("rejectedview", new { id = feedback.id });
+                        }
+                        else
+                        {
+                            TempData["Message"] = "Fill feedback Properly";
+                            return RedirectToAction("rejectedview", new { id = feedback.id });
+                        }
+
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Please enter coment field & Department should be empty";
+                        return RedirectToAction("rejectedview", new { id = feedback.id });
+                    }
+                case "Reject":
+                    if (feedback.departmentID == null && Request.Form["responsee"] != "")
+                    {
+                        feedback.checkStatus = Constants.REJECTED;
+                        if (ModelState.IsValid)
+                        {
+                            Comments c = new Comments();
+                            c.text = Request.Form["responsee"];
+                            c.commentedById = user.Id;
+                            c.feedbackId = feedback.id;
+                            db.comments.Add(c);
+                            db.SaveChanges();
+                            feedback.submittedById = user.Id;           //----------------later will use this to check rejectedby
+                            
+                            db.Entry(feedback).State = EntityState.Modified;
+                            db.SaveChanges();
+                            TempData["MessageSuccess"] = "Feedback Rejected";
+                            return RedirectToAction("DashBoard");
+                        }
+                        else
+                        {
+                            TempData["Message"] = "FeedBack Information is not Valid";
+                            return RedirectToAction("rejectedview", new { id = feedback.id });
+                        }
+                    }
+                    else
+                    {
+                        TempData["Message"] = "Response should not be empty & Department Field should be empty";
+                        return RedirectToAction("rejectedview", new { id = feedback.id });
+                    }
+
+
+                default:
+                    return RedirectToAction("rejectedview", new { id = feedback.id });
+
+
+            }
+
+
+        }
+
+
+
+        /******** HR By CLosed TO Open******/
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public ActionResult updatestatus(Feedback feedback)
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            Feedback f = db.Feedbacks.Find(feedback.id);
+            f.status = feedback.status;
+                f.checkStatus = feedback.status;
+            // f.response = cc;
+            // f.response = feedback.response;
+            //f.responseById = user.Id;
+            //f.responseBy = db.Users.Find(user.Id);
+            //f.responseDate = DateTime.Today;
+
+            if (ModelState.IsValid)
+            {
+
+                db.Entry(f).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["displayMsg"] = "FeedBacK Updated";
+                ViewData["decide"] = db.comments.Where(m => m.feedbackId == feedback.id).ToList();
+                return RedirectToAction("DashBoard");
+            }
+            else
+            {
+
+
+                TempData["displayMsg"] = "Response field is empty";
+                return RedirectToAction("view", new { name = "respondedview", id = feedback.id });
+            }
+        }
+
     }
 }

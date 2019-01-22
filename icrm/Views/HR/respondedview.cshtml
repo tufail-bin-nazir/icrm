@@ -9,7 +9,8 @@
 @{
     var data = (ApplicationUser)ViewData["user"];
 
-  
+    var commentlist = (IList<Comments>)@ViewData["commentList"];
+
 
 }
 <!DOCTYPE html>
@@ -247,14 +248,22 @@
                                 <label class="text-danger" id="statuscheck"></label>
                             </div>
                             <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Comment</label>
-                                    @Html.TextAreaFor(m => m.response, new { @readonly = "readonly", @class = "form-control" })
+                            @foreach( var res in commentlist)
+                            {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Response:</label>
 
 
+                                        @Html.TextArea("comments", @res.text, new { @readonly = "readonly", @class = "form-control" })
+                                       
+
+
+
+
+                                    </div>
                                 </div>
-                            </div>
+                            }
                         </div>
 
 

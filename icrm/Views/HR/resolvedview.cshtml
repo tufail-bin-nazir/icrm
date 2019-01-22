@@ -8,8 +8,9 @@
 
 @{
     var data = (ApplicationUser)ViewData["user"];
+    var commentList = (IList<Comments>)@ViewData["commentList"];
 
- 
+
 
 }
 <!DOCTYPE html>
@@ -51,27 +52,26 @@
             {
 
                 @Html.AntiForgeryToken()
-                <div class="section-wrapper">
-                    <label class="section-title">CREATING TICKETS BY HR</label>
+            <div class="section-wrapper">
+                <label class="section-title">CREATING TICKETS BY HR</label>
 
-                    <p class="mg-b-20 mg-sm-b-40"></p>
-                    <div class="form-layout">
-                        <span class="tx-success">@TempData["Message"]</span>
-                        @Html.HiddenFor(model => model.id, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.user.LastName, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
+                <p class="mg-b-20 mg-sm-b-40"></p>
+                <div class="form-layout">
+                    <span class="tx-success">@TempData["Message"]</span>
+                    @Html.HiddenFor(model => model.id, new { @class = "form-control" })
+                    @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
+                    @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
+                    @Html.HiddenFor(model => model.user.LastName, new { @class = "form-control" })
+                    @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
+                    @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
+                    @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
 
 
-                        <div class="row mg-b-25">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Name: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.FirstName, new { @readonly = "readonly", @class = "form-control" })
-                                </div>
+                    <div class="row mg-b-25">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">Name: <span class="tx-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.user.FirstName, new { @readonly = "readonly", @class = "form-control" })
                             </div>
                             <!-- col-4 -->
                             <div class="col-lg-4">
@@ -80,35 +80,36 @@
                                     @Html.TextBoxFor(model => model.user.EmployeeId, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
                             </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.Email, new { @readonly = "readonly", @class = "form-control" })
-                                </div>
+                        </div>
+                        <!-- col-4 -->
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.user.Email, new { @readonly = "readonly", @class = "form-control" })
                             </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Phone No: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.PhoneNumber, new { @readonly = "readonly", @class = "form-control" })
-                                </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">Phone No: <span class="tx-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.user.PhoneNumber, new { @readonly = "readonly", @class = "form-control" })
                             </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Location: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.Location.name, new { @readonly = "readonly", @class = "form-control" })
+                        </div>
+                        <!-- col-4 -->
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">Location: <span class="tx-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.user.Location.name, new { @readonly = "readonly", @class = "form-control" })
 
-                                </div>
                             </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })
+                        </div>
+                        <!-- col-4 -->
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })
 
-                                </div>
                             </div>
+                        </div>
 
                             <!-- col-4 -->
                             <!-- col-4 -->
@@ -117,109 +118,113 @@
                                     <label class="form-control-label">Job Title: <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(model => model.user.JobTitle.name, new { @readonly = "readonly", @class = "form-control" })
 
-                                </div>
                             </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Nationality: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.Nationality.name, new { @readonly = "readonly", @class = "form-control" })
-
-                                </div>
-                            </div>
-                            <!-- col-4 -->
-                            <!-- col-4 -->
                         </div>
-                        <!-- row -->
-                        <!-- form-layout-footer -->
+                        <!-- col-4 -->
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">Nationality: <span class="tx-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.user.Nationality.name, new { @readonly = "readonly", @class = "form-control" })
 
-                    </div>
-
-                    <label class="section-title">FeedBack / Complaint</label>
-
-
-                    <div class="form-layout">
-                        <div class="row mg-b-25">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Title: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.title, new { @readonly = "readonly", @class = "form-control" })
-                                </div>
                             </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group mg-b-10-force">
-                                    <label class="form-control-label">Description: <span class="tx-danger">*</span></label>
-                                    @Html.TextAreaFor(model => model.description, new { @readonly = "readonly", @class = "form-control" })
-                                </div>
-                            </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.departmentID,
-                          new SelectList(ViewBag.Departmn,
-                        "Id", "name"), "Choose Department", new { @readonly = "readonly", disabled="disabled", @class = "form-control select2" })
-                                    @Html.HiddenFor(model => model.departmentID, new { @class = "form-control" })
-
-                                </div>
-                            </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.categoryId,
-                           new SelectList(ViewBag.Categories,
-                         "Id", "name"), "Choose Category", new { @readonly = "readonly", disabled = "disabled", @class = "form-control select2" })
-                                    @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
-
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Priority: <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.priorityId,
-                           new SelectList(ViewBag.Priorities,
-                         "Id", "priorityId"), "Choose Priority", new { @readonly = "readonly", disabled = "disabled", @class = "form-control select2" })
-                                    @Html.HiddenFor(model => model.priorityId, new { @class = "form-control" })
-
-                                </div>
-                            </div>
-                            <!-- col-4 -->
                         </div>
-                        <!-- row -->
-                        <!-- form-layout-footer -->
+                        <!-- col-4 -->
+                        <!-- col-4 -->
                     </div>
+                    <!-- row -->
+                    <!-- form-layout-footer -->
+
+                </div>
+
+                <label class="section-title">FeedBack / Complaint</label>
 
 
+                <div class="form-layout">
+                    <div class="row mg-b-25">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">Title: <span class="tx-danger">*</span></label>
+                                @Html.TextBoxFor(model => model.title, new { @readonly = "readonly", @class = "form-control" })
+                            </div>
+                        </div>
+                        <!-- col-4 -->
+                        <div class="col-lg-4">
+                            <div class="form-group mg-b-10-force">
+                                <label class="form-control-label">Description: <span class="tx-danger">*</span></label>
+                                @Html.TextAreaFor(model => model.description, new { @readonly = "readonly", @class = "form-control" })
+                            </div>
+                        </div>
+                        <!-- col-4 -->
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
+                                @Html.DropDownListFor(m => m.departmentID,
+                      new SelectList(ViewBag.Departmn,
+                    "Id", "name"), "Choose Department", new { @readonly = "readonly", disabled="disabled", @class = "form-control select2" })
+                                @Html.HiddenFor(model => model.departmentID, new { @class = "form-control" })
 
-                    <label class="section-title">Attachment</label>
+                            </div>
+                        </div>
+                        <!-- col-4 -->
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
+                                @Html.DropDownListFor(m => m.categoryId,
+                       new SelectList(ViewBag.Categories,
+                     "Id", "name"), "Choose Category", new { @readonly = "readonly", disabled = "disabled", @class = "form-control select2" })
+                                @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
+
+                            </div>
+                        </div>
 
 
-                    <div class="form-layout">
-                        <div class="row mg-b-25">
-                            @if (Model.attachment != null)
-                            {
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Download</label>
-                                        @Html.HiddenFor(m => m.attachment)
-                                        <a href="@Url.Action("DownloadFile", "HR", new { filename = Model.attachment })" target="_blank" style="height:200px;width:200px;"><i class="fa fa-download"></i></a>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">Priority: <span class="tx-danger">*</span></label>
+                                @Html.DropDownListFor(m => m.priorityId,
+                       new SelectList(ViewBag.Priorities,
+                     "Id", "priorityId"), "Choose Priority", new { @readonly = "readonly", disabled = "disabled", @class = "form-control select2" })
+                                @Html.HiddenFor(model => model.priorityId, new { @class = "form-control" })
 
+                            </div>
+                        </div>
+                        <!-- col-4 -->
+                    </div>
+                    <!-- row -->
+                    <!-- form-layout-footer -->
+                </div>
+                @if (Model.attachment != null)
+                {
+                    <div class="row mg-b-25">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="section-title">Attachment</label>
+                                <div class="row mg-b-25">
+
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Download</label>
+                                            @Html.HiddenFor(m => m.attachment)
+                                            <a href="@Url.Action("DownloadFile", "HR", new { filename = Model.attachment })" target="_blank" style="height:200px;width:200px;"><i class="fa fa-download"></i></a>
+
+                                        </div>
                                     </div>
-                                </div>
-                                <!-- col-4 -->
-                            }
+                                    <!-- col-4 -->
+                                    
 
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                }
+                    <div class="form-layout">
+
 
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Choose Action</label>
-                                    <select name="status" id="statusfield" class="form-control select2">
+                                    <select name="status" id="statusfield" disabled class="form-control select2">
 
                                         @if (Model.status == "Open")
                                         {
@@ -247,108 +252,115 @@
                                 <label class="text-danger" id="statuscheck"></label>
                             </div>
                             <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Comment</label>
-                                    @Html.TextAreaFor(m => m.response, new { @class = "form-control",id="resolvecomment" })
+
+                            @foreach (var resp in commentList)
+                            {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Response:</label>
 
 
-                                </div>
-                            </div>
+                                        @Html.TextArea("comments", resp.text, new { @readonly = "readonly", @class = "form-control" })
+
+
+
+
+                                    </div>
+                                </div>}
+
+
                         </div>
 
 
                         <!-- row -->
                         <div class="form-layout-footer">
                             <input type="hidden" value="Resolvedtype" name="typeoflink" />
-                            <input type="submit" value="Submit" class="btn btn-primary bd-0" id="SubmitBtn" />
+                            <!-- <input type="submit" value="Submit" class="btn btn-primary bd-0" id="SubmitBtn" />-->
                         </div>
                         <!-- form-layout-footer -->
                     </div>
 
                 </div>
-            }
-            <!-- container -->
-        </div>
-        </div>
-        <!-- slim-mainpanel -->
-        <div class="slim-footer">
-            <div class="container">
-                <p>Copyright 2018 &copy; All Rights Reserved. </p>
-            </div>
-            <!-- container -->
-        </div>
-        <!-- slim-footer -->
-        <script src="~/Content/lib/jquery/js/jquery.js"></script>
-        <script src="~/Content/lib/popper.js/js/popper.js"></script>
-        <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
-        <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
-        <script src="~/Content/lib/moment/js/moment.js"></script>
-        <script src="~/Content/lib/jquery-ui/js/jquery-ui.js"></script>
-        <script src="~/Content/lib/jquery-toggles/js/toggles.min.js"></script>
-        <script src="~/Content/lib/jt.timepicker/js/jquery.timepicker.js"></script>
-        <script src="~/Content/lib/spectrum/js/spectrum.js"></script>
-        <script src="~/Content/lib/jquery.maskedinput/js/jquery.maskedinput.js"></script>
-        <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
-        <script src="~/Content/js/slim.js"></script>
-        <script>
-            $(document).ready(function () {
-                var navig = ["Dashboard", "Create", "HR", "Department", "Users"];
-                var url = window.location.href;
-                var page = new Array();
-                var page = url.split("/");
-                console.log(page[10])
+                        }
+                        <!-- container -->
+                    </div>
+                </div>
+                <!-- slim-mainpanel -->
+                <div class="slim-footer">
+                    <div class="container">
+                        <p>Copyright 2018 &copy; All Rights Reserved. </p>
+                    </div>
+                    <!-- container -->
+                </div>
+                <!-- slim-footer -->
+                <script src="~/Content/lib/jquery/js/jquery.js"></script>
+                <script src="~/Content/lib/popper.js/js/popper.js"></script>
+                <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
+                <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
+                <script src="~/Content/lib/moment/js/moment.js"></script>
+                <script src="~/Content/lib/jquery-ui/js/jquery-ui.js"></script>
+                <script src="~/Content/lib/jquery-toggles/js/toggles.min.js"></script>
+                <script src="~/Content/lib/jt.timepicker/js/jquery.timepicker.js"></script>
+                <script src="~/Content/lib/spectrum/js/spectrum.js"></script>
+                <script src="~/Content/lib/jquery.maskedinput/js/jquery.maskedinput.js"></script>
+                <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
+                <script src="~/Content/js/slim.js"></script>
+                <script>
+                    $(document).ready(function () {
+                        var navig = ["Dashboard", "Create", "HR", "Department", "Users"];
+                        var url = window.location.href;
+                        var page = new Array();
+                        var page = url.split("/");
+                        console.log(page[10])
 
-                if (page[3] == navig[0]) {
-        case navig[0]:
-
-
-                    break;
-                } else if ((page[3] == navig[1])) {
-                    $(".nav").find('.active').first().removeAttr("class", "active");
-                    $(".nav").find('.active').first().attr("class", "active");
-
-                } else {
-                    $(".nav").find('.active').first().removeAttr("class", "active");
-                    $(".nav").find("li:nth-child(2)").attr("class", "active");
-                }
+                        if (page[3] == navig[0]) {
+                        case navig[0]:
 
 
+                            break;
+                        } else if ((page[3] == navig[1])) {
+                            $(".nav").find('.active').first().removeAttr("class", "active");
+                            $(".nav").find('.active').first().attr("class", "active");
 
-
-            });
+                        } else {
+                            $(".nav").find('.active').first().removeAttr("class", "active");
+                            $(".nav").find("li:nth-child(2)").attr("class", "active");
+                        }
 
 
 
-            $('#SubmitBtn').click(function () {
 
-                if ($('#statusfield').val() == "Resolved" && $('#resolvecomment').val()!="") {
-
-                    return true;
-                }
-                else {
-                    $('#statuscheck').text("Set status Resolve & Fill Comment");
-                    return false;
-
-                }
-            });
+                    });
 
 
-            $('#resolve').click(function () {
-                if ($('#statusfield').val() == "Resolved") {
 
-                    return true;
-                }
+                    $('#SubmitBtn').click(function () {
 
-                else {
-                    $('#statuscheck').text("Set status Resolve");
-                    return false;
+                        if ($('#statusfield').val() == "Resolved" && $('#resolvecomment').val() != "") {
 
-                }
+                            return true;
+                        }
+                        else {
+                            $('#statuscheck').text("Set status Resolve & Fill Comment");
+                            return false;
 
-            });
+                        }
+                    });
 
 
+                    $('#resolve').click(function () {
+                        if ($('#statusfield').val() == "Resolved") {
+
+                            return true;
+                        }
+
+                        else {
+                            $('#statuscheck').text("Set status Resolve");
+                            return false;
+
+                        }
+
+                    });
 
 
 
@@ -356,73 +368,75 @@
 
 
 
-            $(function () {
 
 
-                'use strict'
+                    $(function () {
 
-                // Toggles
-                $('.toggle').toggles({
-                    on: true,
-                    height: 26
-                });
 
-                // Input Masks
-                $('#dateMask').mask('99/99/9999');
-                $('#phoneMask').mask('(999) 999-9999');
-                $('#ssnMask').mask('999-99-9999');
+                        'use strict'
 
-                // Time Picker
-                $('#tpBasic').timepicker();
-                $('#tp2').timepicker({
-                    'scrollDefault': 'now'
-                });
-                $('#tp3').timepicker();
+                        // Toggles
+                        $('.toggle').toggles({
+                            on: true,
+                            height: 26
+                        });
 
-                $('#setTimeButton').on('click', function () {
-                    $('#tp3').timepicker('setTime', new Date());
-                });
+                        // Input Masks
+                        $('#dateMask').mask('99/99/9999');
+                        $('#phoneMask').mask('(999) 999-9999');
+                        $('#ssnMask').mask('999-99-9999');
 
-                // Color picker
-                $('#colorpicker').spectrum({
-                    color: '#17A2B8'
-                });
+                        // Time Picker
+                        $('#tpBasic').timepicker();
+                        $('#tp2').timepicker({
+                            'scrollDefault': 'now'
+                        });
+                        $('#tp3').timepicker();
 
-                $('#showAlpha').spectrum({
-                    color: 'rgba(23,162,184,0.5)',
-                    showAlpha: true
-                });
+                        $('#setTimeButton').on('click', function () {
+                            $('#tp3').timepicker('setTime', new Date());
+                        });
 
-                $('#showPaletteOnly').spectrum({
-                    showPaletteOnly: true,
-                    showPalette: true,
-                    color: '#DC3545',
-                    palette: [
-                        ['#1D2939', '#fff', '#0866C6', '#23BF08', '#F49917'],
-                        ['#DC3545', '#17A2B8', '#6610F2', '#fa1e81', '#72e7a6']
-                    ]
-                });
+                        // Color picker
+                        $('#colorpicker').spectrum({
+                            color: '#17A2B8'
+                        });
 
-            });
+                        $('#showAlpha').spectrum({
+                            color: 'rgba(23,162,184,0.5)',
+                            showAlpha: true
+                        });
 
-            $(function () {
-                'use strict'
+                        $('#showPaletteOnly').spectrum({
+                            showPaletteOnly: true,
+                            showPalette: true,
+                            color: '#DC3545',
+                            palette: [
+                                ['#1D2939', '#fff', '#0866C6', '#23BF08', '#F49917'],
+                                ['#DC3545', '#17A2B8', '#6610F2', '#fa1e81', '#72e7a6']
+                            ]
+                        });
 
-                // Datepicker
-                $('.fc-datepicker').datepicker({
-                    showOtherMonths: true,
-                    selectOtherMonths: true,
-                    dateFormat: 'dd-mm-yy'
-                });
+                    });
 
-                $('#datepickerNoOfMonths').datepicker({
-                    showOtherMonths: true,
-                    selectOtherMonths: true,
-                    numberOfMonths: 2
-                });
+                    $(function () {
+                        'use strict'
 
-            });
+                        // Datepicker
+                        $('.fc-datepicker').datepicker({
+                            showOtherMonths: true,
+                            selectOtherMonths: true,
+                            dateFormat: 'dd-mm-yy'
+                        });
 
-        </script>
+                        $('#datepickerNoOfMonths').datepicker({
+                            showOtherMonths: true,
+                            selectOtherMonths: true,
+                            numberOfMonths: 2
+                        });
+
+                    });
+
+                </script>
 </body>
 </html>

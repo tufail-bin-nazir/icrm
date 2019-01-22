@@ -16,6 +16,7 @@
     s.Add(new SelectListItem { Text = "Resolved", Value = "Resolved" });
 
     ViewData["Status"] = s;
+    var commentlist = (IList<Comments>)@ViewData["commentList"];
 
 }
 <!DOCTYPE html>
@@ -50,10 +51,11 @@
                     <li class="breadcrumb-item active" aria-current="page">Create Tickets</li>
                 </ol>
                 <h6 class="slim-pagetitle">CREATE TICKET</h6>
+                <span class="text-success">@TempData["displayMsg"]</span>
             </div>
             <!-- slim-pageheader -->
             @Html.ValidationSummary()
-            @using (Html.BeginForm("assign", "HR", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            @using (Html.BeginForm("updatestatus", "HR", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
 
                 @Html.AntiForgeryToken()
@@ -218,54 +220,56 @@ new SelectList(ViewBag.Priorities,
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    @if (Model.status != "Rejected")
-                                    {
+                                  
                                         <label class="form-control-label">Choose Action</label>
 
-                                        <select name="status" id="statusfield" class="form-control select2">
+                                        <select name="status" id="statusfield" class="form-control select2" >
 
                                             @if (Model.status == "Open")
                                             {
                                                 <option selected value="Open">Open</option>
-                                                <option value="Resolved">Resolved</option>
+                                              
                                                 <option value="Closed">Closed</option>
                                             }
                                             else if (Model.status == "Closed")
                                             {
                                                 <option value="Open">Open</option>
-                                                <option value="Resolved">Resolved</option>
+                                              
                                                 <option selected value="Closed">Closed</option>
                                             }
-                                            else
-                                            {
-
-                                                <option value="Open">Open</option>
-                                                <option selected value="Resolved">Resolved</option>
-                                                <option value="Closed">Closed</option>
-                                            }
-
+                                           
 
                                         </select>
-                                    }
-                                    else
-                                    {
-                                        <label class="form-control-label">Status</label>
-
-                                        @Html.TextBoxFor(m => m.status, new { @readonly = "readonly", @class = "form-control" })
-
-
-                                    }
+                                    
+                                   
                                 </div>
                                 <label class="text-danger" id="statuscheck"></label>
                             </div>
                             <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Comment</label>
-                                    @Html.TextAreaFor(m => m.response, new { @readonly = "readonly", @class = "form-control" })
 
 
+
+                            @foreach (var resp in commentlist)
+                            {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Response:</label>
+
+
+
+
+
+                                        @Html.TextArea("comments", resp.text, new { @readonly = "readonly", @class = "form-control" })
+
+
+
+                                    </div>
                                 </div>
+                            }
+
+                            <div class="form-layout-footer">
+                                <input type="submit" value="Update" name="submitButton" id="forward2" class="btn btn-primary bd-0" />
+
                             </div>
                         </div>
 

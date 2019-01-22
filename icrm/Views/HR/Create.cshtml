@@ -63,8 +63,11 @@
                 <div class="form-layout">
 
                     <p class="mg-b-20 mg-sm-b-40"></p>
-                    <span class="tx-success">
+                    <span class="tx-danger">
                         @TempData["Message"]
+                    </span>
+                    <span class="tx-success">
+                        @TempData["MessageSuccess"]
                     </span>
                     @Html.HiddenFor(model => model.submittedById, new { @class = "form-control", id = "submittedBy" })
 
@@ -84,7 +87,7 @@
                                     <label class="form-control-label">Employee ID: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.userId,
     new SelectList(ViewBag.EmployeeList,
-    "Id", "EmployeeId"), "Select Employee", new { @class = "form-control select2", id = "empID" })
+    "Id", "EmployeeId"), "Select Employee", new { @class = "form-control select2", id = "empID",required="required" })
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -178,7 +181,7 @@
                             <div class="form-group">
                                 <label class="form-control-label">Type: <span class="tx-danger">*</span></label>
                                 @Html.DropDownListFor(model => model.typeId,
-  new SelectList(ViewBag.typeList, "Id", "name"), "Choose", new { @class = "form-control select2" })
+  new SelectList(ViewBag.typeList, "Id", "name"), "Choose", new { @class = "form-control select2", id="typeofFeedback",required="required" })
 
                               
                             </div>
@@ -186,14 +189,14 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">Title: <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(model => model.title, new { @class = "form-control" })
+                                @Html.TextBoxFor(model => model.title, new { @class = "form-control", required = "required" })
                             </div>
                         </div>
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group mg-b-10-force">
                                 <label class="form-control-label">Description: <span class="tx-danger">*</span></label>
-                                @Html.TextAreaFor(model => model.description, new { @class = "form-control" })
+                                @Html.TextAreaFor(model => model.description, new { @class = "form-control", required = "required" })
                             </div>
                         </div>
                         <!-- col-4 -->
@@ -262,7 +265,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Comment</label>
-                                        @Html.TextAreaFor(m => m.response, new { @class = "form-control" })
+                                        @Html.TextArea("responsee", new { @class = "form-control" ,name="responsee"})
 
 
                                     </div>
@@ -304,8 +307,9 @@
         <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
         <script src="~/Content/js/slim.js"></script>
         <script>
+            $("#typeofFeedback").prop('required', true);
 
-
+            
 
             $('#empID').change(function () {
 
@@ -344,6 +348,11 @@
 
 
             $('#forward').click(function () {
+
+                if ($('#statusfield').val() == "Resolved") {
+                    $('#statuscheck').text("Set status Open/Closed");
+                    return false;
+                }
                 $("#priorty").prop('required', true);
                 $("#category").prop('required', true);
 

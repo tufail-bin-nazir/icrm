@@ -34,5 +34,6 @@ namespace icrm.RepositoryInterface
         IEnumerable<Feedback> searchHR(string d1, string d2, string status);
         IPagedList<Feedback> searchHR(string v1, string v2, string status, int pageIndex, int pageSize);
         IPagedList<Feedback> getAllRejected(int pageIndex, int pageSize);
+        IPagedList<Feedback> getAllOpen(int pageIndex, int pageSize);
     }
 }

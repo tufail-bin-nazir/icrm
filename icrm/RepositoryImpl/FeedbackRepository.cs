@@ -45,7 +45,15 @@ namespace icrm.RepositoryImpl
 
         public IPagedList<Feedback> getAllAssigned(int pageIndex, int pageSize)
         {
-            return db.Feedbacks.Where(m=>m.status=="Open" && m.departmentID !=null && m.response ==null).OrderByDescending(m => m.user.Id).ToPagedList(pageIndex, pageSize);
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("getAllAssigned").ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToPagedList(pageIndex, pageSize);
+            // return db.Feedbacks.Where(m=>m.status=="Open" && m.departmentID !=null && m.response ==null).OrderByDescending(m => m.user.Id).ToPagedList(pageIndex, pageSize);
 
         }
 
@@ -108,19 +116,53 @@ namespace icrm.RepositoryImpl
         public IPagedList<Feedback> getAllOpenWithDepartment(string usrid, int pageIndex, int pageSize)
         {
             ApplicationUser user = db.Users.Find(usrid);
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@depID";
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = user.DepartmentId;
 
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID== user.DepartmentId && m.status=="Open" && m.departmentID != null && m.response==null && m.responseById==null).ToPagedList(pageIndex, pageSize);
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("getAllOpenWithDepart @depID", param1).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToPagedList(pageIndex, pageSize);            
+            // return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID== user.DepartmentId && m.status=="Open" && m.departmentID != null && m.response==null && m.responseById==null).ToPagedList(pageIndex, pageSize);
         }
 
         public IPagedList<Feedback> getAllRespondedWithDepartment(string usrid, int pageIndex, int pageSize)
         {
             ApplicationUser user = db.Users.Find(usrid);
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == user.DepartmentId && m.departmentID != null && m.response != null && m.responseById==usrid).ToPagedList(pageIndex, pageSize);
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@depID";
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = user.DepartmentId;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@CommentedByID";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = usrid;
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("getAllRespondedWithDepart @depID,@CommentedByID", param1,param2).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToPagedList(pageIndex, pageSize);
+
+            //  return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == user.DepartmentId && m.departmentID != null && m.response != null && m.responseById==usrid).ToPagedList(pageIndex, pageSize);
+
         }
 
         public IPagedList<Feedback> OpenWithoutDepart(int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == null && m.response==null && m.status=="Open").ToPagedList(pageIndex, pageSize);
+            //return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == null && m.response==null && m.status=="Open").ToPagedList(pageIndex, pageSize);
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == null && m.status == "Open" && m.checkStatus=="Open").ToPagedList(pageIndex, pageSize);
 
         }
 
@@ -129,10 +171,24 @@ namespace icrm.RepositoryImpl
             return db.Feedbacks.OrderByDescending(m => m.id).Where(m =>  m.status == "Resolved").ToPagedList(pageIndex, pageSize);
 
         }
+        public IPagedList<Feedback> getAllOpen(int pageIndex, int pageSize)
+        {
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == "Open").ToPagedList(pageIndex, pageSize);
+
+        }
 
         public IPagedList<Feedback> getAllResponded(int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID != null && m.response != null && m.status == "Open").ToPagedList(pageIndex, pageSize);
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("getAllResponded").ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToPagedList(pageIndex, pageSize);
+            // return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID != null && m.response != null && m.status == "Open").ToPagedList(pageIndex, pageSize);
+
         }
 
         public IPagedList<Feedback> getAllClosed(int pageIndex, int pageSize)
@@ -214,22 +270,37 @@ namespace icrm.RepositoryImpl
 
         public IEnumerable<Feedback> getAllAssigned()
         {
-            return db.Feedbacks.Where(m => m.status == "Open" && m.departmentID != null && m.response == null).OrderByDescending(m => m.user.Id).ToList();
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("getAllAssigned").ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist;
+          //  return db.Feedbacks.Where(m => m.status == "Open" && m.departmentID != null && m.response == null).OrderByDescending(m => m.user.Id).ToList();
         }
 
         public IEnumerable<Feedback> getAllResponded()
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID != null && m.response != null && m.status == "Open").ToList();
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("getAllResponded").ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+            return feedlist;
+           //return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID != null && m.response != null && m.status == "Open").ToList();
         }
 
         public IEnumerable<Feedback> OpenWithoutDepart()
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == null && m.response == null && m.status == "Open").ToList();
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == null && m.status == "Open").ToList();
         }
 
         public IPagedList<Feedback> getAllRejected(int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == "Rejected").ToPagedList(pageIndex,pageSize);
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.checkStatus == "Rejected").ToPagedList(pageIndex,pageSize);
 
         }
 
@@ -238,7 +309,24 @@ namespace icrm.RepositoryImpl
         public IEnumerable<Feedback> getAllRespondedWithDepartment(string usrid)
         {
             ApplicationUser user = db.Users.Find(usrid);
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == user.DepartmentId && m.departmentID != null && m.response != null && m.responseById == usrid).ToList();
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@depID";
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = user.DepartmentId;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@CommentedByID";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = usrid;
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("getAllRespondedWithDepart @depID,@CommentedByID", param1, param2).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+            return feedlist;
+
         }
     }
 }

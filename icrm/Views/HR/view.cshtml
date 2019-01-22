@@ -56,7 +56,8 @@
 
                     <p class="mg-b-20 mg-sm-b-40"></p>
                     <div class="form-layout">
-                        <span class="tx-success">@TempData["Message"]</span>
+                        <span class="tx-danger">@TempData["Message"]</span>
+                        <span class="tx-success">@TempData["MessageSuccess"]</span>
                         @Html.HiddenFor(model => model.id, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.user.LastName, new { @class = "form-control" })
@@ -64,9 +65,9 @@
                         @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
-                       
-                        
-                        
+
+
+
                         @Html.HiddenFor(model => model.submittedById, new { @class = "form-control" })
 
 
@@ -311,11 +312,11 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Comment</label>
-                                        @Html.TextAreaFor(m => m.response, new { disabled = "disabled", @class = "form-control" })
+                                        @Html.TextArea("responsee", new { @class = "form-control", name = "responsee", @readonly="readonly" })
 
-                                        @Html.HiddenFor(model => model.responseById, new { @class = "form-control" })
-                                        @Html.HiddenFor(model => model.responseDate, new { @class = "form-control" })
-                                        @Html.HiddenFor(model => model.response, new { @class = "form-control" })
+                                        @*  @Html.HiddenFor(model => model.responseById, new { @class = "form-control" })
+        @Html.HiddenFor(model => model.responseDate, new { @class = "form-control" })
+        @Html.HiddenFor(model => model.response, new { @class = "form-control" })*@
                                     </div>
                                 </div>
 
@@ -327,7 +328,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Comment</label>
-                                        @Html.TextAreaFor(m => m.response, new { @class = "form-control" })
+                                        @Html.TextArea("responsee", new { @class = "form-control" ,name="responsee"})
 
 
                                     </div>
@@ -348,7 +349,7 @@
                         {
                             <!-- row -->
                             <div class="form-layout-footer">
-                                <input type="submit" value="Forward" name="submitButton" id="forward" class="btn btn-primary bd-0" />
+                                <input type="submit" value="Forward" name="submitButton" id="forward2" class="btn btn-primary bd-0" />
                                
                             </div>
                         }
@@ -382,6 +383,25 @@
         <script src="~/Content/js/slim.js"></script>
         <script>
 
+            
+            $('#rejected').click(function () {
+                
+                if ($('#statusfield').val() == "Resolved" || res) {
+                    $('#statuscheck').text("Set status either Open/Closed");
+                    return false;
+                }
+
+            });
+
+            $('#forward2').click(function () {
+                $("#priorty").prop('required', true);
+                $("#category").prop('required', true);
+                if ($('#statusfield').val() == "Resolved") {
+                    $('#statuscheck').text("Set status either Open/Closed");
+                    return false;
+                }
+
+            });
             $('#forward').click(function () {
                 $("#priorty").prop('required', true);
                 $("#category").prop('required', true);
