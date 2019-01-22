@@ -1,6 +1,7 @@
 ﻿using FluentScheduler;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Mail;
 using System.Web;
@@ -32,16 +33,19 @@ namespace icrm.Models
                     if (_shuttingDown)
                         return;
                     var query = from f in db.Feedbacks.ToList()
-                                where f.departmentAssignedDate != null && f.internalstatus == "assigned" && f.priorityId== 1
+                                where f.departmentAssignedDate != null && f.internalstatus == "assigned"
                                 select f;
                     foreach (Feedback f in query)
                     {
-                            TimeSpan diff = new DateTime() - f.departmentAssignedDate;
+                            
+                            TimeSpan diff = DateTime.Now - (DateTime)f.departmentAssignedDate;
                             double hours = diff.TotalHours;
-                            if (hours > 4)
+                           Debug.WriteLine(f + " i m feedback"+ hours);
+                        if (hours > 4)
                             {
                                 f.escalationlevel = "level1";
                                 db.Feedbacks.Add(f);
+                                db.Entry(f).State = System.Data.Entity.EntityState.Modified;
                                 db.SaveChanges();
                                  
                             }
@@ -49,16 +53,18 @@ namespace icrm.Models
                             {
                                 f.escalationlevel = "level2";
                                 db.Feedbacks.Add(f);
+                                db.Entry(f).State = System.Data.Entity.EntityState.Modified;
                                 db.SaveChanges();
 
-                            }
+                        }
                             if (hours > 12)
                             {
                                 f.escalationlevel = "level3";
                                 db.Feedbacks.Add(f);
+                                db.Entry(f).State = System.Data.Entity.EntityState.Modified;
                                 db.SaveChanges();
 
-                            }
+                        }
                     }
 
 
