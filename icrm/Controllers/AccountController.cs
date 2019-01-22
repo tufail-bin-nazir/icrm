@@ -196,7 +196,7 @@ namespace icrm.Controllers
             if (ModelState.IsValid)
             {
                 
-                var user = new ApplicationUser { UserName = model.Email,
+                var user = new ApplicationUser { UserName = Convert.ToString(model.EmployeeId),
                     FirstName = model.FirstName, LastName = model.LastName ,
                     Email = model.Email, PhoneNumber = model.PhoneNumber,
                     EmployeeId = model.EmployeeId,
