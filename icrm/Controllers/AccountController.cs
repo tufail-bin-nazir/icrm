@@ -87,8 +87,9 @@ namespace icrm.Controllers
             {
                 case SignInStatus.Success:
                     {
+
                         
-                        IdentityUser user = UserManager.FindByEmail(model.Email);
+                        IdentityUser user = UserManager.FindByName(model.Email);
                         var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
                         var roleManager = new RoleManager<IdentityRole>(roleStore);
                         ApplicationUser appuser = UserManager.FindByName(model.Email);
