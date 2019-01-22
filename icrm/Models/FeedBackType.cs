@@ -11,5 +11,7 @@ namespace icrm.Models
         public string name { get; set; }
 
         public virtual IEnumerable<Feedback> Feedbacks { get; set; }
+
+        public IEnumerable<Category> Categories  { get; set; }
     }
 }

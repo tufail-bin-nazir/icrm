@@ -71,6 +71,30 @@
                                     <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
                                     @Html.EditorFor(x => x.Category.name, new { @class = "form-control", placeholder = "Enter Category", Required = "true" })
 
+
+                                    <div class="col-lg-8">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Department Name <span class="tx-danger">*</span></label>
+                                            @Html.DropDownListFor(m => m.Category.DepartmentId,
+                                               new SelectList(ViewBag.DepartmentList,
+                                                  "Id", "name"),"Choose Department", new { @class = "form-control select2"})
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-8">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Feedback Type <span class="tx-danger">*</span></label>
+                                            @Html.DropDownListFor(m => m.Category.FeedTypeId,
+                                               new SelectList(ViewBag.FeedBackTypeList,
+                                                  "Id", "name"),"Choose FeedBackType", new { @class = "form-control select2"})
+
+
+                                        </div>
+                                    </div>
+                                   
+
                                 </div>
                             </div>
                             <!-- col-4 -->

@@ -112,6 +112,8 @@ namespace icrm.Models
         public System.Data.Entity.DbSet<icrm.Models.Department> Departments { get; set; }
 
         public System.Data.Entity.DbSet<icrm.Models.PayScaleType> PayScaleTypes { get; set; }
+
+        public System.Data.Entity.DbSet<icrm.Models.SubCategory> SubCategories { get; set; }
     }
 
     public class MyDBInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>

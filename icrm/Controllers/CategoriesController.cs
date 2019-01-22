@@ -18,6 +18,8 @@ namespace icrm.Controllers
         // GET: Categories
         public ActionResult Index()
         {
+            ViewBag.DepartmentList = db.Departments.ToList();
+            ViewBag.FeedBackTypeList = db.FeedbackTypes.ToList();
             return View(db.Categories.ToList());
         }
 
@@ -40,6 +42,8 @@ namespace icrm.Controllers
         public ActionResult Create()
         {
             @ViewBag.Status = "Add";
+            ViewBag.DepartmentList = db.Departments.ToList();
+            ViewBag.FeedBackTypeList = db.FeedbackTypes.ToList();
             return View("CreateList",new CategoryViewModel { Categories = db.Categories.ToList()});
         }
 
@@ -48,7 +52,7 @@ namespace icrm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,name")] Category category)
+        public ActionResult Create( Category category)
         {
             if (ModelState.IsValid)
             {
@@ -58,6 +62,8 @@ namespace icrm.Controllers
             }
 
             @ViewBag.Status = "Add";
+            ViewBag.DepartmentList = db.Departments.ToList();
+            ViewBag.FeedBackTypeList = db.FeedbackTypes.ToList();
             return View("CreateList", new CategoryViewModel { Categories = db.Categories.ToList() });
         }
 
@@ -74,6 +80,8 @@ namespace icrm.Controllers
                 return HttpNotFound();
             }
             ViewBag.Status = "Update";
+            ViewBag.DepartmentList = db.Departments.ToList();
+            ViewBag.FeedBackTypeList = db.FeedbackTypes.ToList();
             return View("CreateList", new CategoryViewModel {Category = category, Categories = db.Categories.ToList() });
         }
 
@@ -82,7 +90,7 @@ namespace icrm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,name")] Category category)
+        public ActionResult Edit(Category category)
         {
             if (ModelState.IsValid)
             {
@@ -91,6 +99,8 @@ namespace icrm.Controllers
                 return RedirectToAction("Create");
             }
             ViewBag.Status = "Update";
+            ViewBag.DepartmentList = db.Departments.ToList();
+            ViewBag.FeedBackTypeList = db.FeedbackTypes.ToList();
             return View("CreateList", new CategoryViewModel {  Categories = db.Categories.ToList() });
         }
 
@@ -107,6 +117,8 @@ namespace icrm.Controllers
                 return HttpNotFound();
             }
             @ViewBag.Status = "Delete";
+            ViewBag.DepartmentList = db.Departments.ToList();
+            ViewBag.FeedBackTypeList = db.FeedbackTypes.ToList();
             return View("CreateList", new CategoryViewModel { Category = category, Categories = db.Categories.ToList() });
         }
 

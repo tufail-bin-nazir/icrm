@@ -28,6 +28,9 @@ namespace icrm.Models
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime createDate { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime departmentAssignedDate { get; set; }
+
         [Required(ErrorMessage = "Detail is required")]
         public string description { get; set; }
 
@@ -47,6 +50,13 @@ namespace icrm.Models
         public int? categoryId { get; set; }
 
         public virtual Category category {get;set;}
+
+        public int subcategoryId { get; set; }
+        public virtual  SubCategory SubCategory { get; set; }
+
+        public string escalationlevel { get; set; }
+
+        public string  internalstatus { get; set; }
 
         public int? priorityId { get; set; }
 

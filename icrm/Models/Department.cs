@@ -15,6 +15,8 @@ namespace icrm.Models
 
         public int departmntNumber { get; set; }
 
+        public IEnumerable<Category> Categories { get; set; }
+
         public IEnumerable<ApplicationUser> Users { get; set; }
 
     }
