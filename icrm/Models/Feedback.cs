@@ -79,6 +79,7 @@ namespace icrm.Models
         public int? typeId { get; set; }
 
         public virtual FeedBackType type { get; set; }
+        public string checkStatus { get; set; }
 
     }
 }
