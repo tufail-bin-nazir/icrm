@@ -53,7 +53,7 @@ namespace icrm.WebApi
             {
                 user.Email = model.Email;
                 user.PhoneNumber = model.PhoneNumber;
-                user.UserName = model.Email;
+                user.UserName = Convert.ToString(model.EmployeeId);
                 user.PasswordHash = HashPassword(model.Password);
                 user.SecurityStamp = Guid.NewGuid().ToString("D");
                 db.Users.Add(user);

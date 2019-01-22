@@ -894,7 +894,7 @@ namespace icrm.WebApi
         }
 
         //32/ <summary>
-        /// ////////////////////////////**************** hr Assigned List *******************////////////////////////////
+        /// ////////////////////////////**************** HR Assigned List *******************////////////////////////////
         /// </summary>
         /// <returns></returns>
         /// 
@@ -925,7 +925,6 @@ namespace icrm.WebApi
         /// </summary>
         /// <returns></returns>
         /// 
-
         [HttpPost]
         [Route("api/HR/imageSave")]
         public IHttpActionResult imageSave([FromBody]SaveFile file)
@@ -940,13 +939,12 @@ namespace icrm.WebApi
                 File.WriteAllBytes(path, getfile(file.ImageSave));
                 db.Entry(feedBack).State = EntityState.Modified;
                 db.SaveChanges();
-                //eventService.notifyFeedback(feedBack);
                 return Ok();
 
             }
             else
             {
-                //eventService.notifyFeedback(feedBack);
+               
                 return BadRequest("file not found");
 
             }
@@ -955,7 +953,7 @@ namespace icrm.WebApi
 
         private Byte[] getfile(string stringimage)
         {
-            // Convert base 64 string to byte[]
+           
             byte[] file = Convert.FromBase64String(stringimage);
             return file;
 
@@ -990,5 +988,8 @@ namespace icrm.WebApi
                     return string.Empty;
             }
         }
+
+
+
     }
 }
