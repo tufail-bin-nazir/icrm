@@ -370,7 +370,11 @@
                     $('#statuscheck').text("Set status Open/Closed");
                     return false;
                 }
+                if ($("#typeofFeedback").val()!= "InquiryEnquiries"){
+                $("#priorty").prop('required', false);
+              }else {
                 $("#priorty").prop('required', true);
+             }
                 $("#category").prop('required', true);
 
             });
