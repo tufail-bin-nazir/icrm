@@ -111,7 +111,7 @@ namespace icrm.Controllers
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             Feedback f = db.Feedbacks.Find(feedback.id);
-
+            f.checkStatus = Constants.RESPONDED;
             List<Comments> cc = new List<Comments>();
            
             if (Request.Form["responsee"] != "")
@@ -125,28 +125,28 @@ namespace icrm.Controllers
                 db.comments.Add(c);
                 db.SaveChanges();
 
-                f.checkStatus = Constants.RESPONDED;
+                
                 // f.response = cc;
                 // f.response = feedback.response;
                 //f.responseById = user.Id;
                 //f.responseBy = db.Users.Find(user.Id);
                 //f.responseDate = DateTime.Today;
 
-                if (ModelState.IsValid)
-                {
+             //   if (ModelState.IsValid)
+              //  {
 
                     db.Entry(f).State = EntityState.Modified;
                     db.SaveChanges();
                     TempData["displayMsg"] = "FeedBacK Updated";
                     ViewData["decide"] = db.comments.Where(m => m.feedbackId == feedback.id).ToList();
                     return RedirectToAction("DashBoard");
-                }
-                else
-                {
-                    TempData["displayMsg"] = "Information is not Valid";
-                    ViewData["decide"] = db.comments.Where(m => m.feedbackId == feedback.id).ToList();
-                    return RedirectToAction("view", new { name = "respondedview", id = feedback.id });
-                }
+              //  }
+             //   else
+             //   {
+              //      TempData["displayMsg"] = "Information is not Valid";
+              //      ViewData["decide"] = db.comments.Where(m => m.feedbackId == feedback.id).ToList();
+              //      return RedirectToAction("view", new { name = "respondedview", id = feedback.id });
+             //   }
             }
             TempData["displayMsg"] = "Response field is empty";
             return RedirectToAction("view", new { name = "respondedview", id = feedback.id });
@@ -199,7 +199,7 @@ namespace icrm.Controllers
                 int pageIndex = 1;
                 pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
                 ViewData["user"] = user;
-                IPagedList<Feedback> feedbacks = feedInterface.search(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), status, user.Id, pageIndex, pageSize);
+                IPagedList<Feedback> feedbacks = feedInterface.search(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), status, (Int32)user.DepartmentId, pageIndex, pageSize);
                 ViewBag.Status = Models.Constants.statusList;
                 return View("DashBoard", feedbacks);
             }

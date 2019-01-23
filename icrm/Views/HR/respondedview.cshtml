@@ -225,22 +225,15 @@
                                         @if (Model.status == "Open")
                                         {
                                             <option selected value="Open">Open</option>
-                                            <option value="Resolved">Resolved</option>
                                             <option value="Closed">Closed</option>
                                         }
                                         else if (Model.status == "Closed")
                                         {
                                             <option value="Open">Open</option>
-                                            <option value="Resolved">Resolved</option>
+                                           
                                             <option selected value="Closed">Closed</option>
                                         }
-                                        else
-                                        {
-
-                                            <option value="Open">Open</option>
-                                            <option selected value="Resolved">Resolved</option>
-                                            <option value="Closed">Closed</option>
-                                        }
+                                       
 
 
                                     </select>

@@ -255,7 +255,7 @@
 
                     <label class="section-title">Attachment</label>
 
-                    @ViewBag.fff
+                  
                     <div class="form-layout">
                         <div class="row mg-b-25">
                             @if (Model.attachment != null)
@@ -274,36 +274,66 @@
                             </div>
 
                         <div class="row mg-b-25">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Choose Action</label>
-                                    <select name="status" id="statusfield" class="form-control select2">
+                            @if (Model.departmentID == null)
+                            {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Choose Action</label>
+                                        <select name="status" id="statusfield" class="form-control select2">
 
-                                        @if (Model.status == "Open")
-                                        {
-                                            <option selected value="Open">Open</option>
-                                            <option value="Resolved">Resolved</option>
-                                            <option value="Closed">Closed</option>
-                                        }
-                                        else if (Model.status == "Closed")
-                                        {
-                                            <option value="Open">Open</option>
-                                            <option value="Resolved">Resolved</option>
-                                            <option selected value="Closed">Closed</option>
-                                        }
-                                        else
-                                        {
+                                            @if (Model.status == "Open")
+                                            {
+                                                <option selected value="Open">Open</option>
+                                                <option value="Resolved">Resolved</option>
+                                                <option value="Closed">Closed</option>
+                                            }
+                                            else if (Model.status == "Closed")
+                                            {
+                                                <option value="Open">Open</option>
+                                                <option value="Resolved">Resolved</option>
+                                                <option selected value="Closed">Closed</option>
+                                            }
+                                            else
+                                            {
 
-                                            <option value="Open">Open</option>
-                                            <option selected value="Resolved">Resolved</option>
-                                            <option value="Closed">Closed</option>
-                                        }
+                                                <option value="Open">Open</option>
+                                                <option selected value="Resolved">Resolved</option>
+                                                <option value="Closed">Closed</option>
+                                            }
 
 
-                                    </select>
+                                        </select>
+                                    </div>
+                                    <label class="text-danger" id="statuscheck"></label>
                                 </div>
-                                <label class="text-danger" id="statuscheck"></label>
-                            </div>
+                            }
+                            else
+                            {
+
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Choose Action</label>
+                                        <select name="status" id="statusfield" class="form-control select2">
+
+                                            @if (Model.status == "Open")
+                                            {
+                                                <option selected value="Open">Open</option>
+                                                <option value="Closed">Closed</option>
+                                            }
+                                            else if (Model.status == "Closed")
+                                            {
+                                                <option value="Open">Open</option>
+                                                <option selected value="Closed">Closed</option>
+                                            }
+                                           
+
+
+                                        </select>
+                                    </div>
+                                  <label class="text-danger" id="statuscheck"></label>
+                                </div>
+                            }
+                           
                             @if (Model.departmentID != null)
                             {
 
@@ -312,15 +342,16 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Comment</label>
-                                        @Html.TextArea("responsee", new { @class = "form-control", name = "responsee", @readonly="readonly" })
+                                        @Html.TextArea("responsee", new { @class = "form-control", name = "responsee", @readonly = "readonly" })
 
                                         @*  @Html.HiddenFor(model => model.responseById, new { @class = "form-control" })
-        @Html.HiddenFor(model => model.responseDate, new { @class = "form-control" })
-        @Html.HiddenFor(model => model.response, new { @class = "form-control" })*@
+                    @Html.HiddenFor(model => model.responseDate, new { @class = "form-control" })
+                    @Html.HiddenFor(model => model.response, new { @class = "form-control" })*@
                                     </div>
                                 </div>
 
-                            }else
+                            }
+                            else
                             {
 
 
@@ -328,7 +359,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Comment</label>
-                                        @Html.TextArea("responsee", new { @class = "form-control" ,name="responsee"})
+                                        @Html.TextArea("responsee", new { @class = "form-control", name = "responsee" })
 
 
                                     </div>

@@ -17,8 +17,6 @@ using System.Data.Entity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
 using System.Diagnostics;
-using icrm.Events;
-using Microsoft.Ajax.Utilities;
 
 namespace icrm.WebApi
 {
@@ -28,7 +26,7 @@ namespace icrm.WebApi
     public class HrApiController : ApiController
     {
         private IFeedback feedInterface;
-        private EventService eventService;
+
         ApplicationDbContext db = new ApplicationDbContext();
 
         private ApplicationUserManager _userManager;
@@ -48,7 +46,6 @@ namespace icrm.WebApi
         public HrApiController()
         {
             feedInterface = new FeedbackRepository();
-            eventService = new EventService();
         }
 
         //1/ <summary>
@@ -60,7 +57,7 @@ namespace icrm.WebApi
         {
 
             var Query = from f in feedInterface.OpenWithoutDepart()
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,f.user.FirstName};
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
 
             if (Query != null)
             {
@@ -247,7 +244,7 @@ namespace icrm.WebApi
             if (f == null)
             {
 
-                return BadRequest(" Id not found");
+                return BadRequest(" id not found");
 
             }
 
@@ -258,6 +255,7 @@ namespace icrm.WebApi
                 f.departmentID = feedback.departmentID;
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
+
                 return Ok();
 
             }
@@ -276,23 +274,24 @@ namespace icrm.WebApi
 
             var Name1 = User.Identity.Name;
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
-            var Query = from f in feedInterface.getAllOpen()
+            /*  var Query = from f in feedInterface.getAllOpen()
 
-                        where f.departmentID == user.Result.DepartmentId &&f.response==null
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,f.user.FirstName};
+                          where f.departmentID == user.Result.DepartmentId & f.response == ""
+                          select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
 
-            if (Query != null)
-            {
-                
-                return Ok(Query.ToList());
+              if (Query != null)
+              {
 
-            }
-            else
-            {
+                  return Ok(Query.ToList());
 
-                return BadRequest("Department list not found");
+              }
+              else
+              {
 
-            }
+                  return BadRequest("Department list not found");
+
+              }*/
+            return BadRequest("Department list not found");
 
         }
         //10/ <summary>
@@ -306,7 +305,7 @@ namespace icrm.WebApi
             var Query = from f in feedInterface.getAllOpen()
 
                         where f.id == id
-                        select new { f.id, f.title,f.attachment, f.description, f.createDate, f.status, f.user.EmployeeId,f.user.FirstName,f.user.Email,f.category,f.priority,f.type.name};
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,f.user.FirstName,f.user.Email,f.category,f.priority,f.type.name};
 
             if (Query != null)
             {
@@ -362,7 +361,7 @@ namespace icrm.WebApi
 
             var Query = from f in feedInterface.getAllResponded()
 
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,f.user.FirstName };
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
 
             if (Query != null)
             {
@@ -388,7 +387,7 @@ namespace icrm.WebApi
         public IHttpActionResult respondedTicketItem(string id)
         {
 
-            var Query = from f in feedInterface.getAllResponded()
+            var Query = from f in feedInterface.getAllOpen()
 
                         where f.id == id
                         select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, f.user.FirstName, f.user.Email,f.response ,f.category, f.priority, };
@@ -477,7 +476,7 @@ namespace icrm.WebApi
             if (f != null)
             {
                 //var obj =new {f.createDate, f.title, f.description, f.response, f.satisfaction, f.status }.ToString();
-                return Ok(new { f.createDate, f.title, f.description, f.response, f.satisfaction, f.status,f.type.name,f.user.FirstName});
+                return Ok(new { f.createDate, f.title, f.description, f.response, f.satisfaction, f.status,f.type.name});
 
             }
             else
@@ -789,6 +788,9 @@ namespace icrm.WebApi
             if (user != null)
             {
 
+                
+
+
                 return Ok(new { user.Result.FirstName, user.Result.LastName, user.Result.Email, user.Result.EmployeeId, user.Result.PhoneNumber,
                                  user.Result.JobTitle,user.Result.Location,user.Result.Department,user.Result.Religion,user.Result.Nationality,
                                  user.Result.PayScaleType,user.Result.Position,user.Result.SubLocation,});
@@ -852,7 +854,7 @@ namespace icrm.WebApi
 
             var Query = from f in feedInterface.getAllAssigned()
 
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,f.user.FirstName};
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
 
             if (Query != null)
             {
@@ -893,102 +895,7 @@ namespace icrm.WebApi
             }
         }
 
-        //32/ <summary>
-        /// ////////////////////////////**************** HR Assigned List *******************////////////////////////////
-        /// </summary>
-        /// <returns></returns>
-        /// 
-        [HttpGet]
-        [Route("api/HR/hrAssignedList")]
-        public IHttpActionResult hrAssignedList()
-        {
-
-            var Query = from f in feedInterface.getAllAssigned()
-
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,f.user.FirstName };
-
-            if (Query != null)
-            {
-
-                return Ok(Query.ToList());
-            }
-            else
-            {
-                return BadRequest(" Assigned List not found");
-
-            }
-        }
-
-
-        //33/ <summary>
-        /// ////////////////////////////**************** image Save *******************////////////////////////////
-        /// </summary>
-        /// <returns></returns>
-        /// 
-        [HttpPost]
-        [Route("api/HR/imageSave")]
-        public IHttpActionResult imageSave([FromBody]SaveFile file)
-        {
-
-            Feedback feedBack = db.Feedbacks.Find(file.id);
-            if (!file.ImageSave.IsNullOrWhiteSpace())
-            {
-                string ext = GetFileExtension(file.ImageSave);
-                feedBack.attachment = feedBack.id + "." + ext;
-                string path = Models.Constants.PATH + feedBack.attachment;
-                File.WriteAllBytes(path, getfile(file.ImageSave));
-                db.Entry(feedBack).State = EntityState.Modified;
-                db.SaveChanges();
-                return Ok();
-
-            }
-            else
-            {
-               
-                return BadRequest("file not found");
-
-            }
-          
-        }
-
-        private Byte[] getfile(string stringimage)
-        {
-           
-            byte[] file = Convert.FromBase64String(stringimage);
-            return file;
-
-
-        }
-        private string GetFileExtension(string base64String)
-        {
-            var data = base64String.Substring(0, 5);
-
-            switch (data.ToUpper())
-            {
-                case "IVBOR":
-                    return "png";
-                case "/9J/4":
-                    return "jpg";
-                case "AAAAF":
-                    return "mp4";
-                case "JVBER":
-                    return "pdf";
-                case "AAABA":
-                    return "ico";
-                case "UMFYI":
-                    return "rar";
-                case "E1XYD":
-                    return "rtf";
-                case "U1PKC":
-                    return "txt";
-                case "MQOWM":
-                case "77U/M":
-                    return "srt";
-                default:
-                    return string.Empty;
-            }
-        }
-
+     
 
 
     }
