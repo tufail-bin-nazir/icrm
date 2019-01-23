@@ -991,5 +991,28 @@ namespace icrm.Controllers
             }
         }
 
+
+
+        [HttpPost]
+        public JsonResult getCategories(int depId)
+        {
+
+            List<Category> categories = db.Categories.Where(m=>m.DepartmentId==depId).ToList();
+
+            
+
+            return Json(categories);
+        }
+
+
+        [HttpPost]
+        public JsonResult getSubCategories(int categoryId)
+        {
+
+            List<SubCategory> subCategories = db.SubCategories.Where(m => m.CategoryId == categoryId).ToList();
+
+
+            return Json(subCategories);
+        }
     }
 }
