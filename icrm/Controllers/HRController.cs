@@ -997,7 +997,8 @@ namespace icrm.Controllers
         public JsonResult getCategories(int depId)
         {
 
-            List<Category> categories = db.Categories.Where(m=>m.DepartmentId==depId).ToList();
+            List<Category> categories = feedInterface.getCategories(depId);
+               
 
             
 
@@ -1009,7 +1010,7 @@ namespace icrm.Controllers
         public JsonResult getSubCategories(int categoryId)
         {
 
-            List<SubCategory> subCategories = db.SubCategories.Where(m => m.CategoryId == categoryId).ToList();
+            List<SubCategory> subCategories = feedInterface.getSubCategories(categoryId);
 
 
             return Json(subCategories);

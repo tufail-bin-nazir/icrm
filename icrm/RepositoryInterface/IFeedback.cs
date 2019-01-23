@@ -37,5 +37,8 @@ namespace icrm.RepositoryInterface
         IPagedList<Feedback> getAllOpen(int pageIndex, int pageSize);
 
         List<Comments> getCOmments(string id);
+
+        List<Category> getCategories(Int32 deptId);
+        List<SubCategory> getSubCategories(Int32 categoryId);
     }
 }

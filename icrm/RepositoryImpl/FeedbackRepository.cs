@@ -351,5 +351,15 @@ namespace icrm.RepositoryImpl
         {
             return db.comments.Where(m => m.feedbackId == id).ToList();
         }
+
+        public List<Category> getCategories(int deptId)
+        {
+          return  db.Categories.Where(m => m.DepartmentId == deptId).ToList();
+        }
+
+        public List<SubCategory> getSubCategories(int categoryId)
+        {
+            return db.SubCategories.Where(m => m.CategoryId == categoryId).ToList();
+        }
     }
 }
