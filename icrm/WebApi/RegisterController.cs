@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -37,12 +38,13 @@ namespace icrm.WebApi
         [HttpPost]
         public async Task<IHttpActionResult> User(RegisterViewModel model)
         {
+            Debug.WriteLine(model.EmployeeId + "00--00--0-0-0-0-0-0");
             ApplicationDbContext context = new ApplicationDbContext();
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             ApplicationUser user = db.Users.Where(e => e.EmployeeId == model.EmployeeId).SingleOrDefault();
 
             if (user == null)
@@ -54,12 +56,14 @@ namespace icrm.WebApi
             {
 
                 user.UserName = Convert.ToString(model.EmployeeId);
+                user.Email = user.bussinessEmail;
                 user.PasswordHash = HashPassword(model.Password);
                 user.SecurityStamp = Guid.NewGuid().ToString("D");
                 db.Users.Add(user);
                 db.Entry(user).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 UserManager.AddToRole(user.Id, roleManager.FindByName("User").Name);
+               
                 return Ok();
                
 

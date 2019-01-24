@@ -20,7 +20,6 @@ namespace icrm.Provider
             OAuthGrantResourceOwnerCredentialsContext context)
           {
            
-
             ApplicationUserManager storeUserMgr =
             context.OwinContext.Get<ApplicationUserManager>("AspNet.Identity.Owin:"
             + typeof(ApplicationUserManager).AssemblyQualifiedName);
@@ -62,7 +61,7 @@ namespace icrm.Provider
             foreach (IdentityUserRole r in user.Roles)
             {
                 context.AdditionalResponseParameters.Add("Roles", roleManager.FindById(r.RoleId).Name);
-                context.AdditionalResponseParameters.Add("UserName", user.FirstName);
+                context.AdditionalResponseParameters.Add("UserName",user.FirstName);
             }
            
            return Task.FromResult<object>(null);
