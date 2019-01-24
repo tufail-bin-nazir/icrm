@@ -434,9 +434,13 @@
             }
         });
             $('#rejected').click(function () {
-                if ($('#statusfield').val() == "Open" || $('#statusfield').val() == "Closed" ) {
+                if ($('#statusfield').val() == "Open" || $('#statusfield').val() == "Closed") {
                     return true;
+                } else {
+                    $('#statuscheck').text("Set status either Open/Closed");
+                    return false;
                 }
+
                
             });
       

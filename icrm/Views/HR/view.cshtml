@@ -148,7 +148,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Type: <span class="tx-danger">*</span></label>
-                                    @Html.TextBox("typeoffeedback" , Model.type.name, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.TextBox("typeoffeedback", Model.type.name, new { @readonly = "readonly", @class = "form-control" })
                                     @Html.HiddenFor(model => model.typeId, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
                             </div>
@@ -174,7 +174,7 @@
                                         <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
                                         @Html.DropDownListFor(m => m.departmentID,
                               new SelectList(ViewBag.Departmn,
-                            "Id", "name"), "Choose Department", new { disabled="disabled", @class = "form-control select2" })
+                            "Id", "name"), "Choose Department", new { disabled="disabled", @class = "form-control select2",id= "deptId" })
                                         @Html.HiddenFor(model => model.departmentID, new { @class = "form-control" })
                                     </div>
                                 </div>
@@ -188,7 +188,7 @@
                                         <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
                                         @Html.DropDownListFor(m => m.departmentID,
                               new SelectList(ViewBag.Departmn,
-                            "Id", "name"), "Choose Department", new { @class = "form-control select2" })
+                            "Id", "name"), "Choose Department", new { @class = "form-control select2",id= "deptId" })
                                     </div>
                                 </div>
                             }
@@ -196,32 +196,78 @@
 
                             @if (Model.categoryId == null)
                             {
-                                <!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
-                                        @Html.DropDownListFor(m => m.categoryId,
-                            new SelectList(ViewBag.Categories,
-                          "Id", "name"), "Choose Category", new { @class = "form-control select2", id = "category" })
+                                        <select id="category" class="form-control select2" name="categoryId">
+                                            <option value="">Choose Category</option>
+
+                                        </select>
+
                                     </div>
                                 </div>
+
                             }
                             else
                             {
                                 <!-- col-4 -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
-                                        @Html.DropDownListFor(m => m.categoryId,
-                            new SelectList(ViewBag.Categories,
-                          "Id", "name"), "Choose Category", new { disabled="disabled", @class = "form-control select2", id = "category" })
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
+                                                <select id="category" class="form-control select2" name="categoryId" disabled="disabled">
+                                                    <option value="">Choose Category</option>
+
+                                                </select>
+
+                                            </div>
+                                        </div>
                                         @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
-                                    </div>
-                                </div>
+                                    
                             }
 
-                            @if (Model.priorityId == null)
+
+
+
+                            @if (Model.subcategoryId == null)
+                                        {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Sub Category: <span class="tx-danger">*</span></label>
+                                        <select id="subcategory" class="form-control select2" name="subcategoryId">
+                                            <option value="">Choose Sub Category</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+
+                            }
+                            else
                             {
+                                <!-- col-4 -->
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label class="form-control-label"> Sub Category: <span class="tx-danger">*</span></label>
+                                                <select id="subcategory" class="form-control select2" name="subcategoryId" disabled="disabled">
+                                                    <option value="">Choose Sub Category</option>
+
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        @Html.HiddenFor(model => model.subcategoryId, new { @class = "form-control" })
+                                   
+                                
+                            }
+
+
+
+
+
+
+
+                            @if (Model.priorityId == null)
+                                        {
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Priority: <span class="tx-danger">*</span></label>
@@ -255,11 +301,11 @@
 
                     <label class="section-title">Attachment</label>
 
-                    @ViewBag.fff
+                  
                     <div class="form-layout">
                         <div class="row mg-b-25">
                             @if (Model.attachment != null)
-                            {
+                                        {
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Download</label>
@@ -274,53 +320,84 @@
                             </div>
 
                         <div class="row mg-b-25">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Choose Action</label>
-                                    <select name="status" id="statusfield" class="form-control select2">
-
-                                        @if (Model.status == "Open")
+                            @if (Model.departmentID == null)
                                         {
-                                            <option selected value="Open">Open</option>
-                                            <option value="Resolved">Resolved</option>
-                                            <option value="Closed">Closed</option>
-                                        }
-                                        else if (Model.status == "Closed")
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Choose Action</label>
+                                        <select name="status" id="statusfield" class="form-control select2">
+
+                                            @if (Model.status == "Open")
                                         {
-                                            <option value="Open">Open</option>
-                                            <option value="Resolved">Resolved</option>
-                                            <option selected value="Closed">Closed</option>
-                                        }
-                                        else
-                                        {
+                                                <option selected value="Open">Open</option>
+                                                <option value="Resolved">Resolved</option>
+                                                <option value="Closed">Closed</option>
+                                            }
+                                            else if (Model.status == "Closed")
+                                            {
+                                                <option value="Open">Open</option>
+                                                <option value="Resolved">Resolved</option>
+                                                <option selected value="Closed">Closed</option>
+                                            }
+                                            else
+                                            {
 
-                                            <option value="Open">Open</option>
-                                            <option selected value="Resolved">Resolved</option>
-                                            <option value="Closed">Closed</option>
-                                        }
+                                                <option value="Open">Open</option>
+                                                <option selected value="Resolved">Resolved</option>
+                                                <option value="Closed">Closed</option>
+                                            }
 
 
-                                    </select>
+                                        </select>
+                                    </div>
+                                    <label class="text-danger" id="statuscheck"></label>
                                 </div>
-                                <label class="text-danger" id="statuscheck"></label>
-                            </div>
-                            @if (Model.departmentID != null)
+                            }
+                            else
                             {
+
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Choose Action</label>
+                                        <select name="status" id="statusfield" class="form-control select2">
+
+                                            @if (Model.status == "Open")
+                                        {
+                                                <option selected value="Open">Open</option>
+                                                <option value="Closed">Closed</option>
+                                            }
+                                            else if (Model.status == "Closed")
+                                            {
+                                                <option value="Open">Open</option>
+                                                <option selected value="Closed">Closed</option>
+                                            }
+                                           
+
+
+                                        </select>
+                                    </div>
+                                  <label class="text-danger" id="statuscheck"></label>
+                                </div>
+                            }
+                           
+                            @if (Model.departmentID != null)
+                                        {
 
 
                                 <!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Comment</label>
-                                        @Html.TextArea("responsee", new { @class = "form-control", name = "responsee", @readonly="readonly" })
+                                        @Html.TextArea("responsee", new { @class = "form-control", name = "responsee", @readonly = "readonly" })
 
                                         @*  @Html.HiddenFor(model => model.responseById, new { @class = "form-control" })
-        @Html.HiddenFor(model => model.responseDate, new { @class = "form-control" })
-        @Html.HiddenFor(model => model.response, new { @class = "form-control" })*@
+                    @Html.HiddenFor(model => model.responseDate, new { @class = "form-control" })
+                    @Html.HiddenFor(model => model.response, new { @class = "form-control" })*@
                                     </div>
                                 </div>
 
-                            }else
+                            }
+                            else
                             {
 
 
@@ -328,7 +405,7 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Comment</label>
-                                        @Html.TextArea("responsee", new { @class = "form-control" ,name="responsee"})
+                                        @Html.TextArea("responsee", new { @class = "form-control", name = "responsee" })
 
 
                                     </div>
@@ -403,7 +480,12 @@
 
             });
             $('#forward').click(function () {
-                $("#priorty").prop('required', true);
+                if ($("#typeofFeedback").val() != "Enquiries") {
+                    $("#priorty").prop('required', false);
+                } else {
+                    $("#priorty").prop('required', true);
+                }
+                
                 $("#category").prop('required', true);
                 if ($('#statusfield').val() == "Resolved") {
                     $('#statuscheck').text("Set status either Open/Closed");
@@ -493,6 +575,62 @@
                     showOtherMonths: true,
                     selectOtherMonths: true,
                     numberOfMonths: 2
+                });
+
+            });
+
+
+
+             $("#deptId").change(function () {
+                 $("#category option").remove();
+
+                 $('#category').append('<option value=" ">' + "Choose Category" + '</option>');
+
+                 $("#subcategory option").remove();
+
+                 $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("getCategories", "HR")",
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"depId":"' + $(this).val() + '"}',
+                    dataType: "json",
+                    success: function (r) {
+                        
+                        for (var i = 0; i < r.length; i++) {
+                            $('#category').append('<option value="' + r[i].Id + '">' + r[i].name + '</option>'); 
+                            
+                        }
+                    },
+                    error: function (r) {
+                        alert("error" + r.responseText);
+                    }
+                });
+
+            });
+
+
+
+             $("#category").change(function () {
+                 $("#subcategory option").remove();
+
+                 $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("getSubCategories", "HR")",
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"categoryId":"' + $(this).val() + '"}',
+                    dataType: "json",
+                    success: function (r) {
+                        
+                        for (var i = 0; i < r.length; i++) {
+                            $('#subcategory').append('<option value="' + r[i].Id + '">' + r[i].name + '</option>'); 
+                            
+                        }
+                    },
+                    error: function (r) {
+                        alert("error" + r.responseText);
+                    }
                 });
 
             });

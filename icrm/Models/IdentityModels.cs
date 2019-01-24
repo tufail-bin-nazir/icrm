@@ -12,28 +12,15 @@ namespace icrm.Models
     public class ApplicationUser : IdentityUser
     {
         [Required]
+        public int EmployeeId { get; set; }
+
+        [Required]
         public string FirstName { get; set; }
+
+        public string MiddleName { get; set; }
 
         [Required]
         public string  LastName { get; set; }
-
-        public int EmployeeId { get; set; }
-
-        public int? LocationId { get; set; }
-
-        public virtual Location Location { get; set; }
-
-        public int? SubLocationId { get; set; }
-
-        public virtual SubLocation SubLocation { get; set; }
-
-        public int? PositionId { get; set; }
-
-        public virtual Position Position { get; set; }
-
-        public int? NationalityId { get; set; }
-
-        public virtual Nationality Nationality { get; set; }
 
         public int? DepartmentId { get; set; }
 
@@ -43,21 +30,105 @@ namespace icrm.Models
 
         public virtual CostCenter CostCenter { get; set; }
 
-        public int? PayScaleTypeId { get; set; }
-
-        public virtual PayScaleType PayScaleType { get; set; }
-
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime? EmployeeHireDate { get; set; }
 
-        public int? ReligionId { get; set; }
+        public int? NationalityId { get; set; }
 
-        public virtual Religion Religion { get; set; }
+        public virtual Nationality Nationality { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public System.DateTime? EmployeeFireDate { get; set; }
+
+        public string EmployeeStatus { get; set; }
+
+        public int? EventReasonId { get; set; }
+
+        public virtual EventReason EventReason { get; set; }
+
+        public int? LocationId { get; set; }
+
+        public virtual Location Location { get; set; }
+
+        public int? LocationGroupId { get; set; }
+
+        public virtual LocationGroup LocationGroup { get; set; }
+
 
         public int? JobTitleId { get; set; }
 
         public virtual JobTitle JobTitle { get; set; }
 
+        public string GOSINumber { get; set; }
+
+        public string saudiNationalId { get; set; }
+
+        public string saudiResidentialId { get; set; }
+
+        public int? EmployeeClassId { get; set; }
+
+        public virtual EmployeeClass EmployeeClass { get; set; }
+
+        public int EthincityId { get; set; }
+
+        public virtual Ethnicity Ethnicity { get; set; }
+
+        public bool HasSwipeAccess { get; set; }
+
+        public string bussinessPhoneNumber { get; set; }
+
+        public string homePhoneNumber { get; set; }
+
+        public string cellPhoneNumber { get; set; }
+
+        public string otherPhoneNumber { get; set; }
+
+        public int? PayScaleTypeId { get; set; }
+
+        public virtual PayScaleType PayScaleType { get; set; }
+
+        public int? ReligionId { get; set; }
+
+        public virtual Religion Religion { get; set; }
+
+        public string personalInfoString { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public System.DateTime? DOB { get; set; }
+
+        public int? GenderId { get; set; }
+
+        public virtual Gender  Gender { get; set; }
+
+        public string otherEmail { get; set; }
+
+        public string bussinessEmail { get; set; }
+
+        public string personalEmail { get; set; }
+
+        public int? EmployerTypeId { get; set; }
+
+        public virtual EmployerType EmployerType { get; set; }
+
+        public int? VendorId { get; set; }
+
+        public virtual Vendor Vendor { get; set; }
+
+        public string outSourcedId { get; set; }
+
+        public int? BandId { get; set; }
+
+        public virtual Band Band { get; set; }
+
+        public int? SubLocationId { get; set; }
+
+        public virtual SubLocation SubLocation { get; set; }
+
+        public int? PositionId { get; set; }
+
+        public virtual Position Position { get; set; }
+
+      
         public bool? status { get; set; }
 
         public bool? available { get; set; }
@@ -88,10 +159,13 @@ namespace icrm.Models
 
         public DbSet<Models.Feedback> Feedbacks { get; set; }
         public DbSet<Models.FeedBackType> FeedbackTypes { get; set; }
-        public DbSet<Models.Comments> comments { get; set; }
+
 
         public DbSet<Models.Category> Categories { get; set; }
         public DbSet<Models.Location> Locations { get; set; }
+        public DbSet<Models.LocationGroup> LocationGroups { get; set; }
+        public DbSet<Models.EmployeeClass> employeeClasses { get; set; }
+        public DbSet<Models.Ethnicity> Ethnicities { get; set; }
         public DbSet<Models.SubLocation> SubLocations { get; set; }
         public DbSet<Models.Nationality> Nationalities { get; set; }
         public DbSet<Models.Position> Positions { get; set; }
@@ -99,10 +173,15 @@ namespace icrm.Models
         public DbSet<Models.JobTitle> JobTitles { get; set; }
         public DbSet<Models.CostCenter> CostCenters { get; set; }
         public DbSet<Models.Religion> Religions { get; set; }
+        public DbSet<Models.Gender> Genders { get; set; }
+        public DbSet<Models.EmployerType> employerTypes { get; set; }
+        public DbSet<Models.Vendor> vendors { get; set; }
+        public DbSet<Models.Band> bands { get; set; }
         public DbSet<Models.Chat> Chat { get; set; }
         public DbSet<Models.Message> Message { get; set; }
         public DbSet<Models.ChatRequest> ChatRequest { get; set; }
         public DbSet<Models.BroadcastMessage> BroadcastMessage { get; set; }
+        public DbSet<Models.Comments> comments { get; set; }
 
         public static ApplicationDbContext Create()
         {
@@ -114,6 +193,8 @@ namespace icrm.Models
         public System.Data.Entity.DbSet<icrm.Models.PayScaleType> PayScaleTypes { get; set; }
 
         public System.Data.Entity.DbSet<icrm.Models.SubCategory> SubCategories { get; set; }
+
+        public System.Data.Entity.DbSet<icrm.Models.EventReason> EventReasons { get; set; }
     }
 
     public class MyDBInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>

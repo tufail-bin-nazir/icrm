@@ -215,36 +215,56 @@ new SelectList(ViewBag.Priorities,
                                 <!-- col-4 -->
                             }
 
-                            </div>
+                        </div>
 
                         <div class="row mg-b-25">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                  
+
+                            @if (Model.satisfaction == "Satisfied")
+                            {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+
                                         <label class="form-control-label">Choose Action</label>
 
-                                        <select name="status" id="statusfield" class="form-control select2" >
+
+                                        @Html.TextBoxFor(model => model.status, new { @readonly = "readonly", @class = "form-control" })
+
+
+                                    </div>
+                                    <label class="text-danger" id="statuscheck"></label>
+                                </div>
+
+                            }
+                            else
+                            {<div class="col-lg-4">
+                                    <div class="form-group">
+
+                                        <label class="form-control-label">Choose Action</label>
+
+                                        <select name="status" id="statusfield" class="form-control select2">
 
                                             @if (Model.status == "Open")
                                             {
                                                 <option selected value="Open">Open</option>
-                                              
+
                                                 <option value="Closed">Closed</option>
                                             }
                                             else if (Model.status == "Closed")
                                             {
                                                 <option value="Open">Open</option>
-                                              
+
                                                 <option selected value="Closed">Closed</option>
                                             }
-                                           
+
 
                                         </select>
-                                    
-                                   
+
+
+                                    </div>
+
+                                    <label class="text-danger" id="statuscheck"></label>
                                 </div>
-                                <label class="text-danger" id="statuscheck"></label>
-                            </div>
+                            }
                             <!-- col-4 -->
 
 
@@ -267,13 +287,15 @@ new SelectList(ViewBag.Priorities,
                                 </div>
                             }
 
+                        </div>
+
+                        @if (Model.satisfaction!= "Satisfied")
+                        {
                             <div class="form-layout-footer">
                                 <input type="submit" value="Update" name="submitButton" id="forward2" class="btn btn-primary bd-0" />
 
                             </div>
-                        </div>
-
-
+                        }
                         <!-- row -->
                         <!-- form-layout-footer -->
                     </div>

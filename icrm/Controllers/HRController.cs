@@ -247,8 +247,9 @@ namespace icrm.Controllers
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             Feedback f = db.Feedbacks.Find(feedback.id);
+            f.checkStatus = feedback.status;
             f.status = feedback.status;
-            if (feedback.status == "Closed") {
+            if (feedback.status == Constants.CLOSED) {
                 f.closedDate = DateTime.Today;
             }
            
@@ -257,7 +258,7 @@ namespace icrm.Controllers
                 case "Resolvedtype":
                     if (ModelState.IsValid)
                     {
-                        f.checkStatus = Constants.RESOLVED;
+                        
                         db.Entry(f).State = EntityState.Modified;
                         db.SaveChanges();
                     }
@@ -266,7 +267,7 @@ namespace icrm.Controllers
                 case "Respondedtype":
                     if (ModelState.IsValid)
                     {
-                        f.checkStatus = Constants.RESPONDED;
+                       
                         db.Entry(f).State = EntityState.Modified;
                         db.SaveChanges();
                     }
@@ -279,7 +280,7 @@ namespace icrm.Controllers
 
                     if (ModelState.IsValid)
                     {
-                        f.checkStatus = Constants.ASSIGNED;
+                        
                         db.Entry(f).State = EntityState.Modified;
                         db.SaveChanges();
                     }
@@ -289,7 +290,7 @@ namespace icrm.Controllers
                 case "Rejectedtype":
                     if (ModelState.IsValid)
                     {
-                        f.checkStatus = Constants.REJECTED;
+                       
                         db.Entry(f).State = EntityState.Modified;
                         db.SaveChanges();
                     }
@@ -320,8 +321,8 @@ namespace icrm.Controllers
                     {
                         feedback.department = db.Departments.Find(feedback.departmentID);
                         feedback.checkStatus = Constants.ASSIGNED;
-                        if (ModelState.IsValid)
-                        {
+                       // if (ModelState.IsValid)
+                      //  {
                             
                             if (feedback.assignedDate == null)
                             {
@@ -332,13 +333,13 @@ namespace icrm.Controllers
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
                             TempData["MessageSuccess"] = "Feedback Forwarded";
-                        }
-                        else
-                        {
-                            ViewData["user"] = user;
-                            TempData["Message"] = "Fill feedback Properly";
-                            return RedirectToAction("view", new { id = feedback.id });
-                        }
+                        //}
+                       // else
+                       // {
+                       //     ViewData["user"] = user;
+                       //     TempData["Message"] = "Fill feedback Properly";
+                       //     return RedirectToAction("view", new { id = feedback.id });
+                       // }
                     }
                     else
                     {
@@ -351,8 +352,8 @@ namespace icrm.Controllers
                 case "Resolve":
                     if (feedback.departmentID == null && Request.Form["responsee"] != "")
                     {
-                        if (ModelState.IsValid)
-                        {
+                       // if (ModelState.IsValid)
+                        //{
                             Comments c = new Comments();
                             c.text = Request.Form["responsee"];
                             c.commentedById = user.Id;
@@ -367,12 +368,12 @@ namespace icrm.Controllers
                             db.SaveChanges();
                             TempData["MessageSuccess"] = "Feedback Resolved";
                             return RedirectToAction("view", new { id = feedback.id });
-                        }
-                        else
-                        {                         
-                            TempData["Message"] = "Fill feedback Properly";
-                            return RedirectToAction("view", new { id = feedback.id });
-                        }
+                      //  }
+                      //  else
+                      //  {                         
+                      //      TempData["Message"] = "Fill feedback Properly";
+                      //      return RedirectToAction("view", new { id = feedback.id });
+                       // }
 
                     }
                     else
@@ -382,8 +383,8 @@ namespace icrm.Controllers
                     }
                   case "Reject":
                     if (feedback.departmentID == null && Request.Form["responsee"] != "") {
-                        if (ModelState.IsValid)
-                        {
+                      //  if (ModelState.IsValid)
+                       // {
                             Comments c = new Comments();
                             c.text = Request.Form["responsee"];
                             c.commentedById = user.Id;
@@ -397,11 +398,11 @@ namespace icrm.Controllers
                             db.SaveChanges();
                             TempData["MessageSuccess"] = "Feedback Rejected";
                             return RedirectToAction("DashBoard");
-                        }
-                        else {
-                            TempData["Message"] = "FeedBack Information is not Valid";
-                            return RedirectToAction("view", new { id = feedback.id });
-                        }
+                       // }
+                      //  else {
+                      //      TempData["Message"] = "FeedBack Information is not Valid";
+                      //      return RedirectToAction("view", new { id = feedback.id });
+                       // }
                     }
                     else
                     {
@@ -852,8 +853,8 @@ namespace icrm.Controllers
                     {
                         feedback.department = db.Departments.Find(feedback.departmentID);
                         feedback.checkStatus = Constants.ASSIGNED;
-                        if (ModelState.IsValid)
-                        {
+                       // if (ModelState.IsValid)
+                       // {
                             if (feedback.assignedDate == null)
                             {
                                 feedback.assignedBy = user.Id;
@@ -863,13 +864,13 @@ namespace icrm.Controllers
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
                             TempData["MessageSuccess"] = "Feedback Forwarded";
-                        }
-                        else
-                        {
-                            ViewData["user"] = user;
-                            TempData["Message"] = "Fill feedback Properly";
-                            return RedirectToAction("rejectedview", new { id = feedback.id });
-                        }
+                       // }
+                       // else
+                       //  {
+                       //     ViewData["user"] = user;
+                       //     TempData["Message"] = "Fill feedback Properly";
+                        //    return RedirectToAction("rejectedview", new { id = feedback.id });
+                       // }
                     }
                     else
                     {
@@ -883,8 +884,8 @@ namespace icrm.Controllers
                     if (feedback.departmentID == null && Request.Form["responsee"] != "")
                     {
                         feedback.checkStatus = Constants.RESOLVED;
-                        if (ModelState.IsValid)
-                        {
+                      //  if (ModelState.IsValid)
+                       // {
                             Comments c = new Comments();
                             c.text = Request.Form["responsee"];
                             c.commentedById = user.Id;
@@ -898,12 +899,12 @@ namespace icrm.Controllers
                             db.SaveChanges();
                             TempData["MessageSuccess"] = "Feedback Resolved";
                             return RedirectToAction("rejectedview", new { id = feedback.id });
-                        }
-                        else
-                        {
-                            TempData["Message"] = "Fill feedback Properly";
-                            return RedirectToAction("rejectedview", new { id = feedback.id });
-                        }
+                      //  }
+                      //  else
+                      //  {
+                        //    TempData["Message"] = "Fill feedback Properly";
+                        //    return RedirectToAction("rejectedview", new { id = feedback.id });
+                       // }
 
                     }
                     else
@@ -915,8 +916,8 @@ namespace icrm.Controllers
                     if (feedback.departmentID == null && Request.Form["responsee"] != "")
                     {
                         feedback.checkStatus = Constants.REJECTED;
-                        if (ModelState.IsValid)
-                        {
+                     //   if (ModelState.IsValid)
+                     //   {
                             Comments c = new Comments();
                             c.text = Request.Form["responsee"];
                             c.commentedById = user.Id;
@@ -929,12 +930,12 @@ namespace icrm.Controllers
                             db.SaveChanges();
                             TempData["MessageSuccess"] = "Feedback Rejected";
                             return RedirectToAction("DashBoard");
-                        }
-                        else
-                        {
-                            TempData["Message"] = "FeedBack Information is not Valid";
-                            return RedirectToAction("rejectedview", new { id = feedback.id });
-                        }
+                      //  }
+                       // else
+                       // {
+                        //    TempData["Message"] = "FeedBack Information is not Valid";
+                       //     return RedirectToAction("rejectedview", new { id = feedback.id });
+                       // }
                     }
                     else
                     {
@@ -990,5 +991,29 @@ namespace icrm.Controllers
             }
         }
 
+
+
+        [HttpPost]
+        public JsonResult getCategories(int depId)
+        {
+
+            List<Category> categories = feedInterface.getCategories(depId);
+               
+
+            
+
+            return Json(categories);
+        }
+
+
+        [HttpPost]
+        public JsonResult getSubCategories(int categoryId)
+        {
+
+            List<SubCategory> subCategories = feedInterface.getSubCategories(categoryId);
+
+
+            return Json(subCategories);
+        }
     }
 }
