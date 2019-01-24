@@ -814,6 +814,7 @@ namespace icrm.Controllers
             var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
             ViewBag.Departmn = departments;         
             ViewBag.Priorities = priorities;
+
             ViewBag.Emails = feedInterface.getEmails();
             ViewBag.typeList = db.FeedbackTypes.OrderBy(m => m.Id).ToList();
 
@@ -1020,7 +1021,8 @@ namespace icrm.Controllers
             EmailSend e = new EmailSend();
             ViewBag.check = "djhsdjhsjhdjhdhd";
             Debug.WriteLine("kuch b nahin hai ye jahaaaaa");
-            e.sendEmailAsync();
+
+            var task=e.sendEmailAsync();
             return RedirectToAction("openview");
         }
         
