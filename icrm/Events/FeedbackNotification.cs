@@ -30,7 +30,7 @@ namespace icrm.Events
 
             var postData = new
             {
-                to = "/topics/HR",
+                to = "/topics/test",
                 priority = "high",
                 content_available = true,
                 notification = new

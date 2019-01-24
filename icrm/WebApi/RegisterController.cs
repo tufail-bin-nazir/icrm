@@ -39,20 +39,20 @@ namespace icrm.WebApi
         {
             ApplicationDbContext context = new ApplicationDbContext();
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest(ModelState);
+            //}
             ApplicationUser user = db.Users.Where(e => e.EmployeeId == model.EmployeeId).SingleOrDefault();
+
             if (user == null)
             {
                 return BadRequest(" NO User Found");
 
             }
-            else
+            else if (user.PasswordHash==null)
             {
-                user.Email = model.Email;
-                user.PhoneNumber = model.PhoneNumber;
+
                 user.UserName = Convert.ToString(model.EmployeeId);
                 user.PasswordHash = HashPassword(model.Password);
                 user.SecurityStamp = Guid.NewGuid().ToString("D");
@@ -61,6 +61,12 @@ namespace icrm.WebApi
                 db.SaveChanges();
                 UserManager.AddToRole(user.Id, roleManager.FindByName("User").Name);
                 return Ok();
+               
+
+            }
+            else 
+            {
+                return Conflict();
 
             }
         }
