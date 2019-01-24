@@ -23,6 +23,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI;
 using Constants = icrm.Models.Constants;
 using Comments = icrm.Models.Comments;
+using System.Net.Mail;
 
 namespace icrm.Controllers
 {
@@ -158,7 +159,7 @@ namespace icrm.Controllers
                             {
                                 
                                 feedback.assignedBy = user.Id;
-                                feedback.assignedDate = DateTime.Today;
+                                feedback.assignedDate = DateTime.Now;
                                 feedback.checkStatus = Constants.ASSIGNED;
                                 
                                 feedInterface.Save(feedback);
@@ -327,7 +328,7 @@ namespace icrm.Controllers
                             if (feedback.assignedDate == null)
                             {
                                 feedback.assignedBy = user.Id;
-                                feedback.assignedDate = DateTime.Today;
+                                feedback.assignedDate = DateTime.Now;
                                 
                             }
                             db.Entry(feedback).State = EntityState.Modified;
@@ -810,11 +811,10 @@ namespace icrm.Controllers
         public void getAttributeList()
         {
             var departments = db.Departments.OrderByDescending(m => m.name).ToList();
-            var categories = db.Categories.OrderByDescending(m => m.name).ToList();
             var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
-            ViewBag.Departmn = departments;
-            ViewBag.Categories = categories;
+            ViewBag.Departmn = departments;         
             ViewBag.Priorities = priorities;
+            //ViewBag.Emails = feedInterface.getEmails();
             ViewBag.typeList = db.FeedbackTypes.OrderBy(m => m.Id).ToList();
 
         }
@@ -858,7 +858,7 @@ namespace icrm.Controllers
                             if (feedback.assignedDate == null)
                             {
                                 feedback.assignedBy = user.Id;
-                                feedback.assignedDate = DateTime.Today;
+                                feedback.assignedDate = DateTime.Now;
                             
                             }
                             db.Entry(feedback).State = EntityState.Modified;
@@ -1015,5 +1015,8 @@ namespace icrm.Controllers
 
             return Json(subCategories);
         }
+
+      
+        
     }
 }
