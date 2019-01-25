@@ -238,7 +238,7 @@ namespace icrm.WebApi
 
         [HttpPost]
         [Route("api/HR/forwardTicket/{id}")]
-        public IHttpActionResult forwardTicket(string Id, Feedback feedback)
+        public IHttpActionResult forwardTicket(string Id, Forwardmodel forward)
         {
             Feedback f = db.Feedbacks.Find(Id);
 
@@ -251,9 +251,11 @@ namespace icrm.WebApi
 
             else
             {
-                f.categoryId = feedback.categoryId;
-                f.priorityId = feedback.priorityId;
-                f.departmentID = feedback.departmentID;
+               
+                f.subcategoryId = forward.subcategoryId;
+                f.categoryId = forward.categoryId;
+                f.priorityId = forward.priorityId;
+                f.departmentID = forward.departmentID;
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
 
@@ -266,24 +268,22 @@ namespace icrm.WebApi
         //9/ <summary>
         /// /////////////////////////////////////*************Departmentlist*****************/////////////////
         /// </summary>
-
         [HttpGet]
         [Route("api/HR/Departmentlist")]
         public IHttpActionResult Departmentlist()
         {
 
-
             var Name1 = User.Identity.Name;
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
-            /*  var Query = from f in feedInterface.getAllOpen()
+              var query = from f in feedInterface.getAllOpen()
 
                           where f.departmentID == user.Result.DepartmentId & f.response == ""
                           select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
 
-              if (Query != null)
+              if (query != null)
               {
 
-                  return Ok(Query.ToList());
+                  return Ok(query.ToList());
 
               }
               else
@@ -291,13 +291,13 @@ namespace icrm.WebApi
 
                   return BadRequest("Department list not found");
 
-              }*/
-            return BadRequest("Department list not found");
-
+              }
+          
         }
+
         //10/ <summary>
         /// /////////////////////////////////////*************DepartmentbyId*****************/////////////////
-        /// </summary>
+                                                                                              /// </summary>
         [HttpGet]
         [Route("api/HR/DepartmentbyId/{id}")]
         public IHttpActionResult DepartmentbyId(string id)
@@ -1064,7 +1064,7 @@ namespace icrm.WebApi
         /// </summary>
         // <returns></returns> 
         [HttpGet]
-        [Route("api/hr/Emaillist")]
+        [Route("api/Hr/Emaillist")]
         public IHttpActionResult Emaillist()
         {
 
@@ -1084,6 +1084,24 @@ namespace icrm.WebApi
             }
         }
 
+        //36/ <summary>
+        /// ////////////////////////////**************** Recieve Emails *******************////////////////////////////
+        /// </summary>
+        // <returns></returns> 
+        [HttpPost]
+        [Route("api/Hr/recieveEmails/{id}")]
+        public IHttpActionResult recieveEmails(string id, RecieveEmails emails )
+        {
+
+            foreach (var item in emails.EmailList)
+            {
+
+              
+
+            }
+
+            return Ok();
+        }
 
     }
 }
