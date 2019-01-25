@@ -907,7 +907,7 @@ namespace icrm.WebApi
         {
 
             Feedback feedBack = db.Feedbacks.Find(file.id);
-            if (!file.ImageSave.IsNullOrWhiteSpace())
+            if (!String.IsNullOrWhiteSpace(file.ImageSave))
             { 
                 string ext = GetFileExtension(file.ImageSave);
                 feedBack.attachment = feedBack.id + "." + ext;
