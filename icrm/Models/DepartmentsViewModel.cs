@@ -8,9 +8,8 @@ namespace icrm.Models
 {
     public class DepartmentsViewModel
     {
-        public Department Department { get; set; }
-
-       
+        public Department Department { get; set; }     
         public IEnumerable<Department> Departments { get; set; }
+
     }
 }

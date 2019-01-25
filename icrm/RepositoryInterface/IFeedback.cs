@@ -40,5 +40,7 @@ namespace icrm.RepositoryInterface
 
         List<Category> getCategories(Int32 deptId);
         List<SubCategory> getSubCategories(Int32 categoryId);
+
+        List<ApplicationUser> getEmails();
     }
 }

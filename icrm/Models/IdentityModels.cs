@@ -134,7 +134,7 @@ namespace icrm.Models
         public bool? available { get; set; }
 
         public string DeviceCode { get; set; }
-
+        public bool? forwarDeptEmailCCStatus { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -159,7 +159,7 @@ namespace icrm.Models
 
         public DbSet<Models.Feedback> Feedbacks { get; set; }
         public DbSet<Models.FeedBackType> FeedbackTypes { get; set; }
-
+        public DbSet<Models.Comments> comments { get; set; }
 
         public DbSet<Models.Category> Categories { get; set; }
         public DbSet<Models.Location> Locations { get; set; }
@@ -181,7 +181,7 @@ namespace icrm.Models
         public DbSet<Models.Message> Message { get; set; }
         public DbSet<Models.ChatRequest> ChatRequest { get; set; }
         public DbSet<Models.BroadcastMessage> BroadcastMessage { get; set; }
-        public DbSet<Models.Comments> comments { get; set; }
+      
 
         public static ApplicationDbContext Create()
         {
