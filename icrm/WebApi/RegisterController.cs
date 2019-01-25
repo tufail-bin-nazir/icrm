@@ -38,7 +38,7 @@ namespace icrm.WebApi
         [HttpPost]
         public async Task<IHttpActionResult> User(RegisterViewModel model)
         {
-            Debug.WriteLine(model.EmployeeId + "00--00--0-0-0-0-0-0");
+           
             ApplicationDbContext context = new ApplicationDbContext();
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             if (!ModelState.IsValid)

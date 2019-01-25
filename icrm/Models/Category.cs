@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,14 +13,14 @@ namespace icrm.Models
 
         [Required]
         public string name { get; set; }
-
+        [JsonIgnore]
         public IEnumerable<SubCategory> subCategories { get; set; }
-
+        [JsonIgnore]
         public int FeedTypeId { get; set; }
-
+        [JsonIgnore]
         public int DepartmentId { get; set; }
-        
 
+        [JsonIgnore]
         public virtual FeedBackType FeedBackType { get; set; }
     }
 }

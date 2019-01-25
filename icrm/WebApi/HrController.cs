@@ -190,12 +190,13 @@ namespace icrm.WebApi
         /// /////////////////////////////////////*************catagorey*****************/////////////////
         /// </summary>
         [HttpGet]
-        [Route("api/HR/catagorey")]
-        public IHttpActionResult catagorey()
+        [Route("api/HR/catagorey/{deptId}")]
+        public IHttpActionResult catagorey(int deptId)
         {
 
-            var entity = db.Categories.ToList();
-
+            var entity = from f in feedInterface.getCategories(deptId)
+                         select f;
+           
             if (entity != null)
             {
                 return Ok(entity.ToList());
@@ -1024,12 +1025,12 @@ namespace icrm.WebApi
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/HR/Subcategories/list")]
-        public IHttpActionResult Subcategories()
+        [Route("api/HR/Subcategories/{categoryId}")]
+        public IHttpActionResult Subcategories(int categoryId)
         {
 
-            var entity = db.SubCategories.ToList();
-
+            var entity = from f in feedInterface.getSubCategories(categoryId)
+                         select f;
             if (entity != null)
             {
                 return Ok(entity.ToList());
@@ -1073,5 +1074,32 @@ namespace icrm.WebApi
 
             }
         }
+
+        ////37/ <summary>
+        ///// ////////////////////////////**************** Email List *******************////////////////////////////
+        ///// </summary>
+        ///// <returns></returns>
+        ///// 
+        //[HttpGet]
+        //[Route("api/HR/EmailList")]
+        //public IHttpActionResult EmailList()
+        //{
+
+        //    var entity = db.
+        //        from f in feedInterface.ema
+
+        //    if (entity != null)
+        //    {
+        //        return Ok(entity.ToList());
+
+        //    }
+        //    else
+        //    {
+
+        //        return BadRequest(" FeedbackTypes  not found");
+
+        //    }
+        //}
+
     }
 }
