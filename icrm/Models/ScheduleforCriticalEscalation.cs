@@ -57,7 +57,7 @@ namespace icrm.Models
 
                     var level2query = from f in db.Feedbacks.ToList()
                                 where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED &&
-                                f.priorityId == 1 && f.escalationlevel.Equals("level1") && (DateTime.Now - (DateTime)f.assignedDate).TotalHours > 8 &&
+                                f.priorityId == 1 && f.escalationlevel == "level1" && (DateTime.Now - (DateTime)f.assignedDate).TotalHours > 8 &&
                                 (DateTime.Now - (DateTime)f.assignedDate).TotalHours < 12
                                 select f;
 
@@ -73,7 +73,7 @@ namespace icrm.Models
 
                     var level3query = from f in db.Feedbacks.ToList()
                                       where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED &&
-                                      f.priorityId == 1 && f.escalationlevel.Equals("level2") && (DateTime.Now - (DateTime)f.assignedDate).TotalHours > 12
+                                      f.priorityId == 1 && f.escalationlevel == "level2" && (DateTime.Now - (DateTime)f.assignedDate).TotalHours > 12
                                       select f;
 
                     foreach (Feedback f in level3query)
