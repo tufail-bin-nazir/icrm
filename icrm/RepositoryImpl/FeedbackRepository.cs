@@ -364,6 +364,7 @@ namespace icrm.RepositoryImpl
 
         public List<ApplicationUser> getEmails()
         {
+
             return db.Users.OrderBy(m => m.Id).Where(m=>m.forwarDeptEmailCCStatus==true).ToList();
         }
     }
