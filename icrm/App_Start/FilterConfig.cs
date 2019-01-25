@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using icrm.Models;
+using System.Web;
 using System.Web.Mvc;
 
 namespace icrm
@@ -8,6 +9,7 @@ namespace icrm
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new CultureAttribute());
         }
     }
 }
