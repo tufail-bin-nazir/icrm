@@ -34,10 +34,7 @@ namespace icrm.Models
                 {
                     if (_shuttingDown)
                         return;
-
-                   
-                   
-                   
+ 
                     var level1query = from f in db.Feedbacks.ToList()
                                 where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED && 
                                 f.priorityId == 1 && f.escalationlevel is null && (DateTime.Now- (DateTime)f.assignedDate).TotalHours > Constants.criticalescelationtime &&
