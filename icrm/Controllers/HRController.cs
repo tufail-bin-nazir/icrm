@@ -24,6 +24,7 @@ using System.Web.UI;
 using Constants = icrm.Models.Constants;
 using Comments = icrm.Models.Comments;
 using System.Net.Mail;
+using System.Net.Mime;
 
 namespace icrm.Controllers
 {
@@ -1017,14 +1018,43 @@ namespace icrm.Controllers
             return Json(subCategories);
         }
 
-        public ActionResult send() {
+        public async System.Threading.Tasks.Task sendEmailAsync() {
+           string b=  PopulateBody();
+            
+            
             EmailSend e = new EmailSend();
-            ViewBag.check = "djhsdjhsjhdjhdhd";
-            Debug.WriteLine("kuch b nahin hai ye jahaaaaa");
+            var message = new MailMessage();
+            message.To.Add(new MailAddress("iram.8859@gmail.com")); //replace with valid value
+            message.Subject = "Your email subject";
+            message.Body = string.Format(b, "tufail.b.n@gmail.com", "tufail.b.n@gmail.com", "suit");
 
-            var task=e.sendEmailAsync();
-            return RedirectToAction("openview");
+            message.IsBodyHtml = true;
+
+            using (var smtp = new SmtpClient())
+            {
+                await smtp.SendMailAsync(message);
+
+            }
+
         }
-        
+
+
+        private string PopulateBody()
+        {
+            string path = Server.MapPath(Url.Content("~/Content/img/logo.png"));
+          //  LinkedResource logo = new LinkedResource(path);
+          //  logo.ContentId = "logoImage";
+
+            string body = string.Empty;
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/HR/email.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+            body = body.Replace("{UserName}", "Iram");
+            body = body.Replace("{UER}", path);
+
+            return body;
+        }
+
     }
 }

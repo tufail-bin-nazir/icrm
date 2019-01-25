@@ -10,7 +10,7 @@ namespace icrm.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        
         public string name { get; set; }
     }
 }

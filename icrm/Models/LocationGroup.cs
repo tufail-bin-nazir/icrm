@@ -5,10 +5,9 @@ using System.Web;
 
 namespace icrm.Models
 {
-	public class CostCenter
-	{
+    public class LocationGroup
+    {
         public int Id { get; set; }
-        public string CostCenterCode { get; set; }
-        public String name { get; set; }
+        public string name { get; set; }
     }
 }
