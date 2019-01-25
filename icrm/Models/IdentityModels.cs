@@ -181,7 +181,7 @@ namespace icrm.Models
         public DbSet<Models.Message> Message { get; set; }
         public DbSet<Models.ChatRequest> ChatRequest { get; set; }
         public DbSet<Models.BroadcastMessage> BroadcastMessage { get; set; }
-        public DbSet<Models.Comments> comments { get; set; }
+      
 
         public static ApplicationDbContext Create()
         {
