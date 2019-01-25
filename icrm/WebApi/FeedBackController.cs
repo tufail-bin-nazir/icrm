@@ -77,7 +77,6 @@ namespace icrm.WebApi
 
             }
 
-            feedBack.checkStatus = Models.Constants.OPEN;
             feedInterface.Save(feedBack);
             eventService.notifyFeedback(feedBack);
             return Ok(feedBack.id);
