@@ -833,9 +833,61 @@ namespace icrm.Controllers
         public ViewResult charts()
         {
 
+            string chartsAll = (db.Feedbacks.Count()).ToString();
+            string chartsOpen = (db.Feedbacks.Where(f => f.status == "Open").Count()).ToString();
+            string chartsClosed = (db.Feedbacks.Where(f => f.status == "Closed").Count()).ToString();
+            string chartsResolved = (db.Feedbacks.Where(f => f.status == "Resolved").Count()).ToString();
+            ViewBag.All = chartsAll;
+            ViewBag.Open = chartsOpen;
+            ViewBag.Closed = chartsClosed;
+            ViewBag.Resolved = chartsResolved;
+
             return View("DataCharts");
         }
 
+        [HttpGet]
+        [Route("hr/chartssearch/")]
+        public ActionResult chartssearch(string date22, string date1)
+        {
+
+            string d3 = date22;
+            string dd = date1;
+            if (d3.Equals("") || dd.Equals(""))
+            {
+                TempData["DateMsg"] = "Select StartDate And EndDate";
+                return RedirectToAction("DataCharts");
+            }
+            else
+            {
+                DateTime dt = DateTime.ParseExact(dd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                DateTime dt2 = DateTime.ParseExact(d3, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                IEnumerable<Feedback> feedbacksopen = feedInterface.searchHR(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), "Open");
+                IEnumerable<Feedback> feedbacksclosed = feedInterface.searchHR(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), "Closed");
+                IEnumerable<Feedback> feedbacksresolved = feedInterface.searchHR(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), "Resolved");
+
+                ViewBag.Open = feedbacksopen.Count();
+                ViewBag.Closed = feedbacksclosed.Count();
+                ViewBag.Resolved = feedbacksresolved.Count();
+                ViewBag.All = feedbacksopen.Count() + feedbacksclosed.Count() + feedbacksresolved.Count();
+
+
+                return View("DataCharts");
+
+            }
+
+
+        }
+
+
+
+/*
+
+        public ViewResult charts()
+        {
+
+            return View("DataCharts");
+        }
+*/
 
         /**************REJECT ACTION************************/
 
