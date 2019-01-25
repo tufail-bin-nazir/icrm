@@ -232,7 +232,7 @@
                                     <option value="">Choose Sub Category</option>
 
                                 </select>
-                              
+
                             </div>
                         </div>
 
@@ -242,6 +242,17 @@
                                 @Html.DropDownListFor(m => m.priorityId,
                        new SelectList(ViewBag.Priorities,
                      "Id", "priorityId"), "Choose Priority", new { @class = "form-control select2",id="priorty" })
+                            </div>
+                        </div>
+
+
+                        <!-- col-4 -->
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
+                                @Html.DropDownList("emailsss",
+                      new SelectList(ViewBag.Emails,
+                    "", ""), new { @class = "form-control select2", Multiple = "multiple",name="emailsss" })
                             </div>
                         </div>
                         <!-- col-4 -->
@@ -325,7 +336,7 @@
         <script src="~/Content/js/slim.js"></script>
         <script>
             $("#typeofFeedback").prop('required', true);
-
+            
             
 
             $('#empID').change(function () {
@@ -365,7 +376,7 @@
 
 
             $('#forward').click(function () {
-
+                $("#emailsss").prop('required', true);
                 if ($('#statusfield').val() == "Resolved") {
                     $('#statuscheck').text("Set status Open/Closed");
                     return false;

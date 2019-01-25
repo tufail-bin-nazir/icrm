@@ -168,7 +168,7 @@ namespace icrm.Controllers
                                 
                                 feedInterface.Save(feedback);
                                 TempData["MessageSuccess"] = "Feedback Saved";
-                            eventService.sendEmails(Request.Form["emailsss"], PopulateBody());
+                            eventService.sendEmails(Request.Form["emailsss"], PopulateBody(feedback));
                         }
                             else
                             {
@@ -338,7 +338,7 @@ namespace icrm.Controllers
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
                             TempData["MessageSuccess"] = "Feedback Forwarded";
-                        eventService.sendEmails(Request.Form["emailsss"], PopulateBody());
+                        eventService.sendEmails(Request.Form["emailsss"], PopulateBody(feedback));
                         //}
                         // else
                         // {
@@ -1076,8 +1076,19 @@ namespace icrm.Controllers
         }
 
 
-        private string PopulateBody()
+        private string PopulateBody(Feedback feedback)
         {
+            ApplicationUser user = db.Users.Find(feedback.userId);
+
+            string imgPath = Server.MapPath("~/Content/img/logo.png");
+            // Convert image to byte array  
+            byte[] byteData = System.IO.File.ReadAllBytes(imgPath);
+            //Convert byte arry to base64string   
+            string imreBase64Data = Convert.ToBase64String(byteData);
+            string imgDataURL = string.Format("data:image/png;base64,{0}", imreBase64Data);
+            //Passing image data in viewbag to view  
+            ViewBag.ImageData = imgDataURL;
+
             string path = Server.MapPath(Url.Content("~/Content/img/logo.png"));
             LinkedResource logo = new LinkedResource(path);
             logo.ContentId = "logoImage";
@@ -1088,7 +1099,16 @@ namespace icrm.Controllers
                 body = reader.ReadToEnd();
             }
             body = body.Replace("{UserName}", "Iram");
-            body = body.Replace("{UER}", path);
+            body = body.Replace("{UER}", imgDataURL);
+            body = body.Replace("{Title}", feedback.title);
+            body = body.Replace("{TicketId}", feedback.id);
+            body = body.Replace("{Location}",user.Location.name);
+            body = body.Replace("{SubLocation}", user.SubLocation.name);
+            body = body.Replace("{EmplyeeId}", user.EmployeeId.ToString());
+            body = body.Replace("{Description}", feedback.description);
+            body = body.Replace("{email}", user.Email);
+            body = body.Replace("{issueClass}", feedback.escalationlevel);
+            body = body.Replace("{Attachment}", feedback.attachment);
 
             return body;
         }

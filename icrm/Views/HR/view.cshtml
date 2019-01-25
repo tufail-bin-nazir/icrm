@@ -488,6 +488,7 @@
             });
 
             $('#forward2').click(function () {
+                $("#emailsss").prop('required', true);
                 $("#priorty").prop('required', true);
                 $("#category").prop('required', true);
                 if ($('#statusfield').val() == "Resolved") {
@@ -497,6 +498,7 @@
 
             });
             $('#forward').click(function () {
+                $("#emailsss").prop('required', true);
                 if ($("#typeofFeedback").val() != "Enquiries") {
                     $("#priorty").prop('required', false);
                 } else {
