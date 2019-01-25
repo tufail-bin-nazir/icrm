@@ -1,14 +1,19 @@
 $(function () {
 	'use strict';
 
+    var open = $("#opencount").val();
+    var closed = $("#closedcount").val();
+    var resolved = $("#resolvedcount").val();
+    var all = $("#allcount").val();
+
 	var ctx1 = document.getElementById('chartBar1').getContext('2d');
 	var myChart1 = new Chart(ctx1, {
 		type: 'bar',
 		data: {
-			labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+			labels: ['Open', 'Closed', 'Resolved'],
 			datasets: [{
-				label: '# of Votes',
-				data: [12, 39, 20, 10, 25, 18],
+				label: '# of Ticket',
+                data: [open, closed, resolved],
 				backgroundColor: '#27AAC8'
       }]
 		},
@@ -41,16 +46,14 @@ $(function () {
 	var myChart2 = new Chart(ctx2, {
 		type: 'bar',
 		data: {
-			labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+			labels: ['Open', 'Closed', 'Resolved'],
 			datasets: [{
-				label: '# of Votes',
-				data: [12, 39, 20, 10, 25, 18],
+                label: '# of Tickets',
+                data: [open, closed, resolved],
 				backgroundColor: [
           '#29B0D0',
           '#2A516E',
-          '#F07124',
-          '#CBE0E3',
-          '#979193'
+          '#F07124'
         ]
       }]
 		},
