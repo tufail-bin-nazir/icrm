@@ -44,7 +44,7 @@ namespace icrm.Models
                     foreach (Feedback f in level1query) {
                         
                         f.escalationlevel = "level1";
-                        sendEmailAsync(f, "kmiraste@gmail.com");
+                        sendEmailAsync(f, Constants.criticallevel1useremail);
                         db.Feedbacks.Add(f);
                         db.Entry(f).State = System.Data.Entity.EntityState.Modified;
                     }
@@ -59,7 +59,7 @@ namespace icrm.Models
                     foreach (Feedback f in level2query)
                     {
                         f.escalationlevel = "level2";
-                        sendEmailAsync(f, "mymdamin@gmail.com");
+                        sendEmailAsync(f, Constants.criticallevel2useremail);
                         db.Feedbacks.Add(f);
                         db.Entry(f).State = System.Data.Entity.EntityState.Modified;
                     }
@@ -74,7 +74,7 @@ namespace icrm.Models
                     foreach (Feedback f in level3query)
                     {
                         f.escalationlevel = "level3";
-                        sendEmailAsync(f, "amin@stie.com.sg");
+                        sendEmailAsync(f, Constants.criticallevel3useremail);
                         db.Feedbacks.Add(f);
                         db.Entry(f).State = System.Data.Entity.EntityState.Modified;
                     }
@@ -154,7 +154,7 @@ namespace icrm.Models
             var message = new MailMessage();
             message.To.Add(new MailAddress(emailto)); //replace with valid value
             message.Subject = "Notification";
-            message.Body = string.Format(body, "icrm", "tufail.b.n@gmail.com", "");
+            message.Body = string.Format(body, "icrm", "info@stie.com.sg", "");
             message.IsBodyHtml = true;
             using (var smtp = new SmtpClient())
             {

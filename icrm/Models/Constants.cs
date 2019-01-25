@@ -19,5 +19,8 @@ namespace icrm.Models
         public static string REJECTED = "Rejected";
         public static string CLOSED = "Closed";
         public static int criticalescelationtime = 1;
+        public static string criticallevel1useremail = "";
+        public static string criticallevel2useremail = "";
+        public static string criticallevel3useremail = "";
     }
 }
