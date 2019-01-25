@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using FluentScheduler;
 
 namespace icrm
 {
@@ -15,6 +16,7 @@ namespace icrm
         
         protected void Application_Start()
         {
+            JobManager.Initialize(new MyRegistry());
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

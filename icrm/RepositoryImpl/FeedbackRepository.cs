@@ -362,7 +362,10 @@ namespace icrm.RepositoryImpl
             return db.SubCategories.Where(m => m.CategoryId == categoryId).ToList();
         }
 
+        public List<ApplicationUser> getEmails()
+        {
 
-
+            return db.Users.OrderBy(m => m.Id).Where(m=>m.forwarDeptEmailCCStatus==true).ToList();
+        }
     }
 }

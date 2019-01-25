@@ -48,7 +48,7 @@ namespace icrm.Models
 
     public class LoginViewModel
     {
-      
+        [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -72,13 +72,13 @@ namespace icrm.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-      
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
 
-        //[Required(ErrorMessage = "You must provide a phone number")]
+        [Required(ErrorMessage = "You must provide a phone number")]
         [Display(Name = "Home Phone")]
         [DataType(DataType.PhoneNumber)]
         [RegularExpression(@"^(\d{10}|\d{12})$", ErrorMessage = "Not a valid phone number")]
