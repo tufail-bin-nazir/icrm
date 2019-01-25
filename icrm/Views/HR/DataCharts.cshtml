@@ -26,6 +26,22 @@
 
     <!-- Slim CSS -->
     <link rel="stylesheet" href="~/Content/css/slim.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <style type="text/css">
+        #flotTip {
+            padding: 3px 5px;
+            background-color: #dfbaba;
+            z-index: 100;
+            color: #000;
+            opacity: .80;
+            filter: alpha(opacity=85);
+        }
+    </style>
+
+
+
+
 
 </head>
 
@@ -40,14 +56,70 @@
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Charts</li>
                 </ol>
-                <h6 class="slim-pagetitle">Flot Charts</h6>
+                <h6 class="slim-pagetitle">Pictorial Charts</h6>
             </div>
             <!-- slim-pageheader -->
+
+            <div class="form-layout">
+                <span class="text-danger">
+                    @TempData["DateMsg"]
+
+
+                </span>
+
+                @using (Html.BeginForm("chartssearch", "HR", FormMethod.Get, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+                    <div class="row mg-b-25">
+
+
+
+                        <div class="col-lg-4">
+                            <label class="form-control-label">From: <span class="tx-danger">*</span></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                                    </div>
+                                </div>
+                                <input type="text" class="form-control date hasDatepicker" value="@ViewBag.startDate" name="date1" placeholder="MM-DD-YYYY" id="dp1545306018953">
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <label class="form-control-label">To : <span class="tx-danger">*</span></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                                    </div>
+                                </div>
+                                <input type="text" class="form-control date hasDatepicker" value="@ViewBag.endDate" name="date22" placeholder="MM-DD-YYYY" id="dp1545306018953">
+                            </div>
+                        </div>
+                        <!-- col-4 -->
+                    </div>
+
+                    <!-- row -->
+                    <div class="form-layout-footer">
+                        <button class="btn btn-primary bd-0" name="charts" value="search">Submit </button>
+
+
+                    </div>
+                }
+                <!-- form-layout-footer -->
+            </div>
+
+
+
 
 
             <div class="section-wrapper mg-t-20">
                 <label class="section-title">Pie Chart</label>
-                <p class="mg-b-20 mg-sm-b-40">Labels can be hidden if the slice is less than a given percentage of the pie.</p>
+                <p class="mg-b-20 mg-sm-b-40">
+
+                    Total Tickets:@ViewBag.All
+
+                    @*Labels can be hidden if the slice is less than a given percentage of the pie.*@
+                </p>
 
                 <div class="row">
                     <div class="col-xl-6">
@@ -98,6 +170,11 @@
         </div>
         <!-- container -->
     </div>
+    <input type="hidden" id="allcount" value="@ViewBag.All" />
+    <input type="hidden" id="opencount" value="@ViewBag.Open" />
+    <input type="hidden" id="closedcount" value="@ViewBag.Closed" />
+    <input type="hidden" id="resolvedcount" value="@ViewBag.Resolved" />
+
     <!-- slim-footer -->
 
     <script src="~/Content/lib/jquery/js/jquery.js"></script>
@@ -109,11 +186,29 @@
     <script src="~/Content/lib/Flot/js/jquery.flot.resize.js"></script>
     <script src="~/Content/lib/flot-spline/js/jquery.flot.spline.js"></script>
     <script src="~/Content/lib/chart.js/js/Chart.js"></script>
+    <script src="~/Content/lib/Flot/js/jquery.flot.tooltip.min.js"></script>
 
 
     <script src="~/Content/js/slim.js"></script>
     <script src="~/Content/js/chart.chartjs.js"></script>
     <script src="~/Content/js/chart.flot.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        $(function () {
+
+           // alert("date choose");
+            // Datepicker
+
+            $(".date").flatpickr({
+                dateFormat: "d-m-Y"
+            });
+
+
+        });
+
+    </script>
+
 </body>
 
 </html>

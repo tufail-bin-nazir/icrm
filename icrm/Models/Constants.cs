@@ -18,5 +18,6 @@ namespace icrm.Models
         public static string RESPONDED = "Responded";
         public static string REJECTED = "Rejected";
         public static string CLOSED = "Closed";
+        public static int criticalescelationtime = 1;
     }
 }

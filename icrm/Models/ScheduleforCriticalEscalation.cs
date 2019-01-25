@@ -34,17 +34,12 @@ namespace icrm.Models
                 {
                     if (_shuttingDown)
                         return;
-
-                   
-                   
-                    //string text = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/Views/EmailTemplate.cshtml"));
-
-                    //Debug.WriteLine(text + "0--00--0-0-0-0-00--0-00-0-00-0");
+ 
                     var level1query = from f in db.Feedbacks.ToList()
                                 where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED && 
-                                f.priorityId == 1 && f.escalationlevel is null && (DateTime.Now- (DateTime)f.assignedDate).TotalHours > 4 &&
-                                (DateTime.Now - (DateTime)f.assignedDate).TotalHours < 8 
-                                select f;
+                                f.priorityId == 1 && f.escalationlevel is null && (DateTime.Now- (DateTime)f.assignedDate).TotalHours > Constants.criticalescelationtime &&
+                                (DateTime.Now - (DateTime)f.assignedDate).TotalHours < (Constants.criticalescelationtime)*2
+                                      select f;
 
                     foreach (Feedback f in level1query) {
                         
@@ -57,9 +52,9 @@ namespace icrm.Models
 
                     var level2query = from f in db.Feedbacks.ToList()
                                 where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED &&
-                                f.priorityId == 1 && f.escalationlevel == "level1" && (DateTime.Now - (DateTime)f.assignedDate).TotalHours > 8 &&
-                                (DateTime.Now - (DateTime)f.assignedDate).TotalHours < 12
-                                select f;
+                                f.priorityId == 1 && f.escalationlevel == "level1" && (DateTime.Now - (DateTime)f.assignedDate).TotalHours > (Constants.criticalescelationtime)*2 &&
+                                (DateTime.Now - (DateTime)f.assignedDate).TotalHours < (Constants.criticalescelationtime) * 3
+                                      select f;
 
                     foreach (Feedback f in level2query)
                     {
@@ -73,7 +68,7 @@ namespace icrm.Models
 
                     var level3query = from f in db.Feedbacks.ToList()
                                       where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED &&
-                                      f.priorityId == 1 && f.escalationlevel == "level2" && (DateTime.Now - (DateTime)f.assignedDate).TotalHours > 12
+                                      f.priorityId == 1 && f.escalationlevel == "level2" && (DateTime.Now - (DateTime)f.assignedDate).TotalHours > (Constants.criticalescelationtime) * 3
                                       select f;
 
                     foreach (Feedback f in level3query)
