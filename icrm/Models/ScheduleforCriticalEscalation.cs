@@ -35,7 +35,7 @@ namespace icrm.Models
                     if (_shuttingDown)
                         return;
 
-                    Debug.WriteLine(DateTime.Now + "---------" + db.Feedbacks.First().assignedDate);
+                   
                    
                     //string text = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/Views/EmailTemplate.cshtml"));
 
