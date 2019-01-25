@@ -296,9 +296,9 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
-                                    @Html.DropDownList("emails",
+                                    @Html.DropDownList("emailsss",
                           new SelectList(ViewBag.Emails,
-                        "Id", "email"), new { @class = "form-control select2", Multiple = "multiple" })
+                        "", ""), new { @class = "form-control select2", Multiple = "multiple",name="emailsss" })
                                 </div>
                             </div>
                             <!-- col-4 -->
@@ -309,7 +309,7 @@
                     </div>
 
 
-
+                    @ViewBag.eeee    mm
                     <label class="section-title">Attachment</label>
 
                   
