@@ -38,7 +38,7 @@ namespace icrm.WebApi
                 return _userManager ?? HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
             private set
-            {                                                                                                                                                                                       
+            {
                 _userManager = value;
             }
         }
@@ -57,7 +57,7 @@ namespace icrm.WebApi
         {
 
             var Query = from f in feedInterface.OpenWithoutDepart()
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
 
             if (Query != null)
             {
@@ -67,7 +67,7 @@ namespace icrm.WebApi
             }
             else
             {
-                
+
                 return BadRequest("hr list not found");
 
             }
@@ -86,7 +86,7 @@ namespace icrm.WebApi
             var Query = from f in feedInterface.getAllOpen()
 
                         where f.id == id
-                        select new { f.id, f.title, f.attachment, f.description, f.user.EmployeeId, f.user.Email, f.user.FirstName,f.type.name};
+                        select new { f.id, f.title, f.attachment, f.description, f.user.EmployeeId, f.user.Email, f.user.FirstName, f.type.name };
 
             if (Query != null)
             {
@@ -186,11 +186,12 @@ namespace icrm.WebApi
         /// </summary>
 
         [HttpGet]
-        [Route("api/HR/catagorey")]
-        public IHttpActionResult catagorey()
+        [Route("api/HR/catagorey/{deptId}")]
+        public IHttpActionResult catagorey(int deptId)
         {
 
-            var entity = db.Categories.ToList();
+            var entity = from f in feedInterface.getCategories(deptId)
+                         select f;
 
             if (entity != null)
             {
@@ -305,7 +306,7 @@ namespace icrm.WebApi
             var Query = from f in feedInterface.getAllOpen()
 
                         where f.id == id
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,f.user.FirstName,f.user.Email,f.category,f.priority,f.type.name};
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, f.user.FirstName, f.user.Email, f.category, f.priority, f.type.name };
 
             if (Query != null)
             {
@@ -367,7 +368,7 @@ namespace icrm.WebApi
             {
 
                 return Ok(Query.ToList());
-                
+
             }
             else
             {
@@ -390,7 +391,7 @@ namespace icrm.WebApi
             var Query = from f in feedInterface.getAllOpen()
 
                         where f.id == id
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, f.user.FirstName, f.user.Email,f.response ,f.category, f.priority, };
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, f.user.FirstName, f.user.Email, f.response, f.category, f.priority, };
 
             if (Query != null)
             {
@@ -410,7 +411,7 @@ namespace icrm.WebApi
         //14/ <summary>
         //////////////////////////*************** update Ticket which is responded***************////////////////////////
         /// </summary>
-       
+
 
         [HttpPost]
         [Route("api/HR/updateTicketResponded/{id}")]
@@ -465,18 +466,18 @@ namespace icrm.WebApi
         //16/ <summary>
         /// ///////////////////*********************** userTicketView************//////////////////////////////////
         /// </summary>
-       
+
         [HttpGet]
         [Route("api/HR/userTicketView/{id}")]
         public IHttpActionResult userTicketView(string id)
         {
             var f = db.Feedbacks.Find(id);
-                   
+
 
             if (f != null)
             {
                 //var obj =new {f.createDate, f.title, f.description, f.response, f.satisfaction, f.status }.ToString();
-                return Ok(new { f.createDate, f.title, f.description, f.response, f.satisfaction, f.status,f.type.name});
+                return Ok(new { f.createDate, f.title, f.description, f.response, f.satisfaction, f.status, f.type.name });
 
             }
             else
@@ -708,10 +709,10 @@ namespace icrm.WebApi
         {
 
             var entity = db.SubLocations.ToList();
-             
+
             if (entity != null)
             {
-               
+
                 return Ok(entity.ToList());
 
             }
@@ -784,17 +785,17 @@ namespace icrm.WebApi
         {
             var Name1 = User.Identity.Name;
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
-        
+
             if (user != null)
             {
 
-                
+
 
 
                 return Ok(new { user.Result.FirstName, user.Result.LastName, user.Result.Email, user.Result.EmployeeId, user.Result.PhoneNumber,
-                                 user.Result.JobTitle,user.Result.Location,user.Result.Department,user.Result.Religion,user.Result.Nationality,
-                                 user.Result.PayScaleType,user.Result.Position,user.Result.SubLocation,});
-                          
+                    user.Result.JobTitle, user.Result.Location, user.Result.Department, user.Result.Religion, user.Result.Nationality,
+                    user.Result.PayScaleType, user.Result.Position, user.Result.SubLocation, });
+
             }
             else
             {
@@ -820,14 +821,14 @@ namespace icrm.WebApi
 
             Debug.WriteLine("location id: " + model.LocationId);
             if (user == null)
-               {
+            {
 
-                   return BadRequest(" not found");
+                return BadRequest(" not found");
 
-                }
+            }
 
-                else
-                {
+            else
+            {
                 user.Result.LocationId = model.LocationId;
                 user.Result.JobTitleId = model.JobTitleId;
                 user.Result.DepartmentId = model.DepartmentId;
@@ -840,7 +841,7 @@ namespace icrm.WebApi
                 UserManager.Update(user.Result);
                 return Ok();
 
-              }
+            }
         }
 
         //30/ <summary>
@@ -854,7 +855,7 @@ namespace icrm.WebApi
 
             var Query = from f in feedInterface.getAllAssigned()
 
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
 
             if (Query != null)
             {
@@ -894,8 +895,194 @@ namespace icrm.WebApi
 
             }
         }
+        
+        //32/ <summary>
+        /// ////////////////////////////**************** image Save *******************////////////////////////////
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        [HttpPost]
+        [Route("api/HR/imageSave")]
+        public IHttpActionResult imageSave([FromBody]SaveFile file)
+        {
 
-     
+            Feedback feedBack = db.Feedbacks.Find(file.id);
+            if (!file.ImageSave.IsNullOrWhiteSpace())
+            { 
+                string ext = GetFileExtension(file.ImageSave);
+                feedBack.attachment = feedBack.id + "." + ext;
+                string path = Models.Constants.PATH + feedBack.attachment;
+                File.WriteAllBytes(path, getfile(file.ImageSave));
+                db.Entry(feedBack).State = EntityState.Modified;
+                db.SaveChanges();
+                return Ok();
+
+            }
+            else
+            {
+
+                return BadRequest("file not found");
+
+            }
+
+        }
+
+        private Byte[] getfile(string stringimage)
+        {
+
+            byte[] file = Convert.FromBase64String(stringimage);
+            return file;
+
+
+        }
+        private string GetFileExtension(string base64String)
+        {
+            var data = base64String.Substring(0, 5);
+
+            switch (data.ToUpper())
+            {
+                case "IVBOR":
+                    return "png";
+                case "/9J/4":
+                    return "jpg";
+                case "AAAAF":
+                    return "mp4";
+                case "JVBER":
+                    return "pdf";
+                case "AAABA":
+                    return "ico";
+                case "UMFYI":
+                    return "rar";
+                case "E1XYD":
+                    return "rtf";
+                case "U1PKC":
+                    return "txt";
+                case "MQOWM":
+                case "77U/M":
+                    return "srt";
+                default:
+                    return string.Empty;
+            }
+        }
+
+        //34/ <summary>
+        /// /////////////////////////////////////*************Rejected By Id *****************/////////////////
+        /// </summary>
+        [HttpPost]
+        [Route("api/HR/Rejected/{id}")]
+        public IHttpActionResult Rejected(string Id, Feedback feedback)
+        {
+            Feedback f = db.Feedbacks.Find(Id);
+
+            if (f == null)
+            {
+
+                return BadRequest("Id not found");
+
+            }
+
+            else
+            {
+                var Name1 = User.Identity.Name;
+                Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
+                f.checkStatus = Models.Constants.REJECTED;
+                db.Entry(f).State = EntityState.Modified;
+                db.SaveChanges();
+                /////////************** New code******************////////////////////
+                Comments c = new Comments();
+                c.date = DateTime.Now;
+                c.feedbackId = Id;
+                c.commentedById = user.Result.Id;
+                c.text = feedback.checkStatus;
+                db.comments.Add(c);
+                db.SaveChanges();
+                return Ok();
+
+            }
+        }
+
+
+        //33/ <summary>
+        /// ******************************************** Subcatagorey list    ***************************////
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/HR/Subcategories/{categoryId}")]
+        public IHttpActionResult Subcategories(int categoryId)
+        {
+
+            var entity = from f in feedInterface.getSubCategories(categoryId)
+                         select f;
+            if (entity != null)
+            {
+                return Ok(entity.ToList());
+
+            }
+            else
+            {
+
+                return BadRequest(" Subcatagorey list not found");
+
+            }
+        }
+
+
+        //34/ <summary>
+        /// ******************************************** updateTicket by id ***************************////
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/HR/updateTicket/{id}")]
+        public IHttpActionResult updateTicket(string Id, FeedBackViewModel feedBackmodel)
+        {
+            Feedback f = db.Feedbacks.Find(Id);
+
+            if (f == null)
+            {
+
+                return BadRequest(" id not found");
+
+            }
+
+            else
+            {
+                f.checkStatus = Models.Constants.OPEN;
+                f.typeId = feedBackmodel.Typeid;
+                f.title = feedBackmodel.Title;
+                f.description = feedBackmodel.Description;
+                db.Entry(f).State = EntityState.Modified;
+                db.SaveChanges();
+                return Ok();
+
+            }
+        }
+
+
+
+        //35/ <summary>
+        /// ////////////////////////////**************** Email list *******************////////////////////////////
+        /// </summary>
+        // <returns></returns> 
+        [HttpGet]
+        [Route("api/hr/Emaillist")]
+        public IHttpActionResult Emaillist()
+        {
+
+            var entity = from f in feedInterface.getEmails()
+                         select f;
+
+            if (entity != null)
+            {
+                return Ok(entity.ToList());
+
+            }
+            else
+            {
+
+                return BadRequest(" Email list  not found");
+
+            }
+        }
 
 
     }
