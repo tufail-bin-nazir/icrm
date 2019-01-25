@@ -120,7 +120,7 @@ namespace icrm.Controllers
                     file.SaveAs(Path.Combine(icrm.Models.Constants.PATH, filename));
                 }
                     feedInterface.Save(feedback);
-                TempData["Path"] = filename;
+                
                 TempData["Message"] = "Feedback Saved";
                 return RedirectToAction("add");
             }
@@ -160,13 +160,10 @@ namespace icrm.Controllers
         [Route("searchfeedback")]
         public ActionResult search(int? page)
         {
-            //string d1 = Convert.ToDateTime(Request["date1"], CultureInfo.CurrentCulture).ToString("yyyy-MM-dd HH:mm:ss.fff");
-            // string d2 = Convert.ToDateTime(Request["date2"], CultureInfo.CurrentCulture).ToString("yyyy-MM-dd HH:mm:ss.fff");
+            
             DateTime d1 = Convert.ToDateTime(Request["date1"]);
                 DateTime d2 = Convert.ToDateTime(Request["date2"]);
             ViewBag.showDate =d2 ;
-          //  DateTime d1= Convert.ToDateTime("2018-12-24 00:00:00.000");
-           // DateTime d2 = Convert.ToDateTime("2018-12-24 00:00:00.000");
             Debug.WriteLine(d1 + "00000" + d2 + "saaaaaaaaath");
             int pageSize = 10;
             int pageIndex = 1;
@@ -174,7 +171,6 @@ namespace icrm.Controllers
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
 
-          // IPagedList<Feedback> feedbacks=feedInterface.search(d1,d2, pageIndex, pageSize);
             return View("dashboard");
 
         }

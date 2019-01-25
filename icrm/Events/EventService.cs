@@ -10,12 +10,14 @@ namespace icrm.Events
         private Notification notification;
         private FeedbackNotifyEvent feedbackNotifyEvent;
         private FeedbackNotification feedbackNotification;
+        private EmailSend emailSend;
         public EventService()
         {
             broadcastEvent = new BroadcastMessageEvent();
             notification = new Notification();
             feedbackNotification = new FeedbackNotification();
             feedbackNotifyEvent = new FeedbackNotifyEvent();
+            emailSend = new EmailSend();
         }
 
         public Task sendmessage(BroadcastMessage broadcastMessage)
@@ -37,6 +39,18 @@ namespace icrm.Events
             {
                 feedbackNotifyEvent.FeedbackNotified += feedbackNotification.OnFeedbackNotified;
                 feedbackNotifyEvent.notify(feedback);
+
+            });
+            return null;
+        }
+
+        public Task sendEmails(string emails,string body)
+        {
+
+            HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
+            {
+                System.Diagnostics.Debug.WriteLine("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
+                emailSend.sendEmailAsync(emails,body);
 
             });
             return null;

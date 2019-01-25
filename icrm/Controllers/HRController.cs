@@ -25,6 +25,7 @@ using Constants = icrm.Models.Constants;
 using Comments = icrm.Models.Comments;
 using System.Net.Mail;
 using System.Net.Mime;
+using icrm.Events;
 
 namespace icrm.Controllers
 {
@@ -36,11 +37,13 @@ namespace icrm.Controllers
         private ApplicationUserManager _userManager;
         private ApplicationDbContext db = new ApplicationDbContext();
         private IFeedback feedInterface;
+        private EventService eventService;
        
 
         public HRController() {
             ViewBag.Status = Models.Constants.statusList;
             feedInterface = new FeedbackRepository();
+            eventService = new EventService();
            
         }
         public ApplicationUserManager UserManager
@@ -165,8 +168,8 @@ namespace icrm.Controllers
                                 
                                 feedInterface.Save(feedback);
                                 TempData["MessageSuccess"] = "Feedback Saved";
-                               
-                            }
+                            eventService.sendEmails(Request.Form["emailsss"], PopulateBody());
+                        }
                             else
                             {
                                 ViewData["user"] = user;
@@ -314,7 +317,7 @@ namespace icrm.Controllers
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-                   
+            
             feedback.user = db.Users.Find(feedback.userId);
             switch (submitButton)
             {
@@ -335,13 +338,14 @@ namespace icrm.Controllers
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
                             TempData["MessageSuccess"] = "Feedback Forwarded";
+                        eventService.sendEmails(Request.Form["emailsss"], PopulateBody());
                         //}
-                       // else
-                       // {
-                       //     ViewData["user"] = user;
-                       //     TempData["Message"] = "Fill feedback Properly";
-                       //     return RedirectToAction("view", new { id = feedback.id });
-                       // }
+                        // else
+                        // {
+                        //     ViewData["user"] = user;
+                        //     TempData["Message"] = "Fill feedback Properly";
+                        //     return RedirectToAction("view", new { id = feedback.id });
+                        // }
                     }
                     else
                     {
@@ -811,6 +815,7 @@ namespace icrm.Controllers
         /*****Get Attribute List***************/
         public void getAttributeList()
         {
+            
             var departments = db.Departments.OrderByDescending(m => m.name).ToList();
             var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
             ViewBag.Departmn = departments;         
@@ -916,15 +921,15 @@ namespace icrm.Controllers
                             
                             }
                             db.Entry(feedback).State = EntityState.Modified;
-                            db.SaveChanges();
+                           db.SaveChanges();
                             TempData["MessageSuccess"] = "Feedback Forwarded";
-                       // }
-                       // else
-                       //  {
-                       //     ViewData["user"] = user;
-                       //     TempData["Message"] = "Fill feedback Properly";
+                        // }
+                        // else
+                        //  {
+                        //     ViewData["user"] = user;
+                        //     TempData["Message"] = "Fill feedback Properly";
                         //    return RedirectToAction("rejectedview", new { id = feedback.id });
-                       // }
+                        // }
                     }
                     else
                     {
@@ -1070,32 +1075,12 @@ namespace icrm.Controllers
             return Json(subCategories);
         }
 
-        public async System.Threading.Tasks.Task sendEmailAsync() {
-           string b=  PopulateBody();
-            
-            
-            EmailSend e = new EmailSend();
-            var message = new MailMessage();
-            message.To.Add(new MailAddress("iram.8859@gmail.com")); //replace with valid value
-            message.Subject = "Your email subject";
-            message.Body = string.Format(b, "tufail.b.n@gmail.com", "tufail.b.n@gmail.com", "suit");
-
-            message.IsBodyHtml = true;
-
-            using (var smtp = new SmtpClient())
-            {
-                await smtp.SendMailAsync(message);
-
-            }
-
-        }
-
 
         private string PopulateBody()
         {
             string path = Server.MapPath(Url.Content("~/Content/img/logo.png"));
-          //  LinkedResource logo = new LinkedResource(path);
-          //  logo.ContentId = "logoImage";
+            LinkedResource logo = new LinkedResource(path);
+            logo.ContentId = "logoImage";
 
             string body = string.Empty;
             using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/HR/email.html")))
@@ -1107,6 +1092,5 @@ namespace icrm.Controllers
 
             return body;
         }
-
     }
 }
