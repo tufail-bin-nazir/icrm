@@ -655,6 +655,26 @@ namespace icrm.Controllers
             return View("Dashboard", feedbackList);
         }
 
+
+        /*****************ENQUIRIES TICKETS LIST********************/
+
+        public ActionResult tickets(int? page, int typeId)
+        {
+            TicketCounts();
+            ViewBag.linkName = "tickettype";
+            ViewBag.type = typeId;
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            IPagedList<Feedback> feedbackList = feedInterface.getListBasedOnType(pageIndex, pageSize, typeId);
+            return View("Dashboard", feedbackList);
+        }
+
+       
+
+
         /*****************VIEW OPEN  TICKET********************/
 
         public ActionResult openview(string  id)
@@ -815,9 +835,9 @@ namespace icrm.Controllers
         /*****Get Attribute List***************/
         public void getAttributeList()
         {
-            
-            var departments = db.Departments.OrderByDescending(m => m.name).ToList();
-            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
+
+            var departments = db.Departments.Where(m => m.type == "Forward").ToList();
+                var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
             ViewBag.Departmn = departments;         
             ViewBag.Priorities = priorities;
 
@@ -1059,8 +1079,6 @@ namespace icrm.Controllers
             List<Category> categories = feedInterface.getCategories(depId);
                
 
-            
-
             return Json(categories);
         }
 
@@ -1080,7 +1098,7 @@ namespace icrm.Controllers
         {
             ApplicationUser user = db.Users.Find(feedback.userId);
 
-            string imgPath = Server.MapPath("~/Content/img/logo.png");
+           string imgPath = Server.MapPath("~/Content/img/logo.png");
             // Convert image to byte array  
             byte[] byteData = System.IO.File.ReadAllBytes(imgPath);
             //Convert byte arry to base64string   
@@ -1089,27 +1107,32 @@ namespace icrm.Controllers
             //Passing image data in viewbag to view  
             ViewBag.ImageData = imgDataURL;
 
-            string path = Server.MapPath(Url.Content("~/Content/img/logo.png"));
+          /*  string path = Server.MapPath(Url.Content("~/Content/img/logo.png"));
             LinkedResource logo = new LinkedResource(path);
-            logo.ContentId = "logoImage";
+            logo.ContentId = "logoImage";*/
 
             string body = string.Empty;
             using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/HR/email.html")))
             {
                 body = reader.ReadToEnd();
             }
-            body = body.Replace("{UserName}", "Iram");
+
             body = body.Replace("{UER}", imgDataURL);
             body = body.Replace("{Title}", feedback.title);
             body = body.Replace("{TicketId}", feedback.id);
-            body = body.Replace("{Location}",user.Location.name);
-            body = body.Replace("{SubLocation}", user.SubLocation.name);
-            body = body.Replace("{EmplyeeId}", user.EmployeeId.ToString());
-            body = body.Replace("{Description}", feedback.description);
+            body = body.Replace("{Location}", user.Location.name);
+            body = body.Replace("{EmployeeId}", user.EmployeeId.ToString());
+            body = body.Replace("{Description}",feedback.description);
             body = body.Replace("{email}", user.Email);
-            body = body.Replace("{issueClass}", feedback.escalationlevel);
-            body = body.Replace("{Attachment}", feedback.attachment);
-
+            body = body.Replace("{issueClass}", "ISSUE CLASSIFICATION");
+            body = body.Replace("{SubLocation}", user.SubLocation.name);
+            if (feedback.attachment == null) {
+                body = body.Replace("{Attachment}", "NO");
+            }
+            else {
+                body = body.Replace("{Attachment}", "YES");
+            }           
+            body = body.Replace("{IssueEscalate}", "ISSUE ESCALATE"); 
             return body;
         }
     }

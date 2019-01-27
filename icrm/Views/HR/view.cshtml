@@ -480,7 +480,7 @@
             
             $('#rejected').click(function () {
                 
-                if ($('#statusfield').val() == "Resolved" || res) {
+                if ($('#statusfield').val() == "Resolved") {
                     $('#statuscheck').text("Set status either Open/Closed");
                     return false;
                 }
@@ -489,7 +489,11 @@
 
             $('#forward2').click(function () {
                 $("#emailsss").prop('required', true);
-                $("#priorty").prop('required', true);
+                if ($("#typeofFeedback").val() != "Enquiries") {
+                    $("#priorty").prop('required', false);
+                } else {
+                    $("#priorty").prop('required', true);
+                }
                 $("#category").prop('required', true);
                 if ($('#statusfield').val() == "Resolved") {
                     $('#statuscheck').text("Set status either Open/Closed");

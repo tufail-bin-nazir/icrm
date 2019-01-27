@@ -19,5 +19,7 @@ namespace icrm.Models
 
         public IEnumerable<ApplicationUser> Users { get; set; }
 
+        public string type { get; set; }
+
     }
 }

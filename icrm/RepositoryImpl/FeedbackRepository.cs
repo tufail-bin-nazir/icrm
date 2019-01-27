@@ -372,5 +372,12 @@ namespace icrm.RepositoryImpl
             }
             return emailList;
         }
+
+        public IPagedList<Feedback> getListBasedOnType(int pageIndex, int pageSize,int typeId)
+        {
+            return db.Feedbacks.OrderBy(m=>m.id).Where(m => m.typeId == typeId).ToPagedList(pageIndex,pageSize);
+        }
+
+        
     }
 }

@@ -197,26 +197,52 @@
 
                             @if (Model.categoryId == null)
                             {
-                                <!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
-                                        @Html.DropDownListFor(m => m.categoryId,
-                            new SelectList(ViewBag.Categories,
-                          "Id", "name"), "Choose Category", new { @class = "form-control select2", id = "category" })
+                                        <select id="category" class="form-control select2" name="categoryId">
+                                            <option value="">Choose Category</option>
+
+                                        </select>
+
                                     </div>
                                 </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Sub Category: <span class="tx-danger">*</span></label>
+                                        <select id="subcategory" class="form-control select2" name="subcategoryId">
+                                            <option value="">Choose Sub Category</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+
                             }
                             else
                             {
                                 <!-- col-4 -->
+                                <!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
-                                        @Html.DropDownListFor(m => m.categoryId,
-                            new SelectList(ViewBag.Categories,
-                          "Id", "name"), "Choose Category", new { disabled="disabled", @class = "form-control select2", id = "category" })
+                                        @Html.TextBoxFor(m => m.category.name,
+                               new { @readonly = "readonly" , @class = "form-control" })
                                         @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label"> Sub Category: <span class="tx-danger">*</span></label>
+                                        @Html.TextBoxFor(m => m.SubCategory.name,
+                               new { @readonly = "readonly" , @class = "form-control" })
+                                        @Html.HiddenFor(model => model.subcategoryId, new { @class = "form-control" })
+
                                     </div>
                                 </div>
                             }
@@ -246,7 +272,20 @@
                                 </div>
                             }
                             <!-- col-4 -->
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
+                                    @Html.DropDownList("emailsss",
+                          new SelectList(ViewBag.Emails,
+                        "", ""), new { @class = "form-control select2", Multiple = "multiple",name="emailsss" })
+                                </div>
+                            </div>
                         </div>
+
+
+
+                       
 
                         <!-- row -->
                         <!-- form-layout-footer -->
@@ -398,7 +437,12 @@
             $('#statusfield').attr("disabled", true);
         }
         $('#forward2').click(function () {
-            $("#priorty").prop('required', true);
+            $("#emailsss").prop('required', true);
+            if ($("#typeofFeedback").val() != "Enquiries") {
+                $("#priorty").prop('required', false);
+            } else {
+                $("#priorty").prop('required', true);
+            }
             $("#category").prop('required', true);
             if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Rejected") {
                 $('#statuscheck').text("Set status either Open/Closed");
@@ -408,7 +452,12 @@
         });
 
         $('#forward').click(function () {
-            $("#priorty").prop('required', true);
+            $("#emailsss").prop('required', true);
+            if ($("#typeofFeedback").val() != "Enquiries") {
+                $("#priorty").prop('required', false);
+            } else {
+                $("#priorty").prop('required', true);
+            }
             $("#category").prop('required', true);
             if ($('#statusfield').val() == "Resolved" || $('#statusfield').val()=="Rejected" ) {
                 $('#statuscheck').text("Set status either Open/Closed");
@@ -513,6 +562,61 @@
 
         });
 
+
+
+         $("#dep").change(function () {
+                 $("#category option").remove();
+
+                 $('#category').append('<option value=" ">' + "Choose Category" + '</option>');
+
+                 $("#subcategory option").remove();
+
+                 $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("getCategories", "HR")",
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"depId":"' + $(this).val() + '"}',
+                    dataType: "json",
+                    success: function (r) {
+                        
+                        for (var i = 0; i < r.length; i++) {
+                            $('#category').append('<option value="' + r[i].Id + '">' + r[i].name + '</option>'); 
+                            
+                        }
+                    },
+                    error: function (r) {
+                        alert("error" + r.responseText);
+                    }
+                });
+
+            });
+
+
+
+             $("#category").change(function () {
+                 $("#subcategory option").remove();
+
+                 $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("getSubCategories", "HR")",
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"categoryId":"' + $(this).val() + '"}',
+                    dataType: "json",
+                    success: function (r) {
+                        
+                        for (var i = 0; i < r.length; i++) {
+                            $('#subcategory').append('<option value="' + r[i].Id + '">' + r[i].name + '</option>'); 
+                            
+                        }
+                    },
+                    error: function (r) {
+                        alert("error" + r.responseText);
+                    }
+                });
+
+            });
     </script>
 </body>
 </html>

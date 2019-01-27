@@ -45,6 +45,12 @@
                     <li class="breadcrumb-item active" aria-current="page">Create Tickets</li>
                 </ol>
                 <h6 class="slim-pagetitle">CREATE TICKET</h6>
+                <span class="tx-danger">
+                    @TempData["Message"]
+                </span>
+                <span class="tx-success">
+                    @TempData["MessageSuccess"]
+                </span>
             </div>
             <!-- slim-pageheader -->
             @Html.ValidationSummary()
@@ -169,10 +175,21 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.categoryId,
-                           new SelectList(ViewBag.Categories,
-                         "Id", "name"), "Choose Category", new { @readonly = "readonly", disabled="disabled", @class = "form-control select2" })
+                                    @Html.TextBoxFor(m => m.category.name,
+                           new { @readonly = "readonly" , @class = "form-control" })
                                     @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label"> Sub Category: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(m => m.SubCategory.name,
+                           new { @readonly = "readonly" , @class = "form-control" })
+                                    @Html.HiddenFor(model => model.subcategoryId, new { @class = "form-control" })
 
                                 </div>
                             </div>
