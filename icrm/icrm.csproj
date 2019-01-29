@@ -279,9 +279,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901240949191_thirdmigration.cs" />
-    <Compile Include="Migrations\201901240949191_thirdmigration.Designer.cs">
-      <DependentUpon>201901240949191_thirdmigration.cs</DependentUpon>
+    <Compile Include="Migrations\201901290935404_new.cs" />
+    <Compile Include="Migrations\201901290935404_new.Designer.cs">
+      <DependentUpon>201901290935404_new.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -298,6 +298,7 @@
     <Compile Include="Models\CultureAttribute.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\DepartmentsViewModel.cs" />
+    <Compile Include="Models\EmailSend.cs" />
     <Compile Include="Models\EmployeeClass.cs" />
     <Compile Include="Models\EmployerType.cs" />
     <Compile Include="Models\Ethnicity.cs" />
@@ -306,6 +307,7 @@
     <Compile Include="Models\FeedbackDTO.cs" />
     <Compile Include="Models\FeedBackType.cs" />
     <Compile Include="Models\FeedBackViewModel.cs" />
+    <Compile Include="Models\Forwardmodel.cs" />
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JobTitle.cs" />
@@ -325,6 +327,7 @@
     <Compile Include="Models\PrioritiesViewModel.cs" />
     <Compile Include="Models\Priority.cs" />
     <Compile Include="Models\RabbitMQBll.cs" />
+    <Compile Include="Models\RecieveEmails.cs" />
     <Compile Include="Models\Religion.cs" />
     <Compile Include="Models\ReligionViewModel.cs" />
     <Compile Include="Models\Save File.cs" />
@@ -734,9 +737,11 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201901240949191_thirdmigration.resx">
-      <DependentUpon>201901240949191_thirdmigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901290935404_new.resx">
+      <DependentUpon>201901290935404_new.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.ar-SA.resx" />
+    <EmbeddedResource Include="Resources\Resource.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
