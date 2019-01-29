@@ -57,13 +57,14 @@ namespace icrm.Events
         {
 
             HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
-                {
-                    Debug.Print("--------in push messages call-----");
-                    messasgeEvent.MessageNotified += messageHub.OnMessageNotified;
-                    messasgeEvent.notify(message);
+            {
+                Debug.Print("--------in push messages call-----");
+                messasgeEvent.MessageNotified += messageHub.OnMessageNotified;
+                messasgeEvent.notify(message);
 
-                });
+            });
             return null;
+        }
 
         public Task sendEmails(string emails,string body)
         {
@@ -113,5 +114,5 @@ namespace icrm.Events
             return null;
         }
     }
-    }
+
 }
