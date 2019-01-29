@@ -77,7 +77,7 @@
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Name: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Name <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(model => model.user.FirstName, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
                             </div>
@@ -91,13 +91,13 @@
                             <!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Email_Id <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(model => model.user.Email, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Phone No: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Phone_No <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(model => model.user.PhoneNumber, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
                             </div>
@@ -150,14 +150,14 @@
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Title: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Title <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(model => model.title, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
                             </div>
                             <!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group mg-b-10-force">
-                                    <label class="form-control-label">Description: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Description <span class="tx-danger">*</span></label>
                                     @Html.TextAreaFor(model => model.description, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
                             </div>
@@ -196,7 +196,7 @@ new SelectList(ViewBag.Departmn,
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Priority: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Priority <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.priorityId,
 new SelectList(ViewBag.Priorities,
 "Id", "priorityId"), "Choose Priority", new { @readonly = "readonly", @class = "form-control select2" })
@@ -223,7 +223,7 @@ new SelectList(ViewBag.Priorities,
                             {
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label class="form-control-label">Download</label>
+                                        <label class="form-control-label">@Resources.Resource.Download_Attachment</label>
                                         @Html.HiddenFor(m => m.attachment)
                                         <a href="@Url.Action("DownloadFile", "HR", new { filename = Model.attachment })" target="_blank" style="height:200px;width:200px;"><i class="fa fa-download"></i></a>
 
@@ -290,7 +290,7 @@ new SelectList(ViewBag.Priorities,
                             {
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label class="form-control-label">Response:</label>
+                                        <label class="form-control-label">@Resources.Resource.Comments</label>
 
 
 

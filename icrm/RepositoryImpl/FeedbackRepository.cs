@@ -220,6 +220,10 @@ namespace icrm.RepositoryImpl
 
         public IPagedList<Feedback> searchHR(string d1, string d2, string status, int pageIndex, int pageSize)
         {
+
+            System.Diagnostics.Debug.WriteLine(d1+"jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
+
+            System.Diagnostics.Debug.WriteLine(d2 + "jjjjjjjjhhhhjjjjjjjjjjjjjjjjjjjjjjjjjjj");
             var param1 = new SqlParameter();
             param1.ParameterName = "@D1";
 

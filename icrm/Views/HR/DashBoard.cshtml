@@ -52,7 +52,7 @@
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
                 </ol>
-                <h6 class="slim-pagetitle">Welcome back,  ICRM Agent</h6>
+                <h6 class="slim-pagetitle">@Resources.Resource.Welcome_back,  ICRM Agent</h6>
             </div>
             <!-- slim-pageheader -->
             <div class="row row-xs">
@@ -77,7 +77,7 @@
                             <i class="icon fa fa-envelope-open tx-teal"></i>
                             <div class="media-body">
                                 <h1>@ViewBag.OpenTickets</h1>
-                                <p>Daily Complaint Open</p>
+                                <p>@Resources.Resource.Open_Complaints</p>
                             </div>
                             <!-- media-body -->
                         </div>
@@ -92,7 +92,7 @@
                             <i class="icon fa fa-envelope tx-pink"></i>
                             <div class="media-body">
                                 <h1>@ViewBag.ClosedTickets</h1>
-                                <p>Daily Complaint Closed</p>
+                                <p>@Resources.Resource.Closed_Complaints</p>
                             </div>
                             <!-- media-body -->
                         </div>
@@ -107,7 +107,7 @@
                             <i class="icon fa fa-question-circle tx-yellow"></i>
                             <div class="media-body">
                                 <h1>@ViewBag.ResolvedTickets</h1>
-                                <p>Daily Inquiry Resolved</p>
+                                <p>@Resources.Resource.Resolved_Complaints</p>
                             </div>
                             <!-- media-body -->
                         </div>
@@ -140,7 +140,7 @@
 
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label class="form-control-label">Status: <span class="tx-danger">*</span></label>
+                                        <label class="form-control-label">@Resources.Resource.Status: <span class="tx-danger">*</span></label>
                                         @Html.DropDownList("status", new SelectList(ViewBag.Status), new { @class = "form-control select2", name = "Status" })
 
                                     </div>
@@ -173,8 +173,8 @@
 
                             <!-- row -->
                             <div class="form-layout-footer">
-                                <button class="btn btn-primary bd-0" name="export" value="search">Submit </button>
-                                <button class="btn btn-secondary bd-0">Cancel</button>
+                                <button class="btn btn-primary bd-0" name="export" value="search">@Resources.Resource.Submit </button>
+                                <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
                                 <button class="btn btn-secondary bd-0" name="export" value="excel">Export to Excel</button>
                             </div>
                         }
@@ -197,14 +197,14 @@
                                     <tr class="tx-10">
                                         <th class="wd-10p pd-y-5">S.NO</th>
                                         <th class="pd-y-5">TICKET ID</th>
-                                        <th class="pd-y-5">TYPE</th>
+                                        <th class="pd-y-5">@Resources.Resource.Type</th>
                                         <th class="pd-y-5">ACTION</th>
-                                        <th class="pd-y-5">TITLE</th>
-                                        <th class="pd-y-5">STATUS</th>
-                                        <th class="pd-y-5">DESC.</th>
-                                        <th class="pd-y-5">NAME</th>
-                                        <th class="pd-y-5">EMAIL ID</th>
-                                        <th class="pd-y-5">PHONE NO</th>
+                                        <th class="pd-y-5">@Resources.Resource.Title</th>
+                                        <th class="pd-y-5">@Resources.Resource.Status</th>
+                                        <th class="pd-y-5">@Resources.Resource.Description</th>
+                                        <th class="pd-y-5">@Resources.Resource.Name</th>
+                                        <th class="pd-y-5">@Resources.Resource.Email_Id</th>
+                                        <th class="pd-y-5">@Resources.Resource.Phone_No</th>
 
 
 
@@ -250,6 +250,10 @@
                                                 @if (ViewBag.linkName == "rejectedticket")
                                                 {
                                                     <a href="@Url.Action("rejectedview", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                                }
+                                                @if (ViewBag.linkName == "tickettype")
+                                                {
+                                                    <a href="@Url.Action("viewticket", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
                                                 }
                                             </td>
                                             <td>

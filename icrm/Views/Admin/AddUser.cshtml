@@ -73,32 +73,32 @@
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Employee ID: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Employee_Id<span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(x => x.EmployeeId, new { @class = "form-control", placeholder = "Enter EmployeeID" })
 
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">First Name: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.FirstName <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", placeholder = " Enter Firstname" })
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Last Name: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.LastName<span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(x => x.LastName, new { @class = "form-control", placeholder = "Enter Lastname" })
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Email_Id <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = " Enter Email" })
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Contact No: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Phone_No<span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control", placeholder = "Contact Number" })
                                 </div>
                             </div><!-- col-4 -->
@@ -119,7 +119,7 @@
                             <div class="col-sm">
                                 @Html.DropDownListFor(m => m.DepartmentId,
                                     new SelectList(ViewBag.DepartmentList,
-                                       "Id", "name"),"Choose Department", new { @class = "form-control select2", @id="location"})
+                                       "Id", "name"),Resources.Resource.Select_Department, new { @class = "form-control select2", @id="location"})
                             </div>
                             }
 
@@ -127,8 +127,8 @@
                         </div><!-- row -->
 
                         <div class="form-layout-footer">
-                            <button class="btn btn-primary bd-0">Submit Form</button>
-                            <button class="btn btn-secondary bd-0">Cancel</button>
+                            <button class="btn btn-primary bd-0">@Resources.Resource.Submit</button>
+                            <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
                         </div><!-- form-layout-footer -->
                     </div>
                 }

@@ -62,12 +62,12 @@
                                 <div class="form-group">
                                     @Html.DropDownListFor(m => m.LocationId,
                                         new SelectList(ViewBag.Locationlist,
-                                           "Id", "name"),"Choose Location", new { @class = "form-control select2", @id="location"})
+                                           "Id", "name"),Resources.Resource.Select_Location, new { @class = "form-control select2", @id="location"})
                                 </div>
                             </div>
                                 <div class="col-sm">
                                     <select name="SubLocationId" id="sublocation" class="form-control select2">
-                                        <option value="">Select SubLocation</option>
+                                        <option value="">@Resources.Resource.Select_Sub_Location</option>
                                     </select>
                                 </div>
 
@@ -76,14 +76,14 @@
                                     <div class="form-group">
                                         @Html.DropDownListFor(m => m.PositionId,
                                             new SelectList(ViewBag.Positionlist,
-                                               "Id", "name"),"Choose Position", new { @class = "form-control select2"})
+                                               "Id", "name"),@Resources.Resource.Select_Position, new { @class = "form-control select2"})
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         @Html.DropDownListFor(m => m.NationalityId,
                                             new SelectList(ViewBag.Nationalitylist,
-                                               "Id", "name"),"Choose Nationality", new { @class = "form-control select2"})
+                                               "Id", "name"),Resources.Resource.Select_Nationality, new { @class = "form-control select2"})
                                     </div>
                             </div>
 
@@ -102,7 +102,7 @@
                                     <div class="form-group">
                                         @Html.DropDownListFor(m => m.DepartmentId,
                                             new SelectList(ViewBag.Departmentlist,
-                                               "Id", "name"),"Choose Department", new { @class = "form-control select2"})
+                                               "Id", "name"),Resources.Resource.Select_Department, new { @class = "form-control select2"})
                                     </div>
                             </div>
 
@@ -133,8 +133,8 @@
                                 </div><!-- row -->
 
                         <div class="form-layout-footer">
-                            <button class="btn btn-primary bd-0">Submit Form</button>
-                            <button class="btn btn-secondary bd-0">Cancel</button>
+                            <button class="btn btn-primary bd-0">@Resources.Resource.Submit</button>
+                            <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
                         </div><!-- form-layout-footer -->
                     </div>
                 }

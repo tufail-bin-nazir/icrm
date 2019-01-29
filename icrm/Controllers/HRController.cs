@@ -745,6 +745,30 @@ namespace icrm.Controllers
         }
 
 
+
+        /*****************VIEW   TICKET********************/
+
+        public ActionResult viewticket(string id)
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            ViewData["commentList"] = db.comments.Where(m => m.feedbackId == id).ToList();
+
+            if (id == null)
+            {
+                ViewBag.ErrorMsg = "FeedBack not found";
+                return RedirectToAction("list");
+            }
+            else
+            {
+                getAttributeList();
+                Feedback f = feedInterface.Find(id);
+                return View("assignedview",f);
+            }
+        }
+
+
+
         /*****************VIEW RESPONDED  TICKET********************/
 
         public ActionResult respondedview(string id)
