@@ -55,9 +55,10 @@ namespace icrm.WebApi
         [Route("api/HR/HrTicketslist")]
         public IHttpActionResult HrTicketslist()
         {
+            
 
-            var Query = from f in feedInterface.OpenWithoutDepart()
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
+            var Query = from f in feedInterface.getAllOpen()
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
 
             if (Query != null)
             {
@@ -82,11 +83,13 @@ namespace icrm.WebApi
         //Get /api/ HR / id
         public IHttpActionResult HrTicket(string id)
         {
+            var quer = from n in feedInterface.getCOmments(id)
+                       select n;
 
             var Query = from f in feedInterface.getAllOpen()
 
                         where f.id == id
-                        select new { f.id, f.title, f.attachment, f.description, f.user.EmployeeId, f.user.Email, f.user.FirstName, f.type.name };
+                        select new { f.id,f.checkStatus, f.title, f.attachment, f.description, f.user.EmployeeId, f.user.Email, f.user.FirstName, f.type.name,quer };
 
             if (Query != null)
             {
@@ -144,7 +147,7 @@ namespace icrm.WebApi
 
             else
             {
-
+                f.checkStatus = Models.Constants.RESOLVED;
                 f.status = feedback.status;
                 f.response = feedback.response;
                 db.Entry(f).State = EntityState.Modified;
@@ -251,7 +254,7 @@ namespace icrm.WebApi
 
             else
             {
-               
+                f.checkStatus = Models.Constants.ASSIGNED;
                 f.subcategoryId = forward.subcategoryId;
                 f.categoryId = forward.categoryId;
                 f.priorityId = forward.priorityId;
@@ -275,10 +278,11 @@ namespace icrm.WebApi
 
             var Name1 = User.Identity.Name;
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
-              var query = from f in feedInterface.getAllOpen()
+              var query = from f in feedInterface.GetAllAssigned()
 
-                          where f.departmentID == user.Result.DepartmentId & f.response == ""
-                          select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
+                          where f.departmentID == user.Result.DepartmentId
+                          select new { f.id, f.title, f.description, f.createDate, f.status,f.type.name, f.user.EmployeeId,f.user.FirstName};
+                                   
 
               if (query != null)
               {
@@ -297,23 +301,25 @@ namespace icrm.WebApi
 
         //10/ <summary>
         /// /////////////////////////////////////*************DepartmentbyId*****************/////////////////
-                                                                                              /// </summary>
+        /// </summary>
         [HttpGet]
         [Route("api/HR/DepartmentbyId/{id}")]
         public IHttpActionResult DepartmentbyId(string id)
         {
 
-            var Query = from f in feedInterface.getAllOpen()
+            var quer = from n in feedInterface.getCOmments(id)
+                       select n;
 
-                        where f.id == id
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, f.user.FirstName, f.user.Email, f.category, f.priority, f.type.name };
 
-            if (Query != null)
+            var f = db.Feedbacks.Find(id);
+
+            if (f != null)
             {
-
-                return Ok(Query.FirstOrDefault());
+               
+                return Ok(new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, f.user.FirstName, f.user.Email, f.category, f.priority, f.type.name, quer });
 
             }
+
             else
             {
 
@@ -342,11 +348,23 @@ namespace icrm.WebApi
 
             else
             {
-                f.response = feedback.response;
+
+
+                var Name1 = User.Identity.Name;
+                Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
+                f.checkStatus = Models.Constants.RESPONDED;
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
-
+                /////////////////////////////////////////////////////////////
+                Comments c = new Comments();
+                c.date = DateTime.Now;
+                c.feedbackId = Id;
+                c.commentedById = user.Result.Id;
+                c.text = feedback.response;
+                db.comments.Add(c);
+                db.SaveChanges();
                 return Ok();
+
 
             }
         }
@@ -359,9 +377,11 @@ namespace icrm.WebApi
         [Route("api/HR/respondedTicketList")]
         public IHttpActionResult respondedTicketList()
         {
+            var Name1 = User.Identity.Name;
+            Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
 
-            var Query = from f in feedInterface.getAllResponded()
-
+            var Query = from f in feedInterface.GetAllResponded()
+                        where f.departmentID == user.Result.DepartmentId
                         select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
 
             if (Query != null)
@@ -471,13 +491,16 @@ namespace icrm.WebApi
         [Route("api/HR/userTicketView/{id}")]
         public IHttpActionResult userTicketView(string id)
         {
+            var quer = from n in feedInterface.getCOmments(id)
+                       select n;
+                       
+
             var f = db.Feedbacks.Find(id);
-
-
+            
             if (f != null)
             {
                 //var obj =new {f.createDate, f.title, f.description, f.response, f.satisfaction, f.status }.ToString();
-                return Ok(new { f.createDate, f.title, f.description, f.response, f.satisfaction, f.status, f.type.name });
+                return Ok(new { f.createDate,f.checkStatus, f.title, f.description, f.response, f.satisfaction, f.status, f.type ,quer});
 
             }
             else
@@ -525,11 +548,12 @@ namespace icrm.WebApi
         {
 
             var Query = from f in feedInterface.getAllResolved()
+                        
                         select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, f.user.FirstName, f.user.Email, f.category, f.priority, };
 
             if (Query != null)
             {
-
+               
                 return Ok(Query.ToList());
 
             }
@@ -561,10 +585,37 @@ namespace icrm.WebApi
 
             else
             {
+                var Name1 = User.Identity.Name;
+                Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
+
                 f.status = feedback.status;
+                if (f.status == "Closed")
+                {
+                    f.checkStatus = Models.Constants.CLOSED;
+
+                }
+                else
+                {
+                    f.checkStatus = Models.Constants.RESOLVED;
+
+                }
+               
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
-
+                ////////////////////////////////////////////////////////// 
+               
+               
+                if (feedback.response != null)   
+                {
+                    Comments c = new Comments();
+                    c.date = DateTime.Now;
+                    c.feedbackId = Id;
+                    c.commentedById = user.Result.Id;
+                    c.text = feedback.response;
+                    db.comments.Add(c);
+                    db.SaveChanges();
+                }
+               
                 return Ok();
 
             }
@@ -789,9 +840,6 @@ namespace icrm.WebApi
             if (user != null)
             {
 
-
-
-
                 return Ok(new { user.Result.FirstName, user.Result.LastName, user.Result.Email, user.Result.EmployeeId, user.Result.PhoneNumber,
                     user.Result.JobTitle, user.Result.Location, user.Result.Department, user.Result.Religion, user.Result.Nationality,
                     user.Result.PayScaleType, user.Result.Position, user.Result.SubLocation, });
@@ -837,7 +885,6 @@ namespace icrm.WebApi
                 user.Result.NationalityId = model.NationalityId;
                 user.Result.PayScaleTypeId = model.PayScaleTypeId;
                 user.Result.PositionId = model.PositionId;
-
                 UserManager.Update(user.Result);
                 return Ok();
 
@@ -853,9 +900,11 @@ namespace icrm.WebApi
         public IHttpActionResult assignedTicketList()
         {
 
-            var Query = from f in feedInterface.getAllAssigned()
 
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
+            var Query = from f in feedInterface.GetAllAssigned()
+                       
+                       
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
 
             if (Query != null)
             {
@@ -988,6 +1037,7 @@ namespace icrm.WebApi
                 f.checkStatus = Models.Constants.REJECTED;
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
+
                 /////////************** New code******************////////////////////
                 Comments c = new Comments();
                 c.date = DateTime.Now;
@@ -1092,16 +1142,65 @@ namespace icrm.WebApi
         [Route("api/Hr/recieveEmails/{id}")]
         public IHttpActionResult recieveEmails(string id, RecieveEmails emails )
         {
-
-            foreach (var item in emails.EmailList)
-            {
-
-              
-
-            }
+            Debug.WriteLine(emails);
+           
 
             return Ok();
         }
+
+        //37/ <summary>
+        /// ////////////////////////////****************Get HR Responded TicketList*******************////////////////////////////
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/HR/respondedticket")]
+        public IHttpActionResult respondedticket()
+        {
+          
+            var Query = from f in feedInterface.GetAllResponded()
+                       
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
+
+            if (Query != null)
+            {
+
+                return Ok(Query.ToList());
+
+            }
+            else
+            {
+
+                return BadRequest("RespondedTicketList not found");
+
+            }
+
+        }
+
+        //38/ <summary>
+        /// ////////////////////////////****************Get All Suggestions*******************////////////////////////////
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/HR/GetSuggestionslist")]
+        public IHttpActionResult GetSuggestionslist()
+        {
+
+            var entity = from f in feedInterface.GetAllResponded()
+                         select f;
+
+            if (entity != null)
+            {
+                return Ok(entity.ToList());
+
+            }
+            else
+            {
+
+                return BadRequest(" Suggestion list  not found");
+
+            }
+        }
+
+
 
     }
 }

@@ -16,6 +16,7 @@ namespace icrm.RepositoryInterface
         IPagedList<Feedback> Pagination(int pageIndex, int pageSize,string userId);
         IPagedList<Feedback> getAllAssigned(int pageIndex, int pageSize);
         IEnumerable<Feedback> getAllAssigned();
+        IEnumerable<Feedback> GetAllAssigned();
         IPagedList<Feedback> search(string d1,string d2,string status,int id,int pageIndex, int pageSize);
         IEnumerable<Feedback> getAll();
         IPagedList<Feedback> getAllOpenWithDepartment(string id, int pageIndex, int pageSize);
@@ -29,6 +30,7 @@ namespace icrm.RepositoryInterface
         IEnumerable<Feedback> getAllClosed();
         IEnumerable<Feedback> getAllResolved();
         IEnumerable<Feedback> getAllResponded();
+        IEnumerable<Feedback> GetAllResponded();
         IEnumerable<Feedback> OpenWithoutDepart();
         IEnumerable<Feedback> searchlist(DateTime d1, DateTime d2);
         IEnumerable<Feedback> searchHR(string d1, string d2, string status);
