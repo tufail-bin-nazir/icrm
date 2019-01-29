@@ -400,6 +400,12 @@ namespace icrm.RepositoryImpl
             return db.Feedbacks.OrderBy(m=>m.id).Where(m => m.typeId == typeId).ToPagedList(pageIndex,pageSize);
         }
 
-        
+
+        public IEnumerable<Feedback> GetListBasedOnType(string type)
+        {
+            return db.Feedbacks.OrderBy(m => m.id).Where(m => m.type.name == type).ToList();
+        }
+
+
     }
 }

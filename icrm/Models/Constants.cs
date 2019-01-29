@@ -18,6 +18,8 @@ namespace icrm.Models
         public static string RESPONDED = "Responded";
         public static string REJECTED = "Rejected";
         public static string CLOSED = "Closed";
+        public static string Enquirey = "Enquirey";
+        public static string Suggestion = "Suggestion";
         public static int criticalescelationtime = 1;
         public static string criticallevel1useremail = "";
         public static string criticallevel2useremail = "";

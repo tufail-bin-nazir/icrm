@@ -1177,14 +1177,15 @@ namespace icrm.WebApi
         }
 
         //38/ <summary>
-        /// ////////////////////////////****************Get All Suggestions*******************////////////////////////////
+        /// ////////////////////////////**************** Get All Suggestions*******************////////////////////////////
         /// </summary>
         /// <returns></returns>
-        [Route("api/HR/GetSuggestionslist")]
-        public IHttpActionResult GetSuggestionslist()
+        [Route("api/HR/getsuggestionlist")]
+        public IHttpActionResult getsuggestionlist()
         {
+            string type = Models.Constants.Suggestion;
 
-            var entity = from f in feedInterface.GetAllResponded()
+            var entity = from f in feedInterface.GetListBasedOnType(type)
                          select f;
 
             if (entity != null)
@@ -1200,7 +1201,30 @@ namespace icrm.WebApi
             }
         }
 
+        //38/ <summary>
+        /// ////////////////////////////****************Get All Enquirey list*******************////////////////////////////
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/HR/getenquireslist")]
+        public IHttpActionResult getenquireslist()
+        {
+            string type = Models.Constants.Enquirey;
 
+            var entity = from f in feedInterface.GetListBasedOnType(type)
+                         select f;
+
+            if (entity != null)
+            {
+                return Ok(entity.ToList());
+
+            }
+            else
+            {
+
+                return BadRequest(" Enquirey list  not found");
+
+            }
+        }
 
     }
 }
