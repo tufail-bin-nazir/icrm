@@ -23,6 +23,8 @@
       @Scripts.Render("~/resources/js")-->
     <!-- Slim CSS -->
     <link rel="stylesheet" href="~/Content/css/slim.css">
+    <link href="~/Content/lib/jquery-toggles/css/toggles-full.css" rel="stylesheet">
+
 </head>
 <body>
     @Html.Partial("_HRMenu")
@@ -35,34 +37,36 @@
                     <a href="default.htm" class="messages-compose"><i class="icon ion-compose"></i></a>
                 </div><!-- slim-pageheader -->
                 <div class="messages-list clk">
-                   @if(ViewBag.Messages != null){ 
-                    foreach (var item in ViewBag.Messages)
+                    @if (ViewBag.Messages != null)
                     {
-                        if(item != null){ 
-                        <a href="#" class="media" id="chatlist@(item.Chat.Id)">
-                            <div class="media-left">
-                                <img src="~/Content/img/img2.jpg" alt="">
-                                <span class="square-10 bg-success"></span>
-                            </div><!-- media-left -->
-                            <div class="media-body">
-                                <div>
-                                    <h6>@item.Chat.UserOne.FirstName @item.Chat.UserOne.LastName</h6>
-                                    <p id="latestmsg@(item.Chat.Id)">@item.Text</p>
-                                    <input type="hidden" class="chatId" value="@(item.Chat.Id)" />
-                                </div>
-                                <div id="msgCount@(item.Chat.Id)">
-                                    <span>
-                                        @if (item.RecieveTime != null)
-                                        {
-                                            @item.RecieveTime.ToString("MM/dd/yyyy hh:mm tt");
-                                        }
-                                    </span>
-                                </div>
-                            </div><!-- media-body -->
-                        </a>
-                           }
-                       }
-                   }
+                        foreach (var item in ViewBag.Messages)
+                        {
+                            if (item != null)
+                            {
+                                <a href="#" class="media" id="chatlist@(item.Chat.Id)">
+                                    <div class="media-left">
+                                        <img src="~/Content/img/img2.jpg" alt="">
+                                        <span class="square-10 bg-success"></span>
+                                    </div><!-- media-left -->
+                                    <div class="media-body">
+                                        <div>
+                                            <h6>@item.Chat.UserOne.FirstName @item.Chat.UserOne.LastName</h6>
+                                            <p id="latestmsg@(item.Chat.Id)">@item.Text</p>
+                                            <input type="hidden" class="chatId" value="@(item.Chat.Id)" />
+                                        </div>
+                                        <div id="msgCount@(item.Chat.Id)">
+                                            <span>
+                                                @if (item.RecieveTime != null)
+                                                {
+                                                    @item.RecieveTime.ToString("MM/dd hh:mm tt");
+                                                }
+                                            </span>
+                                        </div>
+                                    </div><!-- media-body -->
+                                </a>
+                            }
+                        }
+                    }
                     <!-- media -->
                     <!--<a href="#" class="media unread">
                         <div class="media-left">
@@ -99,15 +103,15 @@
                         </div><!-- media-body -->
                     </div><!-- media -->
                     <div class="message-option">
-                        <div class="d-none d-sm-flex">
-                            <a href="default.htm"><i class="icon ion-ios-telephone-outline"></i></a>
-                            <a href="default.htm"><i class="icon ion-ios-videocam-outline"></i></a>
-                            <a href="default.htm"><i class="icon ion-ios-gear-outline"></i></a>
-                            <a href="default.htm"><i class="icon ion-ios-information-outline"></i></a>
-                        </div>
-                        <div class="d-sm-none">
-                            <a href="default.htm"><i class="icon ion-more"></i></a>
-                        </div>
+                        @*<div class="d-none d-sm-flex">
+                                <a href="default.htm"><i class="icon ion-ios-telephone-outline"></i></a>
+                                <a href="default.htm"><i class="icon ion-ios-videocam-outline"></i></a>
+                                <a href="default.htm"><i class="icon ion-ios-gear-outline"></i></a>
+                                <a href="default.htm"><i class="icon ion-ios-information-outline"></i></a>
+                            </div>
+                            <div class="d-sm-none">
+                                <a href="default.htm"><i class="icon ion-more"></i></a>
+                            </div>*@
 
                     </div>
                 </div><!-- message-header -->
@@ -167,12 +171,12 @@
                             <input type="text" id="txtmsg" class="form-control" placeholder="Type something here...">
                         </div><!-- col-8 -->
                         <div class="col-3 col-sm-4 col-xl-3 tx-right">
-                            <div class="d-none d-sm-block">
-                                <a href="default.htm"><i class="icon ion-happy-outline"></i></a>
-                                <a href="default.htm"><i class="icon ion-ios-game-controller-b-outline"></i></a>
-                                <a href="default.htm"><i class="icon ion-ios-camera-outline"></i></a>
-                                <a href="default.htm"><i class="icon ion-ios-mic-outline"></i></a>
-                            </div>
+                            @*<div class="d-none d-sm-block">
+                                    <a href="default.htm"><i class="icon ion-happy-outline"></i></a>
+                                    <a href="default.htm"><i class="icon ion-ios-game-controller-b-outline"></i></a>
+                                    <a href="default.htm"><i class="icon ion-ios-camera-outline"></i></a>
+                                    <a href="default.htm"><i class="icon ion-ios-mic-outline"></i></a>
+                                </div>*@
                             <div class="d-sm-none">
                                 <a href="default.htm"><i class="icon ion-more"></i></a>
                                 <input type="hidden" id="username" value="@System.Web.HttpContext.Current.User.Identity.Name" />
@@ -185,6 +189,56 @@
             </div><!-- messages-right -->
         </div><!-- container -->
     </div><!-- slim-mainpanel -->
+    <div id="closechat" class="modal fade">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content bd-0 tx-14">
+                <div class="modal-header pd-x-20">
+                    <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Close Chat</h6>
+
+                </div>
+                <div class="modal-body pd-20">
+                    <p class="mg-b-5">Do you want to close current chat</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-primary" id="closeChatBtn">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div><!-- modal-dialog -->
+    </div>
+    <div id="userclosechat" class="modal fade">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content bd-0 tx-14">
+                <div class="modal-header pd-x-20">
+                    <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">User Closed Chat</h6>
+
+                </div>
+                <div class="modal-body pd-20">
+                    <p class="mg-b-5">User has closed the current chat</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeChatBtn">OK</button>
+                </div>
+            </div>
+        </div><!-- modal-dialog -->
+    </div>
+    <div id="userinqueue" class="modal fade">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content bd-0 tx-14">
+                <div class="modal-header pd-x-20">
+                    <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">User in Queue</h6>
+
+                </div>
+                <div class="modal-body pd-20">
+                    <p class="mg-b-5">There is next user in queue to chat.Do you want to chat</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-primary" id="getNextRequest">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeAvailableStatus">No</button>
+                </div>
+            </div>
+        </div><!-- modal-dialog -->
+    </div>
     <script src="~/Content/lib/jquery/js/jquery.js"></script>
     <script src="~/Content/lib/popper.js/js/popper.js"></script>
     <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
@@ -198,6 +252,10 @@
     <script src="~/Content/js/ResizeSensor.js"></script>
     <script src="~/Content/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
+    <script src="/signalr/hubs"></script>
+
     <script>
         $(function () {
             'use script';
@@ -250,101 +308,122 @@
             }
         });
 
+        var messageHub = $.connection.messageHub;
+        console.log(messageHub);
+        $.connection.hub.start().done(function() {
+            console.log('Notification hub started');
+            console.log('connection started with id: ' + $.connection.hub.id);
+            var url = "/chat/startconsumer";
+            $.get(url, function () {
+                console.log('consumer started');
+            });
+        });
+        //signalr method for push server message to client
+        messageHub.client.recieve = function(response) {
+            //updateNotificationCount();
+            //console.log(response);
+            //alert("message recieved");
+            if ($('#chatlist' + response.ChatId).length > 0 &&
+                $('#chatId').val() == response.ChatId) {
+                console.log('sender is here and is active');
+                $('.media-list')
+                    .append(
+                        '<div class="media-body" style="margin-top:5px"><div class="msg"><p>' +
+                        response.Text +
+                        '</p></div></div>');
+                $('.messages-list, .message-body').scrollTop($(".media-list").prop("scrollHeight"));
+                $('#latestmsg' + $('#chatId').val()).text(response.Text);
+            } else {
+                /*console.log('sender is here ' + $('#chatlist' + sender + '.media').length >
+                    0 + '===but  is not active ' + $('.activechat').attr('id') ==
+                    'chatlist' + sender);*/
 
-        setInterval(function() {
-            $.ajax({
-                type: "GET",
-                contentType: "application/json; charset=utf-8",
-                data: '{}',
-                url: "@Url.Action("receive")",
-                    dataType: "json",
-                    success: function(response) {
-                        console.log("passs");
-                        if (response == null) {
-                            console.log("---null----------");
-                            return false;
-                        }
-                        console.log(response.Text);
-                        //console.log($('#chatlist' + sender + '.media'));
-                        //console.log('sender is here ' + $('#chatlist'+sender+'.media').length > 0 + '===and is active ' + $('.activechat').attr('id') == 'chatlist'+sender);
+                if ($('#chatlist' + response.ChatId).length > 0 &&
+                    $('#chatId').val() != response.ChatId) {
 
-                        console.log('0---0-0-0');
-                        var s = $('#chatlist' + response.ChatId);
-                        console.log(s);
-                        console.log($('#chatlist' + response.ChatId).length);
-                        console.log('after----0---0-0-0');
-                        if ($('#chatlist' + response.ChatId).length > 0 &&
-                            $('#chatId').val() == response.ChatId) {
-                            console.log('sender is here and is active');
-                            $('.media-list')
-                                .append(
-                                    '<div class="media-body" style="margin-top:5px"><div class="msg"><p>' +
-                                    response.Text +
-                                    '</p></div></div>');
-                            $('.messages-list, .message-body').scrollTop($(".media-list").prop("scrollHeight"));
-                            $('#latestmsg' + $('#chatId').val()).text(response.Text);
+                    console.log(msgStore[response.ChatId] + "-----sender is here but is not active");
+                    if (msgStore[response.ChatId] == null) {
+                        console.log('sender is null')
+                        msgStore[response.ChatId] = [];
+                        msgStore[response.ChatId].push(response.Text);
+                        if ($('#msgCount' + response.ChatId + '>span').length < 2) {
+                            $('#msgCount' + response.ChatId).append('<span>' + msgStore[response.ChatId].length + '</span>');
+                            $('#latestmsg' + response.ChatId).text(response.Text);
                         } else {
-                            /*console.log('sender is here ' + $('#chatlist' + sender + '.media').length >
-                                0 + '===but  is not active ' + $('.activechat').attr('id') ==
-                                'chatlist' + sender);*/
 
-                            if ($('#chatlist' + response.ChatId).length > 0 &&
-                                $('#chatId').val() != response.ChatId) {
+                            $('#msgCount' + response.ChatId).children('span').eq(1).text(msgStore[response.ChatId].length);
+                            $('#latestmsg' + response.ChatId).text(response.Text);
 
-                                console.log(msgStore[response.ChatId] + "-----sender is here but is not active");
-                                if (msgStore[response.ChatId] == null) {
-                                    console.log('sender is null')
-                                    msgStore[response.ChatId] = [];
-                                    msgStore[response.ChatId].push(response.Text);
-                                    if ($('#msgCount' + response.ChatId + '>span').length < 2) {
-                                        $('#msgCount' + response.ChatId).append('<span>' + msgStore[response.ChatId].length + '</span>');
-                                        $('#latestmsg' + response.ChatId).text(response.Text);
-                                    } else {
-                                        
-                                        $('#msgCount' + response.ChatId).children('span').eq(1).text(msgStore[response.ChatId].length);
-                                        $('#latestmsg' + response.ChatId).text(response.Text);
-
-                                    }
-                                } else {
-                                    console.log('sender is not null so pushing messages')
-                                    msgStore[response.ChatId].push(response.Text);
-                                    $('#msgCount' + response.ChatId).children('span').eq(1).text(msgStore[response.ChatId].length);
-                                    $('#latestmsg' + response.ChatId).text(response.Text);
-
-                                }
-                            } else {
-                                console.log('sender is not in chatlist')
-
-                                msgStore[response.ChatId] = [];
-                                msgStore[response.ChatId].push(response.Text);
-                                $('.messages-list').prepend('<a href="#" class="media" id="chatlist' +
-                                    response.ChatId +
-                                    '"><div class="media-left"><img src="/Content/img/img2.jpg" alt=""><span class="square-10 bg-success"></span></div><div class="media-body"><div><h6>' +
-                                    response.Sender.FirstName+" "+response.Sender.LastName +
-                                    '</h6><p id="latestmsg"'+
-                                    response.ChatId +
-                                    '>'+
-                                    response.Text +
-                                    '</p> <input type="hidden" class="chatId" value="'+response.ChatId+'" /></div><div id="msgCount' +
-                                    response.ChatId +
-                                    '"><span>'+parseJsonDate(response.RecieveTime)+'</span><span>' +
-                                    msgStore[response.ChatId].length +
-                                    '</span></div></div></a>');
-                            }
-
-                            function parseJsonDate(jsonDateString) {
-                                moment().format();
-                                return moment(new Date(parseInt(jsonDateString.replace('/Date(', '')))).format('h:mm A');
-                            }
                         }
-                    },
-                    error: function(response) {
+                    } else {
+                        console.log('sender is not null so pushing messages')
+                        msgStore[response.ChatId].push(response.Text);
+                        $('#msgCount' + response.ChatId).children('span').eq(1).text(msgStore[response.ChatId].length);
+                        $('#latestmsg' + response.ChatId).text(response.Text);
+
                     }
+                } else {
+                    console.log('sender is not in chatlist')
 
-                });
+                    msgStore[response.ChatId] = [];
+                    msgStore[response.ChatId].push(response.Text);
+                    $('.messages-list').prepend('<a href="#" class="media" id="chatlist' +
+                        response.ChatId +
+                        '"><div class="media-left"><img src="/Content/img/img2.jpg" alt=""><span class="square-10 bg-success"></span></div><div class="media-body"><div><h6>' +
+                        response.Sender.FirstName + " " + response.Sender.LastName +
+                        '</h6><p id="latestmsg"' +
+                        response.ChatId +
+                        '>' +
+                        response.Text +
+                        '</p> <input type="hidden" class="chatId" value="' + response.ChatId + '" /></div><div id="msgCount' +
+                        response.ChatId +
+                        '"><span>' + parseJsonDate(response.RecieveTime) + '</span><span>' +
+                        msgStore[response.ChatId].length +
+                        '</span></div></div></a>');
+                }
 
-            },
-            2000);
+                function parseJsonDate(jsonDateString) {
+                    moment().format();
+                    return moment(new Date(parseInt(jsonDateString.replace('/Date(', '')))).format('h:mm A');
+                }
+            }
+        }
+
+        messageHub.client.userclosedchat = function() {
+            $('#userclosechat').modal('show');
+        }
+
+        /*setInterval(function() {
+                $.ajax({
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    data: '{}',
+                    url: "Url.Action("receive")",
+                dataType: "json",
+                success: function(response) {
+                    console.log("passs");
+                    if (response == null) {
+                        console.log("---null----------");
+                        return false;
+                    }
+                    console.log(response.Text);
+                    //console.log($('#chatlist' + sender + '.media'));
+                    //console.log('sender is here ' + $('#chatlist'+sender+'.media').length > 0 + '===and is active ' + $('.activechat').attr('id') == 'chatlist'+sender);
+
+                    console.log('0---0-0-0');
+                    var s = $('#chatlist' + response.ChatId);
+                    console.log(s);
+                    console.log($('#chatlist' + response.ChatId).length);
+                    console.log('after----0---0-0-0');
+
+                },
+                error: function(response) {
+                }
+
+            });
+
+        },
+        2000);*/
 
         function send() {
             var message = $("#txtmsg").val();
@@ -409,32 +488,33 @@
                 console.log('here is message pages----' +page);
                 $('.media-list').empty();
                 var url = "/chat/" + $('#chatId').val() + "/messages/" +1;
-                     $.get(url, function(response) {
-                         for (var i = 0; i < response.length; i++) {
-                             if (response[i].Sender.UserName == $('#username').val()) {
-                                 var mymsg = '<div class="media-body reverse" style="margin-top:5px"><div class="msg"><p>' +
-                                     response[i].Text +
-                                     '</p></div></div>';
-                                 $('.media-list').prepend(mymsg);
-                             } else {
-                                 var othersmsg = '<div class="media-body" style="margin-top:5px"><div class="msg"><p>' +
-                                     response[i].Text +
-                                     '</p></div></div>';
-                                 $('.media-list').prepend(othersmsg);
-                             }
-                         }
-                         $('.messages-list, .message-body').scrollTop($(".media-list").prop("scrollHeight"));
-                         page = page + 1;
-                     });
+                $.get(url, function(response) {
+                    for (var i = 0; i < response.length; i++) {
+                        if (response[i].Sender.UserName == $('#username').val()) {
+                            var mymsg = '<div class="media-body reverse" style="margin-top:5px"><div class="msg"><p>' +
+                                response[i].Text +
+                                '</p></div></div>';
+                            $('.media-list').prepend(mymsg);
+                        } else {
+                            var othersmsg = '<div class="media-body" style="margin-top:5px"><div class="msg"><p>' +
+                                response[i].Text +
+                                '</p></div></div>';
+                            $('.media-list').prepend(othersmsg);
+                        }
+                    }
+                    $('.messages-list, .message-body').scrollTop($(".media-list").prop("scrollHeight"));
+                    page = page + 1;
+                });
 
             });
 
-        $('.btn-uppercase-sm').click(function() {
-            $('.messages-right').attr('style', 'display: none !important');
-            var url = "@Url.Action("CloseChat")";
-            $.get(url, function(data) {
-                console.log('-----------closed chat--------');
-            });
+        $('.btn-uppercase-sm').click(function () {
+            console.log('-------chat closed------');
+            $('#closechat').modal('show');
+        });
+
+        $('#closeChatBtn').click(function() {
+            closeChat();
         });
         const container = document.querySelector('.message-body');
         container.addEventListener('ps-y-reach-start', (event) => {
@@ -459,9 +539,78 @@
                 page = page + 1;
             });
         });
+
+        function closeChat() {
+            var url = "/chat/close";
+            $('#closechat').modal('hide');
+            $.get(url, function(data) {
+                if (data) {
+                    $('.messages-right').attr('style', 'display: none !important');
+
+                    $('#userinqueue').modal('show');
+
+                } else {
+                    $('.messages-right').attr('style', 'display: none !important');
+                    //alert('no user in queue');
+                }
+            });
+        }
+
+        $('#getNextRequest').click(function () {
+            console.log('--get nexy req-----');
+            getNextUser();
+
+        });
+        function getNextUser() {
+            var url = "/chat/nextrequest";
+            $.get(url, function(data) {
+                console.log('next request issued' + data);
+                $('#userinqueue').modal('hide');
+            });
+        }
+
+        $(window).on('beforeunload', function () {
+            console.log('-----chat window not closed-----');
+            var url = "/chat/window/close";
+            //$.get(url, function () { });
+            fetch(url).then(function(data) {
+                        // Here you get the data to modify as you please
+                    console.log('00-0--0-good')
+            })
+            .catch(function(error) {
+                // If there is any error you will catch them here
+
+                    console.log('still goood-------' + error);
+                });
+            for (var i = 0; i < 2000; i++) {
+                if (i % 500 == 0)
+                    console.log(i);
+            }
+        });
+
+        /*window.onbeforeunload = function() {
+            $('body').mousemove(checkunload);
+            console.log('user left');
+            /*var url = "/chat/window/close";
+            $.get(url, function () {
+                console.log('window closed');
+            });#1#
+            return "Sure thing";
+        };
+
+        function checkunload() {
+            $('body').unbind("mousemove");
+            console.log("user stayed");
+            //ADD CODE TO RUN IF CANCEL WAS CLICKED
+        }*/
+
+        $('#closeAvailableStatus').click(function() {
+            var T = $('.toggle').data('toggles');
+            T.toggle(false);
+        });
+
     });
 
-
-
     </script>
+    @Html.Partial("_HRFooter")
 </body>
