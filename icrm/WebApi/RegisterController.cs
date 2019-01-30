@@ -49,12 +49,12 @@ namespace icrm.WebApi
                 return BadRequest(" NO User Found");
 
             }
-            else
+            else if(user.PasswordHash==null)
             {
-                user.Email = model.Email;
-                user.PhoneNumber = model.PhoneNumber;
+               
                 user.UserName = Convert.ToString(model.EmployeeId);
                 user.PasswordHash = HashPassword(model.Password);
+                user.Email = user.bussinessEmail;
                 user.SecurityStamp = Guid.NewGuid().ToString("D");
                 db.Users.Add(user);
                 db.Entry(user).State = System.Data.Entity.EntityState.Modified;
@@ -62,6 +62,12 @@ namespace icrm.WebApi
                 UserManager.AddToRole(user.Id, roleManager.FindByName("User").Name);
                 return Ok();
 
+            }
+
+            else
+            {
+
+                return Conflict();
             }
         }
 
