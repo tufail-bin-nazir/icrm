@@ -1139,12 +1139,12 @@ namespace icrm.Controllers
             body = body.Replace("{issueClass}", "YES");
             body = body.Replace("{SubLocation}", user.SubLocation.name);
             if (feedback.attachment == null) {
-                body = body.Replace("{Attachment}", "NO");
+                body = body.Replace("{Attachment}", "No");
             }
             else {
-                body = body.Replace("{Attachment}", "YES");
+                body = body.Replace("{Attachment}", "Yes");
             }           
-            body = body.Replace("{IssueEscalate}", "YES"); 
+            body = body.Replace("{IssueEscalate}", "Yes"); 
             return body;
         }
 
