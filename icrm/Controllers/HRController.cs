@@ -26,6 +26,7 @@ using Comments = icrm.Models.Comments;
 using System.Net.Mail;
 using System.Net.Mime;
 using icrm.Events;
+using System.Drawing.Imaging;
 
 namespace icrm.Controllers
 {
@@ -168,7 +169,7 @@ namespace icrm.Controllers
                                 
                                 feedInterface.Save(feedback);
                                 TempData["MessageSuccess"] = "Feedback Saved";
-                            eventService.sendEmails(Request.Form["emailsss"], PopulateBody(feedback));
+                           eventService.sendEmails(Request.Form["emailsss"], PopulateBody(feedback));
                         }
                             else
                             {
@@ -338,7 +339,7 @@ namespace icrm.Controllers
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
                             TempData["MessageSuccess"] = "Feedback Forwarded";
-                        eventService.sendEmails(Request.Form["emailsss"], PopulateBody(feedback));
+                      eventService.sendEmails(Request.Form["emailsss"], PopulateBody(feedback));
                         //}
                         // else
                         // {
@@ -1122,33 +1123,20 @@ namespace icrm.Controllers
         {
             ApplicationUser user = db.Users.Find(feedback.userId);
 
-           string imgPath = Server.MapPath("~/Content/img/logo.png");
-            // Convert image to byte array  
-            byte[] byteData = System.IO.File.ReadAllBytes(imgPath);
-            //Convert byte arry to base64string   
-            string imreBase64Data = Convert.ToBase64String(byteData);
-            string imgDataURL = string.Format("data:image/png;base64,{0}", imreBase64Data);
-            //Passing image data in viewbag to view  
-            ViewBag.ImageData = imgDataURL;
-
-          /*  string path = Server.MapPath(Url.Content("~/Content/img/logo.png"));
-            LinkedResource logo = new LinkedResource(path);
-            logo.ContentId = "logoImage";*/
 
             string body = string.Empty;
-            using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/HR/email.html")))
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/HR/HRemail.html")))
             {
                 body = reader.ReadToEnd();
             }
-
-            body = body.Replace("{UER}", imgDataURL);
+      
             body = body.Replace("{Title}", feedback.title);
             body = body.Replace("{TicketId}", feedback.id);
             body = body.Replace("{Location}", user.Location.name);
             body = body.Replace("{EmployeeId}", user.EmployeeId.ToString());
             body = body.Replace("{Description}",feedback.description);
             body = body.Replace("{email}", user.Email);
-            body = body.Replace("{issueClass}", "ISSUE CLASSIFICATION");
+            body = body.Replace("{issueClass}", "YES");
             body = body.Replace("{SubLocation}", user.SubLocation.name);
             if (feedback.attachment == null) {
                 body = body.Replace("{Attachment}", "NO");
@@ -1156,8 +1144,11 @@ namespace icrm.Controllers
             else {
                 body = body.Replace("{Attachment}", "YES");
             }           
-            body = body.Replace("{IssueEscalate}", "ISSUE ESCALATE"); 
+            body = body.Replace("{IssueEscalate}", "YES"); 
             return body;
         }
+
+
+        
     }
 }

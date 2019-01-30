@@ -49,7 +49,6 @@ namespace icrm.Events
 
             HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
             {
-                System.Diagnostics.Debug.WriteLine("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
                 emailSend.sendEmailAsync(emails,body);
 
             });
