@@ -69,7 +69,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Positions: <span class="tx-danger">*</span></label>
-                                    @Html.EditorFor(x => x.Position.name, new { @class = "form-control", placeholder = "Enter Positions", Required = "true" })
+                                    @Html.TextBoxFor(x => x.Position.name, new { @class = "form-control", placeholder = "Enter Positions", Required = "true" })
 
                                 </div>
                             </div>
@@ -89,7 +89,7 @@
 
                         <div class="form-layout-footer">
                             <button class="btn btn-primary bd-0">@ViewBag.Status</button>
-                            <button class="btn btn-secondary bd-0">Cancel</button>
+                            <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
                         </div>
                         <!-- form-layout-footer -->
                     </div>
@@ -109,7 +109,7 @@
                                 <thead>
                                     <tr class="tx-10">
                                         <th class="wd-10p pd-y-5">S.No</th>
-                                        <th class="pd-y-5">Name</th>
+                                        <th class="pd-y-5">@Resources.Resource.Name</th>
                                         <th class="pd-y-5">Action</th>
 
                                     </tr>
@@ -144,6 +144,7 @@
                                 <li class="page-item hidden-xs-down">
                                     <a class="page-link" href="#" aria-label="First"><i class="fa fa-angle-double-left"></i></a>
                                 </li>
+
                                 <li class="page-item">
                                     <a class="page-link" href="#" aria-label="Previous"><i class="fa fa-angle-left"></i></a>
                                 </li>

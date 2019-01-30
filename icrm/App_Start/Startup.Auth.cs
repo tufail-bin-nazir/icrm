@@ -41,8 +41,9 @@ namespace icrm
             app.UseOAuthBearerTokens(new OAuthAuthorizationServerOptions
             {
                 Provider = new ApplicationOAuthProvider(),
-                AllowInsecureHttp = true,
-                TokenEndpointPath = new PathString("/Authenticate")
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(365),
+                TokenEndpointPath = new PathString("/Authenticate"),
+                 AllowInsecureHttp = true,
             });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 

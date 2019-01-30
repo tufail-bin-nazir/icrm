@@ -76,7 +76,7 @@ namespace icrm.WebApi
                 feedBack = new Feedback { title = feedBackmodel.Title, description = feedBackmodel.Description, userId = user.Result.Id, typeId = feedBackmodel.Typeid };
 
             }
-
+            feedBack.checkStatus = Models.Constants.OPEN;
             feedInterface.Save(feedBack);
             eventService.notifyFeedback(feedBack);
             return Ok(feedBack.id);

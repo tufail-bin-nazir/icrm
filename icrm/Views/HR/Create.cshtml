@@ -84,7 +84,7 @@
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Employee ID: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Employee_Id <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.userId,
     new SelectList(ViewBag.EmployeeList,
     "Id", "EmployeeId"), "Select Employee", new { @class = "form-control select2", id = "empID",required="required" })
@@ -106,7 +106,7 @@
                     <div class="row mg-b-25">
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Name: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Name <span class="tx-danger">*</span></label>
                                 @Html.TextBox("EmpName","", new { @readonly = "readonly", @class = "form-control", id="EmpName"})
                             </div>
                         </div>
@@ -120,20 +120,20 @@
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Email_Id <span class="tx-danger">*</span></label>
                                 @Html.TextBox("EmpEmail","", new { @readonly = "readonly", @class = "form-control", id="EmpEmail" })
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Phone No: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Phone_No <span class="tx-danger">*</span></label>
                                 @Html.TextBox("EmpPNo","", new { @readonly = "readonly", @class = "form-control", id="EmpPNo" })
                             </div>
                         </div>
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Location: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">Location:<span class="tx-danger">*</span></label>
                                 @Html.TextBox("EmpLocation","", new { @readonly = "readonly", @class = "form-control", id= "EmpLocation" })
 
                             </div>
@@ -172,14 +172,14 @@
 
 
 
-                <label class="section-title">FeedBack / Complaint</label>
+                <label class="section-title">@Resources.Resource.Feedback_Complaint</label>
 
 
                 <div class="form-layout">
                     <div class="row mg-b-25">
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Type: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Type <span class="tx-danger">*</span></label>
                                 @Html.DropDownListFor(model => model.typeId,
   new SelectList(ViewBag.typeList, "Id", "name"), "Choose", new { @class = "form-control select2", id="typeofFeedback",required="required" })
 
@@ -188,14 +188,14 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Title: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Title<span class="tx-danger">*</span></label>
                                 @Html.TextBoxFor(model => model.title, new { @class = "form-control", required = "required" })
                             </div>
                         </div>
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group mg-b-10-force">
-                                <label class="form-control-label">Description: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Description <span class="tx-danger">*</span></label>
                                 @Html.TextAreaFor(model => model.description, new { @class = "form-control", required = "required" })
                             </div>
                         </div>
@@ -232,16 +232,27 @@
                                     <option value="">Choose Sub Category</option>
 
                                 </select>
-                              
+
                             </div>
                         </div>
 
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Priority: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Priority <span class="tx-danger">*</span></label>
                                 @Html.DropDownListFor(m => m.priorityId,
                        new SelectList(ViewBag.Priorities,
                      "Id", "priorityId"), "Choose Priority", new { @class = "form-control select2",id="priorty" })
+                            </div>
+                        </div>
+
+
+                        <!-- col-4 -->
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">@Resources.Resource.Email_Id <span class="tx-danger">*</span></label>
+                                @Html.DropDownList("emailsss",
+                      new SelectList(ViewBag.Emails,
+                    "", ""), new { @class = "form-control select2", Multiple = "multiple",name="emailsss" })
                             </div>
                         </div>
                         <!-- col-4 -->
@@ -281,7 +292,7 @@
                                 <!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label class="form-control-label">Comment</label>
+                                        <label class="form-control-label">@Resources.Resource.Comments</label>
                                         @Html.TextArea("responsee", new { @class = "form-control" ,name="responsee"})
 
 
@@ -292,8 +303,9 @@
 
                             <!-- row -->
                             <div class="form-layout-footer">
-                                <input type="submit" value="Forward/Create" id="forward" name="submitButton" class="btn btn-primary bd-0" />
-                                <input type="submit" value="Resolve" id="resolve" name="submitButton" class="btn btn-primary bd-0" />
+                                <button class="btn btn-primary bd-0" name="submitButton" id="forward" value="Forward/Create">Forward/Create</button>
+                                <button class="btn btn-primary bd-0" value="Resolve" id="resolve" name="submitButton">@Resources.Resource.Resolve </button>
+
                             </div>
                             <!-- form-layout-footer -->
                         </div>
@@ -325,7 +337,7 @@
         <script src="~/Content/js/slim.js"></script>
         <script>
             $("#typeofFeedback").prop('required', true);
-
+            
             
 
             $('#empID').change(function () {
@@ -365,7 +377,7 @@
 
 
             $('#forward').click(function () {
-
+                $("#emailsss").prop('required', true);
                 if ($('#statusfield').val() == "Resolved") {
                     $('#statuscheck').text("Set status Open/Closed");
                     return false;

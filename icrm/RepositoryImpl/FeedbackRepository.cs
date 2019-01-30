@@ -121,7 +121,7 @@ namespace icrm.RepositoryImpl
 
         public IEnumerable<Feedback> getAllOpen()
         {
-            return db.Feedbacks.OrderByDescending(m => m.user.Id).Where(m=>m.status==Constants.OPEN).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.user.Id).Where(m=>m.checkStatus== Models.Constants.OPEN).ToList();
 
         }
         public IPagedList<Feedback> getAllOpenWithDepartment(string usrid, int pageIndex, int pageSize)
@@ -205,21 +205,39 @@ namespace icrm.RepositoryImpl
 
         }
 
+        public IEnumerable<Feedback> GetAllResponded()
+        {
+
+
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.checkStatus == Constants.RESPONDED).ToList();
+
+        }
+
         public IPagedList<Feedback> getAllClosed(int pageIndex, int pageSize)
         {
             return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == Constants.CLOSED).ToPagedList(pageIndex, pageSize);
         }
         public IEnumerable<Feedback> getAllClosed()
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == Constants.CLOSED).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.checkStatus == Constants.CLOSED).ToList();
         }
         public IEnumerable<Feedback> getAllResolved()
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m =>  m.status == Constants.RESOLVED).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m =>  m.checkStatus == Constants.RESOLVED).ToList();
         }
+
+        public IEnumerable<Feedback> GetAllAssigned()
+        {
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.checkStatus == Constants.ASSIGNED).ToList();
+        }
+
 
         public IPagedList<Feedback> searchHR(string d1, string d2, string status, int pageIndex, int pageSize)
         {
+
+            System.Diagnostics.Debug.WriteLine(d1+"jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
+
+            System.Diagnostics.Debug.WriteLine(d2 + "jjjjjjjjhhhhjjjjjjjjjjjjjjjjjjjjjjjjjjj");
             var param1 = new SqlParameter();
             param1.ParameterName = "@D1";
 
@@ -347,6 +365,10 @@ namespace icrm.RepositoryImpl
 
         }
 
+
+
+       
+
         public List<Comments> getCOmments(string id)
         {
             return db.comments.Where(m => m.feedbackId == id).ToList();
@@ -372,5 +394,12 @@ namespace icrm.RepositoryImpl
             }
             return emailList;
         }
+
+        public IPagedList<Feedback> getListBasedOnType(int pageIndex, int pageSize,int typeId)
+        {
+            return db.Feedbacks.OrderBy(m=>m.id).Where(m => m.typeId == typeId).ToPagedList(pageIndex,pageSize);
+        }
+
+        
     }
 }

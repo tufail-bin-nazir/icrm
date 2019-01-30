@@ -117,14 +117,116 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Assigned_Complaints" xml:space="preserve">
+    <value>الشكاوي المعينة</value>
+  </data>
+  <data name="Attach" xml:space="preserve">
+    <value>ارفق</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>الغاء</value>
+  </data>
+  <data name="Closed_Complaints" xml:space="preserve">
+    <value>الشكاوي المغلقة</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>تعليقات</value>
+  </data>
+  <data name="Created_Date" xml:space="preserve">
+    <value>تاريخ الانشاء</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>الوصف</value>
+  </data>
   <data name="Dont_have_an_account" xml:space="preserve">
     <value>لا يوجد لديك حساب؟</value>
+  </data>
+  <data name="Download_Attachment" xml:space="preserve">
+    <value>تنزيل المرفق</value>
+  </data>
+  <data name="Email_Id" xml:space="preserve">
+    <value>عنوان البريد الالكتروني</value>
+  </data>
+  <data name="Employee_Details" xml:space="preserve">
+    <value>تفاصيل الموظف</value>
+  </data>
+  <data name="Employee_Id" xml:space="preserve">
+    <value>الرقم الوظيفي</value>
+  </data>
+  <data name="Employee_Name" xml:space="preserve">
+    <value>اسم الموظف</value>
   </data>
   <data name="Enter_your_email" xml:space="preserve">
     <value>قم بادخال بريدك الالكتروني</value>
   </data>
   <data name="Enter_your_password" xml:space="preserve">
     <value>قم بادخال الرقم السري</value>
+  </data>
+  <data name="Feedback/Complaint" xml:space="preserve">
+    <value>ملاحظة/شكوى</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>الاسم الاول</value>
+  </data>
+  <data name="Forward" xml:space="preserve">
+    <value>ارسال</value>
+  </data>
+  <data name="Forwarded" xml:space="preserve">
+    <value>المرسلة</value>
+  </data>
+  <data name="Inquiries" xml:space="preserve">
+    <value>استفسارات</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>الاسم الاخير</value>
+  </data>
+  <data name="Open_Complaints" xml:space="preserve">
+    <value>الشكاوي المفتوحة</value>
+  </data>
+  <data name="Open_Tickets" xml:space="preserve">
+    <value>التذاكر المفتوحة</value>
+  </data>
+  <data name="Phone_No" xml:space="preserve">
+    <value>رقم الهاتف</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>الاولوية</value>
+  </data>
+  <data name="Resolve" xml:space="preserve">
+    <value>حل</value>
+  </data>
+  <data name="Resolved_Complaints" xml:space="preserve">
+    <value>الشكاوي المحلولة</value>
+  </data>
+  <data name="Responded_Complaints" xml:space="preserve">
+    <value>الشكاوي المجابة</value>
+  </data>
+  <data name="Satisfied" xml:space="preserve">
+    <value>راضي</value>
+  </data>
+  <data name="Select_Category" xml:space="preserve">
+    <value>اختر الفئة</value>
+  </data>
+  <data name="Select_Department" xml:space="preserve">
+    <value>اختر القسم</value>
+  </data>
+  <data name="Select_Location" xml:space="preserve">
+    <value>اختر الموقع</value>
+  </data>
+  <data name="Select_Nationality" xml:space="preserve">
+    <value>اختر الجنسية</value>
+  </data>
+  <data name="Select_Position" xml:space="preserve">
+    <value>اختر المسمى الوظيفي</value>
+  </data>
+  <data name="Select_priority" xml:space="preserve">
+    <value>اختر الاولوية</value>
+  </data>
+  <data name="Select_Sub_Location" xml:space="preserve">
+    <value>اختر الموقع الفرعي</value>
+  </data>
+  <data name="Select_Type" xml:space="preserve">
+    <value>اختر نوع الملاحظة</value>
   </data>
   <data name="Sign_in" xml:space="preserve">
     <value>تسجيل الدخول</value>
@@ -135,7 +237,37 @@
   <data name="Sign_up" xml:space="preserve">
     <value>قم بادخال البيانات</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>الحالة</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>تسليم</value>
+  </data>
+  <data name="Suggestions" xml:space="preserve">
+    <value>اقتراح</value>
+  </data>
+  <data name="Ticket" xml:space="preserve">
+    <value>تذكرة</value>
+  </data>
+  <data name="Ticket_created_Successfully" xml:space="preserve">
+    <value>تم انشاء تذكرة بنجاح</value>
+  </data>
+  <data name="Ticket_Detail" xml:space="preserve">
+    <value>تفاصيل التذكرة</value>
+  </data>
+  <data name="Ticket_Title" xml:space="preserve">
+    <value>عنوان التذكرة</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>العنوان</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>النوع</value>
+  </data>
   <data name="Welcome_back" xml:space="preserve">
     <value>اهلا وسهلا </value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>اسم </value>
   </data>
 </root>

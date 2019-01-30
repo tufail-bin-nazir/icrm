@@ -69,7 +69,7 @@
 
             <li class="nav-item ">
                 <a class="nav-link" href="/HR/charts">
-                    
+
                     <i class="icon ion-document-text"></i>
                     <span>Report</span>
                 </a>
@@ -86,13 +86,16 @@
                 <div class="sub-item">
                     <ul>
                         <li class="active">@Html.ActionLink("Create Ticket", "Create", "HR")</li>
-                        <li class="active">@Html.ActionLink("Open Tickets", "openAll", "HR", new { id = "openticket" }, null)</li>
-                        <li>@Html.ActionLink("Resolved Tickets", "resolved", "HR", new { id = "resolvedticket" }, null)</li>
-                        <li>@Html.ActionLink("Assigned Tickets", "assigned", "HR", new { id = "assignedticket" }, null)</li>
-                        <li>@Html.ActionLink("Responded Tickets", "responded", "HR", new { id = "respondedticket" }, null)</li>
-                        <li>@Html.ActionLink("Closed Tickets", "Closed", "HR", new { id = "closedticket" }, null)</li>
-                        <li>@Html.ActionLink("Rejected Tickets", "Rejected", "HR", new { id = "rejectedticket" }, null)</li>
 
+                        <li class="active">@Html.ActionLink(Resources.Resource.Open_Tickets, "openAll", "HR", new { id = "openticket" }, null)</li>
+                        <li>@Html.ActionLink(Resources.Resource.Resolved_Complaints, "resolved", "HR", new { id = "resolvedticket" }, null)</li>
+                        <li>@Html.ActionLink(Resources.Resource.Assigned_Complaints, "assigned", "HR", new { id = "assignedticket" }, null)</li>
+                        <li>@Html.ActionLink(Resources.Resource.Responded_Complaints, "responded", "HR", new { id = "respondedticket" }, null)</li>
+                        <li>@Html.ActionLink(Resources.Resource.Closed_Complaints, "Closed", "HR", new { id = "closedticket" }, null)</li>
+                        <li>@Html.ActionLink("Rejected Tickets", "Rejected", "HR", new { id = "rejectedticket" }, null)</li>
+                        <li>@Html.ActionLink(Resources.Resource.Inquiries, "tickets", "HR", new { typeId = "2" }, null)</li>
+                        <li>@Html.ActionLink(Resources.Resource.Suggestions, "tickets", "HR", new { typeId = "3" }, null)</li>
+                        <li>@Html.ActionLink(Resources.Resource.Feedback_Complaint, "tickets", "HR", new { typeId = "1" }, null)</li>
                     </ul>
                 </div>
                 <!-- dropdown-menu -->

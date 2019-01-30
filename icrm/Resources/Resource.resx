@@ -117,14 +117,116 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Assigned_Complaints" xml:space="preserve">
+    <value>Assigned Complaints</value>
+  </data>
+  <data name="Attach" xml:space="preserve">
+    <value>Attach</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Closed_Complaints" xml:space="preserve">
+    <value>Closed Complaints</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="Created_Date" xml:space="preserve">
+    <value>Created Date</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
   <data name="Dont_have_an_account" xml:space="preserve">
     <value>Don't have an account?</value>
+  </data>
+  <data name="Download_Attachment" xml:space="preserve">
+    <value>Download Attachment</value>
+  </data>
+  <data name="Email_Id" xml:space="preserve">
+    <value>Email Id</value>
+  </data>
+  <data name="Employee_Details" xml:space="preserve">
+    <value>Employee Details</value>
+  </data>
+  <data name="Employee_Id" xml:space="preserve">
+    <value>Employee Id</value>
+  </data>
+  <data name="Employee_Name" xml:space="preserve">
+    <value>Employee Name</value>
   </data>
   <data name="Enter_your_email" xml:space="preserve">
     <value>Enter your email</value>
   </data>
   <data name="Enter_your_password" xml:space="preserve">
     <value>Enter your password</value>
+  </data>
+  <data name="Feedback/Complaint" xml:space="preserve">
+    <value>Feedback/Complaint</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>FirstName</value>
+  </data>
+  <data name="Forward" xml:space="preserve">
+    <value>Forward</value>
+  </data>
+  <data name="Forwarded" xml:space="preserve">
+    <value>Forwarded</value>
+  </data>
+  <data name="Inquiries" xml:space="preserve">
+    <value>Inquiries</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>LastName</value>
+  </data>
+  <data name="Open_Complaints" xml:space="preserve">
+    <value>Open Complaints</value>
+  </data>
+  <data name="Open_Tickets" xml:space="preserve">
+    <value>Open Tickets</value>
+  </data>
+  <data name="Phone_No" xml:space="preserve">
+    <value>Phone No</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>Priority</value>
+  </data>
+  <data name="Resolve" xml:space="preserve">
+    <value>Resolve</value>
+  </data>
+  <data name="Resolved_Complaints" xml:space="preserve">
+    <value>Resolved Complaints</value>
+  </data>
+  <data name="Responded_Complaints" xml:space="preserve">
+    <value>Responded Complaints</value>
+  </data>
+  <data name="Satisfied" xml:space="preserve">
+    <value>Satisfied</value>
+  </data>
+  <data name="Select_Category" xml:space="preserve">
+    <value>Select Category</value>
+  </data>
+  <data name="Select_Department" xml:space="preserve">
+    <value>Select Department</value>
+  </data>
+  <data name="Select_Location" xml:space="preserve">
+    <value>Select Location</value>
+  </data>
+  <data name="Select_Nationality" xml:space="preserve">
+    <value>Select Nationality</value>
+  </data>
+  <data name="Select_Position" xml:space="preserve">
+    <value>Select Position</value>
+  </data>
+  <data name="Select_priority" xml:space="preserve">
+    <value>Select priority</value>
+  </data>
+  <data name="Select_Sub_Location" xml:space="preserve">
+    <value>Select Sub Location</value>
+  </data>
+  <data name="Select_Type" xml:space="preserve">
+    <value>Select Type</value>
   </data>
   <data name="Sign_in" xml:space="preserve">
     <value>SIGN IN</value>
@@ -135,7 +237,37 @@
   <data name="Sign_up" xml:space="preserve">
     <value>Sign Up</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="Suggestions" xml:space="preserve">
+    <value>Suggestions</value>
+  </data>
+  <data name="Ticket" xml:space="preserve">
+    <value>Ticket</value>
+  </data>
+  <data name="Ticket_created_Successfully" xml:space="preserve">
+    <value>Ticket created Successfully</value>
+  </data>
+  <data name="Ticket_Detail" xml:space="preserve">
+    <value>Ticket Detail</value>
+  </data>
+  <data name="Ticket_Title" xml:space="preserve">
+    <value>Ticket Title</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
   <data name="Welcome_back" xml:space="preserve">
     <value>Welcome back</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
   </data>
 </root>

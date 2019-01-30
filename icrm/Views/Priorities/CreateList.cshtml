@@ -40,9 +40,9 @@
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Create Priority</li>
+                    <li class="breadcrumb-item active" aria-current="page">Create @Resources.Resource.Priority</li>
                 </ol>
-                <h6 class="slim-pagetitle">Create Priority</h6>
+                <h6 class="slim-pagetitle">Create @Resources.Resource.Priority</h6>
             </div>
             <!-- slim-pageheader -->
 
@@ -69,7 +69,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Priority ID: <span class="tx-danger">*</span></label>
-                                    @Html.EditorFor(x => x.Priority.priorityId, new { @class = "form-control", placeholder = "Enter Priority ID", Required = "true" })
+                                    @Html.TextBoxFor(x => x.Priority.priorityId, new { @class = "form-control", placeholder = "Enter Priority ID", Required = "true" })
 
                                 </div>
                             </div>
@@ -89,7 +89,7 @@
 
                         <div class="form-layout-footer">
                             <button class="btn btn-primary bd-0">@ViewBag.Status</button>
-                            <button class="btn btn-secondary bd-0">Cancel</button>
+                            <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
                         </div>
                         <!-- form-layout-footer -->
                     </div>
@@ -101,7 +101,7 @@
                 <div class="col-lg-12">
                     <div class="card card-table">
                         <div class="card-header">
-                            <h6 class="slim-card-title">Priority List</h6>
+                            <h6 class="slim-card-title">@Resources.Resource.Priority List</h6>
                         </div>
                         <!-- card-header -->
                         <div class="table-responsive">
