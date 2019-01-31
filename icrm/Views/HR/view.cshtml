@@ -56,8 +56,25 @@
 
                     <p class="mg-b-20 mg-sm-b-40"></p>
                     <div class="form-layout">
-                        <span class="tx-danger">@TempData["Message"]</span>
-                        <span class="tx-success">@TempData["MessageSuccess"]</span>
+                        @if (@TempData["MessageSuccess"] != null)
+                        {
+                            <div class="alert alert-success" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong> @TempData["MessageSuccess"]</strong>
+                            </div>
+                        }
+                        @if (@TempData["Message"] != null)
+                        {
+                            <div class="alert alert-danger mg-b-0" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>@TempData["Message"]</strong>
+                            </div>
+
+                        }
                         @Html.HiddenFor(model => model.id, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.user.LastName, new { @class = "form-control" })

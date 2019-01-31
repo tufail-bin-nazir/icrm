@@ -61,44 +61,59 @@
             <div class="section-wrapper">
                 <label class="section-title">CREATING TICKETS BY ICRM Agent</label>
                 <div class="form-layout">
-
-                    <p class="mg-b-20 mg-sm-b-40"></p>
-                    <span class="tx-danger">
-                        @TempData["Message"]
-                    </span>
-                    <span class="tx-success">
-                        @TempData["MessageSuccess"]
-                    </span>
-                    @Html.HiddenFor(model => model.submittedById, new { @class = "form-control", id = "submittedBy" })
-
-
-
-                    <input type="hidden" id="hrdetail" value="@data.Id" />
-                    @Html.HiddenFor(model => model.userId, new { @class = "form-control", id = "userID" })
-                    @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
-                    @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
-                    @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
-
-                    @if (ViewBag.EmployeeList != null)
+                    @if (@TempData["MessageSuccess"] != null)
                     {
-                        <div class="row mg-b-25">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">@Resources.Resource.Employee_Id <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.userId,
-    new SelectList(ViewBag.EmployeeList,
-    "Id", "EmployeeId"), "Select Employee", new { @class = "form-control select2", id = "empID",required="required" })
-                                </div>
-                            </div>
-                            <!-- col-4 -->
-                            <!-- col-4 -->
-                            <!-- col-4 -->
+                        <div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong> @Resources.Resource.Ticket_created_Successfully</strong>
                         </div>
                     }
-                    <!-- row -->
-                    <!-- form-layout-footer -->
+                    @if (@TempData["Message"] != null)
+                    {
+                        <div class="alert alert-danger mg-b-0" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>@TempData["Message"]</strong>
+                        </div>
 
-                </div>
+                    }
+
+
+
+
+                        @Html.HiddenFor(model => model.submittedById, new { @class = "form-control", id = "submittedBy" })
+
+
+
+                        <input type="hidden" id="hrdetail" value="@data.Id" />
+                        @Html.HiddenFor(model => model.userId, new { @class = "form-control", id = "userID" })
+                        @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
+
+                        @if (ViewBag.EmployeeList != null)
+                        {
+                            <div class="row mg-b-25">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@Resources.Resource.Employee_Id <span class="tx-danger">*</span></label>
+                                        @Html.DropDownListFor(m => m.userId,
+        new SelectList(ViewBag.EmployeeList,
+        "Id", "EmployeeId"), "Select Employee", new { @class = "form-control select2", id = "empID",required="required" })
+                                    </div>
+                                </div>
+                                <!-- col-4 -->
+                                <!-- col-4 -->
+                                <!-- col-4 -->
+                            </div>
+                        }
+                        <!-- row -->
+                        <!-- form-layout-footer -->
+
+                    </div>
 
 
                 <div id="OuterDiv" style="display:none;">

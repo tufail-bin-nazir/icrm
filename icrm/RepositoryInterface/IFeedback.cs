@@ -45,7 +45,10 @@ namespace icrm.RepositoryInterface
         List<SubCategory> getSubCategories(Int32 categoryId);
 
         List<string> getEmails();
-        IPagedList<Feedback> getListBasedOnType(int pageIndex, int pageSize, int type);
-       
+        IPagedList<Feedback> getListBasedOnType(int pageIndex, int pageSize, string type);
+        List<Department> getDepartmentsOnType(string fORWARD);
+        List<Priority> getPriorties();
+        List<FeedBackType> getFeedbackTypes();
+        ApplicationUser getEmpDetails(string id);
     }
 }

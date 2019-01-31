@@ -22,5 +22,6 @@ namespace icrm.Models
         public static string criticallevel1useremail = "";
         public static string criticallevel2useremail = "";
         public static string criticallevel3useremail = "";
+        public static string FORWARD = "Forward";
     }
 }

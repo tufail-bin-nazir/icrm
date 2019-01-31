@@ -51,7 +51,15 @@
                     <li class="breadcrumb-item active" aria-current="page">Create Tickets</li>
                 </ol>
                 <h6 class="slim-pagetitle">CREATE TICKET</h6>
-                <span class="text-success">@TempData["displayMsg"]</span>
+                @if (@TempData["displayMsg"] != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @TempData["displayMsg"]</strong>
+                    </div>
+                }
             </div>
             <!-- slim-pageheader -->
             @Html.ValidationSummary()
