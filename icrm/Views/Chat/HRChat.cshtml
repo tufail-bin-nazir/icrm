@@ -255,6 +255,7 @@
     <script src="~/Scripts/modernizr-2.8.3.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
     <script src="/signalr/hubs"></script>
+<script src="~/Content/lib/jquery-toggles/js/toggles.min.js"></script>
 
     <script>
         $(function () {
@@ -307,7 +308,11 @@
                 send();
             }
         });
-
+        function parseJsonDate(jsonDateString) {
+            console.log('--date string----' + jsonDateString);
+            moment().format();
+            return moment(new Date(parseInt(jsonDateString.replace('/Date(', '')))).format('h:mm A');
+        }
         var messageHub = $.connection.messageHub;
         console.log(messageHub);
         $.connection.hub.start().done(function() {
@@ -318,7 +323,7 @@
                 console.log('consumer started');
             });
         });
-        //signalr method for push server message to client
+        //signalr method for receiving server message to client
         messageHub.client.recieve = function(response) {
             //updateNotificationCount();
             //console.log(response);
@@ -333,6 +338,8 @@
                         '</p></div></div>');
                 $('.messages-list, .message-body').scrollTop($(".media-list").prop("scrollHeight"));
                 $('#latestmsg' + $('#chatId').val()).text(response.Text);
+                console.log(parseJsonDate(response.RecieveTime)+"---parsing date")
+                $('#msgCount' + response.ChatId).children('span').eq(0).text(parseJsonDate(response.RecieveTime));
             } else {
                 /*console.log('sender is here ' + $('#chatlist' + sender + '.media').length >
                     0 + '===but  is not active ' + $('.activechat').attr('id') ==
@@ -343,7 +350,7 @@
 
                     console.log(msgStore[response.ChatId] + "-----sender is here but is not active");
                     if (msgStore[response.ChatId] == null) {
-                        console.log('sender is null')
+                        console.log('sender is null');
                         msgStore[response.ChatId] = [];
                         msgStore[response.ChatId].push(response.Text);
                         if ($('#msgCount' + response.ChatId + '>span').length < 2) {
@@ -357,16 +364,15 @@
                         }
                     } else {
                         console.log('sender is not null so pushing messages')
-                        msgStore[response.ChatId].push(response.Text);
+                        //msgStore[response.ChatId].push(response.Text);
                         $('#msgCount' + response.ChatId).children('span').eq(1).text(msgStore[response.ChatId].length);
                         $('#latestmsg' + response.ChatId).text(response.Text);
 
                     }
                 } else {
-                    console.log('sender is not in chatlist')
-
                     msgStore[response.ChatId] = [];
                     msgStore[response.ChatId].push(response.Text);
+                    console.log('sender is not in chat list');
                     $('.messages-list').prepend('<a href="#" class="media" id="chatlist' +
                         response.ChatId +
                         '"><div class="media-left"><img src="/Content/img/img2.jpg" alt=""><span class="square-10 bg-success"></span></div><div class="media-body"><div><h6>' +
@@ -382,10 +388,7 @@
                         '</span></div></div></a>');
                 }
 
-                function parseJsonDate(jsonDateString) {
-                    moment().format();
-                    return moment(new Date(parseInt(jsonDateString.replace('/Date(', '')))).format('h:mm A');
-                }
+               
             }
         }
 
@@ -393,37 +396,6 @@
             $('#userclosechat').modal('show');
         }
 
-        /*setInterval(function() {
-                $.ajax({
-                    type: "GET",
-                    contentType: "application/json; charset=utf-8",
-                    data: '{}',
-                    url: "Url.Action("receive")",
-                dataType: "json",
-                success: function(response) {
-                    console.log("passs");
-                    if (response == null) {
-                        console.log("---null----------");
-                        return false;
-                    }
-                    console.log(response.Text);
-                    //console.log($('#chatlist' + sender + '.media'));
-                    //console.log('sender is here ' + $('#chatlist'+sender+'.media').length > 0 + '===and is active ' + $('.activechat').attr('id') == 'chatlist'+sender);
-
-                    console.log('0---0-0-0');
-                    var s = $('#chatlist' + response.ChatId);
-                    console.log(s);
-                    console.log($('#chatlist' + response.ChatId).length);
-                    console.log('after----0---0-0-0');
-
-                },
-                error: function(response) {
-                }
-
-            });
-
-        },
-        2000);*/
 
         function send() {
             var message = $("#txtmsg").val();
@@ -450,25 +422,6 @@
                 }
             });
         }
-
-        //$('a.media').click(function () {
-        //    $('.media-list').empty();
-        //    $('.activechat').removeClass('activechat');
-        //    $(this).addClass('activechat');
-        //    $('.messages-right').attr('style', '');
-        //    var sender = $(this).find('h6').html();
-        //    var messages = msgStore[sender];
-        //    console.log('messages----' + messages);
-        //    for (var i = 0;i < messages.length; i++)
-        //    {
-        //        $('.media-list')
-        //            .append(
-        //                '<div class="media"><div class="media-body"><div class="msg"><p>' + messages[i] + '</p></div></div></div>');
-
-        //    }
-        //    msgStore[sender] = [];
-        //    $('#msgCount' + sender + ' span:last').remove();
-        //}); +
 
 
 
@@ -570,23 +523,17 @@
         }
 
         $(window).on('beforeunload', function () {
-            console.log('-----chat window not closed-----');
-            var url = "/chat/window/close";
-            //$.get(url, function () { });
-            fetch(url).then(function(data) {
-                        // Here you get the data to modify as you please
-                    console.log('00-0--0-good')
-            })
-            .catch(function(error) {
-                // If there is any error you will catch them here
+            console.log('in beacon');
+            window.addEventListener('beforeunload', () => {
+                var url = "/chat/window/close";
 
-                    console.log('still goood-------' + error);
-                });
-            for (var i = 0; i < 2000; i++) {
-                if (i % 500 == 0)
-                    console.log(i);
-            }
+                navigator.sendBeacon(url, data);
+                console.log('after  beacon');
+
+            });
         });
+
+
 
         /*window.onbeforeunload = function() {
             $('body').mousemove(checkunload);
@@ -610,7 +557,59 @@
         });
 
     });
+    $(function() {
+        'use strict'
 
+        // Toggles
+        $('.toggle').toggles({
+            on: false,
+            height: 26,
+            text: {
+                on: 'YES', // text for the ON position
+                off: 'NO' // and off
+            }
+        });
+        
+        });
+    $(document).ready(function () {
+        
+        $('.toggle').on('click', function (e, active) {
+            var status = $('.toggle').data('toggles');
+            var url = '/chat/hr/available/';
+            console.log(status.active+"----current status")
+
+            if (status.active) {
+                url = url + "true";
+                $.get(url, function() {
+                    console.log('on');
+                });
+            } else {
+                url = url + "false";
+                $.get(url, function () {
+                    console.log('off');
+                });
+            }
+
+
+        });
+         
+        var url = '/chat/hr/checkavailable';
+
+        $.get(url, function (data) {
+            var val = data.toLowerCase();
+            var T = $('.toggle').data('toggles');
+            console.log(data + "======data from server"+val);
+            if (val == "true") {
+                T.toggle(true);
+            } else {
+                T.toggle(false);
+
+            }
+        });
+    });
     </script>
-    @Html.Partial("_HRFooter")
+
+    @*
+        @Html.Partial("_HRFooter")
+    *@
 </body>
