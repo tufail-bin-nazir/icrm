@@ -110,13 +110,12 @@ namespace icrm.Controllers
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-            Feedback f = db.Feedbacks.Find(feedback.id);
+            Feedback f = feedInterface.Find(feedback.id);
             f.checkStatus = Constants.RESPONDED;
             List<Comments> cc = new List<Comments>();
            
             if (Request.Form["responsee"] != "")
             {
-
 
                 Comments c = new Comments();
                 c.text = Request.Form["responsee"];
