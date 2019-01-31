@@ -99,7 +99,7 @@ namespace icrm.Controllers
             ViewData["user"] = user;
             if (id == null)
             {
-                ViewBag.ErrorMsg = "FeedBack not found";
+                ViewBag.ErrorMsg = "This Ticket is not found,Try with proper data";
                 return RedirectToAction("list");
             }
             else
@@ -334,7 +334,7 @@ namespace icrm.Controllers
                             feedback.checkStatus = Constants.RESOLVED;
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
-                            TempData["MessageSuccess"] = "Feedback Resolved";
+                            TempData["MessageSuccess"] = "Ticket has been Resolved Successfully";
                             return RedirectToAction("view", new { id = feedback.id });                     
                     }
                     else
@@ -354,7 +354,7 @@ namespace icrm.Controllers
                             feedback.checkStatus = Constants.REJECTED;
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
-                            TempData["MessageSuccess"] = "Feedback Rejected";
+                            TempData["MessageSuccess"] = "Ticket has been Rejected";
                             return RedirectToAction("DashBoard");
                     }
                     else
@@ -762,7 +762,7 @@ namespace icrm.Controllers
             string dd = date1;
             if (d3.Equals("") || dd.Equals(""))
             {
-                TempData["DateMsg"] = "Select StartDate And EndDate";
+                TempData["DateMsg"] = "Please Select StartDate And EndDate";
                 return RedirectToAction("DataCharts");
             }
             else
