@@ -10,8 +10,10 @@ namespace icrm.RepositoryInterface
     {
        Message Save(Message message);
        List<Message> GetMessagesOnIds(ArrayList idList);
-       Message UpdateMessage(int id);
+       Message UpdateRecieveTimeOfMessage(int id);
        List<Message> getChatListOfHrWithLastMessage(string id);
        IPagedList<Message> getPagedMessages(int chatId,int Page);
+        List<Message> GetMessagesOfChatRequestUser(string userId);
+        Message updateMessage(Message message);
     }
 }

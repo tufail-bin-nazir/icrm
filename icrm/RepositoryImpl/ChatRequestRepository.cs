@@ -32,5 +32,15 @@ namespace icrm.RepositoryImpl
 
             return true;
         }
+
+        public ChatRequest NextChatRequestInQueue()
+        {
+            return this.db.ChatRequest.ToList().FirstOrDefault();
+        }
+
+        public void delete(ChatRequest chatRequest)
+        {
+            this.db.ChatRequest.Remove(chatRequest);
+        }
     }
 }

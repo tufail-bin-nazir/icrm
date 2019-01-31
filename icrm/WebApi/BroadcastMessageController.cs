@@ -50,7 +50,7 @@ namespace icrm.WebApi
             broadcastMessage.SentTime=DateTime.Now;
             if (broadcastMessageService.Save(broadcastMessage))
             {
-                 eventService.sendmessage(broadcastMessage);
+                 eventService.sendbroadcastMessage(broadcastMessage);
             }
 
             return Ok();
@@ -60,10 +60,7 @@ namespace icrm.WebApi
         public IHttpActionResult FindAll()
         {
             List<BroadcastMessage> broadcastMessages = broadcastMessageService.FindAll();
-            foreach (var VARIABLE in broadcastMessages)
-            {
-                Debug.Print("--"+VARIABLE.Text+"-----"+VARIABLE.SentTime);
-            }
+
             return Ok(broadcastMessageService.FindAll());
         }
 
