@@ -324,7 +324,6 @@
     <Compile Include="Models\FeedbackDTO.cs" />
     <Compile Include="Models\FeedBackType.cs" />
     <Compile Include="Models\FeedBackViewModel.cs" />
-    <Compile Include="Models\Forwardmodel.cs" />
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\GenderViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -346,7 +345,6 @@
     <Compile Include="Models\PrioritiesViewModel.cs" />
     <Compile Include="Models\Priority.cs" />
     <Compile Include="Models\RabbitMQBll.cs" />
-    <Compile Include="Models\RecieveEmails.cs" />
     <Compile Include="Models\Religion.cs" />
     <Compile Include="Models\ReligionViewModel.cs" />
     <Compile Include="Models\Save File.cs" />
@@ -373,16 +371,8 @@
     <Compile Include="RepositoryInterface\IFeedback.cs" />
     <Compile Include="RepositoryInterface\MessageInterface.cs" />
     <Compile Include="RepositoryInterface\UserInterface.cs" />
-    <Compile Include="Resources\Resource.ar-SA.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.ar-SA.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\Resource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
+    <Compile Include="Resources\Resource.ar-SA.Designer.cs" />
+    <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Schedular\MyRegistry.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WebApi\BroadcastMessageController.cs" />
@@ -819,16 +809,8 @@
     <EmbeddedResource Include="Migrations\201901270632500_migrationNew.resx">
       <DependentUpon>201901270632500_migrationNew.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Resource.ar-SA.resx">
-      <CustomToolNamespace>Resources</CustomToolNamespace>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.ar-SA.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Resource.resx">
-      <CustomToolNamespace>Resources</CustomToolNamespace>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.ar-SA.resx" />
+    <EmbeddedResource Include="Resources\Resource.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
