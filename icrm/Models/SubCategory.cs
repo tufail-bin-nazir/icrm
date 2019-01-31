@@ -12,6 +12,9 @@ namespace icrm.Models
         public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
         public int priorityId { get; set; }
+        public int FeedBackTypeId { get; set; }
+
+        public virtual FeedBackType FeedBackType { get; set; }
 
     }
 }
