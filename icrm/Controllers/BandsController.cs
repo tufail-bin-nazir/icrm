@@ -38,7 +38,8 @@ namespace icrm.Controllers
         // GET: Bands/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.Status = "Add";
+            return View("CreateList", new BandViewModel { Bands = db.bands.ToList() });
         }
 
         // POST: Bands/Create
@@ -52,10 +53,11 @@ namespace icrm.Controllers
             {
                 db.bands.Add(band);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
-            return View(band);
+            ViewBag.Status = "Add";
+            return View("CreateList", new BandViewModel { Bands = db.bands.ToList() });
         }
 
         // GET: Bands/Edit/5
@@ -70,7 +72,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(band);
+            ViewBag.Status = "Update";
+            return View("CreateList", new BandViewModel {Band = band, Bands = db.bands.ToList() });
         }
 
         // POST: Bands/Edit/5
@@ -84,9 +87,10 @@ namespace icrm.Controllers
             {
                 db.Entry(band).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
-            return View(band);
+            ViewBag.Status = "Update";
+            return View("CreateList", new BandViewModel { Bands = db.bands.ToList() });
         }
 
         // GET: Bands/Delete/5
@@ -101,7 +105,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(band);
+            ViewBag.Status = "Delete";
+            return View("CreateList", new BandViewModel { Band = band, Bands = db.bands.ToList() });
         }
 
         // POST: Bands/Delete/5
@@ -112,7 +117,7 @@ namespace icrm.Controllers
             Band band = db.bands.Find(id);
             db.bands.Remove(band);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Create");
         }
 
         protected override void Dispose(bool disposing)
