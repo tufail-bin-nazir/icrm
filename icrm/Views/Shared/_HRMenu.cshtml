@@ -14,7 +14,36 @@
         </div>
         <!-- slim-header-left -->
         <div class="slim-header-right">
-            
+            <a style="margin-bottom: 5px;">Available for Chat &nbsp; &nbsp; &nbsp;</a>
+
+            <div class="dropdown dropdown-a">
+                <a href="#" class="">
+                    <div class="toggle-wrapper" id="chattoggle">
+                        <div class="toggle toggle-light danger"></div>
+                    </div>
+                </a>
+            </div>
+            <div class="dropdown dropdown-b">
+                <a href="default.htm" class="header-notification" data-toggle="dropdown">
+
+                    <i class="icon ion-ios-bell-outline"></i>
+
+                    <span class="" style="background-color: #1b84e7;color: #fff;border-radius: 100%;font-size: 9px;display: flex;align-items: center;justify-content: center;width: 18px;height: 18px;margin-top: -11px;" id="notifyCount"></span>
+
+                </a>
+                <div class="dropdown-menu">
+                    <div class="dropdown-menu-header">
+                        <h6 class="dropdown-menu-title">Notifications</h6>
+                    </div>
+                    <!-- dropdown-menu-header -->
+                    <div class="dropdown-list" id="notificationlist">
+                        <!-- loop starts here -->
+                        
+                    </div>
+                    <!-- dropdown-list -->
+                </div>
+                <!-- dropdown-menu-right -->
+            </div>
             <!-- dropdown -->
             <div class="dropdown dropdown-c">
                 <a href="#" class="logged-user" data-toggle="dropdown">
@@ -26,18 +55,18 @@
                     <nav class="nav">
                         <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
                         <a href="@Url.Action("index","userprofile")" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>
-                        <a href="@Url.Action("index","DownloadAPK")"  class="nav-link"><i class="icon ion-ios-bolt"></i> Download APK</a>
+                        <a href="@Url.Action("index","DownloadAPK")" class="nav-link"><i class="icon ion-ios-bolt"></i> Download APK</a>
                         <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>
                         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, null))
                         {
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="username" value="@System.Web.HttpContext.Current.User.Identity.Name" />
-                            <a href="#" class="nav-link">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="username" value="@System.Web.HttpContext.Current.User.Identity.Name" />
+                        <a href="#" class="nav-link">
 
-                                <i class="icon ion-forward"></i><input class="nav-link" style="background: transparent;
+                            <i class="icon ion-forward"></i><input class="nav-link" style="background: transparent;
                text-decoration: none;
                cursor: pointer; border:none;" type="submit" value="Sign Out" />
-                            </a>
+                        </a>
 
 
                         }
@@ -93,9 +122,9 @@
                         <li>@Html.ActionLink(Resources.Resource.Responded_Complaints, "responded", "HR", new { id = "respondedticket" }, null)</li>
                         <li>@Html.ActionLink(Resources.Resource.Closed_Complaints, "Closed", "HR", new { id = "closedticket" }, null)</li>
                         <li>@Html.ActionLink("Rejected Tickets", "Rejected", "HR", new { id = "rejectedticket" }, null)</li>
-                        <li>@Html.ActionLink(Resources.Resource.Inquiries, "tickets", "HR", new { typeId = "2" }, null)</li>
-                        <li>@Html.ActionLink(Resources.Resource.Suggestions, "tickets", "HR", new { typeId = "3" }, null)</li>
-                        <li>@Html.ActionLink(Resources.Resource.Feedback_Complaint, "tickets", "HR", new { typeId = "1" }, null)</li>
+                        <li>@Html.ActionLink(Resources.Resource.Inquiries, "tickets", "HR", new { typeId = "Enquiry" }, null)</li>
+                        <li>@Html.ActionLink(Resources.Resource.Suggestions, "tickets", "HR", new { typeId = "Suggestions" }, null)</li>
+                        <li>@Html.ActionLink(Resources.Resource.Feedback_Complaint, "tickets", "HR", new { typeId = "Complaint" }, null)</li>
                     </ul>
                 </div>
                 <!-- dropdown-menu -->

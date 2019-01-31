@@ -195,6 +195,7 @@ namespace icrm.Models
         public System.Data.Entity.DbSet<icrm.Models.SubCategory> SubCategories { get; set; }
 
         public System.Data.Entity.DbSet<icrm.Models.EventReason> EventReasons { get; set; }
+        public System.Data.Entity.DbSet<icrm.Models.HubConnectionMap> HubConnectionMap{ get; set; }
     }
 
     public class MyDBInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>

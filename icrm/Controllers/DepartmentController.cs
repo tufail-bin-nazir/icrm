@@ -88,7 +88,7 @@ namespace icrm.Controllers
             ViewData["user"] = user;
             if (id == null)
             {
-                ViewBag.ErrorMsg = "FeedBack not found";
+                ViewBag.ErrorMsg = "This Ticket is not found,Try with proper data";
                 return RedirectToAction("list");
             }
             else
@@ -124,31 +124,13 @@ namespace icrm.Controllers
                 c.feedbackId = feedback.id;
                 db.comments.Add(c);
                 db.SaveChanges();
-
-                
-                // f.response = cc;
-                // f.response = feedback.response;
-                //f.responseById = user.Id;
-                //f.responseBy = db.Users.Find(user.Id);
-                //f.responseDate = DateTime.Today;
-
-             //   if (ModelState.IsValid)
-              //  {
-
-                    db.Entry(f).State = EntityState.Modified;
-                    db.SaveChanges();
-                    TempData["displayMsg"] = "FeedBacK Updated";
-                    ViewData["decide"] = db.comments.Where(m => m.feedbackId == feedback.id).ToList();
-                    return RedirectToAction("DashBoard");
-              //  }
-             //   else
-             //   {
-              //      TempData["displayMsg"] = "Information is not Valid";
-              //      ViewData["decide"] = db.comments.Where(m => m.feedbackId == feedback.id).ToList();
-              //      return RedirectToAction("view", new { name = "respondedview", id = feedback.id });
-             //   }
+                db.Entry(f).State = EntityState.Modified;
+                 db.SaveChanges();
+                    TempData["displayMsg"] = "Ticket has been Updated Successfully";
+                ViewData["decide"] = feedInterface.getCOmments(feedback.id);                 
+                    return RedirectToAction("DashBoard");           
             }
-            TempData["displayMsg"] = "Response field is empty";
+            TempData["displayMsg"] = "Please fill Comment field";
             return RedirectToAction("view", new { name = "respondedview", id = feedback.id });
 
         }
@@ -162,7 +144,7 @@ namespace icrm.Controllers
             string dd = date1;
             if (d3.Equals("")|| dd.Equals(""))
             {
-                TempData["DateMsg"] = "Select StartDate And EndDate";
+                TempData["DateMsg"] = "Please Select StartDate And EndDate";
                 return RedirectToAction("Dashboard");
             }
             else
@@ -227,12 +209,12 @@ namespace icrm.Controllers
         {
             
             var user = UserManager.FindById(User.Identity.GetUserId());
-            ViewData["commentList"] = db.comments.Where(m => m.feedbackId ==id).ToList();
+            ViewData["commentList"] = feedInterface.getCOmments(id);
 
             ViewData["user"] = user;
             if (id == null)
             {
-                ViewBag.ErrorMsg = "FeedBack not found";
+                ViewBag.ErrorMsg = "This Ticket is not found,Try with proper data";
                 return RedirectToAction("list");
             }
             else
@@ -248,15 +230,15 @@ namespace icrm.Controllers
         public ActionResult openview(string id)
         {
 
-            ViewData["decide"]= db.comments.Where(m => m.feedbackId ==id).ToList();
-            ViewData["commentList"] = db.comments.Where(m => m.feedbackId == id).ToList();
+            ViewData["decide"]= feedInterface.getCOmments(id);
+            ViewData["commentList"] = feedInterface.getCOmments(id);
 
-            ViewBag.co = db.comments.Where(m => m.feedbackId == id).ToList().Count();
+            
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             if (id == null)
             {
-                ViewBag.ErrorMsg = "FeedBack not found";
+                ViewBag.ErrorMsg = "This Ticket is not found,Try with proper data";
                 return RedirectToAction("list");
             }
             else
@@ -272,12 +254,12 @@ namespace icrm.Controllers
         {
            
             var user = UserManager.FindById(User.Identity.GetUserId());
-            ViewData["commentList"] = db.comments.Where(m => m.feedbackId == id).ToList();
+            ViewData["commentList"] = feedInterface.getCOmments(id);
 
             ViewData["user"] = user;
             if (id == null)
             {
-                ViewBag.ErrorMsg = "FeedBack not found";
+                ViewBag.ErrorMsg = "This Ticket is not found,Try with proper data";
                 return RedirectToAction("list");
             }
             else
@@ -294,12 +276,12 @@ namespace icrm.Controllers
         {
             
             var user = UserManager.FindById(User.Identity.GetUserId());
-            ViewData["commentList"] = db.comments.Where(m => m.feedbackId == id).ToList();
+            ViewData["commentList"] = feedInterface.getCOmments(id);
 
             ViewData["user"] = user;
             if (id == null)
             {
-                ViewBag.ErrorMsg = "FeedBack not found";
+                ViewBag.ErrorMsg = "This Ticket is not found,Try with proper data";
                 return RedirectToAction("list");
             }
             else
@@ -337,13 +319,10 @@ namespace icrm.Controllers
         /*****Get Attribute List***************/
 
         public void getAttributeList() {
-            var departments = db.Departments.OrderByDescending(m => m.name).ToList();
-            var categories = db.Categories.OrderByDescending(m => m.name).ToList();
-            var priorities = db.Priorities.OrderByDescending(m => m.priorityId).ToList();
-
-            ViewBag.Departmn = departments;
-            ViewBag.Categories = categories;
-            ViewBag.Priorities = priorities;
+           
+          ViewBag.Departmn = feedInterface.getDepartmentsOnType(Constants.FORWARD);
+           
+            ViewBag.Priorities = feedInterface.getPriorties();
 
         }
     }

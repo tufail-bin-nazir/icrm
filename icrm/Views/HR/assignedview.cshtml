@@ -60,7 +60,16 @@
 
                     <p class="mg-b-20 mg-sm-b-40"></p>
                     <div class="form-layout">
-                        <span class="tx-success">@TempData["Message"]</span>
+
+                        @if (@TempData["Message"] != null)
+                        {
+                            <div class="alert alert-success" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong> @TempData["Message"]</strong>
+                            </div>
+                        }
                         @Html.HiddenFor(model => model.id, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
@@ -146,66 +155,74 @@
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">@Resources.Resource.Title<span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.title, new { @readonly = "readonly", @class = "form-control" })
+                                    <label class="form-control-label">@Resources.Resource.Type <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.type.name, new { @readonly = "readonly", @class = "form-control" })
+
+
+
+                                </div>                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@Resources.Resource.Title<span class="tx-danger">*</span></label>
+                                        @Html.TextBoxFor(model => model.title, new { @readonly = "readonly", @class = "form-control" })
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group mg-b-10-force">
-                                    <label class="form-control-label">@Resources.Resource.Description <span class="tx-danger">*</span></label>
-                                    @Html.TextAreaFor(model => model.description, new { @readonly = "readonly", @class = "form-control" })
+                                <!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group mg-b-10-force">
+                                        <label class="form-control-label">@Resources.Resource.Description <span class="tx-danger">*</span></label>
+                                        @Html.TextAreaFor(model => model.description, new { @readonly = "readonly", @class = "form-control" })
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.departmentID,
-                          new SelectList(ViewBag.Departmn,
-                        "Id", "name"), "Choose Department", new { @readonly = "readonly", disabled = "disabled", @class = "form-control select2" })
-                                    @Html.HiddenFor(model => model.departmentID, new { @class = "form-control" })
+                                <!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
+                                        @Html.DropDownListFor(m => m.departmentID,
+                              new SelectList(ViewBag.Departmn,
+                            "Id", "name"), "Choose Department", new { @readonly = "readonly", disabled = "disabled", @class = "form-control select2" })
+                                        @Html.HiddenFor(model => model.departmentID, new { @class = "form-control" })
 
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(m => m.category.name,
-                           new { @readonly = "readonly" , @class = "form-control" })
-                                    @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
+                                <!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
+                                        @Html.TextBoxFor(m => m.category.name,
+                               new { @readonly = "readonly" , @class = "form-control" })
+                                        @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
 
+                                    </div>
                                 </div>
-                            </div>
 
 
 
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label"> Sub Category: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(m => m.SubCategory.name,
-                           new { @readonly = "readonly" , @class = "form-control" })
-                                    @Html.HiddenFor(model => model.subcategoryId, new { @class = "form-control" })
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label"> Sub Category: <span class="tx-danger">*</span></label>
+                                        @Html.TextBoxFor(m => m.SubCategory.name,
+                               new { @readonly = "readonly" , @class = "form-control" })
+                                        @Html.HiddenFor(model => model.subcategoryId, new { @class = "form-control" })
 
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">@Resources.Resource.Priority<span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.priorityId,
-                           new SelectList(ViewBag.Priorities,
-                         "Id", "priorityId"), "Choose Priority", new { @readonly = "readonly",disabled = "disabled", @class = "form-control select2" })
-                                    @Html.HiddenFor(model => model.priorityId, new { @class = "form-control" })
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@Resources.Resource.Priority<span class="tx-danger">*</span></label>
+                                        @Html.DropDownListFor(m => m.priorityId,
+                               new SelectList(ViewBag.Priorities,
+                             "Id", "priorityId"), "Choose Priority", new { @readonly = "readonly",disabled = "disabled", @class = "form-control select2" })
+                                        @Html.HiddenFor(model => model.priorityId, new { @class = "form-control" })
 
+                                    </div>
                                 </div>
+                                <!-- col-4 -->
                             </div>
-                            <!-- col-4 -->
+                            <!-- row -->
+                            <!-- form-layout-footer -->
                         </div>
-                        <!-- row -->
-                        <!-- form-layout-footer -->
-                    </div>
 
 
 
@@ -315,88 +332,89 @@
     <script src="~/Content/lib/jquery.maskedinput/js/jquery.maskedinput.js"></script>
     <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
     <script src="~/Content/js/slim.js"></script>
-    <script>
-        $('#resolve').click(function () {
-            if ($('#statusfield').val() == "Resolved") {
+<script>
+    $('#resolve').click(function () {
+        if ($('#statusfield').val() == "Resolved") {
 
-                return true;
-            }
+            return true;
+        }
 
-            else {
-                $('#statuscheck').text("Set status Resolve");
-                return false;
+        else {
+            $('#statuscheck').text("Set status Resolve");
+            return false;
 
-            }
+        }
 
+    });
+
+    $(function () {
+
+
+        'use strict'
+
+        // Toggles
+        $('.toggle').toggles({
+            on: true,
+            height: 26
         });
 
-        $(function () {
+        // Input Masks
+        $('#dateMask').mask('99/99/9999');
+        $('#phoneMask').mask('(999) 999-9999');
+        $('#ssnMask').mask('999-99-9999');
 
+        // Time Picker
+        $('#tpBasic').timepicker();
+        $('#tp2').timepicker({
+            'scrollDefault': 'now'
+        });
+        $('#tp3').timepicker();
 
-            'use strict'
-
-            // Toggles
-            $('.toggle').toggles({
-                on: true,
-                height: 26
-            });
-
-            // Input Masks
-            $('#dateMask').mask('99/99/9999');
-            $('#phoneMask').mask('(999) 999-9999');
-            $('#ssnMask').mask('999-99-9999');
-
-            // Time Picker
-            $('#tpBasic').timepicker();
-            $('#tp2').timepicker({
-                'scrollDefault': 'now'
-            });
-            $('#tp3').timepicker();
-
-            $('#setTimeButton').on('click', function () {
-                $('#tp3').timepicker('setTime', new Date());
-            });
-
-            // Color picker
-            $('#colorpicker').spectrum({
-                color: '#17A2B8'
-            });
-
-            $('#showAlpha').spectrum({
-                color: 'rgba(23,162,184,0.5)',
-                showAlpha: true
-            });
-
-            $('#showPaletteOnly').spectrum({
-                showPaletteOnly: true,
-                showPalette: true,
-                color: '#DC3545',
-                palette: [
-                    ['#1D2939', '#fff', '#0866C6', '#23BF08', '#F49917'],
-                    ['#DC3545', '#17A2B8', '#6610F2', '#fa1e81', '#72e7a6']
-                ]
-            });
-
+        $('#setTimeButton').on('click', function () {
+            $('#tp3').timepicker('setTime', new Date());
         });
 
-        $(function () {
-            'use strict'
-
-            // Datepicker
-            $('.fc-datepicker').datepicker({
-                showOtherMonths: true,
-                selectOtherMonths: true,
-                dateFormat: 'dd-mm-yy'
-            });
-
-            $('#datepickerNoOfMonths').datepicker({
-                showOtherMonths: true,
-                selectOtherMonths: true,
-                numberOfMonths: 2
-            });
-
+        // Color picker
+        $('#colorpicker').spectrum({
+            color: '#17A2B8'
         });
 
-    </script>
+        $('#showAlpha').spectrum({
+            color: 'rgba(23,162,184,0.5)',
+            showAlpha: true
+        });
+
+        $('#showPaletteOnly').spectrum({
+            showPaletteOnly: true,
+            showPalette: true,
+            color: '#DC3545',
+            palette: [
+                ['#1D2939', '#fff', '#0866C6', '#23BF08', '#F49917'],
+                ['#DC3545', '#17A2B8', '#6610F2', '#fa1e81', '#72e7a6']
+            ]
+        });
+
+    });
+
+    $(function () {
+        'use strict'
+
+        // Datepicker
+        $('.fc-datepicker').datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            dateFormat: 'dd-mm-yy'
+        });
+
+        $('#datepickerNoOfMonths').datepicker({
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            numberOfMonths: 2
+        });
+
+    });
+
+</script>
+@Html.Partial("_HRFooter")
 </body>
 </html>
