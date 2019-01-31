@@ -45,7 +45,9 @@
         
         $('.toggle').on('click', function (e, active) {
             var status = $('.toggle').data('toggles');
-                var url = '/chat/hr/available/';
+            var url = '/chat/hr/available/';
+            console.log(status.active+"----current status")
+
                 if (status.active) {
                     url = url + "true";
                     $.get(url, function() {
