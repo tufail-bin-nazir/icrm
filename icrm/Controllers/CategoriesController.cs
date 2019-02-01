@@ -15,12 +15,15 @@ namespace icrm.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        private GenericPagination<Category> gp = new GenericPagination<Category>();
         // GET: Categories
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
+            
             ViewBag.DepartmentList = db.Departments.ToList();
-            ViewBag.FeedBackTypeList = db.FeedbackTypes.ToList();
+            ViewBag.FeedBackTypeList = db.FeedbackTypes.ToList();            
             return View(db.Categories.ToList());
+
         }
 
         // GET: Categories/Details/5
@@ -39,12 +42,15 @@ namespace icrm.Controllers
         }
 
         // GET: Categories/Create
-        public ActionResult Create()
+        public ActionResult Create(int? page)
         {
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             @ViewBag.Status = "Add";
             ViewBag.DepartmentList = db.Departments.ToList();
             ViewBag.FeedBackTypeList = db.FeedbackTypes.ToList();
-            return View("CreateList",new CategoryViewModel { Categories = db.Categories.ToList()});
+            return View("CreateList",new CategoryViewModel { Categories = gp.GetAll<Category>(pageIndex, pageSize) });
         }
 
         // POST: Categories/Create
