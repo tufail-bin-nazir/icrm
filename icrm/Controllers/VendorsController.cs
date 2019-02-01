@@ -52,11 +52,10 @@ namespace icrm.Controllers
             {
                 db.vendors.Add(vendor);
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Index");
             }
 
-            ViewBag.Status = "Add";
-            return View("CreateList", new VendorViewModel { Vendors = db.vendors.ToList() });
+            return View(vendor);
         }
 
         // GET: Vendors/Edit/5
@@ -71,8 +70,7 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Status = "Add";
-            return View("CreateList", new VendorViewModel {Vendor = vendor, Vendors = db.vendors.ToList() });
+            return View(vendor);
         }
 
         // POST: Vendors/Edit/5
@@ -86,10 +84,9 @@ namespace icrm.Controllers
             {
                 db.Entry(vendor).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Index");
             }
-            ViewBag.Status = "Update";
-            return View("CreateList", new VendorViewModel { Vendors = db.vendors.ToList() });
+            return View(vendor);
         }
 
         // GET: Vendors/Delete/5
@@ -104,8 +101,7 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Status = "Delete";
-            return View("CreateList", new VendorViewModel {Vendor = vendor,  Vendors = db.vendors.ToList() });
+            return View(vendor);
         }
 
         // POST: Vendors/Delete/5
@@ -116,7 +112,7 @@ namespace icrm.Controllers
             Vendor vendor = db.vendors.Find(id);
             db.vendors.Remove(vendor);
             db.SaveChanges();
-            return RedirectToAction("Create");
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

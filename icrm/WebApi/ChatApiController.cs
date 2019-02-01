@@ -16,8 +16,6 @@ using RabbitMQ.Client;
 
 namespace icrm.WebApi
 {
-    using icrm.Events;
-
     [Authorize]
     public class ChatApiController : ApiController
     {
@@ -26,7 +24,6 @@ namespace icrm.WebApi
         private ChatInterface chatService;
         private MessageInterface messageService;
         private ChatRequestInterface chatRequestService;
-        private EventService eventService;
 
         public ChatApiController()
         {
@@ -34,7 +31,7 @@ namespace icrm.WebApi
             chatService = new ChatRepository();
             messageService = new MessageRepository();
             chatRequestService = new ChatRequestRepository();
-            this.eventService = new EventService();
+            
         }
 
         [HttpPost]
@@ -44,37 +41,64 @@ namespace icrm.WebApi
             var Name1 = User.Identity.Name;
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
             ApplicationUser sender = user.Result;
-            message.SenderId = sender.Id;
-            ApplicationUser reciever;
+            ApplicationUser reciever = new ApplicationUser();
+           // Debug.Print("--------"+chatViewModel.Reciever+"------");
 
-            Debug.Print(message.ChatId + "--------chat id by mudassir-----" + message.Text);
-            if (message.ChatId == 0 || !this.chatService.IsActive(message.ChatId))
+            Debug.Print(message.ChatId+"--------chat id by mudassir-----"+message.Text);
+            if (message.ChatId == 0)
             {
-                reciever =ProcessMessage(message,sender);
-                Debug.Print("it shud be here-----");
-                if (reciever == null)
+                Debug.Print("Chat Id is null");
+                reciever = userService.GetAllAvailableUsers(Constants.ROLE_HR).FirstOrDefault();
+                if (reciever != null)
                 {
-                    Debug.Print("process msg rerurned null----");
-                    return Ok();
-
+                    reciever.available = false;
+                    userService.Update(reciever);
                 }
-                    
+                else
+                {
+                    ChatRequest chatRequest = new ChatRequest();
+                    chatRequest.UserId = sender.Id;
+                    chatRequestService.Save(chatRequest);
+                    return BadRequest();
+                }
+
+                Debug.Print("So reciever is+++"+reciever.UserName);
             }
               else
             {
-                    reciever = userService.findUserOnId(message.RecieverId);
+                reciever = userService.findUserOnId(message.RecieverId);
+            }
+
+
+            RabbitMQBll obj = new RabbitMQBll();
+            IConnection con = obj.GetConnection();
+            int? chatId2 = chatService.getChatIdOfUsers(sender.Id, reciever.Id);
+            Debug.Print("Chat id is  "+chatId2);
+            if (chatId2 == null)
+            {
+                Debug.Print("Chat id 2 is null but how--"+chatId2);
+                Chat chat = new Chat();
+                chat.UserOneId = sender.Id;
+                chat.UserTwoId = reciever.Id;
+                chatId2 = chatService.Save(chat);
             }
 
             
-            Producer producer = new Producer("messageexchange",ExchangeType.Direct);
-            Message msgWithId = new Message();
-            if (producer.ConnectToRabbitMQ())
+            
+            message.SenderId = sender.Id;
+            if (message.RecieverId.IsNullOrWhiteSpace())
             {
-                 msgWithId = SendChatMessage(message, sender, reciever);
-                producer.send(msgWithId);
-                this.eventService.NotifyHrAboutChat(msgWithId);
-
+                message.RecieverId = reciever.Id;
             }
+
+            message.SentTime = DateTime.Now;
+            message.ChatId = chatId2;
+            Message msgWithId = messageService.Save(message);
+            Debug.Print((msgWithId) + "----msgwitrhid");
+            Debug.Print(msgWithId.Id + "----mdgid>><<<<<" + msgWithId.Reciever + "-----reciever");
+            //Debug.Print("---here--------"+chatViewModel.ToString());
+            bool flag = obj.send(con, msgWithId);
+
             return Ok(msgWithId);
         }
 
@@ -82,7 +106,7 @@ namespace icrm.WebApi
         [Route("api/chat/recieve")]
         public IHttpActionResult recievemsg()
         {
-            /*try
+            try
             {
                 var Name1 = User.Identity.Name;
                 Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
@@ -91,6 +115,9 @@ namespace icrm.WebApi
                 RabbitMQBll obj = new RabbitMQBll();
                 IConnection con = obj.GetConnection();
                 Message message = obj.receive(con, reciever.UserName);
+ 
+
+
                 return Ok(message);
             }
             catch (Exception e)
@@ -98,8 +125,8 @@ namespace icrm.WebApi
                 Debug.Print("======excepiton");
                 Debug.Print(e.StackTrace);
                 return null;
-            }*/
-            return null;
+            }
+
         }
 
         [HttpGet]
@@ -110,7 +137,8 @@ namespace icrm.WebApi
             var Name1 = User.Identity.Name;
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
             ApplicationUser sender = user.Result;
-            if (this.chatRequestService.ChatRequestsSize()>0)
+            int chatRequestCount = chatRequestService.ChatRequestsSize();
+            if (reciever == null)
             {
                 if (!chatRequestService.CheckRequestExistsOfUser(sender.Id))
                 {
@@ -121,46 +149,8 @@ namespace icrm.WebApi
 
                 return "false";
             }
-            else
-            {
-                if (reciever == null)
-                {
-                    if (!chatRequestService.CheckRequestExistsOfUser(sender.Id))
-                    {
-                        ChatRequest chatRequest = new ChatRequest();
-                        chatRequest.UserId = sender.Id;
-                        chatRequestService.Save(chatRequest);
-                    }
 
-                    return "false";
-
-                }
-
-            }
-            startConsumer(sender.UserName);
             return "true";
-        }
-
-        [HttpGet]
-        [Route("api/chat/close")]
-        public IHttpActionResult closeChat(Message message)
-        {
-            //tell mudassir to send message with chatid and recieverid
-            this.chatService.changeActiveStatus(message.ChatId,false);
-            this.eventService.chatClosedByUser(message.Reciever.UserName);
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("api/chat/window/open")]
-        public IHttpActionResult chatWindowOpen()
-        {
-            Debug.Print("chat window opened----------");
-            var Name1 = User.Identity.Name;
-            Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
-            ApplicationUser sender = user.Result;
-            startConsumer(sender.UserName);
-            return Ok();
         }
 
         public ApplicationUserManager UserManager
@@ -175,92 +165,5 @@ namespace icrm.WebApi
             }
         }
 
-        public ApplicationUser ProcessMessage(Message message,ApplicationUser sender)
-        {
-            if (this.chatRequestService.ChatRequestsSize() > 0)
-            {
-                if (this.chatRequestService.CheckRequestExistsOfUser(message.SenderId))
-                {
-                    message.ChatId = null;
-                    message.RecieverId = null;
-                    message.SentTime = DateTime.Now;
-                    this.messageService.Save(message);
-                    return null;
-                }
-                else
-                {
-                    ChatRequest chatRequest = new ChatRequest();
-                    chatRequest.UserId = message.Sender.Id;
-                    chatRequestService.Save(chatRequest);
-                    message.ChatId = null;
-                    message.RecieverId = null;
-                    message.SentTime = DateTime.Now;
-                    this.messageService.Save(message);
-                    return null;
-                }
-            }
-            else
-            {
-                ApplicationUser reciever = userService.GetAllAvailableUsers(Constants.ROLE_HR).FirstOrDefault();
-
-                //Debug.Print(reciever.UserName+"-----username-----"+reciever.Id);
-                if (reciever != null && (this.chatService.IsActive(message.ChatId) || message.ChatId == 0) )
-                {
-                    reciever.available = false;
-                    userService.Update(reciever);
-                    return reciever;
-                }
-                else
-                {
-                    ChatRequest chatRequest = new ChatRequest();
-                    chatRequest.UserId = message.Sender.Id;
-                    chatRequestService.Save(chatRequest);
-                    message.ChatId = null;
-                    message.RecieverId = null;
-                    message.SentTime = DateTime.Now;
-                    this.messageService.Save(message);
-                    return null;
-                }
-            }
-
-            return null;
-        }
-
-        public Message SendChatMessage(Message message,ApplicationUser sender,ApplicationUser reciever )
-        {
-            int? chatId2 = chatService.getChatIdOfUsers(sender.Id, reciever.Id);
-            Debug.Print("Chat id is  " + chatId2);
-            if (chatId2 == null)
-            {
-                Debug.Print("Chat id 2 is null but how--" + chatId2);
-                Chat chat = new Chat();
-                chat.UserOneId = sender.Id;
-                chat.UserTwoId = reciever.Id;
-                chat.active = true;
-                Debug.Print("chat details----"+chat.ToString());
-                chatId2 = chatService.Save(chat);
-            }
-
-
-
-            message.SenderId = sender.Id;
-            if (message.RecieverId.IsNullOrWhiteSpace())
-            {
-                message.RecieverId = reciever.Id;
-            }
-
-            message.SentTime = DateTime.Now;
-            message.ChatId = chatId2;
-            Message msgWithId = messageService.Save(message);
-            return msgWithId;
-        }
-
-        public void startConsumer(string username)
-        {
-            Consumer consumer = new Consumer("messageexchange",ExchangeType.Direct);
-            if(consumer.ConnectToRabbitMQ())
-               consumer.StartConsuming(username);
-
-        }
     }
 }

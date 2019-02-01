@@ -147,13 +147,26 @@ namespace icrm.WebApi
 
             else
             {
+
+                var Name1 = User.Identity.Name;
+                Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
                 f.checkStatus = Models.Constants.RESOLVED;
                 f.status = feedback.status;
                 f.response = feedback.response;
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
-
+                /////////////////////////////////////////////////////////////
+                Comments c = new Comments();
+                c.date = DateTime.Now;
+                c.feedbackId = Id;
+                c.commentedById = user.Result.Id;
+                c.text = feedback.response;
+                db.comments.Add(c);
+                db.SaveChanges();
                 return Ok();
+
+
+              
 
             }
         }
@@ -257,7 +270,11 @@ namespace icrm.WebApi
                 f.checkStatus = Models.Constants.ASSIGNED;
                 f.subcategoryId = forward.subcategoryId;
                 f.categoryId = forward.categoryId;
-                f.priorityId = forward.priorityId;
+                if (f.priorityId != null)
+                {
+                    f.priorityId = forward.priorityId;
+
+                }
                 f.departmentID = forward.departmentID;
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
@@ -594,6 +611,13 @@ namespace icrm.WebApi
                     f.checkStatus = Models.Constants.CLOSED;
 
                 }
+                else if(f.status=="Open")
+                {
+
+                    f.checkStatus = Models.Constants.OPEN;
+
+                }
+
                 else
                 {
                     f.checkStatus = Models.Constants.RESOLVED;
@@ -1177,14 +1201,15 @@ namespace icrm.WebApi
         }
 
         //38/ <summary>
-        /// ////////////////////////////****************Get All Suggestions*******************////////////////////////////
+        /// ////////////////////////////**************** Get All Suggestions*******************////////////////////////////
         /// </summary>
         /// <returns></returns>
-        [Route("api/HR/GetSuggestionslist")]
-        public IHttpActionResult GetSuggestionslist()
+        [Route("api/HR/getsuggestionlist")]
+        public IHttpActionResult getsuggestionlist()
         {
+            string type = Models.Constants.Suggestion;
 
-            var entity = from f in feedInterface.GetAllResponded()
+            var entity = from f in feedInterface.GetListBasedOnType(type)
                          select f;
 
             if (entity != null)
@@ -1200,7 +1225,30 @@ namespace icrm.WebApi
             }
         }
 
+        //38/ <summary>
+        /// ////////////////////////////****************Get All Enquirey list*******************////////////////////////////
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/HR/getenquireslist")]
+        public IHttpActionResult getenquireslist()
+        {
+            string type = Models.Constants.Enquiry;
 
+            var entity = from f in feedInterface.GetListBasedOnType(type)
+                         select f;
+
+            if (entity != null)
+            {
+                return Ok(entity.ToList());
+
+            }
+            else
+            {
+
+                return BadRequest(" Enquirey list  not found");
+
+            }
+        }
 
     }
 }

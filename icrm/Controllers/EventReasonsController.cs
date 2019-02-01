@@ -38,8 +38,7 @@ namespace icrm.Controllers
         // GET: EventReasons/Create
         public ActionResult Create()
         {
-            ViewBag.Status = "Add";
-            return View("CreateList",new EventReasonViewModel { EventReasons = db.EventReasons.ToList()});
+            return View();
         }
 
         // POST: EventReasons/Create
@@ -53,10 +52,10 @@ namespace icrm.Controllers
             {
                 db.EventReasons.Add(eventReason);
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Index");
             }
-            ViewBag.Status = "Add";
-            return View("CreateList", new EventReasonViewModel { EventReasons = db.EventReasons.ToList() });
+
+            return View(eventReason);
         }
 
         // GET: EventReasons/Edit/5
@@ -71,9 +70,7 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-           
-            ViewBag.Status = "Update";
-            return View("CreateList", new EventReasonViewModel { eventReason = eventReason, EventReasons = db.EventReasons.ToList() });
+            return View(eventReason);
         }
 
         // POST: EventReasons/Edit/5
@@ -87,10 +84,9 @@ namespace icrm.Controllers
             {
                 db.Entry(eventReason).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Index");
             }
-            ViewBag.Status = "Update";
-            return View("CreateList", new EventReasonViewModel {  EventReasons = db.EventReasons.ToList() });
+            return View(eventReason);
         }
 
         // GET: EventReasons/Delete/5
@@ -105,8 +101,7 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            @ViewBag.Status = "Delete";
-            return View("CreateList", new EventReasonViewModel {eventReason = eventReason, EventReasons = db.EventReasons.ToList() });
+            return View(eventReason);
         }
 
         // POST: EventReasons/Delete/5
@@ -117,7 +112,7 @@ namespace icrm.Controllers
             EventReason eventReason = db.EventReasons.Find(id);
             db.EventReasons.Remove(eventReason);
             db.SaveChanges();
-            return RedirectToAction("Create");
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
