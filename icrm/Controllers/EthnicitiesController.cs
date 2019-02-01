@@ -38,8 +38,7 @@ namespace icrm.Controllers
         // GET: Ethnicities/Create
         public ActionResult Create()
         {
-            ViewBag.Status = "Add";
-            return View("CreateList", new EthnicitesViewModel { Ethnicities = db.Ethnicities.ToList() });
+            return View();
         }
 
         // POST: Ethnicities/Create
@@ -53,11 +52,10 @@ namespace icrm.Controllers
             {
                 db.Ethnicities.Add(ethnicity);
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Index");
             }
 
-            ViewBag.Status = "Add";
-            return View("CreateList", new EthnicitesViewModel { Ethnicities = db.Ethnicities.ToList() });
+            return View(ethnicity);
         }
 
         // GET: Ethnicities/Edit/5
@@ -72,8 +70,7 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Status = "Update";
-            return View("CreateList", new EthnicitesViewModel {Ethnicity = ethnicity, Ethnicities = db.Ethnicities.ToList() });
+            return View(ethnicity);
         }
 
         // POST: Ethnicities/Edit/5
@@ -87,10 +84,9 @@ namespace icrm.Controllers
             {
                 db.Entry(ethnicity).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Index");
             }
-            ViewBag.Status = "Update";
-            return View("CreateList", new EthnicitesViewModel { Ethnicities = db.Ethnicities.ToList() });
+            return View(ethnicity);
         }
 
         // GET: Ethnicities/Delete/5
@@ -105,8 +101,7 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Status = "Delete";
-            return View("CreateList", new EthnicitesViewModel {Ethnicity = ethnicity, Ethnicities = db.Ethnicities.ToList() });
+            return View(ethnicity);
         }
 
         // POST: Ethnicities/Delete/5
@@ -117,7 +112,7 @@ namespace icrm.Controllers
             Ethnicity ethnicity = db.Ethnicities.Find(id);
             db.Ethnicities.Remove(ethnicity);
             db.SaveChanges();
-            return RedirectToAction("Create");
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

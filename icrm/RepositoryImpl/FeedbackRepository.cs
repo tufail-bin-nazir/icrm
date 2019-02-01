@@ -389,6 +389,11 @@ namespace icrm.RepositoryImpl
             return db.Feedbacks.OrderBy(m=>m.id).Where(m => m.type.name==typeId).ToPagedList(pageIndex,pageSize);
         }
 
+
+        public IEnumerable<Feedback> GetListBasedOnType(string type)
+        {
+            return db.Feedbacks.OrderBy(m => m.id).Where(m => m.type.name == type).ToList();
+        }
         public List<Department> getDepartmentsOnType(string fORWARD)
         {
             return db.Departments.OrderBy(m => m.name).ToList();

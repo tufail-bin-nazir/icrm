@@ -120,20 +120,7 @@
 
             <br><br>
                 <div class="section-wrapper">
-
-
-
-                    @if (@TempData["displayMsg"] != null)
-                    {
-                        <div class="alert alert-success" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong> @TempData["displayMsg"]</strong>
-                        </div>
-                    }
-                  
-                    
+                    <span class="text-success">     @TempData["displayMsg"]</span>
                     <label class="section-title">SEARCH YOUR TICKETS</label>
                     <p class="mg-b-20 mg-sm-b-40">
                         On date criteria
@@ -141,17 +128,7 @@
 
                     </p>
                     <div class="form-layout">
-
-                        @if (@TempData["DateMsg"] != null)
-                        {
-                            <div class="alert alert-danger mg-b-0" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                                <strong>@TempData["DateMsg"]</strong>
-                            </div>
-
-                        }
+                        <span class="text-danger">@TempData["DateMsg"]</span>
                         @using (Html.BeginForm("search", "Department", FormMethod.Get, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
                         {
                             <div class="row mg-b-25">

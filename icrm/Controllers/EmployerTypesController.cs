@@ -38,8 +38,7 @@ namespace icrm.Controllers
         // GET: EmployerTypes/Create
         public ActionResult Create()
         {
-            ViewBag.Status = "Add";
-            return View("CreateList", new EmployerTypeViewModel { employerTypes = db.employerTypes.ToList() });
+            return View();
         }
 
         // POST: EmployerTypes/Create
@@ -53,11 +52,10 @@ namespace icrm.Controllers
             {
                 db.employerTypes.Add(employerType);
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Index");
             }
 
-            ViewBag.Status = "Add";
-            return View("CreateList", new EmployerTypeViewModel { employerTypes = db.employerTypes.ToList() });
+            return View(employerType);
         }
 
         // GET: EmployerTypes/Edit/5
@@ -72,8 +70,7 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Status = "Update";
-            return View("CreateList", new EmployerTypeViewModel {employerType = employerType, employerTypes = db.employerTypes.ToList() });
+            return View(employerType);
         }
 
         // POST: EmployerTypes/Edit/5
@@ -87,10 +84,9 @@ namespace icrm.Controllers
             {
                 db.Entry(employerType).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Index");
             }
-            ViewBag.Status = "Update";
-            return View("CreateList", new EmployerTypeViewModel { employerTypes = db.employerTypes.ToList() });
+            return View(employerType);
         }
 
         // GET: EmployerTypes/Delete/5
@@ -105,8 +101,7 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Status = "Delete";
-            return View("CreateList", new EmployerTypeViewModel {employerType = employerType, employerTypes = db.employerTypes.ToList() });
+            return View(employerType);
         }
 
         // POST: EmployerTypes/Delete/5
@@ -117,7 +112,7 @@ namespace icrm.Controllers
             EmployerType employerType = db.employerTypes.Find(id);
             db.employerTypes.Remove(employerType);
             db.SaveChanges();
-            return RedirectToAction("Create");
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

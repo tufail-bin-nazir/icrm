@@ -78,9 +78,6 @@
     <Reference Include="RabbitMQ.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\packages\RabbitMQ.Client.5.1.0\lib\net451\RabbitMQ.Client.dll</HintPath>
     </Reference>
-    <Reference Include="RazorEngine, Version=3.10.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
-      <HintPath>..\packages\RazorEngine.3.10.0\lib\net45\RazorEngine.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -253,25 +250,25 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\BandsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\CostCentersController.cs" />
-    <Compile Include="Controllers\CultureController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DepartmentsController.cs" />
     <Compile Include="Controllers\DownloadAPKController.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\EmployeeClassesController.cs" />
     <Compile Include="Controllers\EmployerTypesController.cs" />
+    <Compile Include="Controllers\EscalationUsersController.cs" />
     <Compile Include="Controllers\EthnicitiesController.cs" />
     <Compile Include="Controllers\EventReasonsController.cs" />
+=======
+>>>>>>> caa6521be43474d15631f5c9402dd2a261bc7a3c
     <Compile Include="Controllers\ExcelFileController.cs" />
     <Compile Include="Controllers\FeedBackController.cs" />
     <Compile Include="Controllers\FeedBackTypesController.cs" />
-    <Compile Include="Controllers\GendersController.cs" />
     <Compile Include="Controllers\HRController.cs" />
     <Compile Include="Controllers\JobTitlesController.cs" />
-    <Compile Include="Controllers\LocationGroupsController.cs" />
     <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NationalitiesController.cs" />
@@ -283,7 +280,6 @@
     <Compile Include="Controllers\SubLocationsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
-    <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Events\BroadcastMessageEvent.cs" />
     <Compile Include="Events\EventService.cs" />
     <Compile Include="Events\FeedbackNotification.cs" />
@@ -291,10 +287,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901270632500_migrationNew.cs" />
-    <Compile Include="Migrations\201901270632500_migrationNew.Designer.cs">
-      <DependentUpon>201901270632500_migrationNew.cs</DependentUpon>
+<<<<<<< HEAD
+=======
+    <Compile Include="Migrations\201901290935404_new.cs" />
+    <Compile Include="Migrations\201901290935404_new.Designer.cs">
+      <DependentUpon>201901290935404_new.cs</DependentUpon>
     </Compile>
+>>>>>>> caa6521be43474d15631f5c9402dd2a261bc7a3c
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Band.cs" />
@@ -316,6 +315,7 @@
     <Compile Include="Models\EmployeeClassViewModel.cs" />
     <Compile Include="Models\EmployerType.cs" />
     <Compile Include="Models\EmployerTypeViewModel.cs" />
+    <Compile Include="Models\EscalationUser.cs" />
     <Compile Include="Models\EthnicitesViewModel.cs" />
     <Compile Include="Models\Ethnicity.cs" />
     <Compile Include="Models\EventReason.cs" />
@@ -324,8 +324,14 @@
     <Compile Include="Models\FeedbackDTO.cs" />
     <Compile Include="Models\FeedBackType.cs" />
     <Compile Include="Models\FeedBackViewModel.cs" />
+    <Compile Include="Models\Forwardmodel.cs" />
     <Compile Include="Models\Gender.cs" />
+<<<<<<< HEAD
     <Compile Include="Models\GenderViewModel.cs" />
+    <Compile Include="Models\HubConnectionMap.cs" />
+    <Compile Include="Models\IConnectRabbitMQ.cs" />
+=======
+>>>>>>> caa6521be43474d15631f5c9402dd2a261bc7a3c
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JobTitle.cs" />
     <Compile Include="Models\JobTitlesViewModel.cs" />
@@ -345,6 +351,7 @@
     <Compile Include="Models\PrioritiesViewModel.cs" />
     <Compile Include="Models\Priority.cs" />
     <Compile Include="Models\RabbitMQBll.cs" />
+    <Compile Include="Models\RecieveEmails.cs" />
     <Compile Include="Models\Religion.cs" />
     <Compile Include="Models\ReligionViewModel.cs" />
     <Compile Include="Models\Save File.cs" />
@@ -371,8 +378,6 @@
     <Compile Include="RepositoryInterface\IFeedback.cs" />
     <Compile Include="RepositoryInterface\MessageInterface.cs" />
     <Compile Include="RepositoryInterface\UserInterface.cs" />
-    <Compile Include="Resources\Resource.ar-SA.Designer.cs" />
-    <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Schedular\MyRegistry.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WebApi\BroadcastMessageController.cs" />
@@ -636,37 +641,40 @@
     <Content Include="Views\FeedBackTypes\Details.cshtml" />
     <Content Include="Views\FeedBackTypes\Edit.cshtml" />
     <Content Include="Views\FeedBackTypes\Index.cshtml" />
-    <Content Include="Views\EmailTemplate.cshtml" />
-    <Content Include="Views\EmployeeClasses\Create.cshtml" />
-    <Content Include="Views\EmployeeClasses\Delete.cshtml" />
-    <Content Include="Views\EmployeeClasses\Details.cshtml" />
-    <Content Include="Views\EmployeeClasses\Edit.cshtml" />
-    <Content Include="Views\EmployeeClasses\Index.cshtml" />
-    <Content Include="Views\Ethnicities\Create.cshtml" />
-    <Content Include="Views\Ethnicities\Delete.cshtml" />
-    <Content Include="Views\Ethnicities\Details.cshtml" />
-    <Content Include="Views\Ethnicities\Edit.cshtml" />
-    <Content Include="Views\Ethnicities\Index.cshtml" />
-    <Content Include="Views\EmployerTypes\Create.cshtml" />
-    <Content Include="Views\EmployerTypes\Delete.cshtml" />
-    <Content Include="Views\EmployerTypes\Details.cshtml" />
-    <Content Include="Views\EmployerTypes\Edit.cshtml" />
-    <Content Include="Views\EmployerTypes\Index.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Bands\Create.cshtml" />
     <Content Include="Views\Bands\Delete.cshtml" />
     <Content Include="Views\Bands\Details.cshtml" />
     <Content Include="Views\Bands\Edit.cshtml" />
     <Content Include="Views\Bands\Index.cshtml" />
+    <Content Include="Views\EmployeeClasses\Create.cshtml" />
+    <Content Include="Views\EmployeeClasses\Delete.cshtml" />
+    <Content Include="Views\EmployeeClasses\Details.cshtml" />
+    <Content Include="Views\EmployeeClasses\Edit.cshtml" />
+    <Content Include="Views\EmployeeClasses\Index.cshtml" />
+    <Content Include="Views\EmployerTypes\Create.cshtml" />
+    <Content Include="Views\EmployerTypes\Delete.cshtml" />
+    <Content Include="Views\EmployerTypes\Details.cshtml" />
+    <Content Include="Views\EmployerTypes\Edit.cshtml" />
+    <Content Include="Views\EmployerTypes\Index.cshtml" />
+    <Content Include="Views\Ethnicities\Create.cshtml" />
+    <Content Include="Views\Ethnicities\Delete.cshtml" />
+    <Content Include="Views\Ethnicities\Details.cshtml" />
+    <Content Include="Views\Ethnicities\Edit.cshtml" />
+    <Content Include="Views\Ethnicities\Index.cshtml" />
     <Content Include="Views\EventReasons\Create.cshtml" />
     <Content Include="Views\EventReasons\Delete.cshtml" />
     <Content Include="Views\EventReasons\Details.cshtml" />
     <Content Include="Views\EventReasons\Edit.cshtml" />
     <Content Include="Views\EventReasons\Index.cshtml" />
-    <Content Include="Views\EventReasons\CreateList.cshtml" />
-    <Content Include="Views\EmployeeClasses\CreateList.cshtml" />
-    <Content Include="Views\Ethnicities\CreateList.cshtml" />
-    <Content Include="Views\EmployerTypes\CreateList.cshtml" />
-    <Content Include="Views\Bands\CreateList.cshtml" />
+    <Content Include="Views\EmailTemplate.cshtml" />
+    <Content Include="Views\EscalationUsers\Create.cshtml" />
+    <Content Include="Views\EscalationUsers\Delete.cshtml" />
+    <Content Include="Views\EscalationUsers\Details.cshtml" />
+    <Content Include="Views\EscalationUsers\Edit.cshtml" />
+    <Content Include="Views\EscalationUsers\Index.cshtml" />
+=======
+>>>>>>> caa6521be43474d15631f5c9402dd2a261bc7a3c
     <None Include="Views\FeedBack\add.cshtml" />
     <None Include="Views\FeedBack\list.cshtml" />
     <Content Include="Web.config" />
@@ -770,24 +778,6 @@
     <Content Include="Views\SubCategories\Edit.cshtml" />
     <Content Include="Views\SubCategories\Index.cshtml" />
     <Content Include="Views\HR\rejectedview.cshtml" />
-    <Content Include="Views\LocationGroups\Create.cshtml" />
-    <Content Include="Views\LocationGroups\Delete.cshtml" />
-    <Content Include="Views\LocationGroups\Details.cshtml" />
-    <Content Include="Views\LocationGroups\Edit.cshtml" />
-    <Content Include="Views\LocationGroups\Index.cshtml" />
-    <Content Include="Views\Genders\Create.cshtml" />
-    <Content Include="Views\Genders\Delete.cshtml" />
-    <Content Include="Views\Genders\Details.cshtml" />
-    <Content Include="Views\Genders\Edit.cshtml" />
-    <Content Include="Views\Genders\Index.cshtml" />
-    <Content Include="Views\Vendors\Create.cshtml" />
-    <Content Include="Views\Vendors\Delete.cshtml" />
-    <Content Include="Views\Vendors\Details.cshtml" />
-    <Content Include="Views\Vendors\Edit.cshtml" />
-    <Content Include="Views\Vendors\Index.cshtml" />
-    <Content Include="Views\LocationGroups\CreateList.cshtml" />
-    <Content Include="Views\Genders\CreateList.cshtml" />
-    <Content Include="Views\Vendors\CreateList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -806,11 +796,17 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201901270632500_migrationNew.resx">
-      <DependentUpon>201901270632500_migrationNew.cs</DependentUpon>
+<<<<<<< HEAD
+    <EmbeddedResource Include="Resources\Resource.ar-SA.resx">
+      <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Resource.ar-SA.resx" />
-    <EmbeddedResource Include="Resources\Resource.resx" />
+    <EmbeddedResource Include="Resources\Resource.resx">
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+=======
+    <EmbeddedResource Include="Migrations\201901290935404_new.resx">
+      <DependentUpon>201901290935404_new.cs</DependentUpon>
+>>>>>>> caa6521be43474d15631f5c9402dd2a261bc7a3c
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

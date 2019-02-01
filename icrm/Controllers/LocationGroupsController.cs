@@ -38,9 +38,7 @@ namespace icrm.Controllers
         // GET: LocationGroups/Create
         public ActionResult Create()
         {
-            ViewBag.Status = "Add";
-            return View("CreateList", new LocationGroupViewModel { locationGroups = db.LocationGroups.ToList() });
-           
+            return View();
         }
 
         // POST: LocationGroups/Create
@@ -54,11 +52,10 @@ namespace icrm.Controllers
             {
                 db.LocationGroups.Add(locationGroup);
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Index");
             }
-            ViewBag.Status = "Add";
-            return View("CreateList", new LocationGroupViewModel { locationGroups = db.LocationGroups.ToList() });
-           
+
+            return View(locationGroup);
         }
 
         // GET: LocationGroups/Edit/5
@@ -73,8 +70,7 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Status = "Update";
-            return View("CreateList", new LocationGroupViewModel { locationGroup = locationGroup, locationGroups = db.LocationGroups.ToList() });
+            return View(locationGroup);
         }
 
         // POST: LocationGroups/Edit/5
@@ -88,10 +84,9 @@ namespace icrm.Controllers
             {
                 db.Entry(locationGroup).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Index");
             }
-            ViewBag.Status = "Update";
-            return View("CreateList", new LocationGroupViewModel { locationGroups = db.LocationGroups.ToList() });
+            return View(locationGroup);
         }
 
         // GET: LocationGroups/Delete/5
@@ -106,8 +101,7 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Status = "Delete";
-            return View("CreateList", new LocationGroupViewModel { locationGroup = locationGroup, locationGroups = db.LocationGroups.ToList() });
+            return View(locationGroup);
         }
 
         // POST: LocationGroups/Delete/5
@@ -118,7 +112,7 @@ namespace icrm.Controllers
             LocationGroup locationGroup = db.LocationGroups.Find(id);
             db.LocationGroups.Remove(locationGroup);
             db.SaveChanges();
-            return RedirectToAction("Create");
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
