@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using icrm.Models;
@@ -20,8 +19,7 @@ namespace icrm.Provider
         public override async Task GrantResourceOwnerCredentials(
             OAuthGrantResourceOwnerCredentialsContext context)
           {
-
-              Debug.Print("GrantResourceOwnerCredentials-------------");
+           
 
             ApplicationUserManager storeUserMgr =
             context.OwinContext.Get<ApplicationUserManager>("AspNet.Identity.Owin:"
@@ -52,15 +50,12 @@ namespace icrm.Provider
         public override Task ValidateClientAuthentication(
         OAuthValidateClientAuthenticationContext context)
         {
-            Debug.Print("ValidateClientAuthentication-------------");
-
             context.Validated();
             return Task.FromResult<object>(null);
         }
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
         {
-            Debug.Print("tokeb endpoint-------------");
             ApplicationDbContext appcontext = new ApplicationDbContext();
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(appcontext));
 
@@ -68,7 +63,6 @@ namespace icrm.Provider
             {
                 context.AdditionalResponseParameters.Add("Roles", roleManager.FindById(r.RoleId).Name);
                 context.AdditionalResponseParameters.Add("UserName", user.FirstName);
-                context.AdditionalResponseParameters.Add("EmployeeId",user.UserName);
             }
            
            return Task.FromResult<object>(null);

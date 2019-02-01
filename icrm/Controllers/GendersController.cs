@@ -38,9 +38,7 @@ namespace icrm.Controllers
         // GET: Genders/Create
         public ActionResult Create()
         {
-            ViewBag.Status = "Add";
-            return View("CreateList", new GenderViewModel { Genders = db.Genders.ToList() });
-            
+            return View();
         }
 
         // POST: Genders/Create
@@ -54,11 +52,10 @@ namespace icrm.Controllers
             {
                 db.Genders.Add(gender);
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Index");
             }
 
-            ViewBag.Status = "Add";
-            return View("CreateList", new GenderViewModel { Genders = db.Genders.ToList() });
+            return View(gender);
         }
 
         // GET: Genders/Edit/5
@@ -73,8 +70,7 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Status = "Update";
-            return View("CreateList", new GenderViewModel {Gender = gender, Genders = db.Genders.ToList() });
+            return View(gender);
         }
 
         // POST: Genders/Edit/5
@@ -88,10 +84,9 @@ namespace icrm.Controllers
             {
                 db.Entry(gender).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Create");
+                return RedirectToAction("Index");
             }
-            ViewBag.Status = "Update";
-            return View("CreateList", new GenderViewModel { Genders = db.Genders.ToList() });
+            return View(gender);
         }
 
         // GET: Genders/Delete/5
@@ -106,8 +101,7 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Status = "Delete";
-            return View("CreateList", new GenderViewModel {Gender = gender, Genders = db.Genders.ToList() });
+            return View(gender);
         }
 
         // POST: Genders/Delete/5
@@ -118,7 +112,7 @@ namespace icrm.Controllers
             Gender gender = db.Genders.Find(id);
             db.Genders.Remove(gender);
             db.SaveChanges();
-            return RedirectToAction("Create");
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

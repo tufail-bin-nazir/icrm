@@ -43,20 +43,5 @@ namespace icrm.RepositoryImpl
             db.SaveChanges();
             return chat.Id;
         }
-
-        public bool IsActive(int? chatId)
-        {
-            if(chatId>0)
-            return this.db.Chat.FirstOrDefault(c => c.Id == chatId).active;
-
-            return false;
-        }
-
-        public void changeActiveStatus(int? chatId,bool value)
-        {
-            Chat chat = this.db.Chat.FirstOrDefault(c => c.Id == chatId);
-            chat.active = value;
-            this.db.SaveChanges();
-        }
     }
 }

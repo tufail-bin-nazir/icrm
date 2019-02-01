@@ -1,99 +1,12 @@
-﻿<script src="~/Content/lib/jquery-toggles/js/toggles.min.js"></script>
-<script src="~/Scripts/modernizr-2.8.3.js"></script>
-<script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
-<script src="/signalr/hubs"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
-
-<script>
-    $(function() {
-        'use strict'
-
-        // Toggles
-       $('.toggle').toggles({
-            on: false,
-           height: 26,
-            text: {
-                on: 'YES', // text for the ON position
-                off: 'NO' // and off
-            }
-        });
-        
-    });
-
-    var messageHub = $.connection.messageHub;
-    console.log(messageHub);
-    $.connection.hub.start().done(function () {
-        console.log('Notification hub started');
-        console.log('connection started with id: ' + $.connection.hub.id);
-    });
-    messageHub.client.notification = function (message) {
-        var c = $('#notifyCount').text();
-         c = $('#notifyCount').text() != ''?Number(c):0;
-        $('#notifyCount').text(++c);
-
-        $('#notificationlist').prepend('<a href="default.htm" class="dropdown-link">' +
-            '<div class="media"> <div class="media-body">' +
-            '<p><strong>'+message.Sender.FirstName +' '+message.Sender.LastName+'</strong> messaged you.</p>' +
-            '<p><strong>'+message.Text+'</strong></p>' +
-            '<span>' + parseJsonDate(message.SentTime)+'</span>' +
-            '</div>' +
-            '</div>' +
-            '</a>');
-    }
-
-    $(document).ready(function () {
-        
-        $('.toggle').on('click', function (e, active) {
-            var status = $('.toggle').data('toggles');
-            var url = '/chat/hr/available/';
-            console.log(status.active+"----current status")
-
-                if (status.active) {
-                    url = url + "true";
-                    $.get(url, function() {
-                        console.log('on');
-                    });
-                } else {
-                    url = url + "false";
-                    $.get(url, function () {
-                        console.log('off');
-                    });
-                }
-
-
-            });
-         
-        var url = '/chat/hr/checkavailable';
-
-        $.get(url, function (data) {
-            var val = data.toLowerCase();
-            var T = $('.toggle').data('toggles');
-            console.log(data + "======data from server"+val);
-            if (val == "true") {
-                T.toggle(true);
-            } else {
-                T.toggle(false);
-
-            }
-        });
-    });
-    function parseJsonDate(jsonDateString) {
-        //moment(g;
-        console.log('===' + jsonDateString);
-        return moment(new Date(jsonDateString)).format('MM/DD/YYYY  HH:mm A');
-    }
-</script>
-
-
-
-<!--<div class="slim-footer">
+﻿
+<div class="slim-footer">
     <div class="container">
-        <p>Copyright 2018  All Rights Reserved. </p>
+        <p>Copyright 2018 &copy; All Rights Reserved. </p>
 
     </div>
-     container
+    <!-- container -->
 </div>
-<!-- slim-footer
+<!-- slim-footer -->
 
 <script src="~/Content/lib/jquery/js/jquery.js"></script>
 <script src="~/Content/lib/popper.js/js/popper.js"></script>
@@ -112,72 +25,72 @@
 
 <script>
 
+   
 
 
+            $(function () {
+                'use strict'
 
-    $(function () {
-        'use strict'
+                // Toggles
+                $('.toggle').toggles({
+                    on: true,
+                    height: 26
+                });
 
-        // Toggles
-        $('.toggle').toggles({
-            on: true,
-            height: 26
-        });
+                // Input Masks
+                $('#dateMask').mask('99/99/9999');
+                $('#phoneMask').mask('(999) 999-9999');
+                $('#ssnMask').mask('999-99-9999');
 
-        // Input Masks
-        $('#dateMask').mask('99/99/9999');
-        $('#phoneMask').mask('(999) 999-9999');
-        $('#ssnMask').mask('999-99-9999');
+                // Time Picker
+                $('#tpBasic').timepicker();
+                $('#tp2').timepicker({
+                    'scrollDefault': 'now'
+                });
+                $('#tp3').timepicker();
 
-        // Time Picker
-        $('#tpBasic').timepicker();
-        $('#tp2').timepicker({
-            'scrollDefault': 'now'
-        });
-        $('#tp3').timepicker();
+                $('#setTimeButton').on('click', function () {
+                    $('#tp3').timepicker('setTime', new Date());
+                });
 
-        $('#setTimeButton').on('click', function () {
-            $('#tp3').timepicker('setTime', new Date());
-        });
+                // Color picker
+                $('#colorpicker').spectrum({
+                    color: '#17A2B8'
+                });
 
-        // Color picker
-        $('#colorpicker').spectrum({
-            color: '#17A2B8'
-        });
+                $('#showAlpha').spectrum({
+                    color: 'rgba(23,162,184,0.5)',
+                    showAlpha: true
+                });
 
-        $('#showAlpha').spectrum({
-            color: 'rgba(23,162,184,0.5)',
-            showAlpha: true
-        });
+                $('#showPaletteOnly').spectrum({
+                    showPaletteOnly: true,
+                    showPalette: true,
+                    color: '#DC3545',
+                    palette: [
+                        ['#1D2939', '#fff', '#0866C6', '#23BF08', '#F49917'],
+                        ['#DC3545', '#17A2B8', '#6610F2', '#fa1e81', '#72e7a6']
+                    ]
+                });
 
-        $('#showPaletteOnly').spectrum({
-            showPaletteOnly: true,
-            showPalette: true,
-            color: '#DC3545',
-            palette: [
-                ['#1D2939', '#fff', '#0866C6', '#23BF08', '#F49917'],
-                ['#DC3545', '#17A2B8', '#6610F2', '#fa1e81', '#72e7a6']
-            ]
-        });
+            });
 
-    });
+            $(function () {
+                'use strict'
 
-    $(function () {
-        'use strict'
+                // Datepicker
+                $('.fc-datepicker').datepicker({
+                    showOtherMonths: true,
+                    selectOtherMonths: true,
+                    dateFormat: 'dd-mm-yy'
+                });
 
-        // Datepicker
-        $('.fc-datepicker').datepicker({
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            dateFormat: 'dd-mm-yy'
-        });
+                $('#datepickerNoOfMonths').datepicker({
+                    showOtherMonths: true,
+                    selectOtherMonths: true,
+                    numberOfMonths: 2
+                });
 
-        $('#datepickerNoOfMonths').datepicker({
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            numberOfMonths: 2
-        });
+            });
 
-    });
-
-</script> -->
+</script>
