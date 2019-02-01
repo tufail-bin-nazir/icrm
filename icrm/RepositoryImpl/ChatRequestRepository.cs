@@ -20,7 +20,7 @@ namespace icrm.RepositoryImpl
         {
             db.ChatRequest.Add(chatRequest);
             db.SaveChanges();
-        }
+        } 
 
         public bool CheckRequestExistsOfUser(string userId)
         {

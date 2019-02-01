@@ -16,4 +16,4 @@ namespace icrm.Models
             return $"{nameof(this.Id)}: {this.Id}, {nameof(this.UserId)}: {this.UserId}, {nameof(this.user)}: {this.user}";
         }
     }
-}
+} 

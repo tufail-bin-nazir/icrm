@@ -14,7 +14,7 @@ namespace icrm.Events
         private FeedbackNotification feedbackNotification;
         public MessageEvent messasgeEvent;
         public MessageHub messageHub;
-        public HrAvailableNotify hrAvailableNotify;
+        public HrAvailableNotify hrAvailableNotify; 
 
         private EmailSend emailSend;
         public EventService()

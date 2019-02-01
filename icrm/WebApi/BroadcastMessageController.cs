@@ -18,7 +18,7 @@ namespace icrm.WebApi
 {
     public class BroadcastMessageController : ApiController
     {
-        private BroadcastMessageInterface broadcastMessageService;
+        private BroadcastMessageInterface broadcastMessageService; 
         private EventService eventService;
         public BroadcastMessageController()
         {

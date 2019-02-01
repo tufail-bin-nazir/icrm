@@ -17,7 +17,7 @@ namespace icrm.Models
         //readonly  static Dictionary<string,string> connections =  new Dictionary<string,string>();
         ApplicationDbContext db = new ApplicationDbContext();
         private UserManager<ApplicationUser> userManager;
-
+         
         public MessageHub()
         {
             userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));

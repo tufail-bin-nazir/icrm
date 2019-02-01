@@ -17,7 +17,7 @@ namespace icrm.RepositoryImpl
         ApplicationDbContext db = new ApplicationDbContext();
          
         public Message Save(Message message)
-        {
+        { 
             Debug.Print(message.SentTime+"---------sent time");
             db.Message.Add(message);
             db.SaveChanges();

@@ -16,4 +16,4 @@ namespace icrm.RepositoryInterface
         List<Message> GetMessagesOfChatRequestUser(string userId);
         Message updateMessage(Message message);
     }
-}
+} 

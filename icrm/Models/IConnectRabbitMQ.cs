@@ -20,7 +20,7 @@ namespace icrm.Models
     public abstract class IConnectToRabbitMQ : IDisposable
     {
 
-        public string Server { get; set; }
+        public string Server { get; set; } 
         public string ExchangeName { get; set; }
 
         protected IModel Model { get; set; }

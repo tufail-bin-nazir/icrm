@@ -13,4 +13,4 @@ namespace icrm.RepositoryInterface
         bool IsActive(int? chatId);
         void changeActiveStatus(int? chatId, bool value);
     }
-}
+} 

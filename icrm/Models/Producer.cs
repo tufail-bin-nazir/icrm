@@ -19,7 +19,7 @@ namespace icrm.Models
 
         public bool send(Message message)
         {
-            try
+            try 
             {
                Debug.Print(Model+"------model is here----");
                 Model.ExchangeDeclare("messageexchange", ExchangeType.Direct);

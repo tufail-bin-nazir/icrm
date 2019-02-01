@@ -17,7 +17,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using PagedList;
 using Constants = icrm.Models.Constants;
 
-namespace icrm.Controllers
+namespace icrm.Controllers 
 {
     using icrm.Events;
 

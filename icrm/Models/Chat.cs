@@ -13,7 +13,7 @@ namespace icrm.Models
 
         public virtual ApplicationUser UserOne { get; set; }
 
-        public string UserTwoId { get; set; }
+        public string UserTwoId { get; set; } 
 
         public virtual ApplicationUser UserTwo { get; set; }
 

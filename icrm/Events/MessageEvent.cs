@@ -13,7 +13,7 @@ namespace icrm.Models
         public Message message { get; set; }
     }
 
-    public class MessageEvent
+    public class MessageEvent 
     {
         public event EventHandler<MessageEventArgs> MessageNotified;
 

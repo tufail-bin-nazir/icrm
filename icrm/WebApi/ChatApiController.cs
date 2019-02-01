@@ -18,7 +18,7 @@ namespace icrm.WebApi
 {
     using icrm.Events;
 
-    [Authorize]
+    [Authorize] 
     public class ChatApiController : ApiController
     {
         private ApplicationUserManager _userManager;

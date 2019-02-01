@@ -19,7 +19,7 @@ namespace icrm.Models
     public class Consumer:IConnectToRabbitMQ
     {
         public EventService eventService;
-        private MessageInterface messageService;
+        private MessageInterface messageService; 
 
         protected bool isConsuming;
 

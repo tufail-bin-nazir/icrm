@@ -10,4 +10,4 @@ namespace icrm.RepositoryInterface
         ChatRequest NextChatRequestInQueue();
         void delete(ChatRequest chatRequest);
     }
-}
+} 
