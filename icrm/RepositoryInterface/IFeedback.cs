@@ -50,5 +50,6 @@ namespace icrm.RepositoryInterface
         List<Priority> getPriorties();
         List<FeedBackType> getFeedbackTypes();
         ApplicationUser getEmpDetails(string id);
+
     }
 }
