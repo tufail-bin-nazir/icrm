@@ -4,7 +4,6 @@
     Layout = null;
 }
 
-<h2>@ViewBag.Title.</h2>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +18,7 @@
     <link rel="shortcut icon" href="~/Content/img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="~/Content/img/favicon.ico" type="image/x-icon">
 
-    <title>Feedback</title>
+    <title>@ViewBag.Title.</title>
 
     <!-- Vendor css -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -29,48 +28,87 @@
 
     <link rel="stylesheet" href="~/Content/css/slim.css">
 
+
+    <style>
+		.signin-left {
+			background-position: center;
+			/* Center the image */
+			background-repeat: no-repeat;
+			/* Do not repeat the image */
+			background-size: cover;
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+			position: relative;
+		}
+
+	
+
+	
+    </style>
+
 </head>
 <body>
 
-    <div class="signin-wrapper">
-        
-        <div class="signin-box">
-            <ul>
-                <li>@Html.ActionLink("english", "SetenglishCulture/Login/Account", "Culture")</li>
-                <li>@Html.ActionLink("arabic", "SetarabicCulture/Login/Account", "Culture")</li>
 
-            </ul>
-            
 
-            <h2 class="slim-logo text-center"><a href="#"><img src="~/Content/img/m_logo.png" width="60px"><span></span></a></h2>
-            <a href="@Url.Action("index","DownloadAPK")" class="nav-link text-center"><i class="icon ion-ios-bolt"></i> Download APK</a>
-            <h2 class="signin-title-primary">@Resources.Resource.Welcome_back</h2>
-            <h3 class="signin-title-secondary">@Resources.Resource.Sign_in_to_continue</h3>
+    <!-- signin-box -->
+    <div class="d-md-flex ">
 
-            @Html.ValidationSummary()
-            @using (Html.BeginForm())
+        <div class="signin-left animated lightSpeedIn" style="background-image: url('../../Content/img/mac.png')" >
+            <div class="signin-box l">
+                <!--	<h2 class="slim-logo"><a href="index.html">ICRM 2.0<span></span></a></h2>
+
+                <p>We are excited to launch our new feedback system  ICRM 2.0. After being featured in too many magazines to mention and having created an online stir, we know that ICRM is going to be big. We also hope to win Startup Fictional Business of the Year this year.</p>
+
+                <p>Browse our site and see for yourself why you need ICRM.</p>-->
+                <!--<p><a href="default.htm" class="btn btn-outline-secondary pd-x-25">Learn More</a></p>-->
+
+
+            </div>
+        </div>
+
+        <div class="signin-right animated lightSpeedIn">
+
+            <div class="signin-box">
+                <ul>
+                    <li>@Html.ActionLink("english", "SetenglishCulture/Login/Account", "Culture")</li>
+                    <li>@Html.ActionLink("arabic", "SetarabicCulture/Login/Account", "Culture")</li>
+
+                </ul>
+
+
+                <h2 class="slim-logo text-center"><a href="#"><img src="~/Content/img/m_logo.png" width="60px"><span></span></a></h2>
+                <a href="@Url.Action("index","DownloadAPK")" class="nav-link text-center"><i class="icon ion-ios-bolt"></i> Download APK</a>
+                <h2 class="signin-title-primary">@Resources.Resource.Welcome_back</h2>
+                <h3 class="signin-title-secondary">@Resources.Resource.Sign_in_to_continue</h3>
+
+                @Html.ValidationSummary()
+                @using (Html.BeginForm())
             {
-                @Html.AntiForgeryToken()
-                <div class="form-group">
-                    @Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = Resources.Resource.Enter_your_email })
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = Resources.Resource.Enter_your_email })
 
-                </div><!-- form-group -->
-                <div class="form-group mg-b-50">
-                    @Html.TextBoxFor(x => x.Password, new { @class = "form-control", placeholder = Resources.Resource.Enter_your_password })
+        </div><!-- form-group -->
+        <div class="form-group mg-b-50">
+            @Html.TextBoxFor(x => x.Password, new { @class = "form-control", placeholder = Resources.Resource.Enter_your_password })
 
-                </div><!-- form-group -->
-                <button class="btn btn-primary btn-block btn-signin">@Resources.Resource.Sign_in</button>
-                <p class="mg-b-0">@Resources.Resource.Dont_have_an_account  @Html.ActionLink(Resources.Resource.Sign_up, "Register")</p>
+        </div><!-- form-group -->
+        <button class="btn btn-primary btn-block btn-signin">@Resources.Resource.Sign_in</button>
+        @*<p class="mg-b-0">@Resources.Resource.Dont_have_an_account  @Html.ActionLink(Resources.Resource.Sign_up, "Register")</p>*@
             }
-        </div><!-- signin-box -->
+            </div><!-- signin-box -->
 
-    </div><!-- signin-wrapper -->
+        </div><!-- signin-wrapper -->
+    </div>
 
-    <script src="~/Content/lib/jquery/js/jquery.js"></script>
-    <script src="~/Content/lib/popper.js/js/popper.js"></script>
-    <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
+        <script src="~/Content/lib/jquery/js/jquery.js"></script>
+        <script src="~/Content/lib/popper.js/js/popper.js"></script>
+        <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
 
-    <script src="~/Content/js/slim.js"></script>
+        <script src="~/Content/js/slim.js"></script>
 
 </body>
 </html>

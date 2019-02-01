@@ -69,9 +69,6 @@
     <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net46\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
-    </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
@@ -81,22 +78,8 @@
     <Reference Include="RabbitMQ.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <HintPath>..\packages\RabbitMQ.Client.5.1.0\lib\net451\RabbitMQ.Client.dll</HintPath>
     </Reference>
-    <Reference Include="RazorEngine, Version=3.10.0.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
-      <HintPath>..\packages\RazorEngine.3.10.0\lib\net45\RazorEngine.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.AppContext.4.3.0\lib\net46\System.AppContext.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Collections.Immutable.1.3.1\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
-    </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.DirectoryServices.Protocols" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
@@ -105,12 +88,6 @@
     <Reference Include="System.IO.Packaging, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.Packaging.4.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -164,9 +141,6 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Xml.ReaderWriter.4.3.0\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -276,30 +250,25 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\BandsController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\CostCentersController.cs" />
-    <Compile Include="Controllers\CultureController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\DepartmentsController.cs" />
     <Compile Include="Controllers\DownloadAPKController.cs" />
-    <Compile Include="Controllers\EmployeeClassesController.cs" />
-    <Compile Include="Controllers\EmployerTypesController.cs" />
-    <Compile Include="Controllers\EthnicitiesController.cs" />
-    <Compile Include="Controllers\EventReasonsController.cs" />
+<<<<<<< HEAD
     <Compile Include="Controllers\EmployeeClassesController.cs" />
     <Compile Include="Controllers\EmployerTypesController.cs" />
     <Compile Include="Controllers\EscalationUsersController.cs" />
     <Compile Include="Controllers\EthnicitiesController.cs" />
     <Compile Include="Controllers\EventReasonsController.cs" />
+=======
+>>>>>>> caa6521be43474d15631f5c9402dd2a261bc7a3c
     <Compile Include="Controllers\ExcelFileController.cs" />
     <Compile Include="Controllers\FeedBackController.cs" />
     <Compile Include="Controllers\FeedBackTypesController.cs" />
-    <Compile Include="Controllers\GendersController.cs" />
     <Compile Include="Controllers\HRController.cs" />
     <Compile Include="Controllers\JobTitlesController.cs" />
-    <Compile Include="Controllers\LocationGroupsController.cs" />
     <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NationalitiesController.cs" />
@@ -311,28 +280,20 @@
     <Compile Include="Controllers\SubLocationsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserProfileController.cs" />
-    <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Events\BroadcastMessageEvent.cs" />
     <Compile Include="Events\EventService.cs" />
     <Compile Include="Events\FeedbackNotification.cs" />
     <Compile Include="Events\FeedbackNotifyEvent.cs" />
-    <Compile Include="Events\HrAvailableNotify.cs" />
-    <Compile Include="Events\MessageEvent.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901310623424_initial.cs" />
-    <Compile Include="Migrations\201901310623424_initial.Designer.cs">
-      <DependentUpon>201901310623424_initial.cs</DependentUpon>
-    </Compile>
+<<<<<<< HEAD
+=======
     <Compile Include="Migrations\201901290935404_new.cs" />
     <Compile Include="Migrations\201901290935404_new.Designer.cs">
       <DependentUpon>201901290935404_new.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901310623424_initial.cs" />
-    <Compile Include="Migrations\201901310623424_initial.Designer.cs">
-      <DependentUpon>201901310623424_initial.cs</DependentUpon>
-    </Compile>
+>>>>>>> caa6521be43474d15631f5c9402dd2a261bc7a3c
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Band.cs" />
@@ -345,7 +306,6 @@
     <Compile Include="Models\ChatViewModel.cs" />
     <Compile Include="Models\Comments.cs" />
     <Compile Include="Models\Constants.cs" />
-    <Compile Include="Models\Consumer.cs" />
     <Compile Include="Models\CostCenter.cs" />
     <Compile Include="Models\CultureAttribute.cs" />
     <Compile Include="Models\Department.cs" />
@@ -366,13 +326,12 @@
     <Compile Include="Models\FeedBackViewModel.cs" />
     <Compile Include="Models\Forwardmodel.cs" />
     <Compile Include="Models\Gender.cs" />
-    <Compile Include="Models\HubConnectionMap.cs" />
-    <Compile Include="Models\IConnectRabbitMQ.cs" />
-    <Compile Include="Models\HubConnectionMap.cs" />
-    <Compile Include="Models\IConnectRabbitMQ.cs" />
+<<<<<<< HEAD
     <Compile Include="Models\GenderViewModel.cs" />
     <Compile Include="Models\HubConnectionMap.cs" />
     <Compile Include="Models\IConnectRabbitMQ.cs" />
+=======
+>>>>>>> caa6521be43474d15631f5c9402dd2a261bc7a3c
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JobTitle.cs" />
     <Compile Include="Models\JobTitlesViewModel.cs" />
@@ -382,7 +341,6 @@
     <Compile Include="Models\LocationViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Message.cs" />
-    <Compile Include="Models\MessageHub.cs" />
     <Compile Include="Models\NationalitiesViewModel.cs" />
     <Compile Include="Models\Nationality.cs" />
     <Compile Include="Models\Notification.cs" />
@@ -417,12 +375,9 @@
     <Compile Include="RepositoryInterface\BroadcastMessageInterface.cs" />
     <Compile Include="RepositoryInterface\ChatInterface.cs" />
     <Compile Include="RepositoryInterface\ChatRequestInterface.cs" />
-    <Compile Include="Events\FeedbackNotification.cs" />
     <Compile Include="RepositoryInterface\IFeedback.cs" />
     <Compile Include="RepositoryInterface\MessageInterface.cs" />
     <Compile Include="RepositoryInterface\UserInterface.cs" />
-    <Compile Include="Resources\Resource.ar-SA1.Designer.cs" />
-    <Compile Include="Resources\Resource1.Designer.cs" />
     <Compile Include="Schedular\MyRegistry.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WebApi\BroadcastMessageController.cs" />
@@ -643,8 +598,6 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.signalR-2.4.0.js" />
-    <Content Include="Scripts\jquery.signalR-2.4.0.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -688,6 +641,7 @@
     <Content Include="Views\FeedBackTypes\Details.cshtml" />
     <Content Include="Views\FeedBackTypes\Edit.cshtml" />
     <Content Include="Views\FeedBackTypes\Index.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Bands\Create.cshtml" />
     <Content Include="Views\Bands\Delete.cshtml" />
     <Content Include="Views\Bands\Details.cshtml" />
@@ -719,9 +673,10 @@
     <Content Include="Views\EscalationUsers\Details.cshtml" />
     <Content Include="Views\EscalationUsers\Edit.cshtml" />
     <Content Include="Views\EscalationUsers\Index.cshtml" />
+=======
+>>>>>>> caa6521be43474d15631f5c9402dd2a261bc7a3c
     <None Include="Views\FeedBack\add.cshtml" />
     <None Include="Views\FeedBack\list.cshtml" />
-    <Content Include="Views\HR\email.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -822,29 +777,7 @@
     <Content Include="Views\SubCategories\Details.cshtml" />
     <Content Include="Views\SubCategories\Edit.cshtml" />
     <Content Include="Views\SubCategories\Index.cshtml" />
-    <Content Include="Views\HR\DataCharts.cshtml" />
-    <Content Include="Views\HR\dataShow.cshtml" />
     <Content Include="Views\HR\rejectedview.cshtml" />
-    <Content Include="Views\Shared\_AdminFooter.cshtml" />
-    <Content Include="Views\Shared\_AdminMenu.cshtml" />
-    <Content Include="Views\Shared\_DepartmentMenu.cshtml" />
-    <Content Include="Views\Shared\_HRFooter.cshtml" />
-    <Content Include="Views\Shared\_HRMenu.cshtml" />
-    <Content Include="Views\Genders\Create.cshtml" />
-    <Content Include="Views\Genders\Delete.cshtml" />
-    <Content Include="Views\Genders\Details.cshtml" />
-    <Content Include="Views\Genders\Edit.cshtml" />
-    <Content Include="Views\Genders\Index.cshtml" />
-    <Content Include="Views\LocationGroups\Create.cshtml" />
-    <Content Include="Views\LocationGroups\Delete.cshtml" />
-    <Content Include="Views\LocationGroups\Details.cshtml" />
-    <Content Include="Views\LocationGroups\Edit.cshtml" />
-    <Content Include="Views\LocationGroups\Index.cshtml" />
-    <Content Include="Views\Vendors\Create.cshtml" />
-    <Content Include="Views\Vendors\Delete.cshtml" />
-    <Content Include="Views\Vendors\Details.cshtml" />
-    <Content Include="Views\Vendors\Edit.cshtml" />
-    <Content Include="Views\Vendors\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -863,18 +796,17 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201901310623424_initial.resx">
-      <DependentUpon>201901310623424_initial.cs</DependentUpon>
-    <EmbeddedResource Include="Migrations\201901290935404_new.resx">
-      <DependentUpon>201901290935404_new.cs</DependentUpon>
+<<<<<<< HEAD
     <EmbeddedResource Include="Resources\Resource.ar-SA.resx">
       <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.resx">
       <CustomToolNamespace>Resources</CustomToolNamespace>
+=======
+    <EmbeddedResource Include="Migrations\201901290935404_new.resx">
+      <DependentUpon>201901290935404_new.cs</DependentUpon>
+>>>>>>> caa6521be43474d15631f5c9402dd2a261bc7a3c
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Resource.ar-SA.resx" />
-    <EmbeddedResource Include="Resources\Resource.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

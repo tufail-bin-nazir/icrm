@@ -195,9 +195,12 @@ namespace icrm.Models
         public System.Data.Entity.DbSet<icrm.Models.SubCategory> SubCategories { get; set; }
 
         public System.Data.Entity.DbSet<icrm.Models.EventReason> EventReasons { get; set; }
-        
+<<<<<<< HEAD
+        public System.Data.Entity.DbSet<icrm.Models.HubConnectionMap> HubConnectionMap{ get; set; }
 
         public System.Data.Entity.DbSet<icrm.Models.EscalationUser> EscalationUsers { get; set; }
+=======
+>>>>>>> caa6521be43474d15631f5c9402dd2a261bc7a3c
     }
 
     public class MyDBInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>
