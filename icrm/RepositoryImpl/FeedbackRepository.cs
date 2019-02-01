@@ -59,7 +59,6 @@ namespace icrm.RepositoryImpl
             }
 
             return feedlist.ToPagedList(pageIndex, pageSize);
-            // return db.Feedbacks.Where(m=>m.status=="Open" && m.departmentID !=null && m.response ==null).OrderByDescending(m => m.user.Id).ToPagedList(pageIndex, pageSize);
 
         }
 
@@ -145,7 +144,6 @@ namespace icrm.RepositoryImpl
             }
 
             return feedlist.ToPagedList(pageIndex, pageSize);            
-            // return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID== user.DepartmentId && m.status=="Open" && m.departmentID != null && m.response==null && m.responseById==null).ToPagedList(pageIndex, pageSize);
         }
 
         public IPagedList<Feedback> getAllRespondedWithDepartment(string usrid, int pageIndex, int pageSize)
@@ -175,13 +173,10 @@ namespace icrm.RepositoryImpl
 
             return feedlist.ToPagedList(pageIndex, pageSize);
 
-            //  return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == user.DepartmentId && m.departmentID != null && m.response != null && m.responseById==usrid).ToPagedList(pageIndex, pageSize);
-
         }
 
         public IPagedList<Feedback> OpenWithoutDepart(int pageIndex, int pageSize)
         {
-            //return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == null && m.response==null && m.status=="Open").ToPagedList(pageIndex, pageSize);
             return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == null  && m.checkStatus==Constants.OPEN).ToPagedList(pageIndex, pageSize);
 
         }
@@ -234,10 +229,7 @@ namespace icrm.RepositoryImpl
 
         public IPagedList<Feedback> searchHR(string d1, string d2, string status, int pageIndex, int pageSize)
         {
-
-            System.Diagnostics.Debug.WriteLine(d1+"jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
-
-            System.Diagnostics.Debug.WriteLine(d2 + "jjjjjjjjhhhhjjjjjjjjjjjjjjjjjjjjjjjjjjj");
+            
             var param1 = new SqlParameter();
             param1.ParameterName = "@D1";
 
@@ -314,7 +306,6 @@ namespace icrm.RepositoryImpl
             }
 
             return feedlist;
-          //  return db.Feedbacks.Where(m => m.status == "Open" && m.departmentID != null && m.response == null).OrderByDescending(m => m.user.Id).ToList();
         }
 
         public IEnumerable<Feedback> getAllResponded()
@@ -326,7 +317,6 @@ namespace icrm.RepositoryImpl
                 feedlist.Add(r);
             }
             return feedlist;
-           //return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID != null && m.response != null && m.status == "Open").ToList();
         }
 
         public IEnumerable<Feedback> OpenWithoutDepart()
@@ -341,7 +331,6 @@ namespace icrm.RepositoryImpl
         }
 
       
-
         public IEnumerable<Feedback> getAllRespondedWithDepartment(string usrid)
         {
             ApplicationUser user = db.Users.Find(usrid);
@@ -395,9 +384,9 @@ namespace icrm.RepositoryImpl
             return emailList;
         }
 
-        public IPagedList<Feedback> getListBasedOnType(int pageIndex, int pageSize,int typeId)
+        public IPagedList<Feedback> getListBasedOnType(int pageIndex, int pageSize,string typeId)
         {
-            return db.Feedbacks.OrderBy(m=>m.id).Where(m => m.typeId == typeId).ToPagedList(pageIndex,pageSize);
+            return db.Feedbacks.OrderBy(m=>m.id).Where(m => m.type.name==typeId).ToPagedList(pageIndex,pageSize);
         }
 
 
@@ -405,7 +394,24 @@ namespace icrm.RepositoryImpl
         {
             return db.Feedbacks.OrderBy(m => m.id).Where(m => m.type.name == type).ToList();
         }
+        public List<Department> getDepartmentsOnType(string fORWARD)
+        {
+            return db.Departments.OrderBy(m => m.name).ToList();
+        }
 
+        public List<Priority> getPriorties()
+        {
+            return db.Priorities.OrderBy(m => m.priorityId).ToList();
+        }
 
+        public List<FeedBackType> getFeedbackTypes()
+        {
+            return db.FeedbackTypes.OrderBy(m=>m.name).ToList();
+        }
+
+        public ApplicationUser getEmpDetails(string id)
+        {
+            return db.Users.Where(u => u.Id == id).FirstOrDefault();
+        }
     }
 }

@@ -18,11 +18,12 @@ namespace icrm.Models
         public static string RESPONDED = "Responded";
         public static string REJECTED = "Rejected";
         public static string CLOSED = "Closed";
-        public static string Enquirey = "Enquirey";
+        public static string Enquiry = "Enquiry";
         public static string Suggestion = "Suggestion";
         public static int criticalescelationtime = 1;
-        public static string criticallevel1useremail = "";
-        public static string criticallevel2useremail = "";
-        public static string criticallevel3useremail = "";
+        public static string criticallevel1useremail = "kmiraste@gmail.com";
+        public static string criticallevel2useremail = "khursheed@stie.com.sg";
+        public static string criticallevel3useremail = "tufail.b.n@gmail.com";
+        public static string FORWARD = "Forward";
     }
 }
