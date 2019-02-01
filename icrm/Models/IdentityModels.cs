@@ -196,6 +196,8 @@ namespace icrm.Models
 
         public System.Data.Entity.DbSet<icrm.Models.EventReason> EventReasons { get; set; }
         public System.Data.Entity.DbSet<icrm.Models.HubConnectionMap> HubConnectionMap{ get; set; }
+
+        public System.Data.Entity.DbSet<icrm.Models.EscalationUser> EscalationUsers { get; set; }
     }
 
     public class MyDBInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>

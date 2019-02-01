@@ -37,14 +37,14 @@ namespace icrm.Models
  
                     var level1query = from f in db.Feedbacks.ToList()
                                 where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED && 
-                                f.priorityId == 1 && f.escalationlevel is null && (DateTime.Now- (DateTime)f.assignedDate).TotalHours > Constants.criticalescelationtime &&
+                                f.priorityId == 1 && f.escalationlevel == null && (DateTime.Now- (DateTime)f.assignedDate).TotalHours > Constants.criticalescelationtime &&
                                 (DateTime.Now - (DateTime)f.assignedDate).TotalHours < (Constants.criticalescelationtime)*2
                                       select f;
 
                     foreach (Feedback f in level1query) {
                         
                         f.escalationlevel = "level1";
-                        sendEmailAsync(f, Constants.criticallevel1useremail);
+                        sendEmailAsync(f, getEmailOfUser(f).firstEscalationUser.Email);
                         db.Feedbacks.Add(f);
                         db.Entry(f).State = System.Data.Entity.EntityState.Modified;
                     }
@@ -59,7 +59,7 @@ namespace icrm.Models
                     foreach (Feedback f in level2query)
                     {
                         f.escalationlevel = "level2";
-                        sendEmailAsync(f, Constants.criticallevel2useremail);
+                        sendEmailAsync(f, getEmailOfUser(f).secondEscalationUser.Email);
                         db.Feedbacks.Add(f);
                         db.Entry(f).State = System.Data.Entity.EntityState.Modified;
                     }
@@ -74,7 +74,7 @@ namespace icrm.Models
                     foreach (Feedback f in level3query)
                     {
                         f.escalationlevel = "level3";
-                        sendEmailAsync(f, Constants.criticallevel3useremail);
+                        sendEmailAsync(f, getEmailOfUser(f).thirdEscalationUser.Email);
                         db.Feedbacks.Add(f);
                         db.Entry(f).State = System.Data.Entity.EntityState.Modified;
                     }
@@ -162,6 +162,14 @@ namespace icrm.Models
                
             }
          }
+
+        public EscalationUser getEmailOfUser(Feedback f) {
+            var query = from e in db.EscalationUsers
+                        where e.DepartmentId == f.departmentID && e.Categories.Contains(f.category)
+                        select e;
+            return query.FirstOrDefault();
+
+        }
 
         
     }
