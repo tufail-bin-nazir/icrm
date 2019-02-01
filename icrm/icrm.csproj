@@ -367,12 +367,8 @@
     <Compile Include="Models\Forwardmodel.cs" />
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\HubConnectionMap.cs" />
-    <Compile Include="Models\IConnectRabbitMQ.cs" />
-    <Compile Include="Models\HubConnectionMap.cs" />
-    <Compile Include="Models\IConnectRabbitMQ.cs" />
     <Compile Include="Models\GenderViewModel.cs" />
-    <Compile Include="Models\HubConnectionMap.cs" />
-    <Compile Include="Models\IConnectRabbitMQ.cs" />
+    <Compile Include="Models\IConnectToRabbitMQ.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JobTitle.cs" />
     <Compile Include="Models\JobTitlesViewModel.cs" />
@@ -392,12 +388,12 @@
     <Compile Include="Models\PositionsViewModel.cs" />
     <Compile Include="Models\PrioritiesViewModel.cs" />
     <Compile Include="Models\Priority.cs" />
+    <Compile Include="Models\Producer.cs" />
     <Compile Include="Models\RabbitMQBll.cs" />
     <Compile Include="Models\RecieveEmails.cs" />
     <Compile Include="Models\Religion.cs" />
     <Compile Include="Models\ReligionViewModel.cs" />
     <Compile Include="Models\Save File.cs" />
-    <Compile Include="Models\ScheduleforCriticalEscalation.cs" />
     <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\SubCategory.cs" />
     <Compile Include="Models\SubLocation.cs" />
@@ -637,6 +633,8 @@
     <Content Include="Content\lib\SpinKit\css\Descr.WD3" />
     <Content Include="Content\lib\summernote\css\Descr.WD3" />
     <Content Include="Content\lib\summernote\js\Descr.WD3" />
+    <Content Include="icrm.csproj.orig" />
+    <Content Include="Models\ScheduleforCriticalEscalation.cs.orig" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -865,8 +863,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201901310623424_initial.resx">
       <DependentUpon>201901310623424_initial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901290935404_new.resx">
       <DependentUpon>201901290935404_new.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.ar-SA.resx">
       <CustomToolNamespace>Resources</CustomToolNamespace>
     </EmbeddedResource>
