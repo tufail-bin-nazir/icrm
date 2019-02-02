@@ -1,5 +1,5 @@
 ﻿
-@model icrm.Models.CategoryViewModel
+@model icrm.Models.FeedBackTypeViewModel
 @{
     Layout = null;
 }
@@ -41,18 +41,18 @@
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Create Category</li>
+                    <li class="breadcrumb-item active" aria-current="page">Create FeedBack Type</li>
                 </ol>
-                <h6 class="slim-pagetitle">Create Category</h6>
+                <h6 class="slim-pagetitle">Create FeedBack Type</h6>
             </div>
             <!-- slim-pageheader -->
 
             <div class="section-wrapper">
-                <label class="section-title">Creating Category</label>
+                <label class="section-title">Creating FeedBack Type</label>
                 <p class="mg-b-20 mg-sm-b-40"></p>
 
 
-                <label class="section-title">Admin / Category</label>
+                <label class="section-title">Admin / FeedBack Type</label>
                 @using (Html.BeginForm())
                 {
                     @Html.ValidationSummary()
@@ -60,7 +60,7 @@
 
                     if (ViewBag.Status == "Update")
                     {
-                        @Html.HiddenFor(x => x.Category.Id)
+                        @Html.HiddenFor(x => x.FeedBackType.Id)
                     }
 
                     <div class="form-layout">
@@ -68,25 +68,19 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(x => x.Category.name, new { @class = "form-control", placeholder = "Enter Category", Required = "true" })
-
-
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Department Name <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.Category.DepartmentId,
-                                       new SelectList(ViewBag.DepartmentList,
-                                          "Id", "name"),"Choose Department", new { @class = "form-control select2"})
+                                    <label class="form-control-label">FeedBack Type: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(x => x.FeedBackType.name, new { @class = "form-control", placeholder = "Enter FeedBack Name", Required = "true" })
 
 
                                 </div>
                             </div>
 
                           
+
+                          
+
+
+
 
                             <!-- col-4 -->
                             <!-- col-4 -->
@@ -131,7 +125,7 @@
                                 </thead>
                                 <tbody>
 
-                                    @foreach (var item in Model.Categories)
+                                    @foreach (var item in Model.FeedBackTypes)
                                     {
                                         <tr>
                                             <td class="pd-l-20">

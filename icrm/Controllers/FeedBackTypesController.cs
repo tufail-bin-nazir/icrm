@@ -38,7 +38,8 @@ namespace icrm.Controllers
         // GET: FeedBackTypes/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.Status = "Add";
+            return View("CreateList", new FeedBackTypeViewModel {FeedBackTypes = db.FeedbackTypes.ToList() });
         }
 
         // POST: FeedBackTypes/Create
@@ -52,10 +53,11 @@ namespace icrm.Controllers
             {
                 db.FeedbackTypes.Add(feedBackType);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
-            return View(feedBackType);
+            ViewBag.Status = "Add";
+            return View("CreateList", new FeedBackTypeViewModel { FeedBackTypes = db.FeedbackTypes.ToList() });
         }
 
         // GET: FeedBackTypes/Edit/5
@@ -70,7 +72,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(feedBackType);
+            ViewBag.Status = "Update";
+            return View("CreateList", new FeedBackTypeViewModel {FeedBackType= feedBackType, FeedBackTypes = db.FeedbackTypes.ToList() });
         }
 
         // POST: FeedBackTypes/Edit/5
@@ -84,9 +87,10 @@ namespace icrm.Controllers
             {
                 db.Entry(feedBackType).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Update");
             }
-            return View(feedBackType);
+            ViewBag.Status = "Add";
+            return View("CreateList", new FeedBackTypeViewModel { FeedBackTypes = db.FeedbackTypes.ToList() });
         }
 
         // GET: FeedBackTypes/Delete/5
@@ -101,7 +105,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(feedBackType);
+            ViewBag.Status = "Delete";
+            return View("CreateList", new FeedBackTypeViewModel { FeedBackType = feedBackType, FeedBackTypes = db.FeedbackTypes.ToList() });
         }
 
         // POST: FeedBackTypes/Delete/5
@@ -112,7 +117,7 @@ namespace icrm.Controllers
             FeedBackType feedBackType = db.FeedbackTypes.Find(id);
             db.FeedbackTypes.Remove(feedBackType);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Create");
         }
 
         protected override void Dispose(bool disposing)
