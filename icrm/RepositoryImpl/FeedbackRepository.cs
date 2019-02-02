@@ -378,8 +378,10 @@ namespace icrm.RepositoryImpl
             List<string> emailList = new List<string>();
              List<ApplicationUser> u= db.Users.OrderBy(m => m.Id).Where(m=>m.forwarDeptEmailCCStatus==true).ToList();
 
+            
             foreach (ApplicationUser uu in u) {
                 emailList.Add(uu.Email);
+                System.Diagnostics.Debug.WriteLine(uu.Email+"---------------------jjjj");
             }
             return emailList;
         }
