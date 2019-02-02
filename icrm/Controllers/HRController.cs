@@ -918,12 +918,18 @@ namespace icrm.Controllers
             }      
             body = body.Replace("{Title}", feedback.title);
             body = body.Replace("{TicketId}", feedback.id);
-            body = body.Replace("{Location}", user.Location.name);
+            if (user.Location != null) {
+                body = body.Replace("{Location}", user.Location.name);
+            }
+            if (user.SubLocation != null)
+            {
+                body = body.Replace("{SubLocation}", user.SubLocation.name);
+            }
             body = body.Replace("{EmployeeId}", user.EmployeeId.ToString());
             body = body.Replace("{Description}",feedback.description);
             body = body.Replace("{email}", user.Email);
             body = body.Replace("{issueClass}", "YES");
-            body = body.Replace("{SubLocation}", user.SubLocation.name);
+            
             if (feedback.attachment == null) {
                 body = body.Replace("{Attachment}", "No");
             }
