@@ -1167,7 +1167,7 @@ namespace icrm.WebApi
         public IHttpActionResult recieveEmails(string id, RecieveEmails emails )
         {
             Debug.WriteLine(emails);
-           
+          
 
             return Ok();
         }
@@ -1249,6 +1249,35 @@ namespace icrm.WebApi
 
             }
         }
+
+        //39/ <summary>
+        /// ////////////////////////////**************** Forget Password*******************////////////////////////////
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/HR/ForgetPassword/{id}")]
+        public IHttpActionResult ForgetPassword(string id)
+        {
+            Feedback f = db.Feedbacks.Find(id);
+
+            if (f == null)
+            {
+
+                return NotFound();
+
+            }
+
+            else
+            {
+               
+                    return Ok();
+
+            }
+
+
+
+        }
+
+
 
     }
 }
