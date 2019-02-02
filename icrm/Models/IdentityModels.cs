@@ -223,7 +223,7 @@ namespace icrm.Models
             // Initialize default user
             var ustore = new UserStore<ApplicationUser>(context);
             var umanager = new UserManager<ApplicationUser>(ustore);
-            var admin = new ApplicationUser { EmployeeId=1000, UserName = "admin@admin.com", FirstName = "admin", LastName = "admin", Email = "admin@admin.com", PhoneNumber = "1234567890" };
+            var admin = new ApplicationUser { EmployeeId=1000, UserName = "1000", FirstName = "admin", LastName = "admin", Email = "admin@admin.com", PhoneNumber = "1234567890" };
 
 
             umanager.Create(admin, "123456");
