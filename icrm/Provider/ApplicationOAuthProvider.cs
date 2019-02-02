@@ -19,7 +19,7 @@ namespace icrm.Provider
         public override async Task GrantResourceOwnerCredentials(
             OAuthGrantResourceOwnerCredentialsContext context)
           {
-           
+
 
             ApplicationUserManager storeUserMgr =
             context.OwinContext.Get<ApplicationUserManager>("AspNet.Identity.Owin:"

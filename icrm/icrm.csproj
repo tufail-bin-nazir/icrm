@@ -65,6 +65,15 @@
       <HintPath>..\packages\FluentScheduler.5.3.0\lib\net40\FluentScheduler.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.4.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.0\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Razor, Version=1.1.2.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Razor.1.1.2\lib\net451\Microsoft.AspNetCore.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net46\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
@@ -98,13 +107,45 @@
     <Reference Include="System.Data" />
     <Reference Include="System.DirectoryServices.Protocols" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Globalization.Calendars, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Globalization.Calendars.4.3.0\lib\net46\System.Globalization.Calendars.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Packaging, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.Packaging.4.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.0\lib\net46\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Sockets, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Sockets.4.3.0\lib\net46\System.Net.Sockets.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Reflection.Metadata, Version=1.4.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.Metadata.1.4.2\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
     </Reference>
     <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
@@ -314,24 +355,11 @@
     <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Events\BroadcastMessageEvent.cs" />
     <Compile Include="Events\EventService.cs" />
-    <Compile Include="Events\FeedbackNotification.cs" />
     <Compile Include="Events\FeedbackNotifyEvent.cs" />
     <Compile Include="Events\HrAvailableNotify.cs" />
     <Compile Include="Events\MessageEvent.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201901310623424_initial.cs" />
-    <Compile Include="Migrations\201901310623424_initial.Designer.cs">
-      <DependentUpon>201901310623424_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201901290935404_new.cs" />
-    <Compile Include="Migrations\201901290935404_new.Designer.cs">
-      <DependentUpon>201901290935404_new.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201901310623424_initial.cs" />
-    <Compile Include="Migrations\201901310623424_initial.Designer.cs">
-      <DependentUpon>201901310623424_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -367,8 +395,14 @@
     <Compile Include="Models\Forwardmodel.cs" />
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\HubConnectionMap.cs" />
+    <Compile Include="Models\IConnectRabbitMQ.cs" />
+    <Compile Include="Models\HubConnectionMap.cs" />
+    <Compile Include="Models\IConnectRabbitMQ.cs" />
+    
+    <Compile Include="Models\HubConnectionMap.cs" />
     <Compile Include="Models\GenderViewModel.cs" />
-    <Compile Include="Models\IConnectToRabbitMQ.cs" />
+    <Compile Include="Models\GenericPagination.cs" />
+   
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\JobTitle.cs" />
     <Compile Include="Models\JobTitlesViewModel.cs" />
@@ -389,11 +423,12 @@
     <Compile Include="Models\PrioritiesViewModel.cs" />
     <Compile Include="Models\Priority.cs" />
     <Compile Include="Models\Producer.cs" />
-    <Compile Include="Models\RabbitMQBll.cs" />
+   
     <Compile Include="Models\RecieveEmails.cs" />
     <Compile Include="Models\Religion.cs" />
     <Compile Include="Models\ReligionViewModel.cs" />
     <Compile Include="Models\Save File.cs" />
+   
     <Compile Include="Models\SearchViewModel.cs" />
     <Compile Include="Models\SubCategory.cs" />
     <Compile Include="Models\SubLocation.cs" />
@@ -417,8 +452,7 @@
     <Compile Include="RepositoryInterface\IFeedback.cs" />
     <Compile Include="RepositoryInterface\MessageInterface.cs" />
     <Compile Include="RepositoryInterface\UserInterface.cs" />
-    <Compile Include="Resources\Resource.ar-SA1.Designer.cs" />
-    <Compile Include="Resources\Resource1.Designer.cs" />
+    <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Schedular\MyRegistry.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WebApi\BroadcastMessageController.cs" />
@@ -861,6 +895,17 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201901310623424_initial.resx">
+      <DependentUpon>201901310623424_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901290935404_new.resx">
+      <DependentUpon>201901290935404_new.cs</DependentUpon>
+    <EmbeddedResource Include="Resources\Resource.ar-SA.resx">
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.resx">
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <Compile Include="Resources\Resource.ar-SA.Designer.cs" />
     <EmbeddedResource Include="Migrations\201901310623424_initial.resx">
       <DependentUpon>201901310623424_initial.cs</DependentUpon>
     </EmbeddedResource>

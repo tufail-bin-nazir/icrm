@@ -18,7 +18,7 @@
 "Value", "Name", 1);
     ViewData["list"] = list;
 
-}
+} 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -337,8 +337,8 @@
         <script src="~/Content/js/slim.js"></script>
         <script>
             $("#typeofFeedback").prop('required', true);
-            
-            
+
+
 
             $('#empID').change(function () {
 
@@ -355,7 +355,7 @@
                         url: "@Url.Action("getEmpDetails", "HR")",
                         dataType: "json",
                         success: function (response) {
-                           
+
                             $('#EmpName').val(response.UserName);
                             $('#EmpBatch').val(response.EmployeeId);
                             $('#EmpEmail').val(response.Email);
@@ -392,7 +392,7 @@
             });
 
             $('#resolve').click(function () {
-               
+
                 if ($('#statusfield').val() == "Resolved") {
                     $("#priorty").prop('required', false);
                     $("#category").prop('required', false);
@@ -416,13 +416,13 @@
             }
             $('#empID').change(function () {
                 if (this.value == "") {
-                   
+
                     var hrdetail = $('#hrdetail').val();
                     $('#submittedBy').val(hrdetail);
                 }
                 else {
                     var hrdetail = $('#hrdetail').val();
-                    $('#submittedBy').val(hrdetail);                   
+                    $('#submittedBy').val(hrdetail);
                     $('#userID').val(this.value);
                 }
             });
@@ -509,10 +509,10 @@
                     data: '{"depId":"' + $(this).val() + '"}',
                     dataType: "json",
                     success: function (r) {
-                        
+
                         for (var i = 0; i < r.length; i++) {
-                            $('#category').append('<option value="' + r[i].Id + '">' + r[i].name + '</option>'); 
-                            
+                            $('#category').append('<option value="' + r[i].Id + '">' + r[i].name + '</option>');
+
                         }
                     },
                     error: function (r) {
@@ -535,10 +535,10 @@
                     data: '{"categoryId":"' + $(this).val() + '"}',
                     dataType: "json",
                     success: function (r) {
-                        
+
                         for (var i = 0; i < r.length; i++) {
-                            $('#subcategory').append('<option value="' + r[i].Id + '">' + r[i].name + '</option>'); 
-                            
+                            $('#subcategory').append('<option value="' + r[i].Id + '">' + r[i].name + '</option>');
+
                         }
                     },
                     error: function (r) {
@@ -549,5 +549,6 @@
             });
 
         </script>
+@Html.Partial("_HRFooter")
 </body>
 </html>

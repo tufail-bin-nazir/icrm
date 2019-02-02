@@ -658,7 +658,7 @@ namespace icrm.Controllers
 
         /*****************ENQUIRIES TICKETS LIST********************/
 
-        public ActionResult tickets(int? page, int typeId)
+        public ActionResult tickets(int? page, string typeId)
         {
             TicketCounts();
             ViewBag.linkName = "tickettype";

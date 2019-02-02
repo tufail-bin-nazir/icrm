@@ -7,5 +7,7 @@ namespace icrm.RepositoryInterface
         void Save(ChatRequest chatRequest);
         int ChatRequestsSize();
         bool CheckRequestExistsOfUser(string userId);
+        ChatRequest NextChatRequestInQueue();
+        void delete(ChatRequest chatRequest);
     }
 }

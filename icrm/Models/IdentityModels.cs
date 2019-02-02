@@ -13,7 +13,7 @@ namespace icrm.Models
     {
         [Required]
         public int EmployeeId { get; set; }
-
+         
         [Required]
         public string FirstName { get; set; }
 
@@ -195,6 +195,7 @@ namespace icrm.Models
         public System.Data.Entity.DbSet<icrm.Models.SubCategory> SubCategories { get; set; }
 
         public System.Data.Entity.DbSet<icrm.Models.EventReason> EventReasons { get; set; }
+        public System.Data.Entity.DbSet<icrm.Models.HubConnectionMap> HubConnectionMap{ get; set; }
         
 
         public System.Data.Entity.DbSet<icrm.Models.EscalationUser> EscalationUsers { get; set; }
