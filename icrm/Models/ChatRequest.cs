@@ -11,4 +11,4 @@ namespace icrm.Models
         public string UserId { get; set; }
         public ApplicationUser user { get; set; }
     }
-}
+} 
