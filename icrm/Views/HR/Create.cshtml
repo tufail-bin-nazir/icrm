@@ -366,15 +366,17 @@
                         url: "@Url.Action("getEmpDetails", "HR")",
                         dataType: "json",
                         success: function (response) {
-
+                            alert(response.Nationality.name);
+                            alert(response.JobTitle.name);
+                            $('#EmpPosition').val(response.JobTitle.name);
+                            $('#EmpNationality').val(response.Nationality.name);
                             $('#EmpName').val(response.UserName);
                             $('#EmpBatch').val(response.EmployeeId);
                             $('#EmpEmail').val(response.Email);
                             $('#EmpPNo').val(response.PhoneNumber);
                             $('#EmpLocation').val(response.Location.name);
                             $('#EmpSubLocation').val(response.SubLocation.name);
-                            $('#EmpPosition').val(response.JobTitle.name);
-                            $('#EmpNationality').val(response.Nationality.name);
+                            
 
                         },
                         error: function (response) {

@@ -380,7 +380,7 @@ namespace icrm.RepositoryImpl
 
             
             foreach (ApplicationUser uu in u) {
-                emailList.Add(uu.Email);
+                emailList.Add(uu.bussinessEmail);
                 System.Diagnostics.Debug.WriteLine(uu.Email+"---------------------jjjj");
             }
             return emailList;

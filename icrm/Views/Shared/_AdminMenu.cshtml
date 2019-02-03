@@ -1,4 +1,77 @@
-﻿<div class="slim-header">
+﻿<script>
+
+
+   
+    $(document).ready(function () {
+
+        var menu = ["feedback", "openticket", "resolvedticket", "assignedticket",
+            "respondedticket", "closedticket", "rejectedticket"
+        ];
+
+        var users = ["Create", "HR", "Department"];
+
+        var reports = ["charts"];
+
+        var chat = ["HRChat"];
+
+        var url = window.location.href;
+        var page = new Array();
+        var page = url.split("/");
+        console.log(page[page.length - 1])
+        var last = page[page.length - 1];
+
+
+        //$.each(menu, function (index, value) {
+        //    console.log(value);
+
+        //    if (last == value) {
+        //        console.log($(".nav").find('.active').eq(0));
+        //        $(".nav").find('.nav-item').eq(0).attr("class", "nav-item");
+        //        $(".nav").find('.nav-item').eq(1).attr("class", "nav-item");
+        //        $(".nav").find('.nav-item').eq(3).attr("class", "nav-item  with-sub");
+        //        console.log($(".nav").find('.nav-item').eq(2).attr("class", "nav-item active with-sub"));
+              
+
+        //    }
+        //});
+
+
+
+        $.each(users, function (index, value) {
+            console.log(value);
+
+            if (last == value) {
+                console.log($(".nav").find('.active').eq(0));
+              
+                $(".nav").find('.nav-item').eq(0).attr("class", "nav-item");
+                $(".nav").find('.nav-item').eq(1).attr("class", "nav-item");
+                $(".nav").find('.nav-item').eq(2).attr("class", "nav-item with-sub");
+                console.log($(".nav").find('.nav-item').eq(3).attr("class", "nav-item active with-sub"));
+                
+
+            }
+        });
+
+        //$.each(chat, function (index, value) {
+        //    console.log(value);
+
+        //    if (last == value) {
+        //        console.log($(".nav").find('.active').eq(0));
+        //        $(".nav").find('.nav-item').eq(0).attr("class", "nav-item");
+        //        $(".nav").find('.nav-item').eq(1).attr("class", "nav-item");
+        //        console.log($(".nav").find('.nav-item').eq(2).attr("class", "nav-item "));
+
+
+        //    }
+        //});
+
+
+
+    });
+
+</script>
+
+<div class="slim-header">
     <div class="container">
         <div class="slim-header-left">
             <h2 class="slim-logo"><a href="/Admin/Dashboard"><img  src="~/Content/img/m_logo.png"  width="70px"/></a></h2>
@@ -8,9 +81,29 @@
         </div>
         <!-- slim-header-left -->
         <div class="slim-header-right">
-            
+
             <!-- dropdown -->
-            
+            <div class="dropdown dropdown-c">
+
+                <a href="#" class="logged-user" data-toggle="dropdown">
+                    <span>Translation</span>
+                    <i class="fa fa-angle-down"></i>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right">
+                    <nav class="nav">
+                        <a href="page-profile.html" class="nav-link"><i class="icon fa fa-language"></i> Eng</a>
+                        <a href="page-edit-profile.html" class="nav-link"><i class="icon fa fa-language"></i> Arabic</a>
+                    </nav>
+                </div>
+                <!--<a href="#" class="logged-user">
+        <select class="form-control" style="border-radius: 4px;">
+          <option> Eng</option>
+          <option> Arabic</option>
+        </select>
+        </a>-->
+
+            </div>
             <!-- dropdown -->
             <div class="dropdown dropdown-c">
                 <a href="#" class="logged-user" data-toggle="dropdown">
@@ -20,11 +113,11 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <nav class="nav">
-                        <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
-                        <a href="../userprofile/index" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>
+                        <!--    <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
+                <a href="../userprofile/index" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>-->
                         <a href="@Url.Action("index","DownloadAPK")" class="nav-link"><i class="icon ion-ios-bolt"></i> Download APK</a>
 
-                        <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>
+                        <!--   <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>-->
 
                         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, null))
                         {

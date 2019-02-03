@@ -738,6 +738,8 @@ namespace icrm.Controllers
         [HttpPost]
         public JsonResult getEmpDetails(string id)
         {
+            ApplicationUser u = feedInterface.getEmpDetails(id);
+            System.Diagnostics.Debug.WriteLine(u.Nationality.name+"lllllllllllllllllllllllll"+u.NationalityId +"djdsj"+u.saudiNationalId);
             return Json(feedInterface.getEmpDetails(id));
         }
 
@@ -916,27 +918,24 @@ namespace icrm.Controllers
             {
                 body = reader.ReadToEnd();
             }      
-            body = body.Replace("{Title}", feedback.title);
-            body = body.Replace("{TicketId}", feedback.id);
-            if (user.Location != null) {
-                body = body.Replace("{Location}", user.Location.name);
-            }
-            if (user.SubLocation != null)
-            {
-                body = body.Replace("{SubLocation}", user.SubLocation.name);
-            }
-            body = body.Replace("{EmployeeId}", user.EmployeeId.ToString());
-            body = body.Replace("{Description}",feedback.description);
-            body = body.Replace("{email}", user.Email);
-            body = body.Replace("{issueClass}", "YES");
+         //   body = body.Replace("{Title}", feedback.title);
+        //    body = body.Replace("{TicketId}", feedback.id);
             
-            if (feedback.attachment == null) {
-                body = body.Replace("{Attachment}", "No");
-            }
-            else {
-                body = body.Replace("{Attachment}", "Yes");
-            }           
-            body = body.Replace("{IssueEscalate}", "Yes"); 
+      //    body = body.Replace("{Location}", user.Location.name);
+            
+            
+          //  body = body.Replace("{EmployeeId}", user.EmployeeId.ToString());
+          //  body = body.Replace("{Description}",feedback.description);
+           // body = body.Replace("{email}", user.bussinessEmail);
+          //  body = body.Replace("{issueClass}", "YES");
+            
+           // if (feedback.attachment == null) {
+           //     body = body.Replace("{Attachment}", "No");
+           // }
+          //  else {
+          //      body = body.Replace("{Attachment}", "Yes");
+            //}           
+          //  body = body.Replace("{IssueEscalate}", "Yes"); 
             return body;
         }       
     }

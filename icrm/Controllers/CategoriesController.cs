@@ -72,7 +72,6 @@ namespace icrm.Controllers
             ViewBag.FeedBackTypeList = db.FeedbackTypes.ToList();
             return View("CreateList", new CategoryViewModel { Categories = db.Categories.ToList() });
         }
-
         // GET: Categories/Edit/5
         public ActionResult Edit(int? id)
         {
