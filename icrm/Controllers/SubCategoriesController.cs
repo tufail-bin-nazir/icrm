@@ -42,7 +42,7 @@ namespace icrm.Controllers
             ViewBag.CategoryList = db.Categories.ToList();
             ViewBag.TypeList = db.FeedbackTypes.ToList();
             ViewBag.Status = "Add";
-            return View("CreaList", new SubCategoryViewModel { subCategories = db.SubCategories.ToList()});
+            return View("CreateList", new SubCategoryViewModel { subCategories = db.SubCategories.ToList()});
         }
 
         // POST: SubCategories/Create
@@ -50,7 +50,7 @@ namespace icrm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,name,CategoryId")] SubCategory subCategory)
+        public ActionResult Create(SubCategory subCategory)
         {
             if (ModelState.IsValid)
             {
@@ -62,7 +62,7 @@ namespace icrm.Controllers
             ViewBag.CategoryList = db.Categories.ToList();
             ViewBag.TypeList = db.FeedbackTypes.ToList();
             ViewBag.Status = "Add";
-            return View("CreaList", new SubCategoryViewModel { subCategories = db.SubCategories.ToList() });
+            return View("CreateList", new SubCategoryViewModel { subCategories = db.SubCategories.ToList() });
         }
 
         // GET: SubCategories/Edit/5
@@ -81,7 +81,7 @@ namespace icrm.Controllers
             ViewBag.CategoryList = db.Categories.ToList();
             ViewBag.TypeList = db.FeedbackTypes.ToList();
             ViewBag.Status = "Update";
-            return View("CreaList", new SubCategoryViewModel { subCategory = subCategory, subCategories = db.SubCategories.ToList() });
+            return View("CreateList", new SubCategoryViewModel { subCategory = subCategory, subCategories = db.SubCategories.ToList() });
         }
 
         // POST: SubCategories/Edit/5
@@ -89,7 +89,7 @@ namespace icrm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,name,CategoryId")] SubCategory subCategory)
+        public ActionResult Edit(SubCategory subCategory)
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +101,7 @@ namespace icrm.Controllers
             ViewBag.CategoryList = db.Categories.ToList();
             ViewBag.TypeList = db.FeedbackTypes.ToList();
             ViewBag.Status = "Update";
-            return View("CreaList", new SubCategoryViewModel { subCategories = db.SubCategories.ToList() });
+            return View("CreateList", new SubCategoryViewModel { subCategories = db.SubCategories.ToList() });
         }
 
         // GET: SubCategories/Delete/5
@@ -119,7 +119,7 @@ namespace icrm.Controllers
             ViewBag.CategoryList = db.Categories.ToList();
             ViewBag.TypeList = db.FeedbackTypes.ToList();
             ViewBag.Status = "Delete";
-            return View("CreaList", new SubCategoryViewModel {subCategory = subCategory, subCategories = db.SubCategories.ToList() });
+            return View("CreateList", new SubCategoryViewModel {subCategory = subCategory, subCategories = db.SubCategories.ToList() });
         }
 
         // POST: SubCategories/Delete/5

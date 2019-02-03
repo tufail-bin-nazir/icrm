@@ -38,7 +38,8 @@ namespace icrm.Controllers
         // GET: EmployeeClasses/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.Status = "Add";
+            return View("CreateList", new EmployeeClassViewModel { employeeClasses = db.employeeClasses.ToList()});
         }
 
         // POST: EmployeeClasses/Create
@@ -52,10 +53,11 @@ namespace icrm.Controllers
             {
                 db.employeeClasses.Add(employeeClass);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
-            return View(employeeClass);
+            ViewBag.Status = "Add";
+            return View("CreateList", new EmployeeClassViewModel { employeeClasses = db.employeeClasses.ToList() });
         }
 
         // GET: EmployeeClasses/Edit/5
@@ -70,7 +72,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(employeeClass);
+            ViewBag.Status = "Update";
+            return View("CreateList", new EmployeeClassViewModel {employeeClass = employeeClass, employeeClasses = db.employeeClasses.ToList() });
         }
 
         // POST: EmployeeClasses/Edit/5
@@ -84,9 +87,10 @@ namespace icrm.Controllers
             {
                 db.Entry(employeeClass).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
-            return View(employeeClass);
+            ViewBag.Status = "Update";
+            return View("CreateList", new EmployeeClassViewModel { employeeClasses = db.employeeClasses.ToList() });
         }
 
         // GET: EmployeeClasses/Delete/5
@@ -101,7 +105,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(employeeClass);
+            ViewBag.Status = "Delete";
+            return View("CreateList", new EmployeeClassViewModel {employeeClass = employeeClass, employeeClasses = db.employeeClasses.ToList() });
         }
 
         // POST: EmployeeClasses/Delete/5
@@ -112,7 +117,7 @@ namespace icrm.Controllers
             EmployeeClass employeeClass = db.employeeClasses.Find(id);
             db.employeeClasses.Remove(employeeClass);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Create");
         }
 
         protected override void Dispose(bool disposing)

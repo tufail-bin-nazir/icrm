@@ -1,5 +1,5 @@
 ﻿
-@model icrm.Models.SubCategoryViewModel
+@model icrm.Models.EthnicitesViewModel
 @{
     Layout = null;
 }
@@ -41,66 +41,39 @@
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Create Sub Category</li>
+                    <li class="breadcrumb-item active" aria-current="page">Create Ethnicities</li>
                 </ol>
-                <h6 class="slim-pagetitle">Create Sub Category</h6>
+                <h6 class="slim-pagetitle">Create Ethnicities</h6>
             </div>
             <!-- slim-pageheader -->
 
             <div class="section-wrapper">
-                <label class="section-title">Creating Sub Category</label>
+                <label class="section-title">Creating Ethnicities</label>
                 <p class="mg-b-20 mg-sm-b-40"></p>
 
 
-                <label class="section-title">Admin / Sub Category</label>
+                <label class="section-title">Admin / Ethnicities</label>
                 @using (Html.BeginForm())
                 {
-                    @Html.ValidationSummary()
-                    @Html.AntiForgeryToken()
 
                     if (ViewBag.Status == "Update")
                     {
-                        @Html.HiddenFor(x => x.subCategory.Id)
+                        @Html.HiddenFor(x => x.Ethnicity.Id)
                     }
+
+                    @Html.ValidationSummary()
+                    @Html.AntiForgeryToken()
 
                     <div class="form-layout">
                         <div class="row mg-b-25">
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">SubCategory: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(x => x.subCategory.name, new { @class = "form-control", placeholder = "Enter Sub Category", Required = "true" })
-
-
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Category Name <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.subCategory.CategoryId,
-                                       new SelectList(ViewBag.CategoryList,
-                                          "Id", "name"),"Choose Category", new { @class = "form-control select2"})
-
+                                    <label class="form-control-label">Ethnicities: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(x => x.Ethnicity.name, new { @class = "form-control", placeholder = "Enter Ethnicities", Required = "true" })
 
                                 </div>
                             </div>
-
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Type <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.subCategory.FeedBackTypeId,
-                                       new SelectList(ViewBag.TypeList,
-                                          "Id", "name"),"Choose Type", new { @class = "form-control select2"})
-
-
-                                </div>
-                            </div>
-
-
-
-
-
                             <!-- col-4 -->
                             <!-- col-4 -->
                         </div>
@@ -129,7 +102,7 @@
                 <div class="col-lg-12">
                     <div class="card card-table">
                         <div class="card-header">
-                            <h6 class="slim-card-title">SubCategory List</h6>
+                            <h6 class="slim-card-title">Ethnicities List</h6>
                         </div>
                         <!-- card-header -->
                         <div class="table-responsive">
@@ -138,14 +111,13 @@
                                     <tr class="tx-10">
                                         <th class="wd-10p pd-y-5">S.No</th>
                                         <th class="pd-y-5">@Resources.Resource.Name</th>
-                                        <th class="pd-y-5">Category Name</th>
                                         <th class="pd-y-5">Action</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                    @foreach (var item in Model.subCategories)
+                                    @foreach (var item in Model.Ethnicities)
                                     {
                                     <tr>
                                         <td class="pd-l-20">
@@ -153,11 +125,6 @@
                                         </td>
                                         <td>
                                             <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.name</a>
-
-                                        </td>
-
-                                        <td>
-                                            <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Category.name</a>
 
                                         </td>
                                         <td class="tx-12">
