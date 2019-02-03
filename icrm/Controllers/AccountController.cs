@@ -100,7 +100,8 @@ namespace icrm.Controllers
 
                         if (UserManager.IsInRole(user.Id, roleManager.FindByName("User").Name))
                         {
-                            return RedirectToAction("DashBoard", "User");
+                            ModelState.AddModelError("", "Sorry User Need To Login Through The App Only.");
+                            return View(model);
                         }
                         else if (UserManager.IsInRole(user.Id, roleManager.FindByName("Admin").Name))
                         {
