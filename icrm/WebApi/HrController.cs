@@ -1083,11 +1083,11 @@ namespace icrm.WebApi
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/HR/Subcategories/{categoryId}")]
-        public IHttpActionResult Subcategories(int categoryId,int typeid)
+        [Route("api/HR/Subcategories/{categoryId}/{type}")]
+        public IHttpActionResult Subcategories(int categoryId,string type)
         {
-
-            var entity = from f in feedInterface.getSubCategories(categoryId , typeid)
+            var typeid = db.FeedbackTypes.Where(e => e.name == type).SingleOrDefault().Id;
+            var entity = from f in feedInterface.getSubCategories(categoryId,typeid )
                          select f;
             if (entity != null)
             {
