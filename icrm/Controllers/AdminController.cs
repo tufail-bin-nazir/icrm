@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using System.Diagnostics;
 using icrm.RepositoryInterface;
 using icrm.RepositoryImpl;
+using System.Security.Cryptography;
 
 namespace icrm.Controllers
 {
@@ -60,6 +61,11 @@ namespace icrm.Controllers
                 Response.SetCookie(new HttpCookie("sucess", "") { Expires = DateTime.Now.AddDays(-1) });
                 ViewBag.message = "User Saved Sucessfully";
             }
+            if (Request.Cookies["fail"] != null)
+            {
+                Response.SetCookie(new HttpCookie("sucess", "") { Expires = DateTime.Now.AddDays(-1) });
+                ViewBag.message = "Employee Id Doesn't Exist";
+            }
             ViewBag.DepartmentList = context.Departments.ToList();
                 return View();
         }
@@ -73,21 +79,23 @@ namespace icrm.Controllers
             if (ModelState.IsValid)
             {
 
-                var user = new ApplicationUser
+                ApplicationUser user = UserManager.Users.Where(m => m.EmployeeId == model.EmployeeId).SingleOrDefault();
+
+                if (user != null)
                 {
-                    EmployeeId = model.EmployeeId,
-                    UserName = Convert.ToString(model.EmployeeId),
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Email = model.Email,
-                    PhoneNumber = model.PhoneNumber,
-                };
-
-                if (rolename.Equals("Department")) {
-                    user.DepartmentId = model.DepartmentId;
+                   
+                    user.UserName = Convert.ToString(model.EmployeeId);
+                    user.Email = user.bussinessEmail;
+                    user.PasswordHash = HashPassword(model.Password);
+                    user.SecurityStamp = Guid.NewGuid().ToString("D");
                 }
+                else {
+                    Response.SetCookie(new HttpCookie("fail", ""));
+                    return RedirectToAction("AddUser", new { @id = rolename });
 
-                var result = UserManager.Create(user, model.Password);
+                }
+               
+                var result = UserManager.Update(user);
                 if (result.Succeeded)
                 {
                     if(rolename.Equals("HR"))
@@ -146,6 +154,25 @@ namespace icrm.Controllers
         public ViewResult charts() {
 
             return View("Charts");
+        }
+
+        public string HashPassword(string password)
+        {
+            byte[] salt;
+            byte[] buffer2;
+            if (password == null)
+            {
+                throw new ArgumentNullException("password");
+            }
+            using (Rfc2898DeriveBytes bytes = new Rfc2898DeriveBytes(password, 0x10, 0x3e8))
+            {
+                salt = bytes.Salt;
+                buffer2 = bytes.GetBytes(0x20);
+            }
+            byte[] dst = new byte[0x31];
+            Buffer.BlockCopy(salt, 0, dst, 1, 0x10);
+            Buffer.BlockCopy(buffer2, 0, dst, 0x11, 0x20);
+            return Convert.ToBase64String(dst);
         }
     }
 
