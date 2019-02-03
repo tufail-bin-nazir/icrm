@@ -301,6 +301,7 @@
     <script type="text/javascript">
     $(document).ready(function() {
         var msgStore = {};
+        var activeUser = null;
         var page = 1;
         $("#txtmsg").keypress(function(event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -311,7 +312,11 @@
         function parseJsonDate(jsonDateString) {
             console.log('--date string----' + jsonDateString);
             moment().format();
-            return moment(new Date(parseInt(jsonDateString.replace('/Date(', '')))).format('h:mm A');
+            if (jsonDateString.includes('Date')) {
+                return moment(new Date(parseInt(jsonDateString.replace('/Date(', '')))).format('h:mm A');
+            } else {
+                return moment(new Date(jsonDateString)).format('h:mm A');
+            }
         }
         var messageHub = $.connection.messageHub;
         console.log(messageHub);
@@ -323,11 +328,21 @@
                 console.log('consumer started');
             });
         });
+
+        messageHub.client.notification = function(response) {
+            console.log('notify');
+        }
+
         //signalr method for receiving server message to client
         messageHub.client.recieve = function(response) {
-            //updateNotificationCount();
-            //console.log(response);
             //alert("message recieved");
+
+            if (response.ChatId.active) {
+                $('#chatlist' + response.ChatId).parent().prepend('#chatlist' + response.ChatId);
+                activeUser = response.SenderId;
+            }
+
+
             if ($('#chatlist' + response.ChatId).length > 0 &&
                 $('#chatId').val() == response.ChatId) {
                 console.log('sender is here and is active');
@@ -354,10 +369,11 @@
                         msgStore[response.ChatId] = [];
                         msgStore[response.ChatId].push(response.Text);
                         if ($('#msgCount' + response.ChatId + '>span').length < 2) {
+                            $('#msgCount' + response.ChatId).children('span').eq(0).text(parseJsonDate(response.RecieveTime));
                             $('#msgCount' + response.ChatId).append('<span>' + msgStore[response.ChatId].length + '</span>');
                             $('#latestmsg' + response.ChatId).text(response.Text);
                         } else {
-
+                            $('#msgCount' + response.ChatId).children('span').eq(0).text(parseJsonDate(response.RecieveTime));
                             $('#msgCount' + response.ChatId).children('span').eq(1).text(msgStore[response.ChatId].length);
                             $('#latestmsg' + response.ChatId).text(response.Text);
 
@@ -365,6 +381,7 @@
                     } else {
                         console.log('sender is not null so pushing messages')
                         //msgStore[response.ChatId].push(response.Text);
+                        $('#msgCount' + response.ChatId).children('span').eq(0).text(parseJsonDate(response.RecieveTime));
                         $('#msgCount' + response.ChatId).children('span').eq(1).text(msgStore[response.ChatId].length);
                         $('#latestmsg' + response.ChatId).text(response.Text);
 
@@ -415,6 +432,7 @@
                 dataType: "json",
                 success: function(response) {
                     console.log('response=> ' + response);
+                    activeUser = response.RecieverId;
 
                 },
                 error: function(response) {
@@ -494,7 +512,7 @@
         });
 
         function closeChat() {
-            var url = "/chat/close";
+            var url = "/chat/close/"+activeUser;
             $('#closechat').modal('hide');
             $.get(url, function(data) {
                 if (data) {

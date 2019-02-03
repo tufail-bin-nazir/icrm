@@ -11,6 +11,7 @@ using RabbitMQ.Util;
 using icrm.Models;
 using icrm.RepositoryImpl;
 using icrm.RepositoryInterface;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -147,12 +148,22 @@ namespace icrm.Controllers
         }
 
         [HttpGet]
-        [Route("chat/close")]
-        public JsonResult CloseChat()
+        [Route("chat/close/{activeUser}")]
+        public JsonResult CloseChat(string activeUser)
         {
+            Debug.Print(activeUser+"-----------active user");
             ApplicationUser user1 = (ApplicationUser) Session["user"];
             ApplicationUser user2 = userService.findUserOnId(user1.Id);
-            
+            if (!activeUser.IsNullOrWhiteSpace())
+            {
+                Message message = new Message();
+                message.Text = "Agent has closed the chat.If you want to chat again,send new request.";
+                message.RecieverId = activeUser;
+                message.Reciever = userService.findUserOnId(activeUser);
+                message.SentTime = DateTime.Now;
+                eventService.pushMessage(message);
+            }
+
             if (this.chatRequestService.ChatRequestsSize()>0)
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
@@ -306,7 +317,7 @@ namespace icrm.Controllers
 
                 }
 
-                //this.eventService.hrAvailableNotification(sender.DeviceCode);
+                this.eventService.hrAvailableNotification(sender.DeviceCode);
             }
         }
     }

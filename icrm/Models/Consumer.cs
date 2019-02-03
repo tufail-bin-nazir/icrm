@@ -65,8 +65,8 @@ namespace icrm.Models
             
             while (isConsuming)
             {                
-                Debug.Print("-in consumong------------"+mSubscription.QueueName);
-                BasicDeliverEventArgs e = mSubscription.Next();
+                BasicDeliverEventArgs e;
+                mSubscription.Next(500,out e);
                 if(e != null) {
                 int messageId = (int)e.BasicProperties.Headers["msgId"];
                 Message message = messageService.UpdateRecieveTimeOfMessage(messageId);

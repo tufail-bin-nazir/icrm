@@ -44,7 +44,9 @@ namespace icrm.RepositoryImpl
         {
             this.db.Entry(message).State = EntityState.Modified;
             this.db.SaveChanges();
-            return message;
+
+            return db.Message.Include("Chat").Where(m => m.Id == message.Id)
+                .FirstOrDefault();
         }
 
         public Message UpdateRecieveTimeOfMessage(int id)

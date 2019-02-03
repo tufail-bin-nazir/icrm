@@ -94,7 +94,7 @@ namespace icrm.Controllers
                         var roleManager = new RoleManager<IdentityRole>(roleStore);
                         ApplicationUser appuser = UserManager.FindByName(model.Email);
                         appuser.status = true;
-                        appuser.available = true;
+                        appuser.available = false;
                         UserManager.Update(appuser);
                         Session["user"] = appuser;
 
