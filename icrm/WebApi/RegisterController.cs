@@ -43,7 +43,7 @@ namespace icrm.WebApi
             {
                 return BadRequest(ModelState);
             }
-            ApplicationUser user = db.Users.Where(e => e.EmployeeId == model.EmployeeId).SingleOrDefault();
+            ApplicationUser user = db.Users.Where(e => e.EmployeeId == model.EmployeeId && e.EmployeeStatus== "Active").SingleOrDefault();
             if (user == null)
             {
                 return BadRequest(" NO User Found");
