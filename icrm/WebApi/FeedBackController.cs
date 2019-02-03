@@ -70,7 +70,7 @@ namespace icrm.WebApi
 
                 File.WriteAllBytes(path, getfile(feedBackmodel.Attachment));
             }
-            //getting extension of the base 64 file
+            
             else
             {
                 feedBack = new Feedback { title = feedBackmodel.Title, description = feedBackmodel.Description, userId = user.Result.Id, typeId = feedBackmodel.Typeid };

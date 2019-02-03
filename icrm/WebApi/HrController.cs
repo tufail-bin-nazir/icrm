@@ -980,7 +980,9 @@ namespace icrm.WebApi
         {
 
             Feedback feedBack = db.Feedbacks.Find(file.id);
-            if (!String.IsNullOrWhiteSpace(file.ImageSave))
+            Debug.WriteLine(file.ImageSave);
+
+            if (!string.IsNullOrWhiteSpace(file.ImageSave))
             { 
                 string ext = GetFileExtension(file.ImageSave);
                 feedBack.attachment = feedBack.id + "." + ext;
@@ -1276,8 +1278,6 @@ namespace icrm.WebApi
 
 
         }
-
-
 
     }
 }
