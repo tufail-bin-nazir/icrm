@@ -1084,10 +1084,10 @@ namespace icrm.WebApi
         /// <returns></returns>
         [HttpGet]
         [Route("api/HR/Subcategories/{categoryId}")]
-        public IHttpActionResult Subcategories(int categoryId)
+        public IHttpActionResult Subcategories(int categoryId,int typeid)
         {
 
-            var entity = from f in feedInterface.getSubCategories(categoryId)
+            var entity = from f in feedInterface.getSubCategories(categoryId , typeid)
                          select f;
             if (entity != null)
             {
