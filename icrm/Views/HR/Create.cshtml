@@ -366,8 +366,7 @@
                         url: "@Url.Action("getEmpDetails", "HR")",
                         dataType: "json",
                         success: function (response) {
-                            alert(response.Nationality.name);
-                            alert(response.JobTitle.name);
+                           
                             $('#EmpPosition').val(response.JobTitle.name);
                             $('#EmpNationality').val(response.Nationality.name);
                             $('#EmpName').val(response.UserName);
