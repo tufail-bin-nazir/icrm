@@ -61,13 +61,19 @@ namespace icrm.Controllers
                 Response.SetCookie(new HttpCookie("sucess", "") { Expires = DateTime.Now.AddDays(-1) });
                 ViewBag.message = "User Saved Sucessfully";
             }
-            if (Request.Cookies["fail"] != null)
+            else if (Request.Cookies["fail"] != null)
             {
-                Response.SetCookie(new HttpCookie("sucess", "") { Expires = DateTime.Now.AddDays(-1) });
+                Response.SetCookie(new HttpCookie("fail", "") { Expires = DateTime.Now.AddDays(-1) });
                 ViewBag.message = "Employee Id Doesn't Exist";
             }
-            ViewBag.DepartmentList = context.Departments.ToList();
-                return View();
+            else if (Request.Cookies["already"] != null){
+                Response.SetCookie(new HttpCookie("already", "") { Expires = DateTime.Now.AddDays(-1) });
+                ViewBag.message = "Employee Has Already Been Created";
+            }
+           ViewBag.DepartmentList = context.Departments.ToList();
+           return View();
+            
+          
         }
 
 
@@ -81,14 +87,22 @@ namespace icrm.Controllers
 
                 ApplicationUser user = UserManager.Users.Where(m => m.EmployeeId == model.EmployeeId).SingleOrDefault();
 
+                
+
                 if (user != null)
                 {
+                    if (user.PasswordHash != null) {
+                        Response.SetCookie(new HttpCookie("already", ""));
+                        return RedirectToAction("AddUser", new { @id = rolename });
+
+                    }
                    
                     user.UserName = Convert.ToString(model.EmployeeId);
                     user.Email = user.bussinessEmail;
                     user.PasswordHash = HashPassword(model.Password);
                     user.SecurityStamp = Guid.NewGuid().ToString("D");
                 }
+                
                 else {
                     Response.SetCookie(new HttpCookie("fail", ""));
                     return RedirectToAction("AddUser", new { @id = rolename });
