@@ -368,9 +368,9 @@ namespace icrm.RepositoryImpl
           return  db.Categories.Where(m => m.DepartmentId == deptId).ToList();
         }
 
-        public List<SubCategory> getSubCategories(int categoryId)
+        public List<SubCategory> getSubCategories(int categoryId,int type)
         {
-            return db.SubCategories.Where(m => m.CategoryId == categoryId).ToList();
+            return db.SubCategories.Where(m => m.CategoryId == categoryId && m.FeedBackTypeId==type).ToList();
         }
 
         public List<string> getEmails()

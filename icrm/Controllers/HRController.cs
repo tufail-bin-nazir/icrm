@@ -904,9 +904,9 @@ namespace icrm.Controllers
             return Json(categories);
         }
       [HttpPost]
-        public JsonResult getSubCategories(int categoryId)
+        public JsonResult getSubCategories(int categoryId,int type)
         {
-            List<SubCategory> subCategories = feedInterface.getSubCategories(categoryId);
+            List<SubCategory> subCategories = feedInterface.getSubCategories(categoryId,type);
             return Json(subCategories);
         }
 
@@ -914,28 +914,28 @@ namespace icrm.Controllers
         {
             ApplicationUser user = db.Users.Find(feedback.userId);
             string body = string.Empty;
-            using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/HR/HRemail.cshtml")))
+            using (StreamReader reader = new StreamReader(Server.MapPath("~/Views/HR/HRemail.html")))
             {
                 body = reader.ReadToEnd();
             }      
-         //   body = body.Replace("{Title}", feedback.title);
-        //    body = body.Replace("{TicketId}", feedback.id);
+            body = body.Replace("{Title}", feedback.title);
+            body = body.Replace("{TicketId}", feedback.id);
             
-      //    body = body.Replace("{Location}", user.Location.name);
+         body = body.Replace("{Location}", user.Location.name);
             
             
-          //  body = body.Replace("{EmployeeId}", user.EmployeeId.ToString());
-          //  body = body.Replace("{Description}",feedback.description);
-           // body = body.Replace("{email}", user.bussinessEmail);
-          //  body = body.Replace("{issueClass}", "YES");
+            body = body.Replace("{EmployeeId}", user.EmployeeId.ToString());
+           body = body.Replace("{Description}",feedback.description);
+           body = body.Replace("{email}", user.bussinessEmail);
+            body = body.Replace("{issueClass}", "YES");
             
-           // if (feedback.attachment == null) {
-           //     body = body.Replace("{Attachment}", "No");
-           // }
-          //  else {
-          //      body = body.Replace("{Attachment}", "Yes");
-            //}           
-          //  body = body.Replace("{IssueEscalate}", "Yes"); 
+           if (feedback.attachment == null) {
+               body = body.Replace("{Attachment}", "No");
+           }
+           else {
+               body = body.Replace("{Attachment}", "Yes");
+            }           
+            body = body.Replace("{IssueEscalate}", "Yes"); 
             return body;
         }       
     }
