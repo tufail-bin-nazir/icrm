@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /icrm/Migrations
+/icrm/Models/HubConnectionMap.cs

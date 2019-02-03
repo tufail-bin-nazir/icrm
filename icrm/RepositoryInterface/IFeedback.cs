@@ -43,7 +43,7 @@ namespace icrm.RepositoryInterface
         List<Comments> getCOmments(string id);
 
         List<Category> getCategories(Int32 deptId);
-        List<SubCategory> getSubCategories(Int32 categoryId);
+        List<SubCategory> getSubCategories(Int32 categoryId, Int32 typeId);
 
         List<string> getEmails();
         IPagedList<Feedback> getListBasedOnType(int pageIndex, int pageSize, string type);

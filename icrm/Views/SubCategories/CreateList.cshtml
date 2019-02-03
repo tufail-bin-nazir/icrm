@@ -1,5 +1,5 @@
 ﻿
-@model icrm.Models.CategoryViewModel
+@model icrm.Models.SubCategoryViewModel
 @{
     Layout = null;
 }
@@ -41,18 +41,18 @@
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Create Category</li>
+                    <li class="breadcrumb-item active" aria-current="page">Create Sub Category</li>
                 </ol>
-                <h6 class="slim-pagetitle">Create Category</h6>
+                <h6 class="slim-pagetitle">Create Sub Category</h6>
             </div>
             <!-- slim-pageheader -->
 
             <div class="section-wrapper">
-                <label class="section-title">Creating Category</label>
+                <label class="section-title">Creating Sub Category</label>
                 <p class="mg-b-20 mg-sm-b-40"></p>
 
 
-                <label class="section-title">Admin / Category</label>
+                <label class="section-title">Admin / Sub Category</label>
                 @using (Html.BeginForm())
                 {
                     @Html.ValidationSummary()
@@ -60,7 +60,7 @@
 
                     if (ViewBag.Status == "Update")
                     {
-                        @Html.HiddenFor(x => x.Category.Id)
+                        @Html.HiddenFor(x => x.subCategory.Id)
                     }
 
                     <div class="form-layout">
@@ -68,8 +68,8 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(x => x.Category.name, new { @class = "form-control", placeholder = "Enter Category", Required = "true" })
+                                    <label class="form-control-label">SubCategory: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(x => x.subCategory.name, new { @class = "form-control", placeholder = "Enter Sub Category", Required = "true" })
 
 
                                 </div>
@@ -77,16 +77,29 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Department Name <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.Category.DepartmentId,
-                                       new SelectList(ViewBag.DepartmentList,
-                                          "Id", "name"),"Choose Department", new { @class = "form-control select2"})
+                                    <label class="form-control-label">Category Name <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(m => m.subCategory.CategoryId,
+                                       new SelectList(ViewBag.CategoryList,
+                                          "Id", "name"),"Choose Category", new { @class = "form-control select2"})
 
 
                                 </div>
                             </div>
 
-                          
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Type <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(m => m.subCategory.FeedBackTypeId,
+                                       new SelectList(ViewBag.TypeList,
+                                          "Id", "name"),"Choose Type", new { @class = "form-control select2"})
+
+
+                                </div>
+                            </div>
+
+
+
+
 
                             <!-- col-4 -->
                             <!-- col-4 -->
@@ -116,7 +129,7 @@
                 <div class="col-lg-12">
                     <div class="card card-table">
                         <div class="card-header">
-                            <h6 class="slim-card-title">Category List</h6>
+                            <h6 class="slim-card-title">SubCategory List</h6>
                         </div>
                         <!-- card-header -->
                         <div class="table-responsive">
@@ -125,28 +138,34 @@
                                     <tr class="tx-10">
                                         <th class="wd-10p pd-y-5">S.No</th>
                                         <th class="pd-y-5">@Resources.Resource.Name</th>
+                                        <th class="pd-y-5">Category Name</th>
                                         <th class="pd-y-5">Action</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
 
-                                    @foreach (var item in Model.Categories)
+                                    @foreach (var item in Model.subCategories)
                                     {
-                                        <tr>
-                                            <td class="pd-l-20">
-                                                1
-                                            </td>
-                                            <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.name</a>
+                                    <tr>
+                                        <td class="pd-l-20">
+                                            1
+                                        </td>
+                                        <td>
+                                            <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.name</a>
 
-                                            </td>
-                                            <td class="tx-12">
-                                                <a href="@Url.Action("edit",new {id = item.Id })"> <i class="fa fa-edit"> </i> </a>
-                                                <a href="@Url.Action("Delete",new {id = item.Id })"> <i class="fa fa-trash"> </i> </a>
-                                               
-                                            </td>
-                                            </tr>
+                                        </td>
+
+                                        <td>
+                                            <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Category.name</a>
+
+                                        </td>
+                                        <td class="tx-12">
+                                            <a href="@Url.Action("edit",new {id = item.Id })"> <i class="fa fa-edit"> </i> </a>
+                                            <a href="@Url.Action("Delete",new {id = item.Id })"> <i class="fa fa-trash"> </i> </a>
+
+                                        </td>
+                                    </tr>
                                             }
                                     </tbody>
                             </table>

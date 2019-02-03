@@ -618,7 +618,7 @@
             });
 
 
-
+          
              $("#deptId").change(function () {
                  $("#category option").remove();
 
@@ -657,7 +657,7 @@
                     type: "POST",
                     url: "@Url.Action("getSubCategories", "HR")",
                     contentType: "application/json; charset=utf-8",
-                    data: '{"categoryId":"' + $(this).val() + '"}',
+                    data: '{"categoryId":"' + $(this).val() + '","type":"' + $('#typeofFeedback').val() + '"}',
                     dataType: "json",
                     success: function (r) {
                         
@@ -670,6 +670,19 @@
                         alert("error" + r.responseText);
                     }
                 });
+
+            });
+
+            $("#typeofFeedback").change(function () {
+                
+
+                $("#category option").remove();
+
+                $('#category').append('<option value=" ">' + "Choose Category" + '</option>');
+
+                $("#subcategory option").remove();
+
+                $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
 
             });
 

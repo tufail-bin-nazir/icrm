@@ -39,8 +39,10 @@ namespace icrm.Controllers
         // GET: SubCategories/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "name");
-            return View();
+            ViewBag.CategoryList = db.Categories.ToList();
+            ViewBag.TypeList = db.FeedbackTypes.ToList();
+            ViewBag.Status = "Add";
+            return View("CreateList", new SubCategoryViewModel { subCategories = db.SubCategories.ToList()});
         }
 
         // POST: SubCategories/Create
@@ -48,17 +50,19 @@ namespace icrm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,name,CategoryId")] SubCategory subCategory)
+        public ActionResult Create(SubCategory subCategory)
         {
             if (ModelState.IsValid)
             {
                 db.SubCategories.Add(subCategory);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
 
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "name", subCategory.CategoryId);
-            return View(subCategory);
+            ViewBag.CategoryList = db.Categories.ToList();
+            ViewBag.TypeList = db.FeedbackTypes.ToList();
+            ViewBag.Status = "Add";
+            return View("CreateList", new SubCategoryViewModel { subCategories = db.SubCategories.ToList() });
         }
 
         // GET: SubCategories/Edit/5
@@ -73,8 +77,11 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "name", subCategory.CategoryId);
-            return View(subCategory);
+           
+            ViewBag.CategoryList = db.Categories.ToList();
+            ViewBag.TypeList = db.FeedbackTypes.ToList();
+            ViewBag.Status = "Update";
+            return View("CreateList", new SubCategoryViewModel { subCategory = subCategory, subCategories = db.SubCategories.ToList() });
         }
 
         // POST: SubCategories/Edit/5
@@ -82,16 +89,19 @@ namespace icrm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,name,CategoryId")] SubCategory subCategory)
+        public ActionResult Edit(SubCategory subCategory)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(subCategory).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "name", subCategory.CategoryId);
-            return View(subCategory);
+           
+            ViewBag.CategoryList = db.Categories.ToList();
+            ViewBag.TypeList = db.FeedbackTypes.ToList();
+            ViewBag.Status = "Update";
+            return View("CreateList", new SubCategoryViewModel { subCategories = db.SubCategories.ToList() });
         }
 
         // GET: SubCategories/Delete/5
@@ -106,7 +116,10 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(subCategory);
+            ViewBag.CategoryList = db.Categories.ToList();
+            ViewBag.TypeList = db.FeedbackTypes.ToList();
+            ViewBag.Status = "Delete";
+            return View("CreateList", new SubCategoryViewModel {subCategory = subCategory, subCategories = db.SubCategories.ToList() });
         }
 
         // POST: SubCategories/Delete/5
@@ -117,7 +130,7 @@ namespace icrm.Controllers
             SubCategory subCategory = db.SubCategories.Find(id);
             db.SubCategories.Remove(subCategory);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Create");
         }
 
         protected override void Dispose(bool disposing)
