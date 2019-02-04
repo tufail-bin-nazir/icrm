@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using icrm.Models;
@@ -20,7 +21,7 @@ namespace icrm.RepositoryImpl
         {
             db.ChatRequest.Add(chatRequest);
             db.SaveChanges();
-        } 
+        }
 
         public bool CheckRequestExistsOfUser(string userId)
         {
@@ -40,7 +41,10 @@ namespace icrm.RepositoryImpl
 
         public void delete(ChatRequest chatRequest)
         {
+            Debug.Print("deleting chatrequest"+chatRequest.Id);
+
             this.db.ChatRequest.Remove(chatRequest);
+            this.db.SaveChanges();
         }
     }
 }

@@ -27,10 +27,10 @@ namespace icrm.Models
         {
             if(this.msgId != messageEventArgs.message.Id) { 
             //Debug.Print("----in msg hub-----");
-            Debug.Print(messageEventArgs.message.Text+"---=--===in m hub-=-=-==--="+messageEventArgs.message.Sender.UserName);
+            //Debug.Print(messageEventArgs.message.Text+"---=--===in m hub-=-=-==--="+messageEventArgs.message.Sender.UserName);
             var messageHub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
-            ApplicationUser user = messageEventArgs.message.Reciever;
-            Debug.Print("user id------"+user.UserName+"---------"+ FindConnectionIdOnUsername(user.UserName)+"-------roles is==="+ userManager.IsInRole(user.Id, "User"));
+            ApplicationUser user = userManager.FindById(messageEventArgs.message.RecieverId);
+            //Debug.Print("user id------"+user.UserName+"---------"+ FindConnectionIdOnUsername(user.UserName)+"-------roles is==="+ userManager.IsInRole(user.Id, "User"));
 
                 if (userManager.IsInRole(user.Id,"User"))
                 {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace icrm.Models
     public class Consumer:IConnectToRabbitMQ
     {
         public EventService eventService;
-        private MessageInterface messageService; 
+        private MessageInterface messageService;
 
         protected bool isConsuming;
 
@@ -57,7 +57,7 @@ namespace icrm.Models
 
         private void Consume(String queueName)
         {
-            bool autoAck = false;
+            bool autoAck = true;
             Debug.Print(queueName + "-------queueneame2");
             //create a subscription
             mSubscription = new Subscription(Model, queueName, autoAck);
@@ -65,15 +65,26 @@ namespace icrm.Models
             
             while (isConsuming)
             {                
-                Debug.Print("-in consumong------------"+mSubscription.QueueName);
-                BasicDeliverEventArgs e = mSubscription.Next();
-                if(e != null) {
-                int messageId = (int)e.BasicProperties.Headers["msgId"];
-                Message message = messageService.UpdateRecieveTimeOfMessage(messageId);
-                    eventService.pushMessage(message);
-                System.Threading.Thread.Sleep(500);
+                BasicDeliverEventArgs e= mSubscription.Next();
+
+                if (e != null) {
+                    Debug.Print("checking e----" + e);
+
+                    int messageId = (int)e.BasicProperties.Headers["msgId"];
+                    Debug.Print("REcieved message----"+messageId);
+                    mSubscription.Ack(e);
+                    Message message = messageService.UpdateRecieveTimeOfMessage(messageId);
+                
+                Debug.Print(message.Text+"--------ack-----"+message.RecieveTime);
+                eventService.pushMessage(message);
+                //System.Threading.Thread.Sleep(500);
+                   
                 }
-                mSubscription.Ack(e);
+                else
+                {
+                    mSubscription.Ack(e);
+                }
+
             }
         }
 

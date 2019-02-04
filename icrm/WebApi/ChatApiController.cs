@@ -18,7 +18,7 @@ namespace icrm.WebApi
 {
     using icrm.Events;
 
-    [Authorize] 
+    [Authorize]
     public class ChatApiController : ApiController
     {
         private ApplicationUserManager _userManager;
@@ -71,6 +71,10 @@ namespace icrm.WebApi
             if (producer.ConnectToRabbitMQ())
             {
                  msgWithId = SendChatMessage(message, sender, reciever);
+
+                if(!chatService.IsActive(msgWithId.ChatId))
+                    chatService.changeActiveStatus(msgWithId.ChatId,true);
+
                 producer.send(msgWithId);
                 this.eventService.NotifyHrAboutChat(msgWithId);
 
@@ -146,6 +150,7 @@ namespace icrm.WebApi
         public IHttpActionResult closeChat(Message message)
         {
             //tell mudassir to send message with chatid and recieverid
+            Debug.Print(message.Text+"-----user closes chat----"+message.RecieverId);
             this.chatService.changeActiveStatus(message.ChatId,false);
             this.eventService.chatClosedByUser(message.Reciever.UserName);
             return Ok();
@@ -206,6 +211,7 @@ namespace icrm.WebApi
                 //Debug.Print(reciever.UserName+"-----username-----"+reciever.Id);
                 if (reciever != null && (this.chatService.IsActive(message.ChatId) || message.ChatId == 0) )
                 {
+
                     reciever.available = false;
                     userService.Update(reciever);
                     return reciever;

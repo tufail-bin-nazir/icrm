@@ -11,8 +11,9 @@ using System.Web.Hosting;
 
 namespace icrm.Models
 {
-    public class ScheduleforCriticalEscalation : IJob, IRegisteredObject
+    public class ScheduleforCriticalEscalation //: IJob, IRegisteredObject
     {
+        /*
         ApplicationDbContext db = new ApplicationDbContext();
         private readonly object _lock = new object();
 
@@ -162,6 +163,7 @@ namespace icrm.Models
                
             }
          }
+*/
 
         
     }

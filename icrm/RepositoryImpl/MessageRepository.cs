@@ -17,7 +17,7 @@ namespace icrm.RepositoryImpl
         ApplicationDbContext db = new ApplicationDbContext();
          
         public Message Save(Message message)
-        { 
+        {
             Debug.Print(message.SentTime+"---------sent time");
             db.Message.Add(message);
             db.SaveChanges();
@@ -44,7 +44,9 @@ namespace icrm.RepositoryImpl
         {
             this.db.Entry(message).State = EntityState.Modified;
             this.db.SaveChanges();
-            return message;
+
+            return db.Message.Include("Chat").Where(m => m.Id == message.Id)
+                .FirstOrDefault();
         }
 
         public Message UpdateRecieveTimeOfMessage(int id)
