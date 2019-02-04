@@ -57,63 +57,73 @@
             <!-- slim-pageheader -->
             <div class="row row-xs">
                 <div class="col-sm-6 col-lg-3">
-                    <div class="card card-status">
-                        <div class="media">
-                            <i class="icon fa fa-bullhorn tx-purple"></i>
-                            <div class="media-body">
-                                <h1>@ViewBag.TotalTickets</h1>
-                                <p>All Tickets</p>
+                    <a href="@Url.Action("AllTickets", "HR")" id="openticket">
+                        <div class="card card-status">
+                            <div class="media">
+                                <i class="icon fa fa-bullhorn tx-purple"></i>
+                                <div class="media-body">
+                                    <h1>@ViewBag.TotalTickets</h1>
+                                    <p>All Tickets</p>
+                                </div>
+                                <!-- media-body -->
                             </div>
-                            <!-- media-body -->
-                        </div>
-                        <!-- media -->
-                    </div>
-                    <!-- card -->
+                            <!-- media -->
+                        </div></a>
+                        <!-- card -->
                 </div>
                 <!-- col-3 -->
                 <div class="col-sm-6 col-lg-3 mg-t-10 mg-sm-t-0">
+                   <a href="@Url.Action("openAlltickets", "HR")" id="openticket">
                     <div class="card card-status">
                         <div class="media">
                             <i class="icon fa fa-envelope-open tx-teal"></i>
                             <div class="media-body">
                                 <h1>@ViewBag.OpenTickets</h1>
-                                <p>@Resources.Resource.Open_Complaints</p>
+
+                                <p>
+                                   
+                                                                @Resources.Resource.Open_Complaints
+                                                            </p>
                             </div>
                             <!-- media-body -->
                         </div>
                         <!-- media -->
-                    </div>
+                    </div></a>
                     <!-- card -->
                 </div>
                 <!-- col-3 -->
                 <div class="col-sm-6 col-lg-3 mg-t-10 mg-lg-t-0">
-                    <div class="card card-status">
-                        <div class="media">
-                            <i class="icon fa fa-envelope tx-pink"></i>
-                            <div class="media-body">
-                                <h1>@ViewBag.ClosedTickets</h1>
-                                <p>@Resources.Resource.Closed_Complaints</p>
+                    <a href="@Url.Action("Closed", "HR")" id="openticket">
+                        <div class="card card-status">
+                            <div class="media">
+                                <i class="icon fa fa-envelope tx-pink"></i>
+                                <div class="media-body">
+                                    <h1>@ViewBag.ClosedTickets</h1>
+                                    <p>@Resources.Resource.Closed_Complaints</p>
+                                </div>
+                                <!-- media-body -->
                             </div>
-                            <!-- media-body -->
-                        </div>
-                        <!-- media -->
-                    </div>
-                    <!-- card -->
+                            <!-- media -->
+                        </div></a>
+                        <!-- card -->
                 </div>
                 <!-- col-3 -->
                 <div class="col-sm-6 col-lg-3 mg-t-10 mg-lg-t-0">
-                    <div class="card card-status">
-                        <div class="media">
-                            <i class="icon fa fa-question-circle tx-yellow"></i>
-                            <div class="media-body">
-                                <h1>@ViewBag.ResolvedTickets</h1>
-                                <p>@Resources.Resource.Resolved_Complaints</p>
+                    <a href="@Url.Action("resolved", "HR")" id="openticket">
+                        <div class="card card-status">
+                            <div class="media">
+                                <i class="icon fa fa-question-circle tx-yellow"></i>
+                                <div class="media-body">
+                                    <h1>@ViewBag.ResolvedTickets</h1>
+
+                                    <p>@Resources.Resource.Resolved_Complaints</p>
+                                </div>
+                                <!-- media-body -->
                             </div>
-                            <!-- media-body -->
+                            <!-- media -->
                         </div>
-                        <!-- media -->
-                    </div>
-                    <!-- card -->
+                        <!-- card -->
+                        </a>
                 </div>
                 <!-- col-3 -->
 
@@ -123,8 +133,35 @@
 
             <br><br>
                 <div class="section-wrapper">
-                    <span class="text-success"> @TempData["Message"]</span>
-                    <span class="text-success"> @TempData["MessageSuccess"]</span>
+                    @if (@TempData["MessageSuccess"] != null)
+                    {
+                        <div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong> @TempData["MessageSuccess"]</strong>
+                        </div>
+                    }
+                    @if (@TempData["Message"] != null)
+                    {
+                        <div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong> @TempData["Message"]</strong>
+                        </div>
+                    }
+                    @if (@TempData["displayMsg"] != null)
+                    {
+                        <div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong> @TempData["displayMsg"]</strong>
+                        </div>
+                    }
+
+
                     <label class="section-title">Search your tickets</label>
                     <p class="mg-b-20 mg-sm-b-40">On date criteria</p>
                     <div class="form-layout">
@@ -226,7 +263,7 @@
                                             <td>@Html.DisplayFor(modelitem => item.Data.type.name)</td>
 
                                             <td>
-                                                @if (ViewBag.linkName == "openticket")
+                                                @if (ViewBag.linkName == "openticket" || ViewBag.linkName == "openAllticket")
                                                 {
                                                     <a href="@Url.Action("openview", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
                                                 }
@@ -255,6 +292,10 @@
                                                 {
                                                     <a href="@Url.Action("viewticket", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
                                                 }
+                                                @if (ViewBag.linkName == "Alltickets")
+                                                {
+                                                    <a href="@Url.Action("viewticket", "HR",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                                }
                                             </td>
                                             <td>
 
@@ -274,7 +315,42 @@
                             </table>
                         </div>
                         <!-- table-responsive -->
+                        
 
+                        @if (ViewBag.linkName == "Alltickets" && ViewBag.Search == null)
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("alltickets", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                        @if (ViewBag.linkName == "openAllticket" && ViewBag.Search == null)
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("openAlltickets", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
 
 
                         @if (ViewBag.linkName == "openticket" && ViewBag.Search == null)
@@ -473,7 +549,7 @@
                                     <ul class="pagination pagination-circle mg-b-0">
 
                                         <li class="page-item ">
-                                            @Html.PagedListPager(Model, page => Url.Action("tickets", new { page,typeId=ViewBag.type}), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+                                            @Html.PagedListPager(Model, page => Url.Action("tickets", new { page, typeId = ViewBag.type }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
 
                                         </li>
 

@@ -150,13 +150,13 @@
                             </div>
                         </div>
                         <!-- col-4 -->
-                        <div class="col-lg-4">
+                      <!--  <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
-                                @Html.TextBox("EmpSubLocation","", new { @readonly = "readonly", @class = "form-control", id= "EmpSubLocation" })
-
+                                @**   @Html.TextBox("EmpSubLocation", "", new { @readonly = "readonly", @class = "form-control", id = "EmpSubLocation" })
+                                **@
                             </div>
-                        </div>
+                        </div>-->
 
                         <!-- col-4 -->
                         <!-- col-4 -->
@@ -374,7 +374,7 @@
                             $('#EmpEmail').val(response.Email);
                             $('#EmpPNo').val(response.PhoneNumber);
                             $('#EmpLocation').val(response.Location.name);
-                            $('#EmpSubLocation').val(response.SubLocation.name);
+                           // $('#EmpSubLocation').val(response.SubLocation.name);
                             
 
                         },
@@ -537,15 +537,19 @@
 
 
             $("#category").change(function () {
-               
-                 $("#subcategory option").remove();
 
-                 $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
+             
+
+                $("#subcategory option").remove();
+
+                $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
+                if( $("#typeofFeedback").val() != "")
+            {
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("getSubCategories", "HR")",
-                    contentType: "application/json; charset=utf-8",                   
-                    data: '{"categoryId":"' + $(this).val() + '","type":"' + $('#typeofFeedback').val()+'"}',
+                    contentType: "application/json; charset=utf-8",
+                    data: '{"categoryId":"' + $(this).val() + '","type":"' + $('#typeofFeedback').val() + '"}',
                     dataType: "json",
                     success: function (r) {
 
@@ -558,9 +562,9 @@
                         alert("error" + r.responseText);
                     }
                 });
-
+            }
             });
-
+            
 
             $("#typeofFeedback").change(function () {
 

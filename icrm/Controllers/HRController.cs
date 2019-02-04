@@ -117,6 +117,7 @@ namespace icrm.Controllers
         [Route("hr/feedback/")]
         public ActionResult Create(int? id,string submitButton, Feedback feedback, HttpPostedFileBase file)
         {
+            System.Diagnostics.Debug.WriteLine(Request.Form["emailsss"]+"tttttttttttttttttttt");
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             if (roleManager.FindByName("User").Users.FirstOrDefault() != null)
             {
@@ -440,6 +441,24 @@ namespace icrm.Controllers
             }
         }
 
+        /**********GET ALL TICKETS*******************/
+
+        public ActionResult alltickets(int? page)
+        {
+            TicketCounts();
+            ViewBag.linkName = "Alltickets";
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            IPagedList<Feedback> feedbackList = feedInterface.getAll(pageIndex, pageSize);
+            return View("Dashboard", feedbackList);
+        }
+
+
+
+
         /*****************OPEN TICKETS LIST********************/
 
         public ActionResult open(int? page)
@@ -461,12 +480,26 @@ namespace icrm.Controllers
         {
             TicketCounts();
             ViewBag.linkName = "openticket";
+
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             IPagedList<Feedback> feedbackList = feedInterface.OpenWithoutDepart(pageIndex, pageSize);
+            return View("Dashboard", feedbackList);
+        }
+
+        public ActionResult openAlltickets(int? page)
+        {
+            TicketCounts();
+            ViewBag.linkName = "openAllticket";
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            IPagedList<Feedback> feedbackList = feedInterface.getAllOpen(pageIndex, pageSize);
             return View("Dashboard", feedbackList);
         }
 
@@ -893,8 +926,8 @@ namespace icrm.Controllers
             }
             else
             {
-                TempData["displayMsg"] = "Please fill Comment field ";
-                return RedirectToAction("view", new { name = "respondedview", id = feedback.id });
+                TempData["displayMsgErr"] = "Please Enter Valid Information ";
+                return RedirectToAction("view", new { name = "closedview", id = feedback.id });
             }
         }
       [HttpPost]
@@ -937,6 +970,15 @@ namespace icrm.Controllers
             }           
             body = body.Replace("{IssueEscalate}", "Yes"); 
             return body;
-        }       
+        }
+
+        [HttpGet]
+        public ActionResult HRemail() {
+
+            return View();
+        }
     }
+
+
+    
 }

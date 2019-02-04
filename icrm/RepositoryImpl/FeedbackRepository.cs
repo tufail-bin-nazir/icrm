@@ -118,9 +118,15 @@ namespace icrm.RepositoryImpl
 
         }
 
+        public IPagedList<Feedback> getAll(int pageIndex, int pageSize)
+        {
+            return db.Feedbacks.OrderByDescending(m => m.user.Id).ToPagedList(pageIndex,pageSize);
+
+        }
+
         public IEnumerable<Feedback> getAllOpen()
         {
-            return db.Feedbacks.OrderByDescending(m => m.user.Id).Where(m=>m.checkStatus== Models.Constants.OPEN).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.user.Id).Where(m=>m.status== Models.Constants.OPEN).ToList();
 
         }
         public IPagedList<Feedback> getAllOpenWithDepartment(string usrid, int pageIndex, int pageSize)
@@ -214,11 +220,11 @@ namespace icrm.RepositoryImpl
         }
         public IEnumerable<Feedback> getAllClosed()
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.checkStatus == Constants.CLOSED).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == Constants.CLOSED).ToList();
         }
         public IEnumerable<Feedback> getAllResolved()
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m =>  m.checkStatus == Constants.RESOLVED).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m =>  m.status == Constants.RESOLVED).ToList();
         }
 
         public IEnumerable<Feedback> GetAllAssigned()
@@ -415,5 +421,137 @@ namespace icrm.RepositoryImpl
         {
             return db.Users.Where(u => u.Id == id).FirstOrDefault();
         }
+
+        public IEnumerable<Feedback> getAllByDept(string id)
+        {
+            ApplicationUser user = db.Users.Find(id);
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@depID";
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = user.DepartmentId;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@CommentedByID";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = id;
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("getAllWithDepart @depID,@CommentedByID", param1, param2).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+            return feedlist;
+
+        }
+
+        public IEnumerable<Feedback> getAllOpenByDept(string id)
+        {
+            ApplicationUser user = db.Users.Find(id);
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@depID";
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = user.DepartmentId;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@status";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = Constants.OPEN;
+
+            var param3 = new SqlParameter();
+            param3.ParameterName = "@CommentedByID";
+            param3.SqlDbType = SqlDbType.VarChar;
+            param3.SqlValue = id;
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("getAllWithDepartStatus @depID,@status,@CommentedByID", param1, param2,param3).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+            return feedlist;
+        }
+
+        public IEnumerable<Feedback> getAllClosedByDept(string id)
+        {
+            ApplicationUser user = db.Users.Find(id);
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@depID";
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = user.DepartmentId;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@Status";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = Constants.CLOSED;
+
+            var param3 = new SqlParameter();
+            param3.ParameterName = "@CommentedByID";
+            param3.SqlDbType = SqlDbType.VarChar;
+            param3.SqlValue = id;
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("getAllWithDepartStatus @depID,@Status,@CommentedByID", param1, param2,param3).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+            return feedlist;
+        }
+
+        public IEnumerable<Feedback> getAllResolvedByDept(string id)
+        {
+            ApplicationUser user = db.Users.Find(id);
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@depID";
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = user.DepartmentId;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@status";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = Constants.RESOLVED;
+
+            var param3 = new SqlParameter();
+            param3.ParameterName = "@CommentedByID";
+            param3.SqlDbType = SqlDbType.VarChar;
+            param3.SqlValue = id;
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("getAllWithDepartStatus @depID,@status,@CommentedByID", param1, param2,param3).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+            return feedlist;
+        }
+
+        public IPagedList<Feedback> getAllOpenByDept(string v, int pageIndex, int pageSize)
+        {
+            ApplicationUser user = db.Users.Find(v);
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@depID";
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = user.DepartmentId;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@status";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = Constants.OPEN;
+
+            var param3 = new SqlParameter();
+            param3.ParameterName = "@CommentedByID";
+            param3.SqlDbType = SqlDbType.VarChar;
+            param3.SqlValue = v;
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("getAllWithDepartStatus @depID,@status,@CommentedByID", param1, param2, param3).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+            return feedlist.ToPagedList(pageIndex, pageSize);
+        }
+       
     }
 }

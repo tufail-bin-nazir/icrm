@@ -61,7 +61,7 @@ namespace icrm.Controllers
 
 
         /**Responded Tickets*********************/
-     
+        
         public ActionResult responded(int? page)
         {        
             ViewBag.linkName = "respondedticket";
@@ -75,8 +75,24 @@ namespace icrm.Controllers
             return View("Dashboard",feedbackList);
 
         }
-        
-        /*******Department TicketView**************/ 
+
+        /*****All Tickets***/
+        public ActionResult alltickets(int? page)
+        {
+            ViewBag.linkName = "alltickets";
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            TicketCounts();
+            IPagedList<Feedback> feedbackList = feedInterface.getAllRespondedWithDepartment(user.Id, pageIndex, pageSize);
+            return View("Dashboard", feedbackList);
+
+        }
+
+
+        /*******Department TicketView**************/
 
         [HttpGet]
         [Route("view/{id}")]
@@ -110,19 +126,20 @@ namespace icrm.Controllers
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
-            Feedback f = feedInterface.Find(feedback.id);
+            Feedback f = db.Feedbacks.Find(feedback.id);
             f.checkStatus = Constants.RESPONDED;
             List<Comments> cc = new List<Comments>();
            
             if (Request.Form["responsee"] != "")
             {
-
                 Comments c = new Comments();
                 c.text = Request.Form["responsee"];
                 c.commentedById = user.Id;
                 c.feedbackId = feedback.id;
                 db.comments.Add(c);
-                db.SaveChanges();
+               db.SaveChanges();
+
+
                 db.Entry(f).State = EntityState.Modified;
                  db.SaveChanges();
                     TempData["displayMsg"] = "Ticket has been Updated Successfully";
@@ -198,6 +215,22 @@ namespace icrm.Controllers
             ViewData["user"] = user;
             TicketCounts();
             IPagedList<Feedback> feedbackList = feedInterface.getAllOpenWithDepartment(user.Id.ToString(),pageIndex, pageSize);
+            return View("Dashboard", feedbackList);
+        }
+
+
+        /****** GET Open Tickets List ****/
+
+        public ActionResult allopen(int? page)
+        {
+            ViewBag.linkName = "openticket";
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            TicketCounts();
+            IPagedList<Feedback> feedbackList = feedInterface.getAllOpenByDept(user.Id.ToString(), pageIndex, pageSize);
             return View("Dashboard", feedbackList);
         }
 
@@ -309,10 +342,11 @@ namespace icrm.Controllers
         /****** Get Ticket Counts********/
 
         public void TicketCounts() {
-            ViewBag.TotalTickets = feedInterface.getAll().Count();
-            ViewBag.OpenTickets = feedInterface.getAllOpen().Count();
-            ViewBag.ClosedTickets = feedInterface.getAllClosed().Count();
-            ViewBag.ResolvedTickets = feedInterface.getAllResolved().Count();
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewBag.TotalTickets = feedInterface.getAllByDept((user.Id)).Count();
+            ViewBag.OpenTickets = feedInterface.getAllOpenByDept(user.Id).Count();
+            ViewBag.ClosedTickets = feedInterface.getAllClosedByDept(user.Id).Count();
+            ViewBag.ResolvedTickets = feedInterface.getAllResolvedByDept(user.Id).Count();
         }
 
         /*****Get Attribute List***************/
