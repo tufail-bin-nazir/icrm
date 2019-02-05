@@ -73,7 +73,7 @@ namespace icrm.RepositoryImpl
                         
 
         }
-        public IPagedList<Feedback> search(string d1, string d2, string status, int id,int pageIndex, int pageSize)
+        public IPagedList<Feedback> search(string d1, string d2, string status, string id,int pageIndex, int pageSize)
         {
             var param1 = new SqlParameter();
             param1.ParameterName = "@D1";
@@ -95,13 +95,20 @@ namespace icrm.RepositoryImpl
 
             var param4 = new SqlParameter();
             param4.ParameterName = "@id";
-            param4.SqlDbType = SqlDbType.Int;
+            param4.SqlDbType = SqlDbType.VarChar;
             param4.SqlValue = id;
 
             var param5 = new SqlParameter();
             param5.ParameterName = "@checkstatus";
             param5.SqlDbType = SqlDbType.VarChar;
             param5.SqlValue = Constants.RESPONDED;
+            System.Diagnostics.Debug.WriteLine(id + ",,,,id,,,,,");
+            System.Diagnostics.Debug.WriteLine(Constants.RESPONDED + ",,,,res,,,,,");
+            System.Diagnostics.Debug.WriteLine(status + ",,,,,status,,,,");
+            System.Diagnostics.Debug.WriteLine(d1 + ",,,,d1,,,,,");
+
+            System.Diagnostics.Debug.WriteLine(d2 + ",,,,,d2,,,,");
+
 
             List<Feedback> feedlist = new List<Feedback>();
             var result = db.Feedbacks.SqlQuery("search @D1,@D2,@Status,@id,@checkstatus", param1,param2,param3,param4,param5).ToList();
@@ -430,13 +437,9 @@ namespace icrm.RepositoryImpl
             param1.SqlDbType = SqlDbType.VarChar;
             param1.SqlValue = user.DepartmentId;
 
-            var param2 = new SqlParameter();
-            param2.ParameterName = "@CommentedByID";
-            param2.SqlDbType = SqlDbType.VarChar;
-            param2.SqlValue = id;
-
+            
             List<Feedback> feedlist = new List<Feedback>();
-            var result = db.Feedbacks.SqlQuery("getAllWithDepart @depID,@CommentedByID", param1, param2).ToList();
+            var result = db.Feedbacks.SqlQuery("getAllWithDepart @depID", param1).ToList();
             foreach (var r in result)
             {
                 feedlist.Add(r);
@@ -458,13 +461,10 @@ namespace icrm.RepositoryImpl
             param2.SqlDbType = SqlDbType.VarChar;
             param2.SqlValue = Constants.OPEN;
 
-            var param3 = new SqlParameter();
-            param3.ParameterName = "@CommentedByID";
-            param3.SqlDbType = SqlDbType.VarChar;
-            param3.SqlValue = id;
+          
 
             List<Feedback> feedlist = new List<Feedback>();
-            var result = db.Feedbacks.SqlQuery("getAllWithDepartStatus @depID,@status,@CommentedByID", param1, param2,param3).ToList();
+            var result = db.Feedbacks.SqlQuery("getAllWithDepartStatus @depID,@status", param1, param2).ToList();
             foreach (var r in result)
             {
                 feedlist.Add(r);
@@ -485,13 +485,10 @@ namespace icrm.RepositoryImpl
             param2.SqlDbType = SqlDbType.VarChar;
             param2.SqlValue = Constants.CLOSED;
 
-            var param3 = new SqlParameter();
-            param3.ParameterName = "@CommentedByID";
-            param3.SqlDbType = SqlDbType.VarChar;
-            param3.SqlValue = id;
+           
 
             List<Feedback> feedlist = new List<Feedback>();
-            var result = db.Feedbacks.SqlQuery("getAllWithDepartStatus @depID,@Status,@CommentedByID", param1, param2,param3).ToList();
+            var result = db.Feedbacks.SqlQuery("getAllWithDepartStatus @depID,@Status", param1, param2).ToList();
             foreach (var r in result)
             {
                 feedlist.Add(r);
@@ -512,13 +509,13 @@ namespace icrm.RepositoryImpl
             param2.SqlDbType = SqlDbType.VarChar;
             param2.SqlValue = Constants.RESOLVED;
 
-            var param3 = new SqlParameter();
+           /* var param3 = new SqlParameter();
             param3.ParameterName = "@CommentedByID";
             param3.SqlDbType = SqlDbType.VarChar;
-            param3.SqlValue = id;
+            param3.SqlValue = id;*/
 
             List<Feedback> feedlist = new List<Feedback>();
-            var result = db.Feedbacks.SqlQuery("getAllWithDepartStatus @depID,@status,@CommentedByID", param1, param2,param3).ToList();
+            var result = db.Feedbacks.SqlQuery("getAllWithDepartStatus @depID,@status", param1, param2).ToList();
             foreach (var r in result)
             {
                 feedlist.Add(r);
@@ -528,6 +525,7 @@ namespace icrm.RepositoryImpl
 
         public IPagedList<Feedback> getAllOpenByDept(string v, int pageIndex, int pageSize)
         {
+            
             ApplicationUser user = db.Users.Find(v);
             var param1 = new SqlParameter();
             param1.ParameterName = "@depID";
@@ -539,13 +537,13 @@ namespace icrm.RepositoryImpl
             param2.SqlDbType = SqlDbType.VarChar;
             param2.SqlValue = Constants.OPEN;
 
-            var param3 = new SqlParameter();
+          /*  var param3 = new SqlParameter();
             param3.ParameterName = "@CommentedByID";
             param3.SqlDbType = SqlDbType.VarChar;
-            param3.SqlValue = v;
+            param3.SqlValue = v;*/
 
             List<Feedback> feedlist = new List<Feedback>();
-            var result = db.Feedbacks.SqlQuery("getAllWithDepartStatus @depID,@status,@CommentedByID", param1, param2, param3).ToList();
+            var result = db.Feedbacks.SqlQuery("getAllWithDepartStatus @depID,@status", param1, param2).ToList();
             foreach (var r in result)
             {
                 feedlist.Add(r);
