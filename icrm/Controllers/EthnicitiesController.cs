@@ -10,9 +10,10 @@ using icrm.Models;
 
 namespace icrm.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class EthnicitiesController : Controller
     {
-        [Authorize(Roles = "Admin")]
+        
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Ethnicities
