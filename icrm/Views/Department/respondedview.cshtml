@@ -67,7 +67,7 @@
                                 <strong> @TempData["Message"]</strong>
                             </div>
                         }
-                        
+
                         @Html.HiddenFor(model => model.id, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
@@ -113,14 +113,13 @@
                                 </div>
                             </div>
                             <!-- col-4 -->
-                          <!-- <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
-                                  @** @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })
-                                      **@
-                                </div>
-                            </div>-->
-
+                            <!-- <div class="col-lg-4">
+                                  <div class="form-group">
+                                      <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
+                                    @** @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })
+                                        **@
+                                  </div>
+                              </div>-->
                             <!-- col-4 -->
                             <!-- col-4 -->
                             <div class="col-lg-4">
@@ -243,22 +242,22 @@
                                     </div>
                                 </div>
                                 <!-- col-4 -->
-               
+
 
                             </div>
                         }
-                            <div class="row mg-b-25">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Choose Action</label>
-                                        @Html.TextBoxFor(m => m.status, new { disabled = "disabled", @class = "form-control", id = "statusfield" })
-                                        @Html.HiddenFor(model => model.status, new { @class = "form-control" })
+                        <div class="row mg-b-25">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Choose Action</label>
+                                    @Html.TextBoxFor(m => m.status, new { disabled = "disabled", @class = "form-control", id = "statusfield" })
+                                    @Html.HiddenFor(model => model.status, new { @class = "form-control" })
 
-                                    </div>
-                                    <label class="text-danger" id="statuscheck"></label>
                                 </div>
-                                <!-- col-4 -->
-                                 @foreach( var res in commentlist)
+                                <label class="text-danger" id="statuscheck"></label>
+                            </div>
+                            <!-- col-4 -->
+                            @foreach (var res in commentlist)
                             {
                                 <div class="col-lg-4">
                                     <div class="form-group">
@@ -266,7 +265,7 @@
 
 
                                         @Html.TextArea("comments", @res.text, new { @readonly = "readonly", @class = "form-control" })
-                                       
+
 
 
 
@@ -274,16 +273,16 @@
                                     </div>
                                 </div>
                             }
-                            </div>
-
-
-                            <!-- row
-        <div class="form-layout-footer">
-            <input type="hidden" value="Respondedtype" name="typeoflink" />
-            <input type="submit" value="Submit"  class="btn btn-primary bd-0" />
-        </div>
-        <!-- form-layout-footer -->
                         </div>
+
+
+                        <!-- row
+                        <div class="form-layout-footer">
+                            <input type="hidden" value="Respondedtype" name="typeoflink" />
+                            <input type="submit" value="Submit"  class="btn btn-primary bd-0" />
+                        </div>
+                        <!-- form-layout-footer -->
+                    </div>
 
                 </div>
             }
@@ -393,5 +392,6 @@
         });
 
     </script>
+    @Html.Partial("_DepartmentFooter")
 </body>
 </html>

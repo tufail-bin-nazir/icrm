@@ -65,8 +65,9 @@
                                 <!-- media-body -->
                             </div>
                             <!-- media -->
-                        </div></a>
-                        <!-- card -->
+                        </div>
+                    </a>
+                    <!-- card -->
                 </div>
                 <!-- col-3 -->
                 <div class="col-sm-6 col-lg-3 mg-t-10 mg-sm-t-0">
@@ -81,8 +82,9 @@
                                 <!-- media-body -->
                             </div>
                             <!-- media -->
-                        </div></a>
-                        <!-- card -->
+                        </div>
+                    </a>
+                    <!-- card -->
                 </div>
                 <!-- col-3 -->
                 <div class="col-sm-6 col-lg-3 mg-t-10 mg-lg-t-0">
@@ -99,8 +101,8 @@
                             </div>
                             <!-- media -->
                         </div>
-                        </a>
-                        <!-- card -->
+                    </a>
+                    <!-- card -->
                 </div>
                 <!-- col-3 -->
                 <div class="col-sm-6 col-lg-3 mg-t-10 mg-lg-t-0">
@@ -117,8 +119,9 @@
                                 <!-- media-body -->
                             </div>
                             <!-- media -->
-                        </div></a>
-                        <!-- card -->
+                        </div>
+                    </a>
+                    <!-- card -->
                 </div>
                 <!-- col-3 -->
 
@@ -127,82 +130,82 @@
             <!-- row -->
 
             <br><br>
-                <div class="section-wrapper">
-                   
-                    @if (@TempData["displayMsg"] != null)
+            <div class="section-wrapper">
+
+                @if (@TempData["displayMsg"] != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @TempData["displayMsg"]</strong>
+                    </div>
+                }
+
+                <label class="section-title">SEARCH YOUR TICKETS</label>
+                <p class="mg-b-20 mg-sm-b-40">
+                    On date criteria
+
+
+                </p>
+                <div class="form-layout">
+
+                    @if (@TempData["DateMsg"] != null)
                     {
-                        <div class="alert alert-success" role="alert">
+                        <div class="alert alert-danger mg-b-0" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
-                            <strong> @TempData["displayMsg"]</strong>
+                            <strong>@TempData["DateMsg"]</strong>
                         </div>
                     }
-                   
-                    <label class="section-title">SEARCH YOUR TICKETS</label>
-                    <p class="mg-b-20 mg-sm-b-40">
-                        On date criteria
+                    @using (Html.BeginForm("search", "Department", FormMethod.Get, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                    {
+                        <div class="row mg-b-25">
 
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Status <span class="tx-danger">*</span></label>
+                                    @Html.DropDownList("status", new SelectList(ViewBag.Status), new { @class = "form-control select2", name = "Status" })
 
-                    </p>
-                    <div class="form-layout">
-
-                        @if (@TempData["DateMsg"] != null)
-                        {
-                            <div class="alert alert-danger mg-b-0" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                                <strong>@TempData["DateMsg"]</strong>
-                            </div>
-                        }
-                        @using (Html.BeginForm("search", "Department", FormMethod.Get, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
-                        {
-                            <div class="row mg-b-25">
-
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">@Resources.Resource.Status <span class="tx-danger">*</span></label>
-                                        @Html.DropDownList("status", new SelectList(ViewBag.Status), new { @class = "form-control select2", name = "Status" })
-
-                                    </div>
                                 </div>
+                            </div>
 
-                                <div class="col-lg-4">
-                                    <label class="form-control-label">From: <span class="tx-danger">*</span></label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
-                                            </div>
+                            <div class="col-lg-4">
+                                <label class="form-control-label">From: <span class="tx-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
                                         </div>
-                                        <input type="text" class="form-control date hasDatepicker" value="@ViewBag.startDate" name="date1" placeholder="MM-DD-YYYY" id="dp1545306018953">
                                     </div>
+                                    <input type="text" class="form-control date hasDatepicker" value="@ViewBag.startDate" name="date1" placeholder="MM-DD-YYYY" id="dp1545306018953">
                                 </div>
-                                <div class="col-lg-4">
-                                    <label class="form-control-label">To : <span class="tx-danger">*</span></label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
-                                            </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="form-control-label">To : <span class="tx-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
                                         </div>
-                                        <input type="text" class="form-control date hasDatepicker" value="@ViewBag.endDate" name="date22" placeholder="MM-DD-YYYY" id="dp1545306018953">
                                     </div>
+                                    <input type="text" class="form-control date hasDatepicker" value="@ViewBag.endDate" name="date22" placeholder="MM-DD-YYYY" id="dp1545306018953">
                                 </div>
-                                <!-- col-4 -->
                             </div>
+                            <!-- col-4 -->
+                        </div>
 
-                            <!-- row -->
-                            <div class="form-layout-footer">
-                                <button class="btn btn-primary bd-0" name="export" value="search">@Resources.Resource.Submit </button>
-                                <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
-                            </div>
-                        }
-                        <!-- form-layout-footer -->
-                    </div>
-
+                        <!-- row -->
+                        <div class="form-layout-footer">
+                            <button class="btn btn-primary bd-0" name="export" value="search">@Resources.Resource.Submit </button>
+                            <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
+                        </div>
+                    }
+                    <!-- form-layout-footer -->
                 </div>
+
+            </div>
 
 
             <div class="row row-xs mg-t-10">
@@ -517,5 +520,6 @@
         });
 
     </script>
+    @Html.Partial("_DepartmentFooter")
 </body>
 </html>
