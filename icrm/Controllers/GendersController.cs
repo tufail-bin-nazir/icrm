@@ -10,6 +10,7 @@ using icrm.Models;
 
 namespace icrm.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class GendersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

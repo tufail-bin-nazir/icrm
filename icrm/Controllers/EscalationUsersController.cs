@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -38,7 +39,11 @@ namespace icrm.Controllers
         // GET: EscalationUsers/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.DepartmentList = db.Departments.ToList();
+            ViewBag.UserList = db.Users.ToList();
+            ViewBag.Categories = db.Categories.ToList();
+            ViewBag.Status = "Add";
+            return View("CreateList", new EscalationUserViewModel {  EscalationUsers = db.EscalationUsers.ToList()});
         }
 
         // POST: EscalationUsers/Create
@@ -46,16 +51,29 @@ namespace icrm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,DepartmentId")] EscalationUser escalationUser)
+        public ActionResult Create(EscalationUser escalationUser)
         {
+            Debug.WriteLine(ModelState.IsValid + "0-----------------------");
             if (ModelState.IsValid)
             {
                 db.EscalationUsers.Add(escalationUser);
                 db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                foreach (int cid in escalationUser.CategoriesIds) {
+                    Category c = db.Categories.Find(cid);
+                    c.EscalationUserId = escalationUser.Id;
+                    db.Entry(c).State = EntityState.Modified;
+                    db.SaveChanges();
 
-            return View(escalationUser);
+                }
+              
+                return RedirectToAction("Create");
+            }
+            
+            ViewBag.DepartmentList = db.Departments.ToList();
+            ViewBag.UserList = db.Users.ToList();
+            ViewBag.Categories = db.Categories.ToList();
+            ViewBag.Status = "Add";
+            return View("CreateList", new EscalationUserViewModel { EscalationUsers = db.EscalationUsers.ToList() });
         }
 
         // GET: EscalationUsers/Edit/5
@@ -70,7 +88,12 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(escalationUser);
+
+            ViewBag.DepartmentList = db.Departments.ToList();
+            ViewBag.UserList = db.Users.ToList();
+            ViewBag.Categories = db.Categories.ToList();
+            ViewBag.Status = "Update";
+            return View("CreateList", new EscalationUserViewModel {EscalationUser = escalationUser, EscalationUsers = db.EscalationUsers.ToList() });
         }
 
         // POST: EscalationUsers/Edit/5
@@ -78,15 +101,20 @@ namespace icrm.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,DepartmentId")] EscalationUser escalationUser)
+        public ActionResult Edit( EscalationUser escalationUser)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(escalationUser).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create");
             }
-            return View(escalationUser);
+
+            ViewBag.DepartmentList = db.Departments.ToList();
+            ViewBag.UserList = db.Users.ToList();
+            ViewBag.Categories = db.Categories.ToList();
+            ViewBag.Status = "Update";
+            return View("CreateList", new EscalationUserViewModel { EscalationUsers = db.EscalationUsers.ToList() });
         }
 
         // GET: EscalationUsers/Delete/5
@@ -101,7 +129,12 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            return View(escalationUser);
+
+            ViewBag.DepartmentList = db.Departments.ToList();
+            ViewBag.UserList = db.Users.ToList();
+            ViewBag.Categories = db.Categories.ToList();
+            ViewBag.Status = "Delete";
+            return View("CreateList", new EscalationUserViewModel {EscalationUser = escalationUser, EscalationUsers = db.EscalationUsers.ToList() });
         }
 
         // POST: EscalationUsers/Delete/5
@@ -112,7 +145,7 @@ namespace icrm.Controllers
             EscalationUser escalationUser = db.EscalationUsers.Find(id);
             db.EscalationUsers.Remove(escalationUser);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Create");
         }
 
         protected override void Dispose(bool disposing)

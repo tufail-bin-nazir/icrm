@@ -11,6 +11,7 @@ using icrm.Models;
 
 namespace icrm.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SubLocationsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

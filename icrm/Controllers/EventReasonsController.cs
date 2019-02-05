@@ -12,6 +12,7 @@ namespace icrm.Controllers
 {
     public class EventReasonsController : Controller
     {
+        [Authorize(Roles = "Admin")]
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: EventReasons
