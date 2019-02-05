@@ -114,24 +114,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach (var item in Model.PayScaleTypes.Select((x, i) => new { Data = x, Index = i }))
+                                    {
 
-                                        @foreach (var item in Model.PayScaleTypes)
-                                        {
-                                        <tr>
-                                            <td class="pd-l-20">
-                                                1
-                                            </td>
-                                            <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.name</a>
 
-                                            </td>
-                                            <td class="tx-12">
-                                                <a href="@Url.Action("edit",new {id = item.Id })"> <i class="fa fa-edit"> </i> </a>
-                                                <a href="@Url.Action("Delete",new {id = item.Id })"> <i class="fa fa-trash"> </i> </a>
-                                               
-                                            </td>
+                                            <tr>
+                                                <td class="pd-l-20">
+                                                    @(item.Index+1)
+                                                </td>
+                                                <td>
+                                                    <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.name</a>
+
+                                                </td>
+                                                <td class="tx-12">
+                                                    <a href="@Url.Action("edit",new {id = item.Data.Id })"> <i class="fa fa-edit"> </i> </a>
+                                                    <a href="@Url.Action("Delete",new {id = item.Data.Id })"> <i class="fa fa-trash"> </i> </a>
+
+                                                </td>
                                             </tr>
-                                            }
+                                        }
                                     </tbody>
                             </table>
                         </div>

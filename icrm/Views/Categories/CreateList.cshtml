@@ -79,8 +79,8 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Department Name <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.Category.DepartmentId,
-                                       new SelectList(ViewBag.DepartmentList,
-                                          "Id", "name"),"Choose Department", new { @class = "form-control select2"})
+new SelectList(ViewBag.DepartmentList,
+"Id", "name"), "Choose Department", new { @class = "form-control select2" })
 
 
                                 </div>
@@ -131,23 +131,27 @@
                                 </thead>
                                 <tbody>
 
-                                    @foreach (var item in Model.Categories)
-                                    {
-                                        <tr>
-                                            <td class="pd-l-20">
-                                                1
-                                            </td>
-                                            <td>
-                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.name</a>
+                                   
 
-                                            </td>
-                                            <td class="tx-12">
-                                                <a href="@Url.Action("edit",new {id = item.Id })"> <i class="fa fa-edit"> </i> </a>
-                                                <a href="@Url.Action("Delete",new {id = item.Id })"> <i class="fa fa-trash"> </i> </a>
-                                               
-                                            </td>
+                                    @foreach (var item in Model.Categories.Select((x, i) => new { Data = x, Index = i }))
+                                    {
+                                      
+                                            <tr>
+                                                <td class="pd-l-20">
+                                                    @(item.Index+1)
+
+                                                </td>
+                                                <td>
+                                                    <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.name</a>
+
+                                                </td>
+                                                <td class="tx-12">
+                                                    <a href="@Url.Action("edit",new {id = item.Data.Id })"> <i class="fa fa-edit"> </i> </a>
+                                                    <a href="@Url.Action("Delete",new {id = item.Data.Id })"> <i class="fa fa-trash"> </i> </a>
+
+                                                </td>
                                             </tr>
-                                            }
+                                        }
                                     </tbody>
                             </table>
                         </div>
