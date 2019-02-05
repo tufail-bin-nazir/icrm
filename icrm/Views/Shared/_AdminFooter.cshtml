@@ -21,6 +21,83 @@
 <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
 
 <script src="../js/slim.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+
+
+        var menu = ["feedback", "openticket", "resolvedticket", "assignedticket",
+            "respondedticket", "closedticket", "rejectedticket"
+        ];
+
+        var users = ["Create", "HR", "Department"];
+
+        var chat = ["HRChat"];
+
+        var url = window.location.href;
+        var page = new Array();
+        var page = url.split("/");
+        console.log(page[page.length - 1])
+        var last = page[page.length - 1];
+
+
+        $.each(menu, function (index, value) {
+            console.log(value);
+
+            if (last == value) {
+                console.log($(".nav").find('.active').eq(0));
+                //    $(".nav").find('.active').eq(0).attr("class", "active");
+                $(".nav").find('.nav-item').eq(0).attr("class", "nav-item");
+                $(".nav").find('.nav-item').eq(2).attr("class", "nav-item  with-sub");
+                console.log($(".nav").find('.nav-item').eq(1).attr("class", "nav-item active with-sub"));
+                //    $(".nav").find(":nth-child(1)" ).attr("class", "active");
+
+            }
+        });
+
+
+
+        $.each(users, function (index, value) {
+            console.log(value);
+
+            if (last == value) {
+                console.log($(".nav").find('.active').eq(0));
+                //    $(".nav").find('.active').eq(0).attr("class", "active");
+                $(".nav").find('.nav-item').eq(0).attr("class", "nav-item");
+                $(".nav").find('.nav-item').eq(1).attr("class", "nav-item");
+                console.log($(".nav").find('.nav-item').eq(2).attr("class", "nav-item active with-sub"));
+                //    $(".nav").find(":nth-child(1)" ).attr("class", "active");
+
+            }
+        });
+
+        $.each(chat, function (index, value) {
+            console.log(value);
+
+            if (last == value) {
+                console.log($(".nav").find('.active').eq(0));
+                //    $(".nav").find('.active').eq(0).attr("class", "active");
+                $(".nav").find('.nav-item').eq(0).attr("class", "nav-item");
+                $(".nav").find('.nav-item').eq(1).attr("class", "nav-item");
+                console.log($(".nav").find('.nav-item').eq(2).attr("class", "nav-item "));
+                //    $(".nav").find(":nth-child(1)" ).attr("class", "active");
+
+            }
+        });
+
+
+
+
+
+
+
+    });
+
+
+
+
+</script>
 <script>
             $(function () {
                 'use strict'

@@ -5,7 +5,7 @@
 <div class="slim-header">
     <div class="container">
         <div class="slim-header-left">
-            <h2 class="slim-logo"><a  href="/Department/DashBoard"><img src="~/Content/img/m_logo.png" width="60px" /></a></h2>
+            <h2 class="slim-logo"><a  href="/Department/DashBoard"><img src="~/Content/img/m_logo.png" width="70px" /></a></h2>
 
            
             <!-- search-box -->
@@ -22,30 +22,30 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <nav class="nav">
-                        <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
-                        <a href="../userprofile/index" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>
+                        <!-- <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
+    <a href="../userprofile/index" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>-->
                         <a href="@Url.Action("index","DownloadAPK")" class="nav-link"><i class="icon ion-ios-bolt"></i> Download APK</a>
 
-                        <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>
-                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, null))
-                        {
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="username" value="@System.Web.HttpContext.Current.User.Identity.Name" />
-                            <a href="#" class="nav-link">
+                        <!--   <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>-->
+             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, null))
+             {
+                 @Html.AntiForgeryToken()
+                 <input type="hidden" name="username" value="@System.Web.HttpContext.Current.User.Identity.Name" />
+                 <a href="#" class="nav-link">
 
-                                <i class="icon ion-forward"></i><input class="nav-link" style="background: transparent;
-               text-decoration: none;
-               cursor: pointer; border:none;" type="submit" value="Sign Out" />
-                            </a>
-
-
-                        }
+                     <i class="icon ion-forward"></i><input class="nav-link" style="background: transparent;
+    text-decoration: none;
+    cursor: pointer; border:none;" type="submit" value="Sign Out" />
+                 </a>
 
 
-                    </nav>
-                </div>
-                <!-- dropdown-menu -->
-            </div>
+             }
+
+
+         </nav>
+     </div>
+     <!-- dropdown-menu -->
+</div>
             <!-- dropdown -->
         </div>
         <!-- header-right -->

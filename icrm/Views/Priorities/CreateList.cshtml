@@ -74,6 +74,14 @@
                                 </div>
                             </div>
                             <!-- col-4 -->
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Priority Name: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(x => x.Priority.name, new { @class = "form-control", placeholder = "Enter Priority Name", Required = "true" })
+
+                                </div>
+                            </div>
                             <!-- col-4 -->
                         </div>
                         <!-- row -->
@@ -110,6 +118,7 @@
                                     <tr class="tx-10">
                                         <th class="wd-10p pd-y-5">S.No</th>
                                         <th class="pd-y-5">Priority ID</th>
+                                        <th class="pd-y-5">Priority Name</th>
                                         <th class="pd-y-5">Action</th>
 
                                     </tr>
@@ -124,6 +133,11 @@
                                         </td>
                                         <td>
                                             <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.priorityId</a>
+
+                                        </td>
+
+                                        <td>
+                                            <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.name</a>
 
                                         </td>
                                         <td class="tx-12">

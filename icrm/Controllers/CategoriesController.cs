@@ -50,7 +50,7 @@ namespace icrm.Controllers
             @ViewBag.Status = "Add";
             ViewBag.DepartmentList = db.Departments.ToList();
             ViewBag.FeedBackTypeList = db.FeedbackTypes.ToList();
-            return View("CreateList",new CategoryViewModel { Categories = gp.GetAll<Category>(pageIndex, pageSize) });
+            return View("CreateList",new CategoryViewModel { Categories = db.Categories.ToList() });
         }
 
         // POST: Categories/Create
@@ -72,7 +72,6 @@ namespace icrm.Controllers
             ViewBag.FeedBackTypeList = db.FeedbackTypes.ToList();
             return View("CreateList", new CategoryViewModel { Categories = db.Categories.ToList() });
         }
-
         // GET: Categories/Edit/5
         public ActionResult Edit(int? id)
         {

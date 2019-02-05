@@ -60,7 +60,18 @@
 
                     <p class="mg-b-20 mg-sm-b-40"></p>
                     <div class="form-layout">
-                        <span class="tx-success">@TempData["Message"]</span>
+                        @if (@TempData["Message"] != null)
+                        {
+                            <div class="alert alert-success" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong> @TempData["Message"]</strong>
+                            </div>
+                        }
+                       
+
+                       
                         @Html.HiddenFor(model => model.id, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
@@ -70,70 +81,69 @@
                         @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
 
-                        <div class="row mg-b-25">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">@Resources.Resource.Name <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.FirstName, new { @readonly = "readonly", @class = "form-control" })
+                            <div class="row mg-b-25">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@Resources.Resource.Name <span class="tx-danger">*</span></label>
+                                        @Html.TextBoxFor(model => model.user.FirstName, new { @readonly = "readonly", @class = "form-control" })
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Badge No: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.EmployeeId, new { @readonly = "readonly", @class = "form-control" })
+                                <!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Badge No: <span class="tx-danger">*</span></label>
+                                        @Html.TextBoxFor(model => model.user.EmployeeId, new { @readonly = "readonly", @class = "form-control" })
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">@Resources.Resource.Email_Id <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.Email, new { @readonly = "readonly", @class = "form-control" })
+                                <!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@Resources.Resource.Email_Id <span class="tx-danger">*</span></label>
+                                        @Html.TextBoxFor(model => model.user.Email, new { @readonly = "readonly", @class = "form-control" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">@Resources.Resource.Phone_No<span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.PhoneNumber, new { @readonly = "readonly", @class = "form-control" })
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@Resources.Resource.Phone_No<span class="tx-danger">*</span></label>
+                                        @Html.TextBoxFor(model => model.user.PhoneNumber, new { @readonly = "readonly", @class = "form-control" })
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Location: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.Location.name, new { @readonly = "readonly", @class = "form-control" })
+                                <!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Location: <span class="tx-danger">*</span></label>
+                                        @Html.TextBoxFor(model => model.user.Location.name, new { @readonly = "readonly", @class = "form-control" })
 
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })
+                                <!-- col-4 -->
+                                <!--  <div class="col-lg-4">
+        <div class="form-group">
+            <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
+          @*   @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })**@
 
+        </div>
+    </div>-->
+                                <!-- col-4 -->
+                                <!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Job Title: <span class="tx-danger">*</span></label>
+                                        @Html.TextBoxFor(model => model.user.JobTitle.name, new { @readonly = "readonly", @class = "form-control" })
+
+                                    </div>
                                 </div>
-                            </div>
+                                <!-- col-4 -->
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Nationality: <span class="tx-danger">*</span></label>
+                                        @Html.TextBoxFor(model => model.user.Nationality.name, new { @readonly = "readonly", @class = "form-control" })
 
-                            <!-- col-4 -->
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Job Title: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.JobTitle.name, new { @readonly = "readonly", @class = "form-control" })
-
+                                    </div>
                                 </div>
+                                <!-- col-4 -->
+                                <!-- col-4 -->
                             </div>
-                            <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Nationality: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.Nationality.name, new { @readonly = "readonly", @class = "form-control" })
-
-                                </div>
-                            </div>
-                            <!-- col-4 -->
-                            <!-- col-4 -->
-                        </div>
                         <!-- row -->
                         <!-- form-layout-footer -->
 
@@ -144,6 +154,16 @@
 
                     <div class="form-layout">
                         <div class="row mg-b-25">
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Type <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.type.name, new { @readonly = "readonly", @class = "form-control" })
+
+
+
+                                </div>
+                            </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Title<span class="tx-danger">*</span></label>

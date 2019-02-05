@@ -980,7 +980,9 @@ namespace icrm.WebApi
         {
 
             Feedback feedBack = db.Feedbacks.Find(file.id);
-            if (!String.IsNullOrWhiteSpace(file.ImageSave))
+            Debug.WriteLine(file.ImageSave);
+
+            if (!string.IsNullOrWhiteSpace(file.ImageSave))
             { 
                 string ext = GetFileExtension(file.ImageSave);
                 feedBack.attachment = feedBack.id + "." + ext;
@@ -1081,11 +1083,11 @@ namespace icrm.WebApi
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/HR/Subcategories/{categoryId}")]
-        public IHttpActionResult Subcategories(int categoryId)
+        [Route("api/HR/Subcategories/{categoryId}/{type}")]
+        public IHttpActionResult Subcategories(int categoryId,string type)
         {
-
-            var entity = from f in feedInterface.getSubCategories(categoryId)
+            var typeid = db.FeedbackTypes.Where(e => e.name == type).SingleOrDefault().Id;
+            var entity = from f in feedInterface.getSubCategories(categoryId,typeid )
                          select f;
             if (entity != null)
             {
@@ -1167,7 +1169,7 @@ namespace icrm.WebApi
         public IHttpActionResult recieveEmails(string id, RecieveEmails emails )
         {
             Debug.WriteLine(emails);
-           
+          
 
             return Ok();
         }
@@ -1248,6 +1250,33 @@ namespace icrm.WebApi
                 return BadRequest(" Enquirey list  not found");
 
             }
+        }
+
+        //39/ <summary>
+        /// ////////////////////////////**************** Forget Password*******************////////////////////////////
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/HR/ForgetPassword/{id}")]
+        public IHttpActionResult ForgetPassword(string id)
+        {
+            Feedback f = db.Feedbacks.Find(id);
+
+            if (f == null)
+            {
+
+                return NotFound();
+
+            }
+
+            else
+            {
+               
+                    return Ok();
+
+            }
+
+
+
         }
 
     }

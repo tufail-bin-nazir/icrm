@@ -12,5 +12,8 @@ namespace icrm.Models
 
         [Required]
         public int priorityId { get; set; }
+
+        [Required]
+        public String name { get; set; }
     }
 }

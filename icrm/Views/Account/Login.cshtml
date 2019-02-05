@@ -23,6 +23,7 @@
     <!-- Vendor css -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" />
 
     <!-- Slim CSS -->
 
@@ -30,22 +31,18 @@
 
 
     <style>
-		.signin-left {
-			background-position: center;
-			/* Center the image */
-			background-repeat: no-repeat;
-			/* Do not repeat the image */
-			background-size: cover;
-			-webkit-background-size: cover;
-			-moz-background-size: cover;
-			-o-background-size: cover;
-			background-size: cover;
-			position: relative;
-		}
-
-	
-
-	
+        .signin-left {
+            background-position: center;
+            /* Center the image */
+            background-repeat: no-repeat;
+            /* Do not repeat the image */
+            background-size: cover;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            position: relative;
+        }
     </style>
 
 </head>
@@ -73,13 +70,13 @@
 
             <div class="signin-box">
                 <ul>
-                    <li>@Html.ActionLink("english", "SetenglishCulture/Login/Account", "Culture")</li>
-                    <li>@Html.ActionLink("arabic", "SetarabicCulture/Login/Account", "Culture")</li>
+                    <li>@Html.ActionLink("English", "SetenglishCulture/Login/Account", "Culture")</li>
+                    <li>@Html.ActionLink("Arabic", "SetarabicCulture/Login/Account", "Culture")</li>
 
                 </ul>
 
 
-                <h2 class="slim-logo text-center"><a href="#"><img src="~/Content/img/m_logo.png" width="60px"><span></span></a></h2>
+                <h2 class="slim-logo text-center"><a href="#"><img src="~/Content/img/m_logo.png" width="70px"><span></span></a></h2>
                 <a href="@Url.Action("index","DownloadAPK")" class="nav-link text-center"><i class="icon ion-ios-bolt"></i> Download APK</a>
                 <h2 class="signin-title-primary">@Resources.Resource.Welcome_back</h2>
                 <h3 class="signin-title-secondary">@Resources.Resource.Sign_in_to_continue</h3>
@@ -89,7 +86,7 @@
             {
         @Html.AntiForgeryToken()
         <div class="form-group">
-            @Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = Resources.Resource.Enter_your_email })
+            @Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = "Enter Employee Id"})
 
         </div><!-- form-group -->
         <div class="form-group mg-b-50">

@@ -45,12 +45,25 @@
                     <li class="breadcrumb-item active" aria-current="page">Create Tickets</li>
                 </ol>
                 <h6 class="slim-pagetitle">CREATE TICKET</h6>
-                <span class="tx-danger">
-                    @TempData["Message"]
-                </span>
-                <span class="tx-success">
-                    @TempData["MessageSuccess"]
-                </span>
+                @if (@TempData["MessageSuccess"] != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @TempData["MessageSuccess"]</strong>
+                    </div>
+                }
+                @if (@TempData["Message"] != null)
+                {
+                    <div class="alert alert-danger mg-b-0" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong>@TempData["Message"]</strong>
+                    </div>
+
+                }
             </div>
             <!-- slim-pageheader -->
             @Html.ValidationSummary()
@@ -109,14 +122,14 @@
                                 </div>
                             </div>
                             <!-- col-4 -->
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })
+                            <!--  <div class="col-lg-4">
+        <div class="form-group">
+            <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
+           @** @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })*@
 
-                                </div>
-                            </div>
-
+        </div>
+    </div>
+      -->
                             <!-- col-4 -->
                             <!-- col-4 -->
                             <div class="col-lg-4">
@@ -147,6 +160,17 @@
 
                     <div class="form-layout">
                         <div class="row mg-b-25">
+
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Type <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.type.name, new { @readonly = "readonly", @class = "form-control" })
+
+
+
+                                </div>
+                            </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Title <span class="tx-danger">*</span></label>

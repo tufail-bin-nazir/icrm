@@ -61,44 +61,55 @@
             <div class="section-wrapper">
                 <label class="section-title">CREATING TICKETS BY ICRM Agent</label>
                 <div class="form-layout">
-
-                    <p class="mg-b-20 mg-sm-b-40"></p>
-                    <span class="tx-danger">
-                        @TempData["Message"]
-                    </span>
-                    <span class="tx-success">
-                        @TempData["MessageSuccess"]
-                    </span>
-                    @Html.HiddenFor(model => model.submittedById, new { @class = "form-control", id = "submittedBy" })
-
-
-
-                    <input type="hidden" id="hrdetail" value="@data.Id" />
-                    @Html.HiddenFor(model => model.userId, new { @class = "form-control", id = "userID" })
-                    @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
-                    @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
-                    @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
-
-                    @if (ViewBag.EmployeeList != null)
+                    @if (@TempData["MessageSuccess"] != null)
                     {
-                        <div class="row mg-b-25">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">@Resources.Resource.Employee_Id <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.userId,
-    new SelectList(ViewBag.EmployeeList,
-    "Id", "EmployeeId"), "Select Employee", new { @class = "form-control select2", id = "empID",required="required" })
-                                </div>
-                            </div>
-                            <!-- col-4 -->
-                            <!-- col-4 -->
-                            <!-- col-4 -->
+                        <div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong> @TempData["MessageSuccess"]</strong>
                         </div>
                     }
-                    <!-- row -->
-                    <!-- form-layout-footer -->
+                    @if (@TempData["Message"] != null)
+                    {
+                        <div class="alert alert-danger mg-b-0" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>@TempData["Message"]</strong>
+                        </div>
+                    }
+                        
+                        @Html.HiddenFor(model => model.submittedById, new { @class = "form-control", id = "submittedBy" })
 
-                </div>
+
+
+                        <input type="hidden" id="hrdetail" value="@data.Id" />
+                        @Html.HiddenFor(model => model.userId, new { @class = "form-control", id = "userID" })
+                        @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
+                        @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
+
+                        @if (ViewBag.EmployeeList != null)
+                        {
+                            <div class="row mg-b-25">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@Resources.Resource.Employee_Id <span class="tx-danger">*</span></label>
+                                        @Html.DropDownListFor(m => m.userId,
+        new SelectList(ViewBag.EmployeeList,
+        "Id", "EmployeeId"), "Select Employee", new { @class = "form-control select2", id = "empID",required="required" })
+                                    </div>
+                                </div>
+                                <!-- col-4 -->
+                                <!-- col-4 -->
+                                <!-- col-4 -->
+                            </div>
+                        }
+                        <!-- row -->
+                        <!-- form-layout-footer -->
+
+                    </div>
 
 
                 <div id="OuterDiv" style="display:none;">
@@ -139,13 +150,13 @@
                             </div>
                         </div>
                         <!-- col-4 -->
-                        <div class="col-lg-4">
+                      <!--  <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
-                                @Html.TextBox("EmpSubLocation","", new { @readonly = "readonly", @class = "form-control", id= "EmpSubLocation" })
-
+                                @**   @Html.TextBox("EmpSubLocation", "", new { @readonly = "readonly", @class = "form-control", id = "EmpSubLocation" })
+                                **@
                             </div>
-                        </div>
+                        </div>-->
 
                         <!-- col-4 -->
                         <!-- col-4 -->
@@ -355,15 +366,16 @@
                         url: "@Url.Action("getEmpDetails", "HR")",
                         dataType: "json",
                         success: function (response) {
-
+                           
+                            $('#EmpPosition').val(response.JobTitle.name);
+                            $('#EmpNationality').val(response.Nationality.name);
                             $('#EmpName').val(response.UserName);
                             $('#EmpBatch').val(response.EmployeeId);
                             $('#EmpEmail').val(response.Email);
                             $('#EmpPNo').val(response.PhoneNumber);
                             $('#EmpLocation').val(response.Location.name);
-                            $('#EmpSubLocation').val(response.SubLocation.name);
-                            $('#EmpPosition').val(response.JobTitle.name);
-                            $('#EmpNationality').val(response.Nationality.name);
+                           // $('#EmpSubLocation').val(response.SubLocation.name);
+                            
 
                         },
                         error: function (response) {
@@ -524,15 +536,20 @@
 
 
 
-             $("#category").change(function () {
-                 $("#subcategory option").remove();
+            $("#category").change(function () {
 
-                 $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
+             
+
+                $("#subcategory option").remove();
+
+                $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
+                if( $("#typeofFeedback").val() != "")
+            {
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("getSubCategories", "HR")",
                     contentType: "application/json; charset=utf-8",
-                    data: '{"categoryId":"' + $(this).val() + '"}',
+                    data: '{"categoryId":"' + $(this).val() + '","type":"' + $('#typeofFeedback').val() + '"}',
                     dataType: "json",
                     success: function (r) {
 
@@ -545,6 +562,20 @@
                         alert("error" + r.responseText);
                     }
                 });
+            }
+            });
+            
+
+            $("#typeofFeedback").change(function () {
+
+               // window.location.reload(true);
+                $("#category option").remove();
+
+                $('#category').append('<option value=" ">' + "Choose Category" + '</option>');
+
+                $("#subcategory option").remove();
+
+                $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
 
             });
 
