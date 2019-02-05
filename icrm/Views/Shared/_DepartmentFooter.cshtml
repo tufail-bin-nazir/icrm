@@ -1,0 +1,97 @@
+﻿<script src="~/Content/lib/jquery-toggles/js/toggles.min.js"></script>
+<script src="~/Scripts/modernizr-2.8.3.js"></script>
+<script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
+<script src="/signalr/hubs"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+
+
+        var menu = ["Create", "feedback", "openticket", "resolvedticket", "assignedticket",
+            "respondedticket", "closedticket", "rejectedticket", "tickets?typeId=Complaint", "tickets?typeId=Appreciation",
+            "tickets?typeId=Suggestion", "tickets?typeId=Enquiry"
+        ];
+
+        var users = ["HR", "Department", "ListUser"];
+
+        var chat = ["HRChat"];
+
+        var reports = ["charts"];
+
+        var url = window.location.href;
+        var page = new Array();
+        var page = url.split("/");
+        console.log(page[page.length - 1])
+        var last = page[page.length - 1];
+
+
+        $.each(menu, function (index, value) {
+            console.log("Inside menu");
+
+            if (last == value) {
+                console.log("Inside menu");
+                console.log($(".nav").find('.active').eq(0));
+                $(".nav").find('.nav-item').eq(0).attr("class", "nav-item");
+                $(".nav").find('.nav-item').eq(1).attr("class", "nav-item");
+                console.log($(".nav").find('.nav-item').eq(3));
+                $(".nav").find('.nav-item').eq(3).attr("class", "nav-item");
+                console.log($(".nav").find('.nav-item').eq(2).attr("class", "nav-item active with-sub"));
+
+            }
+        });
+
+
+
+        $.each(users, function (index, value) {
+            console.log("Inside users");
+
+            if (last == value) {
+                console.log($(".nav").find('.active').eq(0));
+                $(".nav").find('.nav-item').eq(0).attr("class", "nav-item");
+                $(".nav").find('.nav-item').eq(1).attr("class", "nav-item");
+                $(".nav").find('.nav-item').eq(2).attr("class", "nav-item with-sub");
+                console.log($(".nav").find('.nav-item').eq(3).attr("class", "nav-item active with-sub"));
+
+
+            }
+        });
+
+        $.each(chat, function (index, value) {
+            console.log(value);
+
+            if (last == value) {
+                console.log($(".nav").find('.active').eq(0));
+                $(".nav").find('.nav-item').eq(0).attr("class", "nav-item");
+                $(".nav").find('.nav-item').eq(1).attr("class", "nav-item");
+                $(".nav").find('.nav-item').eq(2).attr("class", "nav-item with-sub");
+                console.log($(".nav").find('.nav-item').eq(3).attr("class", "nav-item active with-sub"));
+
+
+            }
+        });
+
+
+        $.each(reports, function (index, value) {
+            console.log(value);
+
+            if (last == value) {
+                console.log($(".nav").find('.active').eq(0));
+                $(".nav").find('.nav-item').eq(0).attr("class", "nav-item");
+                $(".nav").find('.nav-item').eq(2).attr("class", "nav-item  with-sub");
+                $(".nav").find('.nav-item').eq(3).attr("class", "nav-item");
+                console.log($(".nav").find('.nav-item').eq(1).attr("class", "nav-item active "));
+
+
+            }
+        });
+
+
+
+
+
+
+
+    });
+</script>
