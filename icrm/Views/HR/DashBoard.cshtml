@@ -69,27 +69,29 @@
                                 <!-- media-body -->
                             </div>
                             <!-- media -->
-                        </div></a>
-                        <!-- card -->
+                        </div>
+                    </a>
+                    <!-- card -->
                 </div>
                 <!-- col-3 -->
                 <div class="col-sm-6 col-lg-3 mg-t-10 mg-sm-t-0">
-                   <a href="@Url.Action("openAlltickets", "HR")" id="openticket">
-                    <div class="card card-status">
-                        <div class="media">
-                            <i class="icon fa fa-envelope-open tx-teal"></i>
-                            <div class="media-body">
-                                <h1>@ViewBag.OpenTickets</h1>
+                    <a href="@Url.Action("openAlltickets", "HR")" id="openticket">
+                        <div class="card card-status">
+                            <div class="media">
+                                <i class="icon fa fa-envelope-open tx-teal"></i>
+                                <div class="media-body">
+                                    <h1>@ViewBag.OpenTickets</h1>
 
-                                <p>
-                                   
-                                                                @Resources.Resource.Open_Complaints
-                                                            </p>
+                                    <p>
+
+                                        @Resources.Resource.Open_Complaints
+                                    </p>
+                                </div>
+                                <!-- media-body -->
                             </div>
-                            <!-- media-body -->
+                            <!-- media -->
                         </div>
-                        <!-- media -->
-                    </div></a>
+                    </a>
                     <!-- card -->
                 </div>
                 <!-- col-3 -->
@@ -105,8 +107,9 @@
                                 <!-- media-body -->
                             </div>
                             <!-- media -->
-                        </div></a>
-                        <!-- card -->
+                        </div>
+                    </a>
+                    <!-- card -->
                 </div>
                 <!-- col-3 -->
                 <div class="col-sm-6 col-lg-3 mg-t-10 mg-lg-t-0">
@@ -124,7 +127,7 @@
                             <!-- media -->
                         </div>
                         <!-- card -->
-                        </a>
+                    </a>
                 </div>
                 <!-- col-3 -->
 
@@ -133,93 +136,93 @@
             <!-- row -->
 
             <br><br>
-                <div class="section-wrapper">
-                    @if (@TempData["MessageSuccess"] != null)
-                    {
-                        <div class="alert alert-success" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong> @TempData["MessageSuccess"]</strong>
-                        </div>
-                    }
-                    @if (@TempData["Message"] != null)
-                    {
-                        <div class="alert alert-success" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong> @TempData["Message"]</strong>
-                        </div>
-                    }
-                    @if (@TempData["displayMsg"] != null)
-                    {
-                        <div class="alert alert-success" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                            <strong> @TempData["displayMsg"]</strong>
-                        </div>
-                    }
-
-
-                    <label class="section-title">Search your tickets</label>
-                    <p class="mg-b-20 mg-sm-b-40">On date criteria</p>
-                    <div class="form-layout">
-                        <span class="text-danger">
-                            @TempData["DateMsg"]
-
-
-                        </span>
-
-                        @using (Html.BeginForm("search", "HR", FormMethod.Get, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
-                        {
-                            <div class="row mg-b-25">
-
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">@Resources.Resource.Status: <span class="tx-danger">*</span></label>
-                                        @Html.DropDownList("status", new SelectList(ViewBag.Status), new { @class = "form-control select2", name = "Status" })
-
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <label class="form-control-label">From: <span class="tx-danger">*</span></label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
-                                            </div>
-                                        </div>
-                                        <input type="text" class="form-control date hasDatepicker" value="@ViewBag.startDate" name="date1" placeholder="MM-DD-YYYY" id="dp1545306018953">
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <label class="form-control-label">To : <span class="tx-danger">*</span></label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
-                                            </div>
-                                        </div>
-                                        <input type="text" class="form-control date hasDatepicker" value="@ViewBag.endDate" name="date22" placeholder="MM-DD-YYYY" id="dp1545306018953">
-                                    </div>
-                                </div>
-                                <!-- col-4 -->
-                            </div>
-
-                            <!-- row -->
-                            <div class="form-layout-footer">
-                                <button class="btn btn-primary bd-0" name="export" value="search">@Resources.Resource.Submit </button>
-                                <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
-                                <button class="btn btn-secondary bd-0" name="export" value="excel">Export to Excel</button>
-                            </div>
-                        }
-                        <!-- form-layout-footer -->
+            <div class="section-wrapper">
+                @if (@TempData["MessageSuccess"] != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @TempData["MessageSuccess"]</strong>
                     </div>
+                }
+                @if (@TempData["Message"] != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @TempData["Message"]</strong>
+                    </div>
+                }
+                @if (@TempData["displayMsg"] != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @TempData["displayMsg"]</strong>
+                    </div>
+                }
 
+
+                <label class="section-title">Search your tickets</label>
+                <p class="mg-b-20 mg-sm-b-40">On date criteria</p>
+                <div class="form-layout">
+                    <span class="text-danger">
+                        @TempData["DateMsg"]
+
+
+                    </span>
+
+                    @using (Html.BeginForm("search", "HR", FormMethod.Get, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                    {
+                        <div class="row mg-b-25">
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Status: <span class="tx-danger">*</span></label>
+                                    @Html.DropDownList("status", new SelectList(ViewBag.Status), new { @class = "form-control select2", name = "Status" })
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <label class="form-control-label">From: <span class="tx-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control date hasDatepicker" value="@ViewBag.startDate" name="date1" placeholder="MM-DD-YYYY" id="dp1545306018953">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label class="form-control-label">To : <span class="tx-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control date hasDatepicker" value="@ViewBag.endDate" name="date22" placeholder="MM-DD-YYYY" id="dp1545306018953">
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                        </div>
+
+                        <!-- row -->
+                        <div class="form-layout-footer">
+                            <button class="btn btn-primary bd-0" name="export" value="search">@Resources.Resource.Submit </button>
+                            <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
+                            <button class="btn btn-secondary bd-0" name="export" value="excel">Export to Excel</button>
+                        </div>
+                    }
+                    <!-- form-layout-footer -->
                 </div>
+
+            </div>
 
 
             <div class="row row-xs mg-t-10">
@@ -316,7 +319,7 @@
                             </table>
                         </div>
                         <!-- table-responsive -->
-                        
+
 
                         @if (ViewBag.linkName == "Alltickets" && ViewBag.Search == null)
                         {
@@ -608,5 +611,6 @@
         });
 
     </script>
+    @Html.Partial("_HRFooter")
 </body>
 </html>
