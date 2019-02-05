@@ -7,11 +7,32 @@ namespace icrm.Models
 {
     public class EscalationUser
     {
+        ApplicationDbContext db = new ApplicationDbContext();
+
         public int Id { get; set; }
+        public string firstEscalationUserId { get; set; }
         public ApplicationUser firstEscalationUser { get; set; }
+        public string secondEscalationUserId { get; set; }
         public ApplicationUser secondEscalationUser { get; set; }
+        public string thirdEscalationUserId { get; set; }
         public ApplicationUser thirdEscalationUser { get; set; }
-        public IEnumerable<Category> Categories { get; set; }
+        private List<Category> categories;
+
+        public List<Category> Categories
+        {
+            
+            get {
+                List<Category> list = new List<Category>();
+                foreach (int i in this.CategoriesIds) {
+                    list.Add(db.Categories.Find(i));
+                }
+                return list;
+            }
+            set { categories = value; }
+        }
+
+        public IEnumerable<int> CategoriesIds { get; set; }
         public int DepartmentId  { get; set; }
+        public virtual Department Department { get; set; }
     }
 }
