@@ -411,7 +411,7 @@ namespace icrm.RepositoryImpl
         }
         public List<Department> getDepartmentsOnType(string fORWARD)
         {
-            return db.Departments.OrderBy(m => m.name).ToList();
+            return db.Departments.OrderBy(m => m.name).Where(m => m.type == fORWARD).ToList();
         }
 
         public List<Priority> getPriorties()
