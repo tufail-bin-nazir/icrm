@@ -60,9 +60,25 @@ namespace icrm.Controllers
             return View(feedbackList);
         }
 
+        /**********************DashBoard***********/
+
+        public ActionResult openall(int? page)
+        {
+            ViewBag.linkName = "openlinkticket";
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["user"] = user;
+            IPagedList<Feedback> feedbackList = feedInterface.getAllOpenWithDepartment(user.Id, pageIndex, pageSize);
+            TicketCounts();
+            return View("DashBoard",feedbackList);
+        }
+
+
 
         /**Responded Tickets*********************/
-        
+
         public ActionResult responded(int? page)
         {        
             ViewBag.linkName = "respondedticket";

@@ -249,6 +249,10 @@
                                                 {
                                                     <a href="@Url.Action("openview", "Department",new {id=item.Data.id })" class="fa fa-edit"></a>
                                                 }
+                                                @if (ViewBag.linkName == "openlinkticket")
+                                                {
+                                                    <a href="@Url.Action("openview", "Department",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                                }
                                                 @if (ViewBag.linkName == "resolvedticket")
                                                 {
                                                     <a href="@Url.Action("resolvedview", "Department",new {id=item.Data.id })" class="fa fa-edit"></a>
@@ -282,6 +286,23 @@
                             </table>
                         </div>
                         <!-- table-responsive -->
+                        @if (ViewBag.linkName == "openlinkticket" && ViewBag.Search == null)
+                        {
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                    of @Model.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model, page => Url.Action("openall", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        }
                         @if (ViewBag.linkName == "openticket" && ViewBag.Search == null)
                         {
                             <div class="pagination-wrapper">
