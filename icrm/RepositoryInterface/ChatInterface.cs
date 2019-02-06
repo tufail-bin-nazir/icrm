@@ -12,5 +12,6 @@ namespace icrm.RepositoryInterface
         ApplicationUser GetUserFromChatIdOtherThanPassedUser(int? chatId, string userId);
         bool IsActive(int? chatId);
         void changeActiveStatus(int? chatId, bool value);
+        bool hasUserChatActive(string id);
     }
-}
+} 

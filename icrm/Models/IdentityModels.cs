@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 
 namespace icrm.Models
 {
@@ -23,18 +24,18 @@ namespace icrm.Models
         public string  LastName { get; set; }
 
         public int? DepartmentId { get; set; }
-
+        [JsonIgnore]
         public virtual Department Department { get; set; }
 
         public int? CostCenterId { get; set; }
-
+        [JsonIgnore]
         public virtual CostCenter CostCenter { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public System.DateTime? EmployeeHireDate { get; set; }
 
         public int? NationalityId { get; set; }
-
+        [JsonIgnore]
         public virtual Nationality Nationality { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
@@ -43,20 +44,20 @@ namespace icrm.Models
         public string EmployeeStatus { get; set; }
 
         public int? EventReasonId { get; set; }
-
+        [JsonIgnore]
         public virtual EventReason EventReason { get; set; }
 
         public int? LocationId { get; set; }
-
+        [JsonIgnore]
         public virtual Location Location { get; set; }
 
         public int? LocationGroupId { get; set; }
-
+        [JsonIgnore]
         public virtual LocationGroup LocationGroup { get; set; }
 
 
         public int? JobTitleId { get; set; }
-
+        [JsonIgnore]
         public virtual JobTitle JobTitle { get; set; }
 
         public string GOSINumber { get; set; }
@@ -66,11 +67,11 @@ namespace icrm.Models
         public string saudiResidentialId { get; set; }
 
         public int? EmployeeClassId { get; set; }
-
+        [JsonIgnore]
         public virtual EmployeeClass EmployeeClass { get; set; }
 
         public int EthincityId { get; set; }
-
+        [JsonIgnore]
         public virtual Ethnicity Ethnicity { get; set; }
 
         public bool HasSwipeAccess { get; set; }
@@ -84,11 +85,11 @@ namespace icrm.Models
         public string otherPhoneNumber { get; set; }
 
         public int? PayScaleTypeId { get; set; }
-
+        [JsonIgnore]
         public virtual PayScaleType PayScaleType { get; set; }
 
         public int? ReligionId { get; set; }
-
+        [JsonIgnore]
         public virtual Religion Religion { get; set; }
 
         public string personalInfoString { get; set; }
@@ -97,7 +98,7 @@ namespace icrm.Models
         public System.DateTime? DOB { get; set; }
 
         public int? GenderId { get; set; }
-
+        [JsonIgnore]
         public virtual Gender  Gender { get; set; }
 
         public string otherEmail { get; set; }
@@ -107,25 +108,25 @@ namespace icrm.Models
         public string personalEmail { get; set; }
 
         public int? EmployerTypeId { get; set; }
-
+        [JsonIgnore]
         public virtual EmployerType EmployerType { get; set; }
 
         public int? VendorId { get; set; }
-
+        [JsonIgnore]
         public virtual Vendor Vendor { get; set; }
 
         public string outSourcedId { get; set; }
 
         public int? BandId { get; set; }
-
+        [JsonIgnore]
         public virtual Band Band { get; set; }
 
         public int? SubLocationId { get; set; }
-
+        [JsonIgnore]
         public virtual SubLocation SubLocation { get; set; }
 
         public int? PositionId { get; set; }
-
+        [JsonIgnore]
         public virtual Position Position { get; set; }
 
       

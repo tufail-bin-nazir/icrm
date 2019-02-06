@@ -156,12 +156,13 @@ namespace icrm.Controllers
             ApplicationUser user2 = userService.findUserOnId(user1.Id);
             if (!activeUser.IsNullOrWhiteSpace())
             {
-                Message message = new Message();
-                message.Text = "Agent has closed the chat.If you want to chat again,send new request.";
-                message.RecieverId = activeUser;
-                message.Reciever = userService.findUserOnId(activeUser);
-                message.SentTime = DateTime.Now;
-                eventService.pushMessage(message);
+                int? chatId = chatService.getChatIdOfUsers(activeUser, user2.Id);
+                if (chatId != null)
+                {
+                    chatService.changeActiveStatus(chatId,false);
+                }
+
+                eventService.hrClosedChat(activeUser);
             }
 
             if (this.chatRequestService.ChatRequestsSize()>0)
@@ -179,6 +180,7 @@ namespace icrm.Controllers
         [Route("chat/nextrequest")]
         public void getNextChatRequestForHR()
         {
+            Thread.Sleep(2000);
             this.AssignNextRequestInQueueToHr();
         }
 
@@ -238,6 +240,14 @@ namespace icrm.Controllers
                 consumer.StartConsuming(user.UserName);
         }
 
+        [HttpGet]
+        [Route("test")]
+        public void testapp()
+        {
+            HttpContext.Application["date"]= DateTime.Now;
+            Debug.Print("sett the date in api---");
+        }
+
         public Message SendMessage(string text,int? chatId,ApplicationUser sender,ApplicationUser reciever)
         {
             Debug.Print("sending message"+text+"---recirever---"+reciever.UserName+"---chatid------"+chatId);
@@ -259,6 +269,7 @@ namespace icrm.Controllers
 
         public void AssignNextRequestInQueueToHr()
         {
+            HttpContext.Application["Time"] = DateTime.Now;
             Debug.Print("in hr get next request---");
             ChatRequest chatRequest = this.chatRequestService.NextChatRequestInQueue();
             ApplicationUser reciever = UserManager.FindById(User.Identity.GetUserId());
@@ -266,57 +277,51 @@ namespace icrm.Controllers
             Debug.Print(chatRequest + "------cgat rwq");
             if (chatRequest != null)
             {
-                Debug.Print(chatRequest.UserId + "---userid before del");
-                Debug.Print(chatRequest.UserId + "---userid after del");
-
-                List<Message> messages = this.messageService.GetMessagesOfChatRequestUser(chatRequest.UserId);
-                Debug.Print(messages.Count + "-----count");
+                int messageSize = this.messageService.GetMessageSizeOfChatRequestUser(chatRequest.UserId);
                 this.chatRequestService.delete(chatRequest);
-
-                bool isChatSetToActive = false;
-                if (messages.Count > 0)
+                int? chatId2 = null;
+                if (messageSize > 0)
                 {
-                    foreach (var message in messages)
-                    {
-                        int? chatId2 = chatService.getChatIdOfUsers(message.SenderId, reciever.Id);
-                        Debug.Print("Chat id is  " + chatId2);
-                        if (!isChatSetToActive)
-                        {
-                            if (chatId2 == null)
+                    chatId2 = chatService.getChatIdOfUsers(sender.Id, reciever.Id);
+                    Debug.Print("Chat id is  " + chatId2);
+                     if (chatId2 == null)
                             {
                                 Debug.Print("Chat id 2 is null but how--" + chatId2);
                                 Chat chat = new Chat();
-                                chat.UserOneId = message.SenderId;
+                                chat.UserOneId = sender.Id;
                                 chat.UserTwoId = reciever.Id;
                                 chat.active = true;
                                 chatId2 = chatService.Save(chat);
-                                isChatSetToActive = true;
-                            }
-                            else
-                            {
-                                this.chatService.changeActiveStatus(chatId2, true);
-                                isChatSetToActive = true;
-                            }
-                        }
+                    }
+                    else
+                    {
+                        this.chatService.changeActiveStatus(chatId2, true);
+                    }
+                }
+
+                    List<Message> messages =messageService.GetMessagesOfChatRequestUser(sender.Id, reciever.Id, chatId2);
+                        
                         Producer producer = new Producer("messageexchange", ExchangeType.Direct);
-                        message.RecieverId = reciever.Id;
-                        message.ChatId = chatId2;
-                        Message msgWithId = messageService.updateMessage(message);
-                        Thread.Sleep(500);
-                        // Debug.Print((msgWithId) + "----msgwitrhid");
-                        // Debug.Print(msgWithId.Id + "----mdgid>><<<<<" + msgWithId.Reciever + "-----reciever");
-                        if (producer.ConnectToRabbitMQ()) { 
+                    /*message.RecieverId = reciever.Id;
+                    message.ChatId = chatId2;
+
+
+                    Message msgWithId = messageService.updateMessage(message);
+                    Thread.Sleep(500);*/
+                    // Debug.Print((msgWithId) + "----msgwitrhid");
+                    // Debug.Print(msgWithId.Id + "----mdgid>><<<<<" + msgWithId.Reciever + "-----reciever");
+                    foreach(Message msgWithId in messages)
+                    {
+                        if (producer.ConnectToRabbitMQ())
+                        {
                             producer.send(msgWithId);
                             this.eventService.NotifyHrAboutChat(msgWithId);
                         }
                         //SendMessage(message.Text, chatId2, message.Sender, reciever);
                     }
-                }
-                else
-                {
+                
 
-                }
-
+            
                 this.eventService.hrAvailableNotification(sender.DeviceCode);
             }
         }

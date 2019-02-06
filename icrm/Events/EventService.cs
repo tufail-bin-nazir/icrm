@@ -17,14 +17,15 @@ namespace icrm.Events
         public HrAvailableNotify hrAvailableNotify;
 
         private EmailSend emailSend;
+
         public EventService()
         {
             this.broadcastEvent = new BroadcastMessageEvent();
             this.notification = new Notification();
             this.feedbackNotification = new FeedbackNotification();
             this.feedbackNotifyEvent = new FeedbackNotifyEvent();
-            this.messageHub=new MessageHub();
-            this.messasgeEvent=new MessageEvent();
+            this.messageHub = new MessageHub();
+            this.messasgeEvent = new MessageEvent();
             this.hrAvailableNotify = new HrAvailableNotify();
             emailSend = new EmailSend();
         }
@@ -32,11 +33,11 @@ namespace icrm.Events
         public Task sendbroadcastMessage(BroadcastMessage broadcastMessage)
         {
 
-             HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
+            HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
             {
                 broadcastEvent.MessageBroadcasted += notification.OnMessageBroadcasted;
                 broadcastEvent.broadcast(broadcastMessage);
-                
+
             });
             return null;
         }
@@ -66,12 +67,13 @@ namespace icrm.Events
             return null;
         }
 
-        public Task sendEmails(string emails,string body)
+        public Task sendEmails(string emails, string body)
         {
 
             HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
             {
-                emailSend.sendEmailAsync(emails,body);
+                System.Diagnostics.Debug.WriteLine("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
+                emailSend.sendEmailAsync(emails, body);
 
             });
             return null;
@@ -81,11 +83,11 @@ namespace icrm.Events
         {
 
             HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
-                {
-                    Debug.Print("--------notify hr about chat----");
-                    this.messageHub.NotifyHRAboutChat(message);
+            {
+                Debug.Print("--------notify hr about chat----");
+                this.messageHub.NotifyHRAboutChat(message);
 
-                });
+            });
             return null;
         }
 
@@ -93,11 +95,11 @@ namespace icrm.Events
         {
 
             HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
-                {
-                    Debug.Print("--------inhr available notify----");
-                    this.hrAvailableNotify.OnHrAvailableNotify(deviceId);
+            {
+                Debug.Print("--------inhr available notify----");
+                this.hrAvailableNotify.OnHrAvailableNotify(deviceId);
 
-                });
+            });
             return null;
         }
 
@@ -105,11 +107,22 @@ namespace icrm.Events
         {
 
             HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
-                {
-                    Debug.Print("--------chat closed by user notify----");
-                    this.messageHub.userClosedChat(username);
+            {
+                Debug.Print("--------chat closed by user notify----");
+                this.messageHub.userClosedChat(username);
 
-                });
+            });
+            return null;
+        }
+
+        public Task hrClosedChat(string username)
+        {
+            HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
+            {
+                Debug.Print("--------chat closed by hr notify----");
+                this.messageHub.HrClosedChat(username);
+
+            });
             return null;
         }
     }

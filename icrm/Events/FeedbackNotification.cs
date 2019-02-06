@@ -15,19 +15,9 @@ namespace icrm.Events
         public async void OnFeedbackNotified(object sender, FeedbackNotifyEventArgs args)
         {
             Debug.Print("-----------in notificationbroadcasting message-------");
-            //RegisterId you got from Android Developer.
-            String recieverId = "fo8m-sJVhSk:APA91bFd-bqtdW_j_6olexzPII4_KVxgIRtOWD2ZPCO900WjjyycfU3Gy7Q6-iUOeYQ3_Q-MmhgMEHvuZxEiImcr6bjVxqki-vhE_vJmRviM2xY3VsMYlAPckZ2lM0_Bh7zCnTnBWH4H";
             string Google_App_ID = "AIzaSyBJG69jVZWgFt7ayf-FC3Wervecxfjm0Dg";
             string Sender_ID = "AIzaSyBJG69jVZWgFt7ayf-FC3Wervecxfjm0Dg";
-            string title = "Demo Notification";
-            string tickerText = "Message Recieved";
             string contentTitle = args.Feedback.title;
-            /*string postData =
-            "{ \"registration_ids\": [ \"" + recieverId + "\" ], " +
-              "\"data\": {\"tickerText\":\"" + tickerText + "\", " +
-                         "\"contentTitle\":\"" + contentTitle + "\", " +
-                         "\"message\": \"" + contentTitle + "\"}}";*/
-
             var postData = new
             {
                 to = "/topics/HR",

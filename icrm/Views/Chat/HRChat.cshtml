@@ -336,10 +336,13 @@
         //signalr method for receiving server message to client
         messageHub.client.recieve = function(response) {
             //alert("message recieved");
+            console.log('---message is---' + response); console.log(response);
+            
+            if (response.Chat.active) {
+                $('#chatlist' + response.ChatId).parent().prepend($('#chatlist'+response.ChatId));
+                activeUser = response.Sender.UserName;
+                console.log('--active user---' + activeUser);
 
-            if (response.ChatId.active) {
-                $('#chatlist' + response.ChatId).parent().prepend('#chatlist' + response.ChatId);
-                activeUser = response.SenderId;
             }
 
 
@@ -409,7 +412,8 @@
             }
         }
 
-        messageHub.client.userclosedchat = function() {
+        messageHub.client.userclosedchat = function (response) {
+            console.log('---user closed chat-----'+response);
             $('#userclosechat').modal('show');
         }
 
@@ -432,8 +436,6 @@
                 dataType: "json",
                 success: function(response) {
                     console.log('response=> ' + response);
-                    activeUser = response.RecieverId;
-
                 },
                 error: function(response) {
                     console.log('-in erorororr')
@@ -627,7 +629,7 @@
     });
     </script>
 
-    
+    @*
         @Html.Partial("_HRFooter")
-    
+    *@
 </body>

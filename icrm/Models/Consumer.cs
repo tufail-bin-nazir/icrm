@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Hosting;
 //using Microsoft.AspNet.SignalR;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -29,7 +30,6 @@ namespace icrm.Models
 
         // used to pass messages back to UI for processing
         public delegate void onReceiveMessage(byte[] message);
-        public event onReceiveMessage onMessageReceived;
 
         public Consumer(string exchange, string exchangeType) : base(exchange, exchangeType)
         {
@@ -57,7 +57,7 @@ namespace icrm.Models
 
         private void Consume(String queueName)
         {
-            bool autoAck = false;
+            bool autoAck = true;
             Debug.Print(queueName + "-------queueneame2");
             //create a subscription
             mSubscription = new Subscription(Model, queueName, autoAck);
@@ -65,15 +65,22 @@ namespace icrm.Models
             
             while (isConsuming)
             {                
-                BasicDeliverEventArgs e;
-                mSubscription.Next(500,out e);
-                if(e != null) {
-                int messageId = (int)e.BasicProperties.Headers["msgId"];
-                Message message = messageService.UpdateRecieveTimeOfMessage(messageId);
-                    eventService.pushMessage(message);
-                System.Threading.Thread.Sleep(500);
+                BasicDeliverEventArgs e= mSubscription.Next();
+                Debug.Print("checking e----" + e);
+                if (e != null) {
+                    int messageId = (int)e.BasicProperties.Headers["msgId"];
+                    Debug.Print("REcieved message----"+messageId);
+                    mSubscription.Ack(e);
+                    HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
+                    {
+                       messageService.UpdateRecieveTimeOfMessage(messageId);
+                    });
                 }
-                mSubscription.Ack(e);
+                else
+                {
+                    mSubscription.Ack(e);
+                }
+
             }
         }
 
