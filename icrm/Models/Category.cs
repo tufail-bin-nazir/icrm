@@ -15,7 +15,7 @@ namespace icrm.Models
 
         public IEnumerable<SubCategory> subCategories { get; set; }
         public int DepartmentId { get; set; }
-        public int EscalationUserId { get; set; }
+        public int? EscalationUserId { get; set; }
 
 
 
