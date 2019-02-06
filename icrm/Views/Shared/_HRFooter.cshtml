@@ -31,7 +31,7 @@
          c = $('#notifyCount').text() != ''?Number(c):0;
         $('#notifyCount').text(++c);
 
-        $('#notificationlist').prepend('<a href="default.htm" class="dropdown-link">' +
+        $('#notificationlist').prepend('<a href="#" class="dropdown-link">' +
             '<div class="media"> <div class="media-body">' +
             '<p><strong>'+message.Sender.FirstName +' '+message.Sender.LastName+'</strong> messaged you.</p>' +
             '<p><strong>'+message.Text+'</strong></p>' +
@@ -75,6 +75,10 @@
                 T.toggle(false);
 
             }
+        });
+
+        $('.dropdown-b').click(function() {
+            $('#notifyCount').text(0);
         });
     });
     function parseJsonDate(jsonDateString) {

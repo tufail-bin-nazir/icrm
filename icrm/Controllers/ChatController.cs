@@ -21,7 +21,7 @@ using Constants = icrm.Models.Constants;
 namespace icrm.Controllers
 {
     using icrm.Events;
-
+    [Authorize]
     public class ChatController : Controller
     {
         private ApplicationUserManager _userManager;
