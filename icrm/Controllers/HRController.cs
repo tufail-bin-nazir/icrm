@@ -855,7 +855,8 @@ namespace icrm.Controllers
                             }
                                 db.Entry(feedback).State = EntityState.Modified;
                                 db.SaveChanges();
-                                 TempData["MessageSuccess"] = "Ticket has been Forwarded Successfully";
+                        eventService.sendEmails(Request.Form["emailsss"], PopulateBody(feedback));
+                        TempData["MessageSuccess"] = "Ticket has been Forwarded Successfully";
 
                     }
                     else
