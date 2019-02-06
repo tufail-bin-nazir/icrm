@@ -58,5 +58,13 @@ namespace icrm.RepositoryImpl
             chat.active = value;
             this.db.SaveChanges();
         }
+
+        public bool hasUserChatActive(string id)
+        {
+           var chats = this.db.Chat.Where(c => (c.UserOneId == id || c.UserTwoId == id) && c.active == true).ToList();
+            if (chats.Count > 0)
+                return true;
+            return false;
+        }
     }
 }

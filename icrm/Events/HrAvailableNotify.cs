@@ -42,7 +42,8 @@ namespace icrm.Events
                 {
                     body = contentTitle,
                     title = "ICRM Agent available",
-                    badge = 1
+                    badge = 1,
+                    click_action= "chatwindow"
                 },
             };
 

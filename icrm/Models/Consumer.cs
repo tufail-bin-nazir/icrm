@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Web.Hosting;
 //using Microsoft.AspNet.SignalR;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -29,7 +30,6 @@ namespace icrm.Models
 
         // used to pass messages back to UI for processing
         public delegate void onReceiveMessage(byte[] message);
-        public event onReceiveMessage onMessageReceived;
 
         public Consumer(string exchange, string exchangeType) : base(exchange, exchangeType)
         {
@@ -66,19 +66,15 @@ namespace icrm.Models
             while (isConsuming)
             {                
                 BasicDeliverEventArgs e= mSubscription.Next();
-
+                Debug.Print("checking e----" + e);
                 if (e != null) {
-                    Debug.Print("checking e----" + e);
-
                     int messageId = (int)e.BasicProperties.Headers["msgId"];
                     Debug.Print("REcieved message----"+messageId);
                     mSubscription.Ack(e);
-                    Message message = messageService.UpdateRecieveTimeOfMessage(messageId);
-                
-                Debug.Print(message.Text+"--------ack-----"+message.RecieveTime);
-                eventService.pushMessage(message);
-                //System.Threading.Thread.Sleep(500);
-                   
+                    HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
+                    {
+                       messageService.UpdateRecieveTimeOfMessage(messageId);
+                    });
                 }
                 else
                 {

@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Results;
 using icrm.Models;
 using icrm.RepositoryImpl;
 using icrm.RepositoryInterface;
@@ -145,14 +146,14 @@ namespace icrm.WebApi
             return "true";
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/chat/close")]
-        public IHttpActionResult closeChat(Message message)
+        public IHttpActionResult closeChat([FromBody]Message message)
         {
             //tell mudassir to send message with chatid and recieverid
             Debug.Print(message.Text+"-----user closes chat----"+message.RecieverId);
             this.chatService.changeActiveStatus(message.ChatId,false);
-            this.eventService.chatClosedByUser(message.Reciever.UserName);
+            this.eventService.chatClosedByUser(userService.findUserOnId(message.RecieverId).UserName);
             return Ok();
         }
 
@@ -164,9 +165,17 @@ namespace icrm.WebApi
             var Name1 = User.Identity.Name;
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
             ApplicationUser sender = user.Result;
+            var map = new
+            {
+                status = chatService.hasUserChatActive(sender.Id),
+                messages = messageService.GetMessagesOfUser(sender.Id)
+            };
             startConsumer(sender.UserName);
-            return Ok();
+
+            return Ok(map);
         }
+
+        
 
         public ApplicationUserManager UserManager
         {
@@ -269,4 +278,5 @@ namespace icrm.WebApi
 
         }
     }
+           
 }

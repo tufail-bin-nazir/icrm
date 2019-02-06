@@ -13,7 +13,9 @@ namespace icrm.RepositoryInterface
        Message UpdateRecieveTimeOfMessage(int id);
        List<Message> getChatListOfHrWithLastMessage(string id);
        IPagedList<Message> getPagedMessages(int chatId,int Page);
-        List<Message> GetMessagesOfChatRequestUser(string userId);
+        int GetMessageSizeOfChatRequestUser(string userId);
+        List<Message> GetMessagesOfChatRequestUser(string userId, string recieverId, int? chatId);
         Message updateMessage(Message message);
+        dynamic GetMessagesOfUser(string id);
     }
 } 

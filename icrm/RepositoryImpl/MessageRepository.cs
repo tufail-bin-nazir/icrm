@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
+using icrm.Events;
 using icrm.Models;
 using icrm.RepositoryInterface;
 using PagedList;
@@ -15,7 +16,7 @@ namespace icrm.RepositoryImpl
     public class MessageRepository : MessageInterface
     {
         ApplicationDbContext db = new ApplicationDbContext();
-         
+         EventService eventService = new EventService();
         public Message Save(Message message)
         {
             Debug.Print(message.SentTime+"---------sent time");
@@ -42,20 +43,52 @@ namespace icrm.RepositoryImpl
 
         public Message updateMessage(Message message)
         {
-            this.db.Entry(message).State = EntityState.Modified;
-            this.db.SaveChanges();
-
-            return db.Message.Include("Chat").Where(m => m.Id == message.Id)
-                .FirstOrDefault();
+            using (var context = new ApplicationDbContext() )
+            {
+                Message message2 = context.Message.Find(message.Id);
+                message2.RecieverId = message.RecieverId;
+                message2.ChatId = message.ChatId;
+                context.Entry(message2).State = EntityState.Modified;
+                context.SaveChanges();
+                return context.Message.Include("Chat").Include("Reciever").Include("Chat").Where(m => m.Id == message.Id)
+                    .FirstOrDefault();
+            }
+            
         }
 
         public Message UpdateRecieveTimeOfMessage(int id)
         {
-            Message message = db.Message.FirstOrDefault(m => m.Id == id);
-            message.RecieveTime = DateTime.Now;
-            this.db.Entry(message).State = EntityState.Modified;
-            db.SaveChanges();
-            return message;
+            using (var context = new ApplicationDbContext() )
+            {
+                Message message = context.Message.Include("Chat").FirstOrDefault(m => m.Id == id);
+
+                message.RecieveTime = DateTime.Now;
+                context.Entry(message).State = EntityState.Modified;
+                context.SaveChanges();
+
+                ApplicationUser msgsender = new ApplicationUser();
+                ApplicationUser msgreciever = new ApplicationUser();
+
+                ApplicationUser sender = context.Users.Find(message.SenderId);
+                msgsender.Id = sender.Id;
+                msgsender.FirstName = sender.FirstName;
+                msgsender.LastName = sender.LastName;
+                msgsender.UserName = sender.UserName;
+
+
+                ApplicationUser reciever = context.Users.Find(message.RecieverId);
+                msgreciever.Id = reciever.Id;
+                msgreciever.FirstName = reciever.FirstName;
+                msgreciever.LastName = reciever.LastName;
+                msgreciever.UserName = reciever.UserName;
+                msgreciever.Roles.Add(reciever.Roles.FirstOrDefault());
+
+                message.Sender = msgsender;
+                message.Reciever = msgreciever;
+
+                eventService.pushMessage(message);
+                return message;
+            }
         }
 
         public List<Message> getChatListOfHrWithLastMessage(string id)
@@ -72,10 +105,27 @@ namespace icrm.RepositoryImpl
             return messages.ToPagedList(Page, 10);
         }
 
-        public List<Message> GetMessagesOfChatRequestUser(string userId)
+        public int GetMessageSizeOfChatRequestUser(string userId)
         {
             Debug.Print(userId+"-------------userID");
-            return this.db.Message.Where(m => m.ChatId == null && m.SenderId == userId ).ToList();
+            return this.db.Message.Where(m => m.ChatId == null && m.SenderId == userId ).ToList().Count;
+        }
+
+        public List<Message> GetMessagesOfChatRequestUser(string userId, string recieverId, int? chatId)
+        {
+            var messages = this.db.Message.Include("Chat").Where(m => m.ChatId == null && m.SenderId == userId).ToList();
+            messages.ForEach(m =>
+            {
+                m.ChatId = chatId;
+                m.RecieverId = recieverId;
+            });
+            db.SaveChanges();
+            return messages;
+        }
+        public dynamic GetMessagesOfUser(string id)
+        {
+            var messages = this.db.Message.Where(m => m.SenderId == id || m.RecieverId == id).Select(m=>new{m.Text,m.Sender.EmployeeId}).ToList();
+                        return messages;
         }
     }
 }

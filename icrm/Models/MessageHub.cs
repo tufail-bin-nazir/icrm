@@ -26,13 +26,15 @@ namespace icrm.Models
         public void OnMessageNotified(object o,MessageEventArgs messageEventArgs)
         {
             if(this.msgId != messageEventArgs.message.Id) { 
-            //Debug.Print("----in msg hub-----");
+            //Debug.Print("----in msg hub-----"+messageEventArgs.message.Chat.active);
             //Debug.Print(messageEventArgs.message.Text+"---=--===in m hub-=-=-==--="+messageEventArgs.message.Sender.UserName);
             var messageHub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
-            ApplicationUser user = userManager.FindById(messageEventArgs.message.RecieverId);
+                ApplicationUser user = messageEventArgs.message.Reciever;
             //Debug.Print("user id------"+user.UserName+"---------"+ FindConnectionIdOnUsername(user.UserName)+"-------roles is==="+ userManager.IsInRole(user.Id, "User"));
-
-                if (userManager.IsInRole(user.Id,"User"))
+               
+                var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+                if (user.Roles.FirstOrDefault().RoleId == "e2777af7-2cb4-400c-9a33-3af89d889297")
                 {
                    messageHub.Clients.Client(FindConnectionIdOnUsername(user.UserName)).recieve(messageEventArgs.message);
                 }
@@ -46,16 +48,29 @@ namespace icrm.Models
 
         public void NotifyHRAboutChat(Message message)
         {
-            var messageHub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
-            ApplicationUser user = message.Reciever;
-            messageHub.Clients.User(user.UserName).notification(message);
+            using (var context = new ApplicationDbContext())
+            {
+                var messageHub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
+                ApplicationUser user = context.Users.Find(message.Reciever.Id);
+                messageHub.Clients.User(user.UserName).notification(message);
+            }
+           
         }
 
         public void userClosedChat(string username)
         {
+            Debug.Print("userclosechat        "+username);
             var messageHub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
             string message = "User has closed the chat";
             messageHub.Clients.User(username).userclosedchat(message);
+        }
+
+        public void HrClosedChat(string username)
+        {
+            var messageHub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
+            string message = "Agent has closed the chat";
+            string connectionId = FindConnectionIdOnUsername(username);
+            messageHub.Clients.Client(connectionId).hrclosedchat(message);
         }
 
         public override Task OnConnected()

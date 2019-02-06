@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace icrm.Models
 {
@@ -10,11 +11,11 @@ namespace icrm.Models
         public int Id { get; set; }
 
         public string UserOneId { get; set; }
-
+        [JsonIgnore]
         public virtual ApplicationUser UserOne { get; set; }
 
-        public string UserTwoId { get; set; } 
-
+        public string UserTwoId { get; set; }
+        [JsonIgnore]
         public virtual ApplicationUser UserTwo { get; set; }
 
         public bool active { get; set; }
