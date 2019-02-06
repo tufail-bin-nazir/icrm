@@ -290,7 +290,7 @@
                                         <label class="form-control-label">@Resources.Resource.Priority<span class="tx-danger">*</span></label>
                                         @Html.DropDownListFor(m => m.priorityId,
                    new SelectList(ViewBag.Priorities,
-                 "Id", "priorityId"), "Choose Priority", new { @class = "form-control select2", id = "priorty" })
+                 "Id", "priorityId"), "Choose Priority", new { @class = "form-control select2", id = "priorty", required = "required" })
                                     </div>
                                 </div>
                             }
