@@ -18,7 +18,7 @@ namespace icrm.Controllers
         [Route("culture/setarabicculture/{act}/{cont}")]
         public ActionResult SetarabicCulture(String act, String cont)
         {
-            Session["culture"] = "ar-SA";
+            Session["culture"] = "ar-AE";
             return RedirectToAction(act, cont);
         }
     }
