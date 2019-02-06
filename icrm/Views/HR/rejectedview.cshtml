@@ -158,7 +158,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Type <span class="tx-danger">*</span></label>
-                                    @Html.TextBox("typeoffeedback", Model.type.name, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.TextBox("typeoffeedback", Model.type.name, new { @readonly = "readonly", @class = "form-control",id= "typeoffeedback" })
                                     @Html.HiddenFor(model => model.typeId, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
                             </div>
@@ -599,7 +599,7 @@
                         }
                     },
                     error: function (r) {
-                        alert("error" + r.responseText);
+                       // alert("error" + r.responseText);
                     }
                 });
 
@@ -625,11 +625,25 @@
                         }
                     },
                     error: function (r) {
-                        alert("error" + r.responseText);
+                       // alert("error" + r.responseText);
                     }
                 });
 
-            });
+        });
+
+
+        $("#typeofFeedback").change(function () {
+            $("#deptId").val("");
+            // window.location.reload(true);
+            $("#category option").remove();
+
+            $('#category').append('<option value=" ">' + "Choose Category" + '</option>');
+
+            $("#subcategory option").remove();
+
+            $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
+
+        });
     </script>
 @Html.Partial("_HRFooter")
 </body>
