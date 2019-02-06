@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Constants = icrm.Models.Constants;
 
 namespace icrm.Controllers
@@ -32,6 +33,19 @@ namespace icrm.Controllers
             ViewBag.Status = Models.Constants.statusList;
             feedInterface = new FeedbackRepository();
 
+        }
+
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+
+            if (Session["user"] == null)
+            {
+                filterContext.Result = new RedirectToRouteResult(
+                new RouteValueDictionary(new { controller = "Account", action = "Login" }));
+                filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
+            }
+            base.OnActionExecuting(filterContext);
         }
         public ApplicationUserManager UserManager
         {

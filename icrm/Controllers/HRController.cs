@@ -27,6 +27,7 @@ using System.Net.Mail;
 using System.Net.Mime;
 using icrm.Events;
 using System.Drawing.Imaging;
+using System.Web.Routing;
 
 namespace icrm.Controllers
 {
@@ -47,6 +48,19 @@ namespace icrm.Controllers
             eventService = new EventService();
            
         }
+
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+
+            if (Session["user"] == null)
+            {
+                filterContext.Result = new RedirectToRouteResult(
+                new RouteValueDictionary(new { controller = "Account", action = "Login" }));
+                filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
+            }
+            base.OnActionExecuting(filterContext);
+        }
+
         public ApplicationUserManager UserManager
         {
             get
