@@ -63,6 +63,7 @@ namespace icrm.Provider
             {
                 context.AdditionalResponseParameters.Add("Roles", roleManager.FindById(r.RoleId).Name);
                 context.AdditionalResponseParameters.Add("UserName", user.FirstName);
+                context.AdditionalResponseParameters.Add("EmployeeId",user.UserName);
             }
            
            return Task.FromResult<object>(null);
