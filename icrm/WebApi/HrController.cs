@@ -17,6 +17,10 @@ using System.Data.Entity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
 using System.Diagnostics;
+using Constants = icrm.Models.Constants;
+using System.Net.Mail;
+using System.Net.Mime;
+using icrm.Controllers;
 
 namespace icrm.WebApi
 {
@@ -25,6 +29,13 @@ namespace icrm.WebApi
     [Authorize]
     public class HrApiController : ApiController
     {
+
+
+
+        public HRController c;
+
+        public EmailSend emailsend;
+
         private IFeedback feedInterface;
 
         ApplicationDbContext db = new ApplicationDbContext();
@@ -45,6 +56,9 @@ namespace icrm.WebApi
 
         public HrApiController()
         {
+             c = new HRController();
+            emailsend = new EmailSend();
+
             feedInterface = new FeedbackRepository();
         }
 
@@ -1171,8 +1185,17 @@ namespace icrm.WebApi
             Debug.WriteLine(emails);
           
 
+            string combindedString = "";
+            combindedString = string.Join(",", emails.EmailList.ToArray());
+            combindedString = combindedString.Replace("[", " ");
+            combindedString = combindedString.Replace("]", "");
+            emailsend.sendEmailAsync(combindedString, id);
             return Ok();
+
+
         }
+
+      
 
         //37/ <summary>
         /// ////////////////////////////****************Get HR Responded TicketList*******************////////////////////////////

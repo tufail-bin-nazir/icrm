@@ -965,7 +965,7 @@ namespace icrm.Controllers
             return Json(subCategories);
         }
 
-     private string PopulateBody(Feedback feedback)
+     public  string PopulateBody(Feedback feedback)
         {
             ApplicationUser user = db.Users.Find(feedback.userId);
             string body = string.Empty;

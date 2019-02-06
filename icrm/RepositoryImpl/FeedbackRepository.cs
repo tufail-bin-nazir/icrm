@@ -102,13 +102,6 @@ namespace icrm.RepositoryImpl
             param5.ParameterName = "@checkstatus";
             param5.SqlDbType = SqlDbType.VarChar;
             param5.SqlValue = Constants.RESPONDED;
-            System.Diagnostics.Debug.WriteLine(id + ",,,,id,,,,,");
-            System.Diagnostics.Debug.WriteLine(Constants.RESPONDED + ",,,,res,,,,,");
-            System.Diagnostics.Debug.WriteLine(status + ",,,,,status,,,,");
-            System.Diagnostics.Debug.WriteLine(d1 + ",,,,d1,,,,,");
-
-            System.Diagnostics.Debug.WriteLine(d2 + ",,,,,d2,,,,");
-
 
             List<Feedback> feedlist = new List<Feedback>();
             var result = db.Feedbacks.SqlQuery("search @D1,@D2,@Status,@id,@checkstatus", param1,param2,param3,param4,param5).ToList();
