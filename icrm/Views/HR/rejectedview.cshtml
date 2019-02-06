@@ -92,7 +92,7 @@
                                 <!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        <label class="form-control-label">Batch No: <span class="tx-danger">*</span></label>
+                                        <label class="form-control-label">Badge No: <span class="tx-danger">*</span></label>
                                         @Html.TextBoxFor(model => model.user.Id, new { @readonly = "readonly", @class = "form-control" })
                                     </div>
                                 </div>
@@ -158,8 +158,8 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Type <span class="tx-danger">*</span></label>
-                                    @Html.TextBox("typeoffeedback", Model.type.name, new { @readonly = "readonly", @class = "form-control",id= "typeoffeedback" })
-                                    @Html.HiddenFor(model => model.typeId, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.TextBox("typeoffeedbackname", Model.type.name, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.HiddenFor(model => model.typeId, new { @readonly = "readonly", @class = "form-control", id = "typeoffeedback" })
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -451,7 +451,7 @@
         }
         $('#forward2').click(function () {
             $("#emailsss").prop('required', true);
-            if ($("#typeofFeedback").val() != "Enquiries") {
+            if ($("#typeoffeedback").val() != "Enquiries") {
                 $("#priorty").prop('required', false);
             } else {
                 $("#priorty").prop('required', true);
@@ -466,7 +466,7 @@
 
         $('#forward').click(function () {
             $("#emailsss").prop('required', true);
-            if ($("#typeofFeedback").val() != "Enquiries") {
+            if ($("#typeoffeedback").val() != "Enquiries") {
                 $("#priorty").prop('required', false);
             } else {
                 $("#priorty").prop('required', true);
@@ -608,42 +608,37 @@
 
 
              $("#category").change(function () {
-                 $("#subcategory option").remove();
 
-                 $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
+               
+
+                $("#subcategory option").remove();
+
+                $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
+                if( $("#typeofeedback").val() != "")
+                {
+                   
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("getSubCategories", "HR")",
                     contentType: "application/json; charset=utf-8",
-                    data: '{"categoryId":"' + $(this).val() + '"}',
+                    data: '{"categoryId":"' + $(this).val() + '","type":"' + $('#typeoffeedback').val() + '"}',
                     dataType: "json",
                     success: function (r) {
-                        
+
                         for (var i = 0; i < r.length; i++) {
-                            $('#subcategory').append('<option value="' + r[i].Id + '">' + r[i].name + '</option>'); 
-                            
+                            $('#subcategory').append('<option value="' + r[i].Id + '">' + r[i].name + '</option>');
+
                         }
                     },
                     error: function (r) {
-                       // alert("error" + r.responseText);
+                        alert("error" + r.responseText);
                     }
                 });
+            }
+            });
 
-        });
 
-
-        $("#typeofFeedback").change(function () {
-            $("#deptId").val("");
-            // window.location.reload(true);
-            $("#category option").remove();
-
-            $('#category').append('<option value=" ">' + "Choose Category" + '</option>');
-
-            $("#subcategory option").remove();
-
-            $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
-
-        });
+       
     </script>
 @Html.Partial("_HRFooter")
 </body>

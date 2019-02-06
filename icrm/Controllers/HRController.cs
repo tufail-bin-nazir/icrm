@@ -319,7 +319,7 @@ namespace icrm.Controllers
                              TempData["Message"] = "Select Department & Comment field should be empty";
                              return RedirectToAction("view", new { id = feedback.id });
                     }
-                    return RedirectToAction("view", new { id = feedback.id });
+                    return RedirectToAction("DashBoard");
                 case "Resolve":
                     if (feedback.departmentID == null && Request.Form["responsee"] != "")
                     {
@@ -336,7 +336,7 @@ namespace icrm.Controllers
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
                             TempData["MessageSuccess"] = "Ticket has been Resolved Successfully";
-                            return RedirectToAction("view", new { id = feedback.id });                     
+                            return RedirectToAction("DashBoard");                     
                     }
                     else
                     {
@@ -372,7 +372,9 @@ namespace icrm.Controllers
         [HttpGet]
         [Route("hr/search/")]
         public ActionResult search(int? page, string status, string date22, string date1, string export)
-        {            
+        {
+
+           
             string d3 = date22;           
             string dd = date1;
             if (d3.Equals("") || dd.Equals(""))
@@ -436,9 +438,14 @@ namespace icrm.Controllers
                     ViewData["user"] = user;
                     IPagedList<Feedback> feedbacks = feedInterface.searchHR(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), status, pageIndex, pageSize);
                     ViewBag.Status = Models.Constants.statusList;
+
                     return View("DashBoard", feedbacks);
+
                 }
+
             }
+            
+
         }
 
         /**********GET ALL TICKETS*******************/
@@ -856,7 +863,7 @@ namespace icrm.Controllers
                         TempData["Message"] = "Select Department & Comment field should be empty";
                         return RedirectToAction("rejectedview", new { id = feedback.id });
                     }
-                    return RedirectToAction("rejectedview", new { id = feedback.id });
+                    return RedirectToAction("DashBoard");
                 case "Resolve":
                     if (feedback.departmentID == null && Request.Form["responsee"] != "")
                     {
@@ -873,7 +880,7 @@ namespace icrm.Controllers
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
                             TempData["MessageSuccess"] = "Ticket has been Resolved Successfully";
-                            return RedirectToAction("rejectedview", new { id = feedback.id });                     
+                            return RedirectToAction("DashBoard");                     
                     }
                     else
                     {
