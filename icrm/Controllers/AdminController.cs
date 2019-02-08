@@ -12,6 +12,7 @@ using System.Diagnostics;
 using icrm.RepositoryInterface;
 using icrm.RepositoryImpl;
 using System.Security.Cryptography;
+using PagedList;
 
 namespace icrm.Controllers
 {
@@ -19,7 +20,7 @@ namespace icrm.Controllers
     public class AdminController : Controller
     {
         private IFeedback feedInterface;
-
+        private GenericPagination<ApplicationUser> gp = new GenericPagination<ApplicationUser>();
         private ApplicationUserManager _userManager;
 
         public ActionResult Dashboard()
@@ -150,10 +151,13 @@ namespace icrm.Controllers
         }
 
         [HttpGet]
-        public ViewResult ListUser() {
+        public ViewResult ListUser(int? page) {
+            ApplicationUser user=new ApplicationUser();
             ApplicationDbContext db = new ApplicationDbContext();
-            
-            return View(db.Users.ToList());
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            return View(gp.GetAll<ApplicationUser>(user.EmployeeId, pageIndex, pageSize));
         }
 
         /****** Get Ticket Counts********/

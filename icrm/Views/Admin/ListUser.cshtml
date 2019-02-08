@@ -1,4 +1,5 @@
-﻿@model IEnumerable<icrm.Models.ApplicationUser>
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<icrm.Models.ApplicationUser>
 
 @{
     Layout = null;
@@ -33,7 +34,7 @@
 </head>
 
 <body>
-     @Html.Partial("_AdminMenu")
+    @Html.Partial("_AdminMenu")
     <!-- slim-navbar -->
 
     <div class="slim-mainpanel">
@@ -47,7 +48,7 @@
             </div>
             <!-- slim-pageheader -->
 
-            
+
 
             <div class="row row-xs mg-t-10">
                 <div class="col-lg-12">
@@ -66,7 +67,7 @@
                                         <th class="pd-y-5">@Resources.Resource.Email_Id</th>
                                         <th class="pd-y-5">@Resources.Resource.Phone_No</th>
                                         <th class="pd-y-5">@Resources.Resource.Status</th>
-                                       
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -78,18 +79,18 @@
                                             </td>
                                             <td>
                                                 <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block"> @Html.DisplayFor(modelItem => item.FirstName)</a>
-                                                
+
                                             </td>
                                             <td class="tx-12 text-center">
                                                 @Html.DisplayFor(modelItem => item.LastName)
                                             </td>
-                                            
+
                                             <td>@Html.DisplayFor(modelItem => item.Email)</td>
                                             <td>  @Html.DisplayFor(modelItem => item.PhoneNumber)</td>
                                             <td>Active</td>
-                                           
+
                                         </tr>
-                                       
+
                                     }
 
 
@@ -100,26 +101,18 @@
 
 
                         <div class="pagination-wrapper">
-                            <ul class="pagination pagination-circle mg-b-0">
-                                <li class="page-item hidden-xs-down">
-                                    <a class="page-link" href="#" aria-label="First"><i class="fa fa-angle-double-left"></i></a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous"><i class="fa fa-angle-left"></i></a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item hidden-xs-down"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item hidden-xs-down"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item disabled"><span class="page-link">...</span></li>
-                                <li class="page-item"><a class="page-link" href="#">10</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next"><i class="fa fa-angle-right"></i></a>
-                                </li>
-                                <li class="page-item hidden-xs-down">
-                                    <a class="page-link" href="#" aria-label="Last"><i class="fa fa-angle-double-right"></i></a>
-                                </li>
-                            </ul>
+                            <div id='Paging' style="text-align:center">
+                                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                                of @Model.PageCount
+                                <ul class="pagination pagination-circle mg-b-0">
+
+                                    <li class="page-item ">
+                                        @Html.PagedListPager(Model, page => Url.Action("ListUser", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                    </li>
+
+                                </ul>
+                            </div>
                         </div>
                         <!-- pagination-wrapper -->
 
@@ -134,11 +127,11 @@
             <!-- container -->
         </div>
         <!-- slim-mainpanel -->
-@Html.Partial("_AdminFooter")
+        @Html.Partial("_AdminFooter")
 </body>
 
 </html>
 
 
 
-   
+
