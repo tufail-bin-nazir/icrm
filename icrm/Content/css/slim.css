@@ -67240,3 +67240,9 @@ a.hover-white-8:focus {
     height: 18px;
     margin-top: -11px;
 }
+
+.fotur {
+    position: fixed;
+    bottom: 0px !important;
+    width: 100%;
+}
