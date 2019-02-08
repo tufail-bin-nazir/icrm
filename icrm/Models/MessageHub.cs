@@ -34,7 +34,7 @@ namespace icrm.Models
                
                 var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
                 var roleManager = new RoleManager<IdentityRole>(roleStore);
-                if (user.Roles.FirstOrDefault().RoleId == "e2777af7-2cb4-400c-9a33-3af89d889297")
+                if (user.Roles.FirstOrDefault().RoleId == roleManager.FindByName("User").Id)
                 {
                    messageHub.Clients.Client(FindConnectionIdOnUsername(user.UserName)).recieve(messageEventArgs.message);
                 }

@@ -21,6 +21,8 @@ using Constants = icrm.Models.Constants;
 namespace icrm.Controllers
 {
     using icrm.Events;
+    using System.Web.Routing;
+
     [Authorize]
     public class ChatController : Controller
     {
@@ -49,6 +51,17 @@ namespace icrm.Controllers
             {
                 _userManager = value;
             }
+        }
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+
+            if (Session["user"] == null)
+            {
+                filterContext.Result = new RedirectToRouteResult(
+                    new RouteValueDictionary(new { controller = "Account", action = "Login" }));
+                filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
+            }
+            base.OnActionExecuting(filterContext);
         }
 
         // GET: Chat

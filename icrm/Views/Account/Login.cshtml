@@ -43,6 +43,11 @@
             background-size: cover;
             position: relative;
         }
+        @@media only screen and (max-width: 700px) {
+      .i {
+        display: none;
+      }
+    }
     </style>
 
 </head>
@@ -53,7 +58,7 @@
     <!-- signin-box -->
     <div class="d-md-flex ">
 
-        <div class="signin-left animated lightSpeedIn" style="background-image: url('../../Content/img/mac.png')" >
+        <div class="signin-left animated lightSpeedIn i" style="background-image: url('../../Content/img/mac.png')" >
             <div class="signin-box l">
                 <!--	<h2 class="slim-logo"><a href="index.html">ICRM 2.0<span></span></a></h2>
 

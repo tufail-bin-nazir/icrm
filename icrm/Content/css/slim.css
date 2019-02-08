@@ -17648,7 +17648,7 @@ textarea.parsley-success:focus {
 }
 
     .slim-logo a {
-        color: #1b84e7;
+        color: #e20001;
     }
 
 @media (min-width: 992px) {
@@ -20971,7 +20971,7 @@ textarea.parsley-success:focus {
     }
 
         .messages-list .media-body > div:last-child span:nth-child(2) {
-            background-color: #1b84e7;
+            background-color: #c20d00;
             color: #fff;
             border-radius: 100%;
             font-size: 9px;
@@ -67239,4 +67239,10 @@ a.hover-white-8:focus {
     width: 18px;
     height: 18px;
     margin-top: -11px;
+}
+
+.fotur {
+    position: fixed;
+    bottom: 0px !important;
+    width: 100%;
 }
