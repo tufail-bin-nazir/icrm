@@ -376,6 +376,7 @@
                             $('#msgCount' + response.ChatId).append('<span>' + msgStore[response.ChatId].length + '</span>');
                             $('#latestmsg' + response.ChatId).text(response.Text);
                         } else {
+
                             $('#msgCount' + response.ChatId).children('span').eq(0).text(parseJsonDate(response.RecieveTime));
                             $('#msgCount' + response.ChatId).children('span').eq(1).text(msgStore[response.ChatId].length);
                             $('#latestmsg' + response.ChatId).text(response.Text);
@@ -384,6 +385,7 @@
                     } else {
                         console.log('sender is not null so pushing messages')
                         //msgStore[response.ChatId].push(response.Text);
+                        msgStore[response.ChatId].push(response.Text)
                         $('#msgCount' + response.ChatId).children('span').eq(0).text(parseJsonDate(response.RecieveTime));
                         $('#msgCount' + response.ChatId).children('span').eq(1).text(msgStore[response.ChatId].length);
                         $('#latestmsg' + response.ChatId).text(response.Text);
@@ -397,9 +399,9 @@
                         response.ChatId +
                         '"><div class="media-left"><img src="/Content/img/img2.jpg" alt=""><span class="square-10 bg-success"></span></div><div class="media-body"><div><h6>' +
                         response.Sender.FirstName + " " + response.Sender.LastName +
-                        '</h6><p id="latestmsg"' +
+                        '</h6><p id="latestmsg' +
                         response.ChatId +
-                        '>' +
+                        '">' +
                         response.Text +
                         '</p> <input type="hidden" class="chatId" value="' + response.ChatId + '" /></div><div id="msgCount' +
                         response.ChatId +
