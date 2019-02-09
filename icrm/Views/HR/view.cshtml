@@ -165,8 +165,8 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Type <span class="tx-danger">*</span></label>
-                                    @Html.TextBox("typeoffeedback", Model.type.name, new { @readonly = "readonly", @class = "form-control" })
-                                    @Html.HiddenFor(model => model.typeId, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.TextBox("typeoffeedbackk", Model.type.name, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.HiddenFor(model => model.typeId, new { @readonly = "readonly", @class = "form-control",id= "typeoffeedback" })
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -504,7 +504,7 @@
 
             $('#forward2').click(function () {
                 $("#emailsss").prop('required', true);
-                if ($("#typeofFeedback").val() != "Enquiries") {
+                if ($("#typeoffeedback").val() != "Enquiries") {
                     $("#priorty").prop('required', false);
                 } else {
                     $("#priorty").prop('required', true);
@@ -518,7 +518,7 @@
             });
             $('#forward').click(function () {
                 $("#emailsss").prop('required', true);
-                if ($("#typeofFeedback").val() != "Enquiries") {
+                if ($("#typeoffeedback").val() != "Enquiries") {
                     $("#priorty").prop('required', false);
                 } else {
                     $("#priorty").prop('required', true);
@@ -657,7 +657,7 @@
                     type: "POST",
                     url: "@Url.Action("getSubCategories", "HR")",
                     contentType: "application/json; charset=utf-8",
-                    data: '{"categoryId":"' + $(this).val() + '","type":"' + $('#typeofFeedback').val() + '"}',
+                    data: '{"categoryId":"' + $(this).val() + '","type":"' + $('#typeoffeedback').val() + '"}',
                     dataType: "json",
                     success: function (r) {
                         
@@ -673,7 +673,7 @@
 
             });
 
-            $("#typeofFeedback").change(function () {
+            $("#typeoffeedback").change(function () {
                 
 
                 $("#category option").remove();
