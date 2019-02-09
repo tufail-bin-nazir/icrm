@@ -50,7 +50,7 @@ namespace icrm.Models
             //message.To.Add(new MailAddress("iram.8859@gmail.com")); //replace with valid value
             message.Subject = "Ticket has been Created ";
 
-            message.Body = string.Format(b, "tufail.b.n@gmail.com", "tufail.b.n@gmail.com", "suit");
+            message.Body = string.Format(b, "info@astie.com.sg", "info@astie.com.sg", "info@astie.com.sg");
 
             message.IsBodyHtml = true;
 

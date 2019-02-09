@@ -502,6 +502,7 @@
 
             });
 
+
             $('#forward2').click(function () {
                 $("#emailsss").prop('required', true);
                 if ($("#typeoffeedback").val() != "Enquiries") {
@@ -525,6 +526,7 @@
                 }
                 
                 $("#category").prop('required', true);
+                $("#subcategory").prop('required', true);
                 if ($('#statusfield').val() == "Resolved") {
                     $('#statuscheck').text("Set status either Open/Closed");
                 return false;
@@ -536,6 +538,7 @@
                 if ($('#statusfield').val() == "Resolved") {
                     $("#priorty").prop('required', false);
                     $("#category").prop('required', false);
+                    $("#subcategory").prop('required', false);
                     return true;
                 }
 
@@ -543,6 +546,7 @@
                     $('#statuscheck').text("Set status Resolved");
                     $("#priorty").prop('required', false);
                     $("#category").prop('required', false);
+                    $("#subcategory").prop('required', false);
                     return false;
 
                 }
