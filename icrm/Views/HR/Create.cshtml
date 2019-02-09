@@ -252,7 +252,7 @@
                                 <label class="form-control-label">@Resources.Resource.Priority <span class="tx-danger">*</span></label>
                                 @Html.DropDownListFor(m => m.priorityId,
                        new SelectList(ViewBag.Priorities,
-                     "Id", "priorityId"), "Choose Priority", new { @class = "form-control select2",id="priorty", required = "required" })
+                     "Id", "priorityId"), "Choose Priority", new { @class = "form-control select2",id="priorty" })
                             </div>
                         </div>
 
@@ -389,37 +389,40 @@
 
 
             $('#forward').click(function () {
-                $("#emailsss").prop('required', true);
+               
+                $("#emailsss").prop('required', true); 
+                $("#category").prop('required', true);
+                $("#subcategory").prop('required', true);
                 if ($('#statusfield').val() == "Resolved") {
                     $('#statuscheck').text("Set status Open/Closed");
                     return false;
+                }               
+                if ($("#typeofFeedback").find(":selected").text() != "Enquiry") {                              
+                     $("#priorty").prop('required', false);
+                }else
+               {
+                    $("#priorty").prop('required', true);                   
                 }
-                if ($("#typeofFeedback").val()!= "Enquiries"){
-                $("#priorty").prop('required', false);
-              }else {
-                $("#priorty").prop('required', true);
-             }
-                $("#category").prop('required', true);
-                $("#subcategory").prop('required', true);
+                
 
             });
 
             $('#resolve').click(function () {
 
                 if ($('#statusfield').val() == "Resolved") {
+                    $("#emailsss").prop('required', false);
                     $("#priorty").prop('required', false);
                     $("#category").prop('required', false);
                     $("#subcategory").prop('required', false);
-                    $("#emailsss").prop('required', false);
                     return true;
                 }
 
                 else {
                     $('#statuscheck').text("Set status Resolved");
+                    $("#emailsss").prop('required', false);
                     $("#priorty").prop('required', false);
                     $("#category").prop('required', false);
                     $("#subcategory").prop('required', false);
-                    $("#emailsss").prop('required', false);
                     return false;
 
                 }
@@ -511,32 +514,35 @@
 
 
 
-             $("#deptId").change(function () {
-                 $("#category option").remove();
+            $("#deptId").change(function () {
+                
+                    $("#category option").remove();
 
-                 $('#category').append('<option value=" ">' + "Choose Category" + '</option>');
+                    $('#category').append('<option value="">' + "Choose Category" + '</option>');
 
-                 $("#subcategory option").remove();
+                    $("#subcategory option").remove();
+                
+                $('#subcategory').append('<option value="">' + "Choose Sub Category" + '</option>');
+                if ($("#deptId").val() != "") {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("getCategories", "HR")",
+                        contentType: "application/json; charset=utf-8",
+                        data: '{"depId":"' + $(this).val() + '"}',
+                        dataType: "json",
+                        success: function (r) {
 
-                 $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
-                $.ajax({
-                    type: "POST",
-                    url: "@Url.Action("getCategories", "HR")",
-                    contentType: "application/json; charset=utf-8",
-                    data: '{"depId":"' + $(this).val() + '"}',
-                    dataType: "json",
-                    success: function (r) {
+                            for (var i = 0; i < r.length; i++) {
+                                $('#category').append('<option value="' + r[i].Id + '">' + r[i].name + '</option>');
 
-                        for (var i = 0; i < r.length; i++) {
-                            $('#category').append('<option value="' + r[i].Id + '">' + r[i].name + '</option>');
-
+                            }
+                        },
+                        error: function (r) {
+                            alert("error" + r.responseText);
                         }
-                    },
-                    error: function (r) {
-                        alert("error" + r.responseText);
-                    }
-                });
-
+                    });
+                }
+                
             });
 
 
@@ -547,8 +553,8 @@
 
                 $("#subcategory option").remove();
 
-                $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
-                if( $("#typeofFeedback").val() != "")
+                $('#subcategory').append('<option value="">' + "Choose Sub Category" + '</option>');
+                if( $("#typeofFeedback").val() != "" && $('#category').val()!="")
             {
                 $.ajax({
                     type: "POST",
@@ -572,16 +578,17 @@
             
 
             $("#typeofFeedback").change(function () {
+             
                 $("#deptId").val("");
                // window.location.reload(true);
                 $("#category option").remove();
 
-                $('#category').append('<option value=" ">' + "Choose Category" + '</option>');
+                $('#category').append('<option value="">' + "Choose Category" + '</option>');
 
                 $("#subcategory option").remove();
 
-                $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
-
+                $('#subcategory').append('<option value="">' + "Choose Sub Category" + '</option>');
+                
             });
 
         </script>
