@@ -10,10 +10,11 @@ namespace icrm.Models
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        public IPagedList<TEntity> GetAll<TEntity>(int pageIndex,int pageSize)
+        public IPagedList<TEntity> GetAll<TEntity>(int sortBy,int pageIndex,int pageSize)
          where TEntity : class 
         {
-            return db.Set<TEntity>().ToPagedList(pageIndex,pageSize);
+            //return db.Set<TEntity>().OrderBy(x=>x.Id).ToPagedList(pageIndex,pageSize);
+            return db.Set<TEntity>().OrderBy(m=>sortBy).ToPagedList(pageIndex, pageSize);
         }
     }
 }

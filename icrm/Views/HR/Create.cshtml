@@ -400,6 +400,7 @@
                 $("#priorty").prop('required', true);
              }
                 $("#category").prop('required', true);
+                $("#subcategory").prop('required', true);
 
             });
 
@@ -408,6 +409,8 @@
                 if ($('#statusfield').val() == "Resolved") {
                     $("#priorty").prop('required', false);
                     $("#category").prop('required', false);
+                    $("#subcategory").prop('required', false);
+                    $("#emailsss").prop('required', false);
                     return true;
                 }
 
@@ -415,6 +418,8 @@
                     $('#statuscheck').text("Set status Resolved");
                     $("#priorty").prop('required', false);
                     $("#category").prop('required', false);
+                    $("#subcategory").prop('required', false);
+                    $("#emailsss").prop('required', false);
                     return false;
 
                 }
