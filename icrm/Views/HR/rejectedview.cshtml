@@ -486,6 +486,7 @@
                 $("#priorty").prop('required', false);
                 $("#category").prop('required', false);
                 $("#subcategory").prop('required', false);
+                $("#emailsss").prop('required', false);
                 return true;
             }
 
@@ -494,15 +495,18 @@
                 $("#priorty").prop('required', false);
                 $("#subcategory").prop('required', false);
                 $("#category").prop('required', false);
+                $("#emailsss").prop('required', false);
                 return false;
 
             }
         });
             $('#rejected').click(function () {
                 if ($('#statusfield').val() == "Open" || $('#statusfield').val() == "Closed") {
+                    $("#emailsss").prop('required', false);
                     return true;
                 } else {
                     $('#statuscheck').text("Set status either Open/Closed");
+                    $("#emailsss").prop('required', false);
                     return false;
                 }
 
