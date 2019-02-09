@@ -16,21 +16,6 @@ namespace icrm.Models
         public ApplicationUser secondEscalationUser { get; set; }
         public string thirdEscalationUserId { get; set; }
         public ApplicationUser thirdEscalationUser { get; set; }
-        private List<Category> categories;
-
-        public List<Category> Categories
-        {
-            
-            get {
-                List<Category> list = new List<Category>();
-                foreach (int i in this.CategoriesIds) {
-                    list.Add(db.Categories.Find(i));
-                }
-                return list;
-            }
-            set { categories = value; }
-        }
-
         public IEnumerable<int> CategoriesIds { get; set; }
         public int DepartmentId  { get; set; }
         public virtual Department Department { get; set; }

@@ -16,7 +16,10 @@ public class MyRegistry : Registry
     {
 
         // Schedule an ITask to run at an interval
-        //Schedule<ScheduleforCriticalEscalation>().ToRunNow().AndEvery(5).Seconds();
+        Schedule<ScheduleforCriticalEscalation>().ToRunNow().AndEvery(5).Seconds();
+        Schedule<ScheduleforHighEscalation>().ToRunNow().AndEvery(5).Seconds();
+        Schedule<ScheduleforMediumEscalation>().ToRunNow().AndEvery(5).Seconds();
+        Schedule<ScheduleforLowEscalation>().ToRunNow().AndEvery(5).Seconds();
 
         //// Schedule an ITask to run once, delayed by a specific time interval. 
         //Schedule<MyTask>().ToRunOnceIn(5).Seconds();

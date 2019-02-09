@@ -152,8 +152,11 @@ namespace icrm.WebApi
         {
             //tell mudassir to send message with chatid and recieverid
             Debug.Print(message.Text+"-----user closes chat----"+message.RecieverId);
+            ApplicationUser reciever = userService.findUserOnId(message.RecieverId);
+            reciever.available = true;
+            userService.Update(reciever);
             this.chatService.changeActiveStatus(message.ChatId,false);
-            this.eventService.chatClosedByUser(userService.findUserOnId(message.RecieverId).UserName);
+            this.eventService.chatClosedByUser(reciever.UserName);
             return Ok();
         }
 
