@@ -398,10 +398,10 @@
                     return false;
                 }               
                 if ($("#typeofFeedback").find(":selected").text() != "Enquiry") {                              
-                     $("#priorty").prop('required', false);
+                     $("#priorty").prop('required', true);
                 }else
                {
-                    $("#priorty").prop('required', true);                   
+                    $("#priorty").prop('required', false);                   
                 }
                 
 
