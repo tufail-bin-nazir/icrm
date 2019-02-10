@@ -58,17 +58,26 @@
 
                     <p class="mg-b-20 mg-sm-b-40"></p>
                     <div class="form-layout">
+                        @if (@TempData["MessageSuccess"] != null)
+                        {
+                            <div class="alert alert-success" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong> @TempData["MessageSuccess"]</strong>
+                            </div>
+                        }
 
                         @if (@TempData["Message"] != null)
                         {
-                            <div class="alert alert-success" role="alert">
+                            <div class="alert alert-danger mg-b-0" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
                                 <strong> @TempData["Message"]</strong>
                             </div>
                         }
-                       
+
                         @Html.HiddenFor(model => model.id, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.user.LastName, new { @class = "form-control" })
@@ -82,69 +91,69 @@
                         @Html.HiddenFor(model => model.submittedById, new { @class = "form-control" })
 
 
-                            <div class="row mg-b-25">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">@Resources.Resource.Name <span class="tx-danger">*</span></label>
-                                        @Html.TextBoxFor(model => model.user.FirstName, new { @readonly = "readonly", @class = "form-control" })
-                                    </div>
+                        <div class="row mg-b-25">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Name <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.user.FirstName, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
-                                <!-- col-4 -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Badge No: <span class="tx-danger">*</span></label>
-                                        @Html.TextBoxFor(model => model.user.Id, new { @readonly = "readonly", @class = "form-control" })
-                                    </div>
-                                </div>
-                                <!-- col-4 -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">@Resources.Resource.Email_Id<span class="tx-danger">*</span></label>
-                                        @Html.TextBoxFor(model => model.user.Email, new { @readonly = "readonly", @class = "form-control" })
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">@Resources.Resource.Phone_No <span class="tx-danger">*</span></label>
-                                        @Html.TextBoxFor(model => model.user.PhoneNumber, new { @readonly = "readonly", @class = "form-control" })
-                                    </div>
-                                </div>
-                                <!-- col-4 -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Location: <span class="tx-danger">*</span></label>
-                                        @Html.TextBoxFor(model => model.user.Location.name, new { @readonly = "readonly", @class = "form-control" })
-
-                                    </div>
-                                </div>
-                                <!-- col-4 -->
-                                <!-- <div class="col-lg-4">
-          <div class="form-group">
-              <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
-           @*   @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })*@
-
-          </div>
-      </div>-->
-                                <!-- col-4 -->
-                                <!-- col-4 -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Job Title: <span class="tx-danger">*</span></label>
-                                        @Html.TextBoxFor(model => model.user.JobTitle.name, new { @readonly = "readonly", @class = "form-control" })
-
-                                    </div>
-                                </div>
-                                <!-- col-4 -->
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">Nationality: <span class="tx-danger">*</span></label>
-                                        @Html.TextBoxFor(model => model.user.Nationality.name, new { @readonly = "readonly", @class = "form-control" })
-
-                                    </div>
-                                </div>
-                                <!-- col-4 -->
-                                <!-- col-4 -->
                             </div>
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Badge No: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.user.Id, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Email_Id<span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.user.Email, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Phone_No <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.user.PhoneNumber, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Location: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.user.Location.name, new { @readonly = "readonly", @class = "form-control" })
+
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <!-- <div class="col-lg-4">
+            <div class="form-group">
+                <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
+             @*   @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })*@
+
+            </div>
+        </div>-->
+                            <!-- col-4 -->
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Job Title: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.user.JobTitle.name, new { @readonly = "readonly", @class = "form-control" })
+
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Nationality: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.user.Nationality.name, new { @readonly = "readonly", @class = "form-control" })
+
+                                </div>
+                            </div>
+                            <!-- col-4 -->
+                            <!-- col-4 -->
+                        </div>
                         <!-- row -->
                         <!-- form-layout-footer -->
 
@@ -158,7 +167,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Type <span class="tx-danger">*</span></label>
-                                    @Html.TextBox("typeoffeedbackname", Model.type.name, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.TextBox("typeoffeedbackname", Model.type.name, new { @readonly = "readonly", @class = "form-control", id= "typeoffeedbacktext" })
                                     @Html.HiddenFor(model => model.typeId, new { @readonly = "readonly", @class = "form-control", id = "typeoffeedback" })
                                 </div>
                             </div>
@@ -451,7 +460,7 @@
         }
         $('#forward2').click(function () {
             $("#emailsss").prop('required', true);
-            if ($("#typeoffeedback").val() != "Enquiries") {
+            if ($("#typeoffeedbacktext").val()!= "Enquiry") {                              
                 $("#priorty").prop('required', false);
             } else {
                 $("#priorty").prop('required', true);
@@ -467,7 +476,7 @@
 
         $('#forward').click(function () {
             $("#emailsss").prop('required', true);
-            if ($("#typeoffeedback").val() != "Enquiries") {
+                if ($("#typeoffeedback").find(":selected").text() != "Enquiry") {                              
                 $("#priorty").prop('required', false);
             } else {
                 $("#priorty").prop('required', true);
@@ -503,10 +512,16 @@
             $('#rejected').click(function () {
                 if ($('#statusfield').val() == "Open" || $('#statusfield').val() == "Closed") {
                     $("#emailsss").prop('required', false);
+                    $("#subcategory").prop('required', false);
+                    $("#category").prop('required', false);
+                    $("#priorty").prop('required', false);
                     return true;
                 } else {
                     $('#statuscheck').text("Set status either Open/Closed");
                     $("#emailsss").prop('required', false);
+                    $("#subcategory").prop('required', false);
+                    $("#category").prop('required', false);
+                    $("#priorty").prop('required', false);
                     return false;
                 }
 
@@ -587,41 +602,42 @@
          $("#dep").change(function () {
                  $("#category option").remove();
 
-                 $('#category').append('<option value=" ">' + "Choose Category" + '</option>');
+                 $('#category').append('<option value="">' + "Choose Category" + '</option>');
 
                  $("#subcategory option").remove();
 
-                 $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
-                $.ajax({
-                    type: "POST",
-                    url: "@Url.Action("getCategories", "HR")",
-                    contentType: "application/json; charset=utf-8",
-                    data: '{"depId":"' + $(this).val() + '"}',
-                    dataType: "json",
-                    success: function (r) {
-                        
-                        for (var i = 0; i < r.length; i++) {
-                            $('#category').append('<option value="' + r[i].Id + '">' + r[i].name + '</option>'); 
-                            
-                        }
-                    },
-                    error: function (r) {
-                       // alert("error" + r.responseText);
-                    }
-                });
+             $('#subcategory').append('<option value="">' + "Choose Sub Category" + '</option>');
+             if ($("#dep").val() != "") {
+                 $.ajax({
+                     type: "POST",
+                     url: "@Url.Action("getCategories", "HR")",
+                     contentType: "application/json; charset=utf-8",
+                     data: '{"depId":"' + $(this).val() + '"}',
+                     dataType: "json",
+                     success: function (r) {
 
+                         for (var i = 0; i < r.length; i++) {
+                             $('#category').append('<option value="' + r[i].Id + '">' + r[i].name + '</option>');
+
+                         }
+                     },
+                     error: function (r) {
+                         // alert("error" + r.responseText);
+                     }
+                 });
+             }
             });
 
 
 
              $("#category").change(function () {
 
-               
+                
 
                 $("#subcategory option").remove();
 
-                $('#subcategory').append('<option value=" ">' + "Choose Sub Category" + '</option>');
-                if( $("#typeofeedback").val() != "")
+                $('#subcategory').append('<option value="">' + "Choose Sub Category" + '</option>');
+          if ($("#typeoffeedback").val() != "" && $('#category').val() != "")
                 {
                    
                 $.ajax({
