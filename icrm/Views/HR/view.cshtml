@@ -165,7 +165,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Type <span class="tx-danger">*</span></label>
-                                    @Html.TextBox("typeoffeedbackk", Model.type.name, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.TextBox("typeoffeedbackk", Model.type.name, new { @readonly = "readonly", @class = "form-control",id="typeoffeedbackname" })
                                     @Html.HiddenFor(model => model.typeId, new { @readonly = "readonly", @class = "form-control",id= "typeoffeedback" })
                                 </div>
                             </div>
@@ -508,10 +508,10 @@
 
             $('#forward2').click(function () {
                 $("#emailsss").prop('required', true);
-                if ($("#typeoffeedback").val() != "Enquiries") {
-                    $("#priorty").prop('required', false);
-                } else {
+                if ($("#typeoffeedbackname").val() != "Enquiry") {
                     $("#priorty").prop('required', true);
+                } else {
+                    $("#priorty").prop('required', false);
                 }
                 $("#category").prop('required', true);
                 if ($('#statusfield').val() == "Resolved") {
@@ -522,7 +522,7 @@
             });
             $('#forward').click(function () {
                 $("#emailsss").prop('required', true);
-                    if ($("#typeoffeedback").find(":selected").text() != "Enquiry") {   
+                if ($("#typeoffeedbackname").val() != "Enquiry") {
                     $("#priorty").prop('required', true);
                 } else {
                     $("#priorty").prop('required', false);
