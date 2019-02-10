@@ -21,9 +21,15 @@
 
                 <div class="dropdown-menu dropdown-menu-right">
                     <nav class="nav">
-                        <a href="page-profile.html" class="nav-link"><i class="icon fa fa-language"></i> Eng</a>
-                        <a href="page-edit-profile.html" class="nav-link"><i class="icon fa fa-language"></i> Arabic</a>
-                    </nav>
+                        <ul>
+                            <li>
+                            @Html.ActionLink("English", "SetenglishCulture/Dashboard/Admin", "Culture") </li>
+                            <li>
+                                @Html.ActionLink("Arabic", "SetarabicCulture/Dashboard/Admin", "Culture")
+                            </li>
+                         
+                        </ul>
+</nav>
                 </div>
                 <!--<a href="#" class="logged-user">
         <select class="form-control" style="border-radius: 4px;">
