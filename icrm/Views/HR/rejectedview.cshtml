@@ -461,9 +461,9 @@
         $('#forward2').click(function () {
             $("#emailsss").prop('required', true);
             if ($("#typeoffeedbacktext").val()!= "Enquiry") {                              
-                $("#priorty").prop('required', false);
-            } else {
                 $("#priorty").prop('required', true);
+            } else {
+                $("#priorty").prop('required', false);
             }
             $("#category").prop('required', true);
             $("#subcategory").prop('required', true);
@@ -476,7 +476,7 @@
 
         $('#forward').click(function () {
             $("#emailsss").prop('required', true);
-                if ($("#typeoffeedback").find(":selected").text() != "Enquiry") {                              
+            if ($("#typeoffeedbacktext").val()!= "Enquiry") {                              
                 $("#priorty").prop('required', true);
             } else {
                 $("#priorty").prop('required', false);
