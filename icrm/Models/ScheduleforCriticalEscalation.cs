@@ -37,7 +37,7 @@ namespace icrm.Models
 
                    
                     var level1query = from f in db.Feedbacks.ToList()
-                                where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED &&
+                                where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED && f.type.name != Constants.Enquiry &&
                                  f.priority.priorityId == 1 && f.escalationlevel == null && (DateTime.Now- (DateTime)f.assignedDate).TotalHours > Constants.criticalescelationtime &&
                                 (DateTime.Now - (DateTime)f.assignedDate).TotalHours < (Constants.criticalescelationtime)*2
                                       select f;
@@ -52,7 +52,7 @@ namespace icrm.Models
                     db.SaveChanges();
 
                     var level2query = from f in db.Feedbacks.ToList()
-                                where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED &&
+                                where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED && f.type.name != Constants.Enquiry &&
                                  f.priority.priorityId == 1 && f.escalationlevel == "level1" && (DateTime.Now - (DateTime)f.assignedDate).TotalHours > (Constants.criticalescelationtime)*2 &&
                                 (DateTime.Now - (DateTime)f.assignedDate).TotalHours < (Constants.criticalescelationtime) * 3
                                       select f;
@@ -68,7 +68,7 @@ namespace icrm.Models
 
 
                     var level3query = from f in db.Feedbacks.ToList()
-                                      where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED &&
+                                      where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED && f.type.name != Constants.Enquiry &&
                                        f.priority.priorityId == 1 && f.escalationlevel == "level2" && (DateTime.Now - (DateTime)f.assignedDate).TotalHours > (Constants.criticalescelationtime) * 3
                                       select f;
 
