@@ -71,7 +71,23 @@
                                     <label class="form-control-label">Department <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.EscalationUser.DepartmentId,
                                        new SelectList(ViewBag.DepartmentList,
-                                          "Id", "name"),"Choose Department", new { @class = "form-control select2"})
+                                          "Id", "name"),"Choose Department", new { @class = "form-control select2", @id="department", required="required"})
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Categories <span class="tx-danger">*</span></label>
+                                    @*@Html.DropDownListFor(m => m.EscalationUser.CategoriesIds,
+                                       new SelectList(ViewBag.Categories,
+                                          "Id", "name"),"Choose Categories", new { @class = "form-control select2",Multiple ="multiple"})*@
+
+                                    <select id="category" name="EscalationUser.CategoriesIds" class="form-control select2" multiple required >
+                                        <option value="">Select category</option>
+
+                                    </select>
 
 
                                 </div>
@@ -82,7 +98,7 @@
                                     <label class="form-control-label">First Escalation User <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.EscalationUser.firstEscalationUserId,
                                        new SelectList(ViewBag.UserList,
-                                          "Id", "EmployeeId"),"Choose First Escalation User", new { @class = "form-control select2"})
+                                          "Id", "EmployeeId"),"Choose First Escalation User", new { @class = "form-control select2", required= "required"})
 
 
                                 </div>
@@ -93,7 +109,7 @@
                                     <label class="form-control-label">Second Escalation User <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.EscalationUser.secondEscalationUserId,
                                        new SelectList(ViewBag.UserList,
-                                          "Id", "EmployeeId"), "Choose Second Escalation User", new { @class = "form-control select2"})
+                                          "Id", "EmployeeId"), "Choose Second Escalation User", new { @class = "form-control select2", required = "required" })
 
 
                                 </div>
@@ -104,22 +120,13 @@
                                     <label class="form-control-label">Third Escalation User <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.EscalationUser.thirdEscalationUserId,
                                        new SelectList(ViewBag.UserList,
-                                          "Id", "EmployeeId"), "Choose Third Escalation User", new { @class = "form-control select2"})
+                                          "Id", "EmployeeId"), "Choose Third Escalation User", new { @class = "form-control select2", required = "required" })
 
 
                                 </div>
                             </div>
 
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Categories <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.EscalationUser.CategoriesIds,
-                                       new SelectList(ViewBag.Categories,
-                                          "Id", "name"),"Choose Categories", new { @class = "form-control select2",Multiple ="multiple"})
 
-
-                                </div>
-                            </div>
 
 
 
@@ -254,6 +261,38 @@
         <!-- slim-mainpanel -->
 
       @Html.Partial("_AdminFooter")
+        <script>
+            $("#department").change(function () {
+               
+                    $("#category option").remove();
+
+                  
+                if ($("#department").val() != "") {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("getCategories", "EscalationUsers")",
+                        contentType: "application/json; charset=utf-8",
+                        data: '{"depId":"' + $(this).val() + '"}',
+                        dataType: "json",
+                        success: function (r) {
+
+                            for (var i = 0; i < r.length; i++) {
+                                $('#category').append('<option value="' + r[i].Id + '">' + r[i].name + '</option>');
+
+                            }
+                        },
+                        error: function (r) {
+                            alert("error" + r.responseText);
+                        }
+                    });
+                }
+                
+            });
+
+
+
+
+        </script>
 </body>
 
 </html>

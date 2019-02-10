@@ -41,9 +41,9 @@ namespace icrm.Controllers
         {
             ViewBag.DepartmentList = db.Departments.ToList();
             ViewBag.UserList = db.Users.ToList();
-            ViewBag.Categories = db.Categories.Where(c=>c.EscalationUserId== null).ToList();
+            //ViewBag.Categories = db.Categories.Where(c=>c.EscalationUserId== null).ToList();
             ViewBag.Status = "Add";
-            return View("CreateList", new EscalationUserViewModel {  EscalationUsers = db.EscalationUsers.ToList()});
+            return View("CreateList", new EscalationUserViewModel { EscalationUser= new EscalationUser(), EscalationUsers = db.EscalationUsers.ToList()});
         }
 
         // POST: EscalationUsers/Create
@@ -71,7 +71,7 @@ namespace icrm.Controllers
             
             ViewBag.DepartmentList = db.Departments.ToList();
             ViewBag.UserList = db.Users.ToList();
-            ViewBag.Categories = db.Categories.Where(c => c.EscalationUserId == null).ToList();
+           // ViewBag.Categories = db.Categories.Where(c => c.EscalationUserId == null).ToList();
             ViewBag.Status = "Add";
             return View("CreateList", new EscalationUserViewModel { EscalationUsers = db.EscalationUsers.ToList() });
         }
@@ -91,7 +91,7 @@ namespace icrm.Controllers
 
             ViewBag.DepartmentList = db.Departments.ToList();
             ViewBag.UserList = db.Users.ToList();
-            ViewBag.Categories = db.Categories.Where(c => c.EscalationUserId == null).ToList();
+           // ViewBag.Categories = db.Categories.Where(c => c.EscalationUserId == null).ToList();
             ViewBag.Status = "Update";
             return View("CreateList", new EscalationUserViewModel {EscalationUser = escalationUser, EscalationUsers = db.EscalationUsers.ToList() });
         }
@@ -112,7 +112,7 @@ namespace icrm.Controllers
 
             ViewBag.DepartmentList = db.Departments.ToList();
             ViewBag.UserList = db.Users.ToList();
-            ViewBag.Categories = db.Categories.Where(c => c.EscalationUserId == null).ToList();
+            //ViewBag.Categories = db.Categories.Where(c => c.EscalationUserId == null).ToList();
             ViewBag.Status = "Update";
             return View("CreateList", new EscalationUserViewModel { EscalationUsers = db.EscalationUsers.ToList() });
         }
@@ -132,7 +132,7 @@ namespace icrm.Controllers
 
             ViewBag.DepartmentList = db.Departments.ToList();
             ViewBag.UserList = db.Users.ToList();
-            ViewBag.Categories = db.Categories.Where(c => c.EscalationUserId == null).ToList();
+           // ViewBag.Categories = db.Categories.Where(c => c.EscalationUserId == null).ToList();
             ViewBag.Status = "Delete";
             return View("CreateList", new EscalationUserViewModel {EscalationUser = escalationUser, EscalationUsers = db.EscalationUsers.ToList() });
         }
@@ -156,5 +156,15 @@ namespace icrm.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [HttpPost]
+        public JsonResult getCategories(int depId)
+        {
+
+            List<Category> categories = db.Categories.Where(m=>m.DepartmentId== depId && m.EscalationUserId == null).ToList();
+            return Json(categories);
+        }
+
+
     }
 }
