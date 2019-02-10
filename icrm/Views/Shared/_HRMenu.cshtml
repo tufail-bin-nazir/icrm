@@ -14,6 +14,7 @@
         </div>
         <!-- slim-header-left -->
         <div class="slim-header-right">
+
             <a style="margin-bottom: 5px;">Available for Chat &nbsp; &nbsp; &nbsp;</a>
 
             <div class="dropdown dropdown-a">
@@ -26,7 +27,7 @@
             <div class="dropdown dropdown-b">
                 <a href="default.htm" class="header-notification" data-toggle="dropdown">
                     <i class="icon ion-ios-bell-outline" id="bellicon"></i>
-                    <span class="bello"  id="notifyCount">0</span>
+                    <span class="bello" id="notifyCount">0</span>
                 </a>
                 <div class="dropdown-menu">
                     <div class="dropdown-menu-header">
@@ -35,7 +36,7 @@
                     <!-- dropdown-menu-header -->
                     <div class="dropdown-list" id="notificationlist">
                         <!-- loop starts here -->
-                        
+
                     </div>
                     <!-- dropdown-list -->
                 </div>
@@ -43,15 +44,36 @@
             </div>
             <!-- dropdown -->
             <div class="dropdown dropdown-c">
+
+                <a href="#" class="logged-user" data-toggle="dropdown">
+                    <span>Translation</span>
+                    <i class="fa fa-angle-down"></i>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right">
+                    <nav class="nav">
+
+                        @Html.ActionLink("English", "SetenglishCulture/DashBoard/HR", "Culture")
+
+                        @Html.ActionLink("Arabic", "SetarabicCulture/DashBoard/HR", "Culture")
+
+                    </nav>
+                </div>
+
+
+            </div>
+            <!-- dropdown -->
+            <div class="dropdown dropdown-c">
                 <a href="#" class="logged-user" data-toggle="dropdown">
                     <img src="~/Content/img/boss.png" alt="">
+
                     <span>@user.UserName</span>
                     <i class="fa fa-angle-down"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <nav class="nav">
                         <!-- <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
-    <a href="@Url.Action("index","userprofile")" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>-->
+                <a href="@Url.Action("index","userprofile")" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>-->
                         <a href="@Url.Action("index","DownloadAPK")" class="nav-link"><i class="icon ion-ios-bolt"></i> Download APK</a>
 
 
@@ -71,12 +93,12 @@
                         }
 
                     </nav>
-     </div>
-     <!-- dropdown-menu -->
-</div>
+                </div>
+                <!-- dropdown-menu -->
+            </div>
 
-            
-                        
+
+
             <!-- dropdown -->
         </div>
         <!-- header-right -->

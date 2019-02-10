@@ -12,7 +12,30 @@
         </div>
         <!-- slim-header-left -->
         <div class="slim-header-right">
-            
+            <!-- dropdown -->
+            <div class="dropdown dropdown-c">
+
+                <a href="#" class="logged-user" data-toggle="dropdown">
+                    <span>Translation</span>
+                    <i class="fa fa-angle-down"></i>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right">
+                    <nav class="nav">
+                       
+                                @Html.ActionLink("English", "SetenglishCulture/Dashboard/Department", "Culture")
+                               @Html.ActionLink("Arabic", "SetarabicCulture/Dashboard/Department", "Culture")
+                              
+                    </nav>
+                </div>
+                <!--<a href="#" class="logged-user">
+        <select class="form-control" style="border-radius: 4px;">
+          <option> Eng</option>
+          <option> Arabic</option>
+        </select>
+        </a>-->
+
+            </div>
             <!-- dropdown -->
             <div class="dropdown dropdown-c">
                 <a href="#" class="logged-user" data-toggle="dropdown">
@@ -23,29 +46,29 @@
                 <div class="dropdown-menu dropdown-menu-right">
                     <nav class="nav">
                         <!-- <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
-    <a href="../userprofile/index" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>-->
+                <a href="../userprofile/index" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>-->
                         <a href="@Url.Action("index","DownloadAPK")" class="nav-link"><i class="icon ion-ios-bolt"></i> Download APK</a>
 
                         <!--   <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>-->
-             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, null))
-             {
-                 @Html.AntiForgeryToken()
-                 <input type="hidden" name="username" value="@System.Web.HttpContext.Current.User.Identity.Name" />
-                 <a href="#" class="nav-link">
+                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, null))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="username" value="@System.Web.HttpContext.Current.User.Identity.Name" />
+                            <a href="#" class="nav-link">
 
-                     <i class="icon ion-forward"></i><input class="nav-link" style="background: transparent;
+                                <i class="icon ion-forward"></i><input class="nav-link" style="background: transparent;
     text-decoration: none;
     cursor: pointer; border:none;" type="submit" value="Sign Out" />
-                 </a>
+                            </a>
 
 
-             }
+                        }
 
 
-         </nav>
-     </div>
-     <!-- dropdown-menu -->
-</div>
+                    </nav>
+                </div>
+                <!-- dropdown-menu -->
+            </div>
             <!-- dropdown -->
         </div>
         <!-- header-right -->
