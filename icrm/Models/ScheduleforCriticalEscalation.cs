@@ -35,8 +35,7 @@ namespace icrm.Models
                     if (_shuttingDown)
                         return;
 
-                    Feedback fe = db.Feedbacks.FirstOrDefault();
-                    Debug.WriteLine((DateTime.Now - (DateTime)fe.assignedDate).TotalHours + "  Hours");
+                   
                     var level1query = from f in db.Feedbacks.ToList()
                                 where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED &&
                                  f.priority.priorityId == 1 && f.escalationlevel == null && (DateTime.Now- (DateTime)f.assignedDate).TotalHours > Constants.criticalescelationtime &&
