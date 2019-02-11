@@ -1,5 +1,9 @@
 ﻿
 @model icrm.Models.CategoryViewModel
+
+
+@using PagedList.Mvc;
+
 @{
     Layout = null;
 }
@@ -33,9 +37,9 @@
 </head>
 
 <body>
-   @Html.Partial("_AdminMenu")
+    @Html.Partial("_AdminMenu")
     <!-- slim-navbar -->
-
+    
     <div class="slim-mainpanel">
         <div class="container">
             <div class="slim-pageheader">
@@ -50,7 +54,24 @@
             <div class="section-wrapper">
                 <label class="section-title">Creating Category</label>
                 <p class="mg-b-20 mg-sm-b-40"></p>
-
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @TempData["Success"]</strong>
+                    </div>
+                }
+                @if (TempData["Fail"] != null)
+                {
+                    <div class="alert alert-danger mg-b-0" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong>@TempData["Fail"]</strong>
+                    </div>
+                }
 
                 <label class="section-title">Admin / Category</label>
                 @using (Html.BeginForm())
@@ -70,7 +91,7 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(x => x.Category.name, new { @class = "form-control", placeholder = "Enter Category", Required = "true" })
-
+                                    @Html.Hidden("pagee", TempData["page"], new { name = "pagee" })
 
                                 </div>
                             </div>
@@ -86,7 +107,7 @@ new SelectList(ViewBag.DepartmentList,
                                 </div>
                             </div>
 
-                          
+
 
                             <!-- col-4 -->
                             <!-- col-4 -->
@@ -131,55 +152,54 @@ new SelectList(ViewBag.DepartmentList,
                                 </thead>
                                 <tbody>
 
-                                   
+
 
                                     @foreach (var item in Model.Categories.Select((x, i) => new { Data = x, Index = i }))
                                     {
-                                      
-                                            <tr>
-                                                <td class="pd-l-20">
-                                                    @(item.Index+1)
 
-                                                </td>
-                                                <td>
-                                                    <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.name</a>
+                                        <tr>
+                                            <td class="pd-l-20">
+                                                @(item.Index + 1)
 
-                                                </td>
-                                                <td class="tx-12">
-                                                    <a href="@Url.Action("edit",new {id = item.Data.Id })"> <i class="fa fa-edit"> </i> </a>
-                                                    <a href="@Url.Action("Delete",new {id = item.Data.Id })"> <i class="fa fa-trash"> </i> </a>
+                                            </td>
+                                            <td>
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.name</a>
 
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
+                                            </td>
+                                            <td class="tx-12">
+                                                <a href="@Url.Action("edit",new {id = item.Data.Id ,page=Model.Categories.PageNumber})"> <i class="fa fa-edit"> </i> </a>
+                                                <a href="@Url.Action("Delete",new {id = item.Data.Id })"> <i class="fa fa-trash"> </i> </a>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
                             </table>
                         </div>
                         <!-- table-responsive -->
-
-
+                        
                         <div class="pagination-wrapper">
-                            <ul class="pagination pagination-circle mg-b-0">
-                                <li class="page-item hidden-xs-down">
-                                    <a class="page-link" href="#" aria-label="First"><i class="fa fa-angle-double-left"></i></a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous"><i class="fa fa-angle-left"></i></a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item hidden-xs-down"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item hidden-xs-down"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item disabled"><span class="page-link">...</span></li>
-                                <li class="page-item"><a class="page-link" href="#">10</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next"><i class="fa fa-angle-right"></i></a>
-                                </li>
-                                <li class="page-item hidden-xs-down">
-                                    <a class="page-link" href="#" aria-label="Last"><i class="fa fa-angle-double-right"></i></a>
-                                </li>
-                            </ul>
+                            <div id='Paging' style="text-align:center">
+                                Page @(Model.Categories.PageCount < Model.Categories.PageNumber ? 0 : Model.Categories.PageNumber)
+                                of @Model.Categories.PageCount
+                                <ul class="pagination pagination-circle mg-b-0">
+
+                                    <li class="page-item ">
+                                        @if(@ViewBag.Status == "Add" || ViewBag.Status=="Delete"){
+                                        @Html.PagedListPager(Model.Categories, page => Url.Action("Create", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+                                        }else{
+                                        @Html.PagedListPager(Model.Categories, page => Url.Action("Edit", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        }
+
+                                    </li>
+
+                                </ul>
+                            </div>
                         </div>
+                        
+                       
+                       
                         <!-- pagination-wrapper -->
 
 
@@ -192,9 +212,10 @@ new SelectList(ViewBag.DepartmentList,
             </div>
             <!-- container -->
         </div>
+        </div>
         <!-- slim-mainpanel -->
 
-      @Html.Partial("_AdminFooter")
+        @Html.Partial("_AdminFooter")
 </body>
 
 </html>
