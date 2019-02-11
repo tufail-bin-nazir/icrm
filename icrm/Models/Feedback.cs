@@ -13,13 +13,13 @@ namespace icrm.Models
             status = "Open";
             Random random = new Random();
 
-            int sequenceNumber = db.Feedbacks.Count();
+            int sequenceNumber = db.Feedbacks.Count()+1;
             id = string.Format("IR{0}", sequenceNumber.ToString().PadLeft(5, '0'));
 
 
 
 
-        }
+        } 
         public string id { get; set; }
 
         [Required(ErrorMessage = "Name is required")]

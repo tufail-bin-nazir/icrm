@@ -538,8 +538,12 @@
             });
 
             $('#resolve').click(function () {
-                if ($('#statusfield').val() == "Resolved") {
+                if ($("#typeoffeedbackname").val() != "Enquiry") {
+                    $("#priorty").prop('required', true);
+                } else {
                     $("#priorty").prop('required', false);
+                }
+                if ($('#statusfield').val() == "Resolved") {
                     $("#category").prop('required', false);
                     $("#subcategory").prop('required', false);
                     $("#emailsss").prop('required', false);
@@ -550,7 +554,6 @@
                 else {
                     $("#emailsss").prop('required', false);
                     $('#statuscheck').text("Set status Resolved");
-                    $("#priorty").prop('required', false);
                     $("#category").prop('required', false);
                     $("#subcategory").prop('required', false);
 

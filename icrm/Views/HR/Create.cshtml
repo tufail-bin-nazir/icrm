@@ -409,9 +409,13 @@
 
             $('#resolve').click(function () {
 
+                if ($("#typeofFeedback").find(":selected").text() != "Enquiry") {
+                    $("#priorty").prop('required', true);
+                } else {
+                    $("#priorty").prop('required', false);
+                }
                 if ($('#statusfield').val() == "Resolved") {
                     $("#emailsss").prop('required', false);
-                    $("#priorty").prop('required', false);
                     $("#category").prop('required', false);
                     $("#subcategory").prop('required', false);
                     return true;
@@ -420,7 +424,6 @@
                 else {
                     $('#statuscheck').text("Set status Resolved");
                     $("#emailsss").prop('required', false);
-                    $("#priorty").prop('required', false);
                     $("#category").prop('required', false);
                     $("#subcategory").prop('required', false);
                     return false;

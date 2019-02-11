@@ -491,8 +491,12 @@
         });
 
         $('#resolve').click(function () {
-            if ($('#statusfield').val() == "Resolved") {
+            if ($("#typeoffeedbacktext").val() != "Enquiry") {
+                $("#priorty").prop('required', true);
+            } else {
                 $("#priorty").prop('required', false);
+            }
+            if ($('#statusfield').val() == "Resolved") {
                 $("#category").prop('required', false);
                 $("#subcategory").prop('required', false);
                 $("#emailsss").prop('required', false);
@@ -501,7 +505,6 @@
 
             else  {
                 $('#statuscheck').text("Set status Resolved");
-                $("#priorty").prop('required', false);
                 $("#subcategory").prop('required', false);
                 $("#category").prop('required', false);
                 $("#emailsss").prop('required', false);
