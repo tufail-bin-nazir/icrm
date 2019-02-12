@@ -220,7 +220,7 @@ namespace icrm.WebApi
         public IHttpActionResult catagorey(int deptId)
         {
 
-            var entity = from f in feedInterface.getCategories(deptId)
+            var entity = from f in feedInterface.getCategories(deptId,1)
                          select f;
 
             if (entity != null)
