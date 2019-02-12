@@ -384,7 +384,27 @@ namespace icrm.Controllers
                 return View(f);
             }
         }
-        
+
+
+        public ActionResult viewticket(string id)
+        {
+
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            ViewData["commentList"] = feedInterface.getCOmments(id);
+
+            ViewData["user"] = user;
+            if (id == null)
+            {
+                ViewBag.ErrorMsg = "This Ticket is not found,Try with proper data";
+                return RedirectToAction("list");
+            }
+            else
+            {
+                getAttributeList();
+                Feedback f = feedInterface.Find(id);
+                return View("closedview",f);
+            }
+        }
         /*******************DOWNLOAD FILE********************/
 
         public void DownloadFile(string filename)

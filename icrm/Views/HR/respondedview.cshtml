@@ -45,25 +45,7 @@
                     <li class="breadcrumb-item active" aria-current="page">Create Tickets</li>
                 </ol>
                 <h6 class="slim-pagetitle">CREATE TICKET</h6>
-                @if (@TempData["MessageSuccess"] != null)
-                {
-                    <div class="alert alert-success" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                        <strong> @TempData["MessageSuccess"]</strong>
-                    </div>
-                }
-                @if (@TempData["Message"] != null)
-                {
-                    <div class="alert alert-danger mg-b-0" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                        <strong>@TempData["Message"]</strong>
-                    </div>
-
-                }
+                
             </div>
             <!-- slim-pageheader -->
             @Html.ValidationSummary()
@@ -76,7 +58,26 @@
 
                     <p class="mg-b-20 mg-sm-b-40"></p>
                     <div class="form-layout">
-                        <span class="tx-success">@TempData["Message"]</span>
+                        @if (@TempData["MessageSuccess"] != null)
+                        {
+                            <div class="alert alert-success" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong> @TempData["MessageSuccess"]</strong>
+                            </div>
+                        }
+                        @if (@TempData["Message"] != null)
+                        {
+                            <div class="alert alert-danger mg-b-0" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>@TempData["Message"]</strong>
+                            </div>
+
+                        }
+                      
                         @Html.HiddenFor(model => model.id, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
@@ -123,13 +124,13 @@
                             </div>
                             <!-- col-4 -->
                             <!--  <div class="col-lg-4">
-        <div class="form-group">
-            <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
-           @** @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })*@
+            <div class="form-group">
+                <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
+               @** @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })*@
 
+            </div>
         </div>
-    </div>
-      -->
+          -->
                             <!-- col-4 -->
                             <!-- col-4 -->
                             <div class="col-lg-4">
@@ -266,15 +267,22 @@
                                         @if (Model.status == "Open")
                                         {
                                             <option selected value="Open">Open</option>
+
+                                            <option value="Resolved">Resolved</option>
                                             <option value="Closed">Closed</option>
+
+
                                         }
                                         else if (Model.status == "Closed")
                                         {
                                             <option value="Open">Open</option>
-                                           
+                                            <option value="Resolved">Resolved</option>
+
                                             <option selected value="Closed">Closed</option>
+
                                         }
-                                       
+                                        
+
 
 
                                     </select>
@@ -304,7 +312,7 @@
                         <!-- row -->
                         <div class="form-layout-footer">
                             <input type="hidden" value="Respondedtype" name="typeoflink" />
-                            <input type="submit" value="@Resources.Resource.Submit" class="btn btn-primary bd-0" />
+                            <input type="submit" value="@Resources.Resource.Submit" id="update"class="btn btn-primary bd-0" />
                         </div>
                         <!-- form-layout-footer -->
                     </div>
@@ -335,6 +343,21 @@
         <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
         <script src="~/Content/js/slim.js"></script>
 <script>
+
+    $('#update').click(function () {
+        if ($('#statusfield').val() == "Resolved" || $('#statusfield').val()=="Closed") {
+
+            return true;
+        }
+
+        else {
+            $('#statuscheck').text("Set status Resolve/Closed");
+            return false;
+
+        }
+
+    });
+    
     $('#resolve').click(function () {
         if ($('#statusfield').val() == "Resolved") {
 

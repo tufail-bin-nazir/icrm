@@ -266,9 +266,14 @@
                                                 }
 
 
-                                                @if (ViewBag.linkName == "closedticket" || ViewBag.linkName == "alltickets" || ViewBag.linkName == "allopenticket" || ViewBag.linkName == "allclosedticket" || ViewBag.linkName == "allresolvedticket")
+                                                @if (ViewBag.linkName == "closedticket")
                                                 {
                                                     <a href="@Url.Action("closedview", "Department",new {id=item.Data.id })" class="fa fa-edit"></a>
+                                                }
+
+                                                @if (ViewBag.linkName == "alltickets" || ViewBag.linkName == "allopenticket" || ViewBag.linkName == "allclosedticket" || ViewBag.linkName == "allresolvedticket")
+                                                {
+                                                    <a href="@Url.Action("viewticket", "Department",new {id=item.Data.id })" class="fa fa-edit"></a>
                                                 }
                                             </td>
                                             <td>
