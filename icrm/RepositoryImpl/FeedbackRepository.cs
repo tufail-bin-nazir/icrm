@@ -129,6 +129,15 @@ namespace icrm.RepositoryImpl
             return db.Feedbacks.OrderByDescending(m => m.user.Id).Where(m=>m.status== Models.Constants.OPEN).ToList();
 
         }
+
+        public IEnumerable<Feedback> getAllOpenMobile()
+        {
+            return db.Feedbacks.OrderByDescending(m => m.user.Id).Where(m => m.checkStatus == Models.Constants.OPEN).ToList();
+
+        }
+
+
+
         public IPagedList<Feedback> getAllOpenWithDepartment(string usrid, int pageIndex, int pageSize)
         {
             ApplicationUser user = db.Users.Find(usrid);
