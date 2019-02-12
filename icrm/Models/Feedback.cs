@@ -70,6 +70,8 @@ namespace icrm.Models
         public DateTime? responseDate { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? closedDate { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? resolvedDate { get; set; }
 
         public string response { get; set; }
         public string responseById { get; set; }

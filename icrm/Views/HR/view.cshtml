@@ -285,23 +285,23 @@
 
                             @if (Model.priorityId == null)
                             {
-                                <div class="col-lg-4">
+                                <div class="col-lg-4" id="priordiv" style="display:none">
                                     <div class="form-group">
                                         <label class="form-control-label">@Resources.Resource.Priority<span class="tx-danger">*</span></label>
                                         @Html.DropDownListFor(m => m.priorityId,
                    new SelectList(ViewBag.Priorities,
-                 "Id", "priorityId"), "Choose Priority", new { @class = "form-control select2", id = "priorty", required = "required" })
+                 "Id", "name"), "Choose Priority", new { @class = "form-control select2", id = "priorty", required = "required" })
                                     </div>
                                 </div>
                             }
                             else
                             {
-                                <div class="col-lg-4">
+                                <div class="col-lg-4" id="priordiv" style="display:none">
                                     <div class="form-group">
                                         <label class="form-control-label">@Resources.Resource.Priority<span class="tx-danger">*</span></label>
                                         @Html.DropDownListFor(m => m.priorityId,
                    new SelectList(ViewBag.Priorities,
-                 "Id", "priorityId"), "Choose Priority", new { disabled="disabled", @class = "form-control select2", id = "priorty" })
+                 "Id", "name"), "Choose Priority", new { disabled="disabled", @class = "form-control select2", id = "priorty" })
                                         @Html.HiddenFor(model => model.priorityId, new { @class = "form-control" })
 
                                     </div>
@@ -491,12 +491,22 @@
         <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
         <script src="~/Content/js/slim.js"></script>
         <script>
-
+          
             
+                if ($("#typeoffeedbackname").val() == "Complaint") {
+                    $('#priordiv').show();
+                    $("#priorty").prop('required', true);
+                } else {
+                    $('#priordiv').hide();
+                    $("#priorty").prop('required', false);
+                }
+         
+
             $('#rejected').click(function () {
                 $("#emailsss").prop('required', false);
                 $("#category").prop('required', false);
                 $("#subcategory").prop('required', false);
+                $("#deptId").prop('required', false);               
                 $("#priorty").prop('required', false);
                 if ($('#statusfield').val() == "Resolved") {
                     $('#statuscheck').text("Set status either Open/Closed");
@@ -507,13 +517,9 @@
 
 
             $('#forward2').click(function () {
-                $("#emailsss").prop('required', true);
-                if ($("#typeoffeedbackname").val() != "Enquiry") {
-                    $("#priorty").prop('required', true);
-                } else {
-                    $("#priorty").prop('required', false);
-                }
+                $("#deptId").prop('required', true);
                 $("#category").prop('required', true);
+                $("#subcategory").prop('required', true);
                 if ($('#statusfield').val() == "Resolved") {
                     $('#statuscheck').text("Set status either Open/Closed");
                     return false;
@@ -522,12 +528,8 @@
             });
             $('#forward').click(function () {
                 $("#emailsss").prop('required', true);
-                if ($("#typeoffeedbackname").val() != "Enquiry") {
-                    $("#priorty").prop('required', true);
-                } else {
-                    $("#priorty").prop('required', false);
-                }
                 
+                $("#deptId").prop('required', true);
                 $("#category").prop('required', true);
                 $("#subcategory").prop('required', true);
                 if ($('#statusfield').val() == "Resolved") {
@@ -538,20 +540,17 @@
             });
 
             $('#resolve').click(function () {
-                if ($("#typeoffeedbackname").val() != "Enquiry") {
-                    $("#priorty").prop('required', true);
-                } else {
-                    $("#priorty").prop('required', false);
-                }
+                
                 if ($('#statusfield').val() == "Resolved") {
                     $("#category").prop('required', false);
                     $("#subcategory").prop('required', false);
                     $("#emailsss").prop('required', false);
-                    
+                    $("#deptId").prop('required', false);
                     return true;
                 }
 
                 else {
+                    $("#deptId").prop('required', false);
                     $("#emailsss").prop('required', false);
                     $('#statuscheck').text("Set status Resolved");
                     $("#category").prop('required', false);
@@ -641,12 +640,12 @@
                  $("#subcategory option").remove();
 
                  $('#subcategory').append('<option value="">' + "Choose Sub Category" + '</option>');
-                 if ($("#deptId").val() != "") {
+                 if ($("#deptId").val() != "" && $('#typeoffeedback').val()!="") {
                      $.ajax({
                          type: "POST",
                          url: "@Url.Action("getCategories", "HR")",
                          contentType: "application/json; charset=utf-8",
-                         data: '{"depId":"' + $(this).val() + '"}',
+                         data: '{"depId":"' + $(this).val() + '","type":"' + $('#typeoffeedback').val() + '"}',
                          dataType: "json",
                          success: function (r) {
 

@@ -226,7 +226,7 @@ new SelectList(ViewBag.Departmn,
                                     <label class="form-control-label">@Resources.Resource.Priority <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.priorityId,
 new SelectList(ViewBag.Priorities,
-"Id", "priorityId"), "Choose Priority", new { @readonly = "readonly", @class = "form-control select2" })
+"Id", "name"), "Choose Priority", new { @readonly = "readonly", @class = "form-control select2" })
                                 </div>
                             </div>
 
@@ -333,7 +333,8 @@ new SelectList(ViewBag.Priorities,
 
                         </div>
 
-                        @if (Model.satisfaction!= "Satisfied")
+                        
+                        @if (Model.satisfaction== "UnSatisfied")
                         {
                             <div class="form-layout-footer">
                                 <input type="submit" value="Update" name="submitButton" id="forward2" class="btn btn-primary bd-0" />

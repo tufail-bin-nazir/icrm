@@ -212,7 +212,7 @@
                                 <label class="form-control-label">@Resources.Resource.Priority <span class="tx-danger">*</span></label>
                                 @Html.DropDownListFor(m => m.priorityId,
                        new SelectList(ViewBag.Priorities,
-                     "Id", "priorityId"), "Choose Priority", new { @readonly = "readonly", disabled = "disabled", @class = "form-control select2" })
+                     "Id", "name"), "Choose Priority", new { @readonly = "readonly", disabled = "disabled", @class = "form-control select2" })
                                 @Html.HiddenFor(model => model.priorityId, new { @class = "form-control" })
 
                             </div>
