@@ -45,7 +45,7 @@ namespace icrm.RepositoryInterface
 
         List<Comments> getCOmments(string id);
 
-        List<Category> getCategories(Int32 deptId);
+        List<Category> getCategories(Int32 deptId,Int32 type);
         List<SubCategory> getSubCategories(Int32 categoryId, Int32 typeId);
 
         List<string> getEmails();

@@ -142,6 +142,10 @@ namespace icrm.Controllers
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
 
+            if (feedback.status == Constants.CLOSED) {
+                feedback.closedDate = DateTime.Today;
+            }
+
             if (feedback.userId == null) {
                 feedback.userId=user.Id;
             }
@@ -177,7 +181,7 @@ namespace icrm.Controllers
                                 feedback.assignedDate = DateTime.Now;
                                 feedback.checkStatus = Constants.ASSIGNED;                               
                                 feedInterface.Save(feedback);
-                                TempData["MessageSuccess"] = "Ticket created Successfully";
+                                TempData["MessageSuccess"] = "Ticket has been forwarded  Successfully";
                                 eventService.sendEmails(Request.Form["emailsss"], PopulateBody(feedback));
                         }
                             else
@@ -192,7 +196,7 @@ namespace icrm.Controllers
                             TempData["Message"] = "Select Department & Comment field should be empty";
                             return View("Create", feedback);
                         }
-                        return View("Create");
+                        return RedirectToAction("DashBoard");
 
 
                     case "Resolve":
@@ -201,6 +205,7 @@ namespace icrm.Controllers
                             if (ModelState.IsValid)
                           {
                             feedback.submittedById = user.Id;
+                            feedback.resolvedDate = DateTime.Today;
                             feedback.assignedBy = null;
                             feedback.assignedDate = null;
                             feedback.checkStatus = Constants.RESOLVED;                       
@@ -211,8 +216,8 @@ namespace icrm.Controllers
                             c.feedbackId = feedback.id;
                             db.comments.Add(c);
                             db.SaveChanges();
-                            TempData["MessageSuccess"] = "Ticket created Successfully";
-                                return RedirectToAction("Create");
+                            TempData["MessageSuccess"] = "Ticket has been Resolved Successfully";
+                                return RedirectToAction("DashBoard");
                             }
                             else
                             {
@@ -240,6 +245,7 @@ namespace icrm.Controllers
         [Route("update/")]
         public ActionResult update(Feedback feedback)
         {
+            
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             getAttributeList();
@@ -256,8 +262,12 @@ namespace icrm.Controllers
             f.status = feedback.status;
             if (feedback.status == Constants.CLOSED) {
                 f.closedDate = DateTime.Today;
-            }          
-            switch(type)
+            }
+            if (feedback.status == Constants.RESOLVED)
+            {
+                f.resolvedDate = DateTime.Today;
+            }
+            switch (type)
             {
                 case "Resolvedtype":
                     if (ModelState.IsValid)
@@ -307,6 +317,10 @@ namespace icrm.Controllers
         [Route("assigndepart/")]
         public ActionResult assign(string submitButton,Feedback feedback)
         {
+            if (feedback.status == Constants.CLOSED)
+            {
+                feedback.closedDate = DateTime.Today;
+            }
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             
@@ -337,7 +351,8 @@ namespace icrm.Controllers
                 case "Resolve":
                     if (feedback.departmentID == null && Request.Form["responsee"] != "")
                     {
-                            Comments c = new Comments();
+                        feedback.resolvedDate = DateTime.Today;
+                        Comments c = new Comments();
                             c.text = Request.Form["responsee"];
                             c.commentedById = user.Id;
                             c.feedbackId = feedback.id;
@@ -852,6 +867,10 @@ namespace icrm.Controllers
         [Route("rejected/action/")]
         public ActionResult feedbackupdate(string submitButton, Feedback feedback)
         {
+            if (feedback.status == Constants.CLOSED)
+            {
+                feedback.closedDate = DateTime.Today;
+            }
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             feedback.user = db.Users.Find(feedback.userId);
@@ -882,6 +901,7 @@ namespace icrm.Controllers
                 case "Resolve":
                     if (feedback.departmentID == null && Request.Form["responsee"] != "")
                     {
+                        feedback.resolvedDate = DateTime.Today;
                         feedback.checkStatus = Constants.RESOLVED;
                             Comments c = new Comments();
                             c.text = Request.Form["responsee"];
@@ -937,7 +957,18 @@ namespace icrm.Controllers
             ViewData["user"] = user;
             Feedback f = db.Feedbacks.Find(feedback.id);
             f.status = feedback.status;
-            f.checkStatus = feedback.status;
+            if (feedback.status == Constants.CLOSED) {
+                f.closedDate = DateTime.Today;
+            }
+
+            if (f.departmentID != null)
+            {
+                f.checkStatus = Constants.ASSIGNED;
+            }
+            else {
+                f.checkStatus = feedback.status;
+            }
+           
             if (ModelState.IsValid)
             {
                 db.Entry(f).State = EntityState.Modified;
@@ -953,9 +984,9 @@ namespace icrm.Controllers
             }
         }
       [HttpPost]
-        public JsonResult getCategories(int depId)
+        public JsonResult getCategories(int depId, int type)
         {
-            List<Category> categories = feedInterface.getCategories(depId);               
+            List<Category> categories = feedInterface.getCategories(depId,type);               
             return Json(categories);
         }
       [HttpPost]
@@ -977,7 +1008,8 @@ namespace icrm.Controllers
             body = body.Replace("{TicketId}", feedback.id);
             
          body = body.Replace("{Location}", user.Location.name);
-            
+
+            Debug.WriteLine(feedback.description + "hhhhh");
             
             body = body.Replace("{EmployeeId}", user.EmployeeId.ToString());
            body = body.Replace("{Description}",feedback.description);

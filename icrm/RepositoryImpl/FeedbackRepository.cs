@@ -126,7 +126,7 @@ namespace icrm.RepositoryImpl
 
         public IEnumerable<Feedback> getAllOpen()
         {
-            return db.Feedbacks.OrderByDescending(m => m.user.Id).Where(m=>m.checkStatus== Models.Constants.OPEN).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.user.Id).Where(m=>m.status== Models.Constants.OPEN).ToList();
 
         }
         public IPagedList<Feedback> getAllOpenWithDepartment(string usrid, int pageIndex, int pageSize)
@@ -369,9 +369,9 @@ namespace icrm.RepositoryImpl
             return db.comments.Where(m => m.feedbackId == id).ToList();
         }
 
-        public List<Category> getCategories(int deptId)
+        public List<Category> getCategories(int deptId,int type)
         {
-          return  db.Categories.Where(m => m.DepartmentId == deptId).ToList();
+          return  db.Categories.Where(m => m.DepartmentId == deptId && m.FeedBackTypeId==type).ToList();
         }
 
         public List<SubCategory> getSubCategories(int categoryId,int type)

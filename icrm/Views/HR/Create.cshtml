@@ -247,12 +247,12 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-4" id="priordiv">
                             <div class="form-group">
                                 <label class="form-control-label">@Resources.Resource.Priority <span class="tx-danger">*</span></label>
                                 @Html.DropDownListFor(m => m.priorityId,
                        new SelectList(ViewBag.Priorities,
-                     "Id", "priorityId"), "Choose Priority", new { @class = "form-control select2",id="priorty" })
+                     "Id", "name"), "Choose Priority", new { @class = "form-control select2",id="priorty"})
                             </div>
                         </div>
 
@@ -348,9 +348,17 @@
         <script src="~/Content/js/slim.js"></script>
         <script>
             $("#typeofFeedback").prop('required', true);
-
-
-
+            $('#priordiv').hide();
+            $('#typeofFeedback').change(function () {
+               
+                if ($(this).find(":selected").text() == "Complaint") {
+                    $('#priordiv').show();
+                    $("#priorty").prop('required', true);
+                } else {
+                    $('#priordiv').hide();
+                    $("#priorty").prop('required', false);
+                }
+            });
             $('#empID').change(function () {
 
                 var id = this.value;
@@ -389,7 +397,8 @@
 
 
             $('#forward').click(function () {
-               
+                
+                $("#deptId").prop('required', true); 
                 $("#emailsss").prop('required', true); 
                 $("#category").prop('required', true);
                 $("#subcategory").prop('required', true);
@@ -397,25 +406,17 @@
                     $('#statuscheck').text("Set status Open/Closed");
                     return false;
                 }               
-                if ($("#typeofFeedback").find(":selected").text() != "Enquiry") {                              
-                     $("#priorty").prop('required', true);
-                }else
-               {
-                    $("#priorty").prop('required', false);                   
-                }
+                
                 
 
             });
 
             $('#resolve').click(function () {
-
-                if ($("#typeofFeedback").find(":selected").text() != "Enquiry") {
-                    $("#priorty").prop('required', true);
-                } else {
-                    $("#priorty").prop('required', false);
-                }
+                
+               
                 if ($('#statusfield').val() == "Resolved") {
                     $("#emailsss").prop('required', false);
+                    $("#deptId").prop('required', false); 
                     $("#category").prop('required', false);
                     $("#subcategory").prop('required', false);
                     return true;
@@ -424,6 +425,7 @@
                 else {
                     $('#statuscheck').text("Set status Resolved");
                     $("#emailsss").prop('required', false);
+                    $("#deptId").prop('required', false); 
                     $("#category").prop('required', false);
                     $("#subcategory").prop('required', false);
                     return false;
@@ -526,12 +528,12 @@
                     $("#subcategory option").remove();
                 
                 $('#subcategory').append('<option value="">' + "Choose Sub Category" + '</option>');
-                if ($("#deptId").val() != "") {
+                if ($("#deptId").val() != "" && $("#typeofFeedback").val() != "" ) {
                     $.ajax({
                         type: "POST",
                         url: "@Url.Action("getCategories", "HR")",
                         contentType: "application/json; charset=utf-8",
-                        data: '{"depId":"' + $(this).val() + '"}',
+                        data: '{"depId":"' + $(this).val() + '","type":"' + $('#typeofFeedback').val() + '"}',
                         dataType: "json",
                         success: function (r) {
 
