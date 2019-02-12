@@ -34,7 +34,7 @@
             <div class="messages-left">
                 <div class="slim-pageheader">
                     <h6 class="slim-pagetitle">Messages</h6>
-                    <a href="default.htm" class="messages-compose"><i class="icon ion-compose"></i></a>
+                    <a href="#" class="messages-compose"><i class="icon ion-compose"></i></a>
                 </div><!-- slim-pageheader -->
                 <div class="messages-list clk">
                     @if (ViewBag.Messages != null)
@@ -340,7 +340,7 @@
             
             if (response.Chat.active) {
                 $('#chatlist' + response.ChatId).parent().prepend($('#chatlist'+response.ChatId));
-                activeUser = response.Sender.UserName;
+                activeUser = response.SenderId;
                 console.log('--active user---' + activeUser);
 
             }
@@ -415,8 +415,9 @@
         }
 
         messageHub.client.userclosedchat = function (response) {
-            console.log('---user closed chat-----'+response);
-            $('#userclosechat').modal('show');
+            console.log('---user closed chat-----' + response);
+            if ($('#chatId').val() == response)
+                    $('#userclosechat').modal('show');
         }
 
 

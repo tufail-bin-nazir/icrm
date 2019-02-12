@@ -67,7 +67,7 @@ namespace icrm.Controllers
         // GET: Chat
         public ActionResult Index()
         {
-            
+
             return View();
         }
 
@@ -83,7 +83,7 @@ namespace icrm.Controllers
 
 
         [HttpPost]
-        public JsonResult sendmsg(string text,int? chatId)
+        public JsonResult sendmsg(string text, int? chatId)
         {
             ApplicationUser sender = UserManager.FindById(User.Identity.GetUserId());
             ApplicationUser reciever = chatService.GetUserFromChatIdOtherThanPassedUser(chatId, sender.Id);
@@ -98,8 +98,8 @@ namespace icrm.Controllers
                         }*/
             //ChatViewModel chatViewModel = new ChatViewModel(){Text = text,Sender = sender.UserName,Reciever = reciever};
 
-           //Producer producer = new Producer("messageexchange",ExchangeType.Direct); 
-           // Debug.Print(con + "-----rec-----"+ reciever.UserName +"-----sen-----"+sender.UserName+"---msg------"+text+"----");
+            //Producer producer = new Producer("messageexchange",ExchangeType.Direct); 
+            // Debug.Print(con + "-----rec-----"+ reciever.UserName +"-----sen-----"+sender.UserName+"---msg------"+text+"----");
             /*int? chatId2 = chatService.getChatIdOfUsers(sender, reciever);
             if (chatId2 == null)
             {
@@ -137,10 +137,10 @@ namespace icrm.Controllers
                     Debug.Print("returned message----=" + message.Text);
 
                 }*/
-               
-            
 
-            return Json("", JsonRequestBehavior.AllowGet);
+
+
+                return Json("", JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
@@ -155,33 +155,36 @@ namespace icrm.Controllers
 
         [HttpGet]
         [Route("chat/{chatId}/messages/{page}")]
-        public JsonResult getPagedMessages(int chatId,int Page)
+        public JsonResult getPagedMessages(int chatId, int Page)
         {
-            return Json(messageService.getPagedMessages(chatId, Page),JsonRequestBehavior.AllowGet);
+            return Json(messageService.getPagedMessages(chatId, Page), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         [Route("chat/close/{activeUser}")]
         public JsonResult CloseChat(string activeUser)
         {
-            Debug.Print(activeUser+"-----------active user");
-            ApplicationUser user1 = (ApplicationUser) Session["user"];
+            Debug.Print(activeUser + "-----------active user");
+            ApplicationUser user1 = (ApplicationUser)Session["user"];
             ApplicationUser user2 = userService.findUserOnId(user1.Id);
             if (!activeUser.IsNullOrWhiteSpace())
             {
+                Debug.Print(user2.Id+"----active user not null chat "+activeUser);
                 int? chatId = chatService.getChatIdOfUsers(activeUser, user2.Id);
+                Debug.Print("chat id is----"+chatId);
                 if (chatId != null)
                 {
-                    chatService.changeActiveStatus(chatId,false);
+
+                    chatService.changeActiveStatus(chatId, false);
                 }
 
                 eventService.hrClosedChat(activeUser);
             }
 
-            if (this.chatRequestService.ChatRequestsSize()>0)
+            if (this.chatRequestService.ChatRequestsSize() > 0)
             {
                 return Json(true, JsonRequestBehavior.AllowGet);
-            }                                                                                       
+            }
             else
             {
                 user2.available = true;
@@ -211,12 +214,12 @@ namespace icrm.Controllers
         public void changeHrAvailabilityStatus(bool value)
         {
             ApplicationUser hr = this.userService.findUserOnId(User.Identity.GetUserId());
-            Debug.Print(value+"---------value");
+            Debug.Print(value + "---------value");
             hr.available = value;
             this.userService.Update(hr);
             if (value)
             {
-                if(this.chatRequestService.ChatRequestsSize()>0)
+                if (this.chatRequestService.ChatRequestsSize() > 0)
                     this.AssignNextRequestInQueueToHr();
             }
         }
@@ -257,14 +260,14 @@ namespace icrm.Controllers
         [Route("test")]
         public void testapp()
         {
-            HttpContext.Application["date"]= DateTime.Now;
+            HttpContext.Application["date"] = DateTime.Now;
             Debug.Print("sett the date in api---");
         }
 
-        public Message SendMessage(string text,int? chatId,ApplicationUser sender,ApplicationUser reciever)
+        public Message SendMessage(string text, int? chatId, ApplicationUser sender, ApplicationUser reciever)
         {
-            Debug.Print("sending message"+text+"---recirever---"+reciever.UserName+"---chatid------"+chatId);
-            Producer producer = new Producer("messageexchange",ExchangeType.Direct);
+            Debug.Print("sending message" + text + "---recirever---" + reciever.UserName + "---chatid------" + chatId);
+            Producer producer = new Producer("messageexchange", ExchangeType.Direct);
             Message message = new Message();
             message.Text = text;
             message.SenderId = sender.Id;
@@ -272,9 +275,9 @@ namespace icrm.Controllers
             message.SentTime = DateTime.Now;
             message.ChatId = chatId;
             Message msgWithId = messageService.Save(message);
-           // Debug.Print((msgWithId) + "----msgwitrhid");
-           // Debug.Print(msgWithId.Id + "----mdgid>><<<<<" + msgWithId.Reciever + "-----reciever");
-            if(producer.ConnectToRabbitMQ())
+            // Debug.Print((msgWithId) + "----msgwitrhid");
+            // Debug.Print(msgWithId.Id + "----mdgid>><<<<<" + msgWithId.Reciever + "-----reciever");
+            if (producer.ConnectToRabbitMQ())
                 producer.send(msgWithId);
             return msgWithId;
         }
@@ -288,56 +291,58 @@ namespace icrm.Controllers
             ApplicationUser reciever = UserManager.FindById(User.Identity.GetUserId());
             ApplicationUser sender = UserManager.FindById(chatRequest.UserId);
             Debug.Print(chatRequest + "------cgat rwq");
+            Producer producer = new Producer("messageexchange", ExchangeType.Direct);
+
             if (chatRequest != null)
             {
                 int messageSize = this.messageService.GetMessageSizeOfChatRequestUser(chatRequest.UserId);
                 this.chatRequestService.delete(chatRequest);
                 int? chatId2 = null;
+                chatId2 = chatService.getChatIdOfUsers(sender.Id, reciever.Id);
+                Debug.Print("Chat id is  " + chatId2);
+                List<Message> messages = new List<Message>();
+                if (chatId2 == null)
+                {
+                    Debug.Print("Chat id 2 is null but how--" + chatId2);
+                    Chat chat = new Chat();
+                    chat.UserOneId = sender.Id;
+                    chat.UserTwoId = reciever.Id;
+                    chat.active = true;
+                    chatId2 = chatService.Save(chat);
+                }
+                else
+                {
+                    this.chatService.changeActiveStatus(chatId2, true);
+                }
                 if (messageSize > 0)
                 {
-                    chatId2 = chatService.getChatIdOfUsers(sender.Id, reciever.Id);
-                    Debug.Print("Chat id is  " + chatId2);
-                     if (chatId2 == null)
-                            {
-                                Debug.Print("Chat id 2 is null but how--" + chatId2);
-                                Chat chat = new Chat();
-                                chat.UserOneId = sender.Id;
-                                chat.UserTwoId = reciever.Id;
-                                chat.active = true;
-                                chatId2 = chatService.Save(chat);
-                    }
-                    else
+                    messages = messageService.GetMessagesOfChatRequestUser(sender.Id, reciever.Id, chatId2);
+
+
+                }
+                else
+                {
+                    Message message = new Message();
+                    message.Text = "Hello Agent,I want to chat with you";
+                    message.RecieverId = reciever.Id;
+                    message.SenderId = sender.Id;
+                    message.SentTime = DateTime.Now;
+                    message.ChatId = chatId2;
+                    message = messageService.Save(message);
+                    messages.Add(message);
+                }
+                foreach (Message msgWithId in messages)
+                {
+                    if (producer.ConnectToRabbitMQ())
                     {
-                        this.chatService.changeActiveStatus(chatId2, true);
+                        producer.send(msgWithId);
+                        this.eventService.NotifyHrAboutChat(msgWithId);
                     }
                 }
-
-                    List<Message> messages =messageService.GetMessagesOfChatRequestUser(sender.Id, reciever.Id, chatId2);
-                        
-                        Producer producer = new Producer("messageexchange", ExchangeType.Direct);
-                    /*message.RecieverId = reciever.Id;
-                    message.ChatId = chatId2;
-
-
-                    Message msgWithId = messageService.updateMessage(message);
-                    Thread.Sleep(500);*/
-                    // Debug.Print((msgWithId) + "----msgwitrhid");
-                    // Debug.Print(msgWithId.Id + "----mdgid>><<<<<" + msgWithId.Reciever + "-----reciever");
-                    foreach(Message msgWithId in messages)
-                    {
-                        if (producer.ConnectToRabbitMQ())
-                        {
-                            producer.send(msgWithId);
-                            this.eventService.NotifyHrAboutChat(msgWithId);
-                        }
-                        //SendMessage(message.Text, chatId2, message.Sender, reciever);
-                    }
-                
-
-            
                 this.eventService.hrAvailableNotification(sender.DeviceCode);
             }
         }
     }
-    
+
 }
+
