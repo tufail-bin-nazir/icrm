@@ -69,7 +69,7 @@ namespace icrm.Controllers
                             user.LastName = row.Cell(4).Value.ToString();
                             user.UserName ="user"+x+"@gmail.com";
 
-                            var departmentname = row.Cell(5).Value.ToString();
+                            var departmentname = row.Cell(5).Value.ToString().Contains("Operations")? "Operations": row.Cell(5).Value.ToString();
                             Department department = context.Departments.Where(m => m.name == departmentname).SingleOrDefault();
                             if (department == null)
                             {
