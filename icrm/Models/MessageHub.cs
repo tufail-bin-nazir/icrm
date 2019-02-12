@@ -123,8 +123,8 @@ namespace icrm.Models
         {
             HubConnectionMap hbc = db.HubConnectionMap.Where(hc => hc.UserName == username)
                 .FirstOrDefault();
-            Debug.Print(hbc.ConnectionId + "------con on usname");
-            return hbc.ConnectionId;
+               return hbc?.ConnectionId;
+            
         }
     }
 }

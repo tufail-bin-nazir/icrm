@@ -68,19 +68,17 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">SubCategory: <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(x => x.subCategory.name, new { @class = "form-control", placeholder = "Enter Sub Category", Required = "true" })
+                                    <label class="form-control-label">Select Department <span class="tx-danger">*</span></label>
+                                    <select class="form-control select2" id="depid">
+                                        <option value="">Choose Department</option>
+                                        @foreach (var Department in ViewBag.DepartmentList)
+                                        {
+                                            <option value="@Department.Id">@Department.name</option>
 
+                                        }
 
-                                </div>
-                            </div>
+                                    </select>
 
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Category Name <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.subCategory.CategoryId,
-                                       new SelectList(ViewBag.CategoryList,
-                                          "Id", "name"),"Choose Category", new { @class = "form-control select2"})
 
 
                                 </div>
@@ -91,11 +89,38 @@
                                     <label class="form-control-label">Type <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.subCategory.FeedBackTypeId,
                                        new SelectList(ViewBag.TypeList,
-                                          "Id", "name"),"Choose Type", new { @class = "form-control select2"})
+                                          "Id", "name"),"Choose Type", new { @class = "form-control select2", @id = "typeid"})
 
 
                                 </div>
                             </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Category Name <span class="tx-danger">*</span></label>
+                                   
+
+                                    <select name="subCategory.CategoryId" class = "form-control select2" id="category">
+                                        <option value="">Select Category</option>
+
+                                    </select>
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">SubCategory: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(x => x.subCategory.name, new { @class = "form-control", placeholder = "Enter Sub Category", Required = "true" })
+
+
+                                </div>
+                            </div>
+
+
+
+
 
 
 
@@ -147,27 +172,27 @@
 
                                     @foreach (var item in Model.subCategories.Select((x, i) => new { Data = x, Index = i }))
                                     {
-                                            <tr>
-                                                <td class="pd-l-20">
-                                                    @(item.Index+1)
-                                                </td>
-                                                <td>
-                                                    <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.name</a>
+                                        <tr>
+                                            <td class="pd-l-20">
+                                                @(item.Index + 1)
+                                            </td>
+                                            <td>
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.name</a>
 
-                                                </td>
+                                            </td>
 
-                                                <td>
-                                                    <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.Category.name</a>
+                                            <td>
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.Category.name</a>
 
-                                                </td>
-                                                <td class="tx-12">
-                                                    <a href="@Url.Action("edit",new {id = item.Data.Id })"> <i class="fa fa-edit"> </i> </a>
-                                                    <a href="@Url.Action("Delete",new {id = item.Data.Id })"> <i class="fa fa-trash"> </i> </a>
+                                            </td>
+                                            <td class="tx-12">
+                                                <a href="@Url.Action("edit",new {id = item.Data.Id })"> <i class="fa fa-edit"> </i> </a>
+                                                <a href="@Url.Action("Delete",new {id = item.Data.Id })"> <i class="fa fa-trash"> </i> </a>
 
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
                             </table>
                         </div>
                         <!-- table-responsive -->
@@ -209,7 +234,42 @@
         </div>
         <!-- slim-mainpanel -->
 
-      @Html.Partial("_AdminFooter")
+        @Html.Partial("_AdminFooter")
+
+        <script>
+            $("#typeid").change(function () {
+
+                $("#category option").remove();
+
+                var typeid = $("#typeid").val();
+                var depid = $("#depid").val();
+               
+                if ($("#typeid").val() != "") {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("getCategories", "SubCategories")",
+                        contentType: "application/json; charset=utf-8",
+                        data: '{"depId":"' + depid + '","type":"' + typeid + '"}',
+                        dataType: "json",
+                        success: function (r) {
+
+                            for (var i = 0; i < r.length; i++) {
+                                $('#category').append('<option value="' + r[i].Id + '">' + r[i].name + '</option>');
+
+                            }
+                        },
+                        error: function (r) {
+                            alert("error" + r.responseText);
+                        }
+                    });
+                }
+
+            });
+
+
+
+
+        </script>
 </body>
 
 </html>
