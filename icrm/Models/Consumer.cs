@@ -57,7 +57,7 @@ namespace icrm.Models
 
         private void Consume(String queueName)
         {
-            bool autoAck = true;
+            bool autoAck = false;
             Debug.Print(queueName + "-------queueneame2");
             //create a subscription
             mSubscription = new Subscription(Model, queueName, autoAck);
