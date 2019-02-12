@@ -98,10 +98,21 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
+                                    <label class="form-control-label">Type Name <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(m => m.Category.FeedBackTypeId,
+                                        new SelectList(ViewBag.FeedBackTypeList,
+                                        "Id", "name"), "Choose Type", new { @class = "form-control select2" })
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
                                     <label class="form-control-label">Department Name <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.Category.DepartmentId,
-new SelectList(ViewBag.DepartmentList,
-"Id", "name"), "Choose Department", new { @class = "form-control select2" })
+                                        new SelectList(ViewBag.DepartmentList,
+                                        "Id", "name"), "Choose Department", new { @class = "form-control select2" })
 
 
                                 </div>

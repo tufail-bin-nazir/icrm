@@ -15,6 +15,9 @@ namespace icrm.Models
 
         public IEnumerable<SubCategory> subCategories { get; set; }
         public int DepartmentId { get; set; }
+
+        public int? FeedBackTypeId { get; set; }
+        public virtual FeedBackType FeedBackType { get; set; }
         public int? EscalationUserId { get; set; }
 
 
