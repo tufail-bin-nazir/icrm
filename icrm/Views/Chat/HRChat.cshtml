@@ -416,8 +416,13 @@
 
         messageHub.client.userclosedchat = function (response) {
             console.log('---user closed chat-----' + response);
-            if ($('#chatId').val() == response)
-                    $('#userclosechat').modal('show');
+            if ($('#chatId').val() == response) {
+                $('#userclosechat').modal('show');
+                $('.messages-right').attr('style', 'display: none !important');
+
+            }
+
+
         }
 
 
@@ -520,15 +525,13 @@
             console.log('in chat close func');
             var url = "/chat/close/"+activeUser;
             $('#closechat').modal('hide');
-            $.get(url, function(data) {
-                if (data) {
-                    $('.messages-right').attr('style', 'display: none !important');
+            $('.messages-right').attr('style', 'display: none !important');
 
+            $.get(url, function (data) {
+                console.log(data+"---response from serever");
+                if (data) {
                     $('#userinqueue').modal('show');
 
-                } else {
-                    $('.messages-right').attr('style', 'display: none !important');
-                    //alert('no user in queue');
                 }
             });
         }
