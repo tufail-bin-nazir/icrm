@@ -82,6 +82,8 @@ namespace icrm.Models
 
         public virtual FeedBackType type { get; set; }
         public string checkStatus { get; set; }
+        public string departUserId { get; set; }
+        public ApplicationUser departUser { get; set; }
 
     }
 }

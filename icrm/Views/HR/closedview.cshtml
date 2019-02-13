@@ -82,6 +82,7 @@
                     <p class="mg-b-20 mg-sm-b-40"></p>
                     <div class="form-layout">
                         <span class="tx-success">@TempData["Message"]</span>
+                        @Html.HiddenFor(model => model.departUserId, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.id, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
@@ -128,12 +129,12 @@
                             </div>
                             <!-- col-4 -->
                             <!-- <div class="col-lg-4">
-         <div class="form-group">
-             <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
-           @** @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })*@
+            <div class="form-group">
+                <label class="form-control-label">Sub Location: <span class="tx-danger">*</span></label>
+              @** @Html.TextBoxFor(model => model.user.SubLocation.name, new { @readonly = "readonly", @class = "form-control" })*@
 
-         </div>
-     </div>-->
+            </div>
+        </div>-->
                             <!-- col-4 -->
                             <!-- col-4 -->
                             <div class="col-lg-4">

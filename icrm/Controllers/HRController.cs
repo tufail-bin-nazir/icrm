@@ -175,7 +175,11 @@ namespace icrm.Controllers
                     case "Forward/Create":
                         if (feedback.departmentID != null && Request.Form["responsee"] == "")
                         {
-                            if (ModelState.IsValid)
+
+                        ApplicationUser deptUser=feedInterface.getEscalationUser(feedback.departmentID,feedback.categoryId);
+                        feedback.departUserId = deptUser.Id;
+                        feedback.departUser = deptUser;
+                        if (ModelState.IsValid)
                             {                                
                                 feedback.assignedBy = user.Id;
                                 feedback.assignedDate = DateTime.Now;
@@ -330,6 +334,10 @@ namespace icrm.Controllers
                 case "Forward":
                     if (feedback.departmentID != null && Request.Form["responsee"] == "")
                     {
+                        ApplicationUser deptUser = feedInterface.getEscalationUser(feedback.departmentID, feedback.categoryId);
+                        feedback.departUserId = deptUser.Id;
+                        feedback.departUser = deptUser;
+
                         feedback.department = db.Departments.Find(feedback.departmentID);
                         feedback.checkStatus = Constants.ASSIGNED;                        
                             if (feedback.assignedDate == null)
@@ -879,6 +887,9 @@ namespace icrm.Controllers
                 case "Forward":
                     if (feedback.departmentID != null && Request.Form["responsee"] == "")
                     {
+                        ApplicationUser deptUser = feedInterface.getEscalationUser(feedback.departmentID, feedback.categoryId);
+                        feedback.departUserId = deptUser.Id;
+                        feedback.departUser = deptUser;
                         feedback.department = db.Departments.Find(feedback.departmentID);
                         feedback.checkStatus = Constants.ASSIGNED;                     
                             if (feedback.assignedDate == null)
