@@ -61,6 +61,9 @@ namespace icrm.RepositoryInterface
         IEnumerable<Feedback> getAllOpenByDept(string id);
         IEnumerable<Feedback> getAllClosedByDept(string id);
         IEnumerable<Feedback> getAllResolvedByDept(string id);
-        
+
+        IEnumerable<Feedback> getAllOpenMobile();
+
+
     }
 }

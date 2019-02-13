@@ -51,7 +51,7 @@ namespace icrm.WebApi
             Debug.Print(message.ChatId + "--------chat id by mudassir-----" + message.Text);
             if (message.ChatId == 0 || !this.chatService.IsActive(message.ChatId))
             {
-                reciever =ProcessMessage(message,sender);
+                reciever = ProcessMessage(message, sender);
                 Debug.Print("it shud be here-----");
                 if (reciever == null)
                 {
@@ -59,22 +59,22 @@ namespace icrm.WebApi
                     return Ok();
 
                 }
-                    
+
             }
-              else
+            else
             {
-                    reciever = userService.findUserOnId(message.RecieverId);
+                reciever = userService.findUserOnId(message.RecieverId);
             }
 
-            
-            Producer producer = new Producer("messageexchange",ExchangeType.Direct);
+
+            Producer producer = new Producer("messageexchange", ExchangeType.Direct);
             Message msgWithId = new Message();
             if (producer.ConnectToRabbitMQ())
             {
-                 msgWithId = SendChatMessage(message, sender, reciever);
+                msgWithId = SendChatMessage(message, sender, reciever);
 
-                if(!chatService.IsActive(msgWithId.ChatId))
-                    chatService.changeActiveStatus(msgWithId.ChatId,true);
+                if (!chatService.IsActive(msgWithId.ChatId))
+                    chatService.changeActiveStatus(msgWithId.ChatId, true);
 
                 producer.send(msgWithId);
                 this.eventService.NotifyHrAboutChat(msgWithId);
@@ -115,7 +115,7 @@ namespace icrm.WebApi
             var Name1 = User.Identity.Name;
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
             ApplicationUser sender = user.Result;
-            if (this.chatRequestService.ChatRequestsSize()>0)
+            if (this.chatRequestService.ChatRequestsSize() > 0)
             {
                 if (!chatRequestService.CheckRequestExistsOfUser(sender.Id))
                 {
@@ -151,12 +151,16 @@ namespace icrm.WebApi
         public IHttpActionResult closeChat([FromBody]Message message)
         {
             //tell mudassir to send message with chatid and recieverid
-            Debug.Print(message.Text+"-----user closes chat----"+message.RecieverId);
+            Debug.Print(message.Text + "-----user closes chat----" + message.RecieverId);
             ApplicationUser reciever = userService.findUserOnId(message.RecieverId);
-            reciever.available = true;
-            userService.Update(reciever);
-            this.chatService.changeActiveStatus(message.ChatId,false);
-            this.eventService.chatClosedByUser(reciever.UserName);
+            if (reciever != null)
+            {
+                reciever.available = true;
+                userService.Update(reciever);
+                this.chatService.changeActiveStatus(message.ChatId, false);
+                this.eventService.chatClosedByUser(message);
+            }
+
             return Ok();
         }
 
@@ -168,9 +172,12 @@ namespace icrm.WebApi
             var Name1 = User.Identity.Name;
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
             ApplicationUser sender = user.Result;
+            Chat chat =chatService.hasUserChatActive(sender.Id);
             var map = new
             {
-                status = chatService.hasUserChatActive(sender.Id),
+                status = chat!=null?true:false,
+                recieverId = chat?.UserOneId == sender.Id?chat?.UserTwoId:chat?.UserOneId,
+                chatId=chat?.Id,
                 messages = messageService.GetMessagesOfUser(sender.Id)
             };
             startConsumer(sender.UserName);
@@ -178,7 +185,7 @@ namespace icrm.WebApi
             return Ok(map);
         }
 
-        
+
 
         public ApplicationUserManager UserManager
         {
@@ -192,7 +199,7 @@ namespace icrm.WebApi
             }
         }
 
-        public ApplicationUser ProcessMessage(Message message,ApplicationUser sender)
+        public ApplicationUser ProcessMessage(Message message, ApplicationUser sender)
         {
             if (this.chatRequestService.ChatRequestsSize() > 0)
             {
@@ -221,7 +228,7 @@ namespace icrm.WebApi
                 ApplicationUser reciever = userService.GetAllAvailableUsers(Constants.ROLE_HR).FirstOrDefault();
 
                 //Debug.Print(reciever.UserName+"-----username-----"+reciever.Id);
-                if (reciever != null && (this.chatService.IsActive(message.ChatId) || message.ChatId == 0) )
+                if (reciever != null && (this.chatService.IsActive(message.ChatId) || message.ChatId == 0))
                 {
 
                     reciever.available = false;
@@ -244,7 +251,7 @@ namespace icrm.WebApi
             return null;
         }
 
-        public Message SendChatMessage(Message message,ApplicationUser sender,ApplicationUser reciever )
+        public Message SendChatMessage(Message message, ApplicationUser sender, ApplicationUser reciever)
         {
             int? chatId2 = chatService.getChatIdOfUsers(sender.Id, reciever.Id);
             Debug.Print("Chat id is  " + chatId2);
@@ -255,7 +262,7 @@ namespace icrm.WebApi
                 chat.UserOneId = sender.Id;
                 chat.UserTwoId = reciever.Id;
                 chat.active = true;
-                Debug.Print("chat details----"+chat.ToString());
+                Debug.Print("chat details----" + chat.ToString());
                 chatId2 = chatService.Save(chat);
             }
 
@@ -275,11 +282,11 @@ namespace icrm.WebApi
 
         public void startConsumer(string username)
         {
-            Consumer consumer = new Consumer("messageexchange",ExchangeType.Direct);
-            if(consumer.ConnectToRabbitMQ())
-               consumer.StartConsuming(username);
+            Consumer consumer = new Consumer("messageexchange", ExchangeType.Direct);
+            if (consumer.ConnectToRabbitMQ())
+                consumer.StartConsuming(username);
 
         }
     }
-           
+
 }

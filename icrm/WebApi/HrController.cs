@@ -71,7 +71,7 @@ namespace icrm.WebApi
         {
             
 
-            var Query = from f in feedInterface.getAllOpen()
+            var Query = from f in feedInterface.getAllOpenMobile()
                         select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
 
             if (Query != null)
@@ -216,11 +216,11 @@ namespace icrm.WebApi
         /// </summary>
 
         [HttpGet]
-        [Route("api/HR/catagorey/{deptId}")]
-        public IHttpActionResult catagorey(int deptId)
+        [Route("api/HR/catagorey/{deptId}/{type}")]
+        public IHttpActionResult catagorey(int deptId, string type)
         {
-
-            var entity = from f in feedInterface.getCategories(deptId)
+            var typeid = db.FeedbackTypes.Where(e => e.name == type).SingleOrDefault().Id;
+            var entity = from f in feedInterface.getCategories(deptId, typeid)
                          select f;
 
             if (entity != null)

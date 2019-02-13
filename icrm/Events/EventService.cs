@@ -103,13 +103,13 @@ namespace icrm.Events
             return null;
         }
 
-        public Task chatClosedByUser(string username)
+        public Task chatClosedByUser(Message message)
         {
 
             HostingEnvironment.QueueBackgroundWorkItem(cancellationToken =>
             {
                 Debug.Print("--------chat closed by user notify----");
-                this.messageHub.userClosedChat(username);
+                this.messageHub.userClosedChat(message);
 
             });
             return null;

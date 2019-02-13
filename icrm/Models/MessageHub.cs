@@ -17,32 +17,33 @@ namespace icrm.Models
         //readonly  static Dictionary<string,string> connections =  new Dictionary<string,string>();
         ApplicationDbContext db = new ApplicationDbContext();
         private UserManager<ApplicationUser> userManager;
-         
+
         public MessageHub()
         {
             userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
         }
 
-        public void OnMessageNotified(object o,MessageEventArgs messageEventArgs)
+        public void OnMessageNotified(object o, MessageEventArgs messageEventArgs)
         {
-            if(this.msgId != messageEventArgs.message.Id) { 
-            //Debug.Print("----in msg hub-----"+messageEventArgs.message.Chat.active);
-            //Debug.Print(messageEventArgs.message.Text+"---=--===in m hub-=-=-==--="+messageEventArgs.message.Sender.UserName);
-            var messageHub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
+            if (this.msgId != messageEventArgs.message.Id)
+            {
+                //Debug.Print("----in msg hub-----"+messageEventArgs.message.Chat.active);
+                //Debug.Print(messageEventArgs.message.Text+"---=--===in m hub-=-=-==--="+messageEventArgs.message.Sender.UserName);
+                var messageHub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
                 ApplicationUser user = messageEventArgs.message.Reciever;
-            //Debug.Print("user id------"+user.UserName+"---------"+ FindConnectionIdOnUsername(user.UserName)+"-------roles is==="+ userManager.IsInRole(user.Id, "User"));
-               
+                //Debug.Print("user id------"+user.UserName+"---------"+ FindConnectionIdOnUsername(user.UserName)+"-------roles is==="+ userManager.IsInRole(user.Id, "User"));
+
                 var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
                 var roleManager = new RoleManager<IdentityRole>(roleStore);
                 if (user.Roles.FirstOrDefault().RoleId == roleManager.FindByName("User").Id)
                 {
-                   messageHub.Clients.Client(FindConnectionIdOnUsername(user.UserName)).recieve(messageEventArgs.message);
+                    messageHub.Clients.Client(FindConnectionIdOnUsername(user.UserName)).recieve(messageEventArgs.message);
                 }
                 else
-                 {
+                {
                     messageHub.Clients.User(user.UserName).recieve(messageEventArgs.message);
                 }
-                this.msgId = messageEventArgs.message.Id;  
+                this.msgId = messageEventArgs.message.Id;
             }
         }
 
@@ -54,15 +55,14 @@ namespace icrm.Models
                 ApplicationUser user = context.Users.Find(message.Reciever.Id);
                 messageHub.Clients.User(user.UserName).notification(message);
             }
-           
+
         }
 
-        public void userClosedChat(string username)
+        public void userClosedChat(Message message)
         {
-            Debug.Print("userclosechat        "+username);
+            Debug.Print("userclosechat        " + message.RecieverId);
             var messageHub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
-            string message = "User has closed the chat";
-            messageHub.Clients.User(username).userclosedchat(message);
+            messageHub.Clients.User(message.RecieverId).userclosedchat(message.ChatId);
         }
 
         public void HrClosedChat(string username)
@@ -82,7 +82,7 @@ namespace icrm.Models
                 : Context.User.Identity.Name;
 
             //Context.User.Identity.Name = username;
-                AddOrUpdateHubConnection(new HubConnectionMap(){UserName = username,ConnectionId = Context.ConnectionId});
+            AddOrUpdateHubConnection(new HubConnectionMap() { UserName = username, ConnectionId = Context.ConnectionId });
 
             return base.OnConnected();
         }
@@ -105,7 +105,7 @@ namespace icrm.Models
         {
             HubConnectionMap hcp = db.HubConnectionMap.Where(hc => hc.UserName == hubConnectionMap.UserName)
                 .FirstOrDefault();
-            if ( hcp == null)
+            if (hcp == null)
             {
                 db.HubConnectionMap.Add(hubConnectionMap);
             }
@@ -113,7 +113,7 @@ namespace icrm.Models
             {
                 hcp.ConnectionId = hubConnectionMap.ConnectionId;
                 db.Entry(hcp).State = EntityState.Modified;
-                
+
             }
 
             db.SaveChanges();
@@ -121,10 +121,10 @@ namespace icrm.Models
 
         public string FindConnectionIdOnUsername(string username)
         {
-            HubConnectionMap hbc =db.HubConnectionMap.Where(hc => hc.UserName == username)
+            HubConnectionMap hbc = db.HubConnectionMap.Where(hc => hc.UserName == username)
                 .FirstOrDefault();
-            Debug.Print(hbc.ConnectionId+"------con on usname");
-            return hbc.ConnectionId;
+               return hbc?.ConnectionId;
+            
         }
     }
 }

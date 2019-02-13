@@ -7,12 +7,22 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using icrm.Models;
+using icrm.RepositoryImpl;
+using icrm.RepositoryInterface;
 
 namespace icrm.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class SubCategoriesController : Controller
     {
+
+        private IFeedback feedInterface;
+
+        public SubCategoriesController()
+        {
+            feedInterface = new FeedbackRepository();
+        }
+
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: SubCategories
@@ -40,8 +50,9 @@ namespace icrm.Controllers
         // GET: SubCategories/Create
         public ActionResult Create()
         {
-            ViewBag.CategoryList = db.Categories.ToList();
+           
             ViewBag.TypeList = db.FeedbackTypes.ToList();
+            ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD);
             ViewBag.Status = "Add";
             return View("CreateList", new SubCategoryViewModel { subCategories = db.SubCategories.ToList()});
         }
@@ -60,8 +71,9 @@ namespace icrm.Controllers
                 return RedirectToAction("Create");
             }
 
-            ViewBag.CategoryList = db.Categories.ToList();
+           
             ViewBag.TypeList = db.FeedbackTypes.ToList();
+            ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD);
             ViewBag.Status = "Add";
             return View("CreateList", new SubCategoryViewModel { subCategories = db.SubCategories.ToList() });
         }
@@ -79,8 +91,9 @@ namespace icrm.Controllers
                 return HttpNotFound();
             }
            
-            ViewBag.CategoryList = db.Categories.ToList();
+           
             ViewBag.TypeList = db.FeedbackTypes.ToList();
+            ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD);
             ViewBag.Status = "Update";
             return View("CreateList", new SubCategoryViewModel { subCategory = subCategory, subCategories = db.SubCategories.ToList() });
         }
@@ -99,8 +112,9 @@ namespace icrm.Controllers
                 return RedirectToAction("Create");
             }
            
-            ViewBag.CategoryList = db.Categories.ToList();
+           
             ViewBag.TypeList = db.FeedbackTypes.ToList();
+            ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD);
             ViewBag.Status = "Update";
             return View("CreateList", new SubCategoryViewModel { subCategories = db.SubCategories.ToList() });
         }
@@ -117,8 +131,9 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryList = db.Categories.ToList();
+          
             ViewBag.TypeList = db.FeedbackTypes.ToList();
+            ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD);
             ViewBag.Status = "Delete";
             return View("CreateList", new SubCategoryViewModel {subCategory = subCategory, subCategories = db.SubCategories.ToList() });
         }
@@ -142,5 +157,14 @@ namespace icrm.Controllers
             }
             base.Dispose(disposing);
         }
+
+        [HttpPost]
+        public JsonResult getCategories(int depId, int type)
+        {
+            List<Category> categories = feedInterface.getCategories(depId, type);
+            return Json(categories);
+        }
+
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using icrm.Models;
@@ -7,14 +8,14 @@ using icrm.RepositoryInterface;
 
 namespace icrm.RepositoryImpl
 {
-    public class ChatRepository : ChatInterface          
+    public class ChatRepository : ChatInterface
     {
 
         ApplicationDbContext db = new ApplicationDbContext();
 
         public int? getChatIdOfUsers(string userOne, string userTwo)
         {
-             Chat chat = db.Chat.Where(c => (c.UserOneId == userOne && c.UserTwoId == userTwo) || (c.UserOneId == userTwo && c.UserTwoId == userOne)).FirstOrDefault();
+            Chat chat = db.Chat.Where(c => (c.UserOneId == userOne && c.UserTwoId == userTwo) || (c.UserOneId == userTwo && c.UserTwoId == userOne)).FirstOrDefault();
             if (chat != null)
             {
                 return chat.Id;
@@ -30,7 +31,7 @@ namespace icrm.RepositoryImpl
 
         public ApplicationUser GetUserFromChatIdOtherThanPassedUser(int? chatId, string userId)
         {
-            Chat chat = db.Chat.Include("UserOne").Include("UserTwo").SingleOrDefault(c=>c.Id ==chatId);
+            Chat chat = db.Chat.Include("UserOne").Include("UserTwo").SingleOrDefault(c => c.Id == chatId);
             if (chat.UserOneId == userId)
                 return chat.UserTwo;
 
@@ -46,25 +47,29 @@ namespace icrm.RepositoryImpl
 
         public bool IsActive(int? chatId)
         {
-            if(chatId>0)
-            return this.db.Chat.FirstOrDefault(c => c.Id == chatId).active;
+            if (chatId > 0)
+                return this.db.Chat.FirstOrDefault(c => c.Id == chatId).active;
 
             return false;
         }
 
-        public void changeActiveStatus(int? chatId,bool value)
+        public void changeActiveStatus(int? chatId, bool value)
         {
+            Debug.Print("----chatId--"+chatId+"----value----"+value);
             Chat chat = this.db.Chat.FirstOrDefault(c => c.Id == chatId);
             chat.active = value;
             this.db.SaveChanges();
         }
 
-        public bool hasUserChatActive(string id)
+        public Chat hasUserChatActive(string id)
         {
-           var chats = this.db.Chat.Where(c => (c.UserOneId == id || c.UserTwoId == id) && c.active == true).ToList();
-            if (chats.Count > 0)
-                return true;
-            return false;
+            Chat chat = this.db.Chat.Where(c => (c.UserOneId == id || c.UserTwoId == id) && c.active == true).FirstOrDefault();
+            return chat;
+        }
+
+        public Chat findChatOnId(int? Id)
+        {
+            return db.Chat.Find(Id);
         }
     }
 }
