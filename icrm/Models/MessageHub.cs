@@ -53,7 +53,8 @@ namespace icrm.Models
             {
                 var messageHub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
                 ApplicationUser user = context.Users.Find(message.Reciever.Id);
-                messageHub.Clients.User(user.UserName).notification(message);
+                var msg = new { FirstName = message.Sender.FirstName, LastName = message.Sender.LastName, Text = message.Text, SentTime = message.SentTime };
+                messageHub.Clients.User(user.UserName).notification(msg);
             }
 
         }
