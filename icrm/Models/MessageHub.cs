@@ -53,7 +53,8 @@ namespace icrm.Models
             {
                 var messageHub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
                 ApplicationUser user = context.Users.Find(message.Reciever.Id);
-                messageHub.Clients.User(user.UserName).notification(message);
+                var msg = new { FirstName = message.Sender.FirstName, LastName = message.Sender.LastName, Text = message.Text, SentTime = message.SentTime };
+                messageHub.Clients.User(user.UserName).notification(msg);
             }
 
         }
@@ -62,7 +63,7 @@ namespace icrm.Models
         {
             Debug.Print("userclosechat        " + message.RecieverId);
             var messageHub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
-            messageHub.Clients.User(message.RecieverId).userclosedchat(message.ChatId);
+            messageHub.Clients.User(message.Reciever.UserName).userclosedchat(message.ChatId);
         }
 
         public void HrClosedChat(string username)
