@@ -153,6 +153,7 @@ namespace icrm.WebApi
             //tell mudassir to send message with chatid and recieverid
             Debug.Print(message.Text + "-----user closes chat----" + message.RecieverId);
             ApplicationUser reciever = userService.findUserOnId(message.RecieverId);
+            message.Reciever = reciever;
             if (reciever != null)
             {
                 reciever.available = true;
@@ -161,6 +162,10 @@ namespace icrm.WebApi
                 this.eventService.chatClosedByUser(message);
             }
 
+            Debug.Print("----close chat window-----"+User.Identity.Name);
+            Consumer consumer = (Consumer)HttpContext.Current.Application[User.Identity.Name];
+            Debug.Print(consumer+"-------consukmer her for despose");
+            consumer?.Dispose();
             return Ok();
         }
 
@@ -283,6 +288,7 @@ namespace icrm.WebApi
         public void startConsumer(string username)
         {
             Consumer consumer = new Consumer("messageexchange", ExchangeType.Direct);
+            HttpContext.Current.Application[username] = consumer;
             if (consumer.ConnectToRabbitMQ())
                 consumer.StartConsuming(username);
 

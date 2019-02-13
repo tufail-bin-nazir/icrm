@@ -517,6 +517,7 @@
         });
 
         function closeChat() {
+            console.log('in chat close func');
             var url = "/chat/close/"+activeUser;
             $('#closechat').modal('hide');
             $.get(url, function(data) {
