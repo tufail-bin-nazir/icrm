@@ -545,15 +545,21 @@
             });
         }
 
-        $(window).on('beforeunload', function () {
+        $(window).on('unload', function () {
             console.log('in beacon');
-            window.addEventListener('beforeunload', () => {
+      
                 var url = "/chat/window/close";
 
-                navigator.sendBeacon(url, data);
-                console.log('after  beacon');
-
+            $.ajax({
+                type: "GET",
+                url: url,
+                async:false,
+                success: function(msg){
+                    console.log( "window closed");
+                }
             });
+             
+            console.log('after beacon meth');
         });
 
 
