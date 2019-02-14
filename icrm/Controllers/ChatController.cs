@@ -167,7 +167,7 @@ namespace icrm.Controllers
             Debug.Print(activeUser + "-----------active user");
             ApplicationUser user1 = (ApplicationUser)Session["user"];
             ApplicationUser user2 = userService.findUserOnId(user1.Id);
-            if (!activeUser.IsNullOrWhiteSpace())
+            if (!activeUser.IsNullOrWhiteSpace() && activeUser != "null")//2nd exp as it used to pass null as string like "null"
             {
                 Debug.Print(user2.Id+"----active user not null chat "+activeUser);
                 int? chatId = chatService.getChatIdOfUsers(activeUser, user2.Id);

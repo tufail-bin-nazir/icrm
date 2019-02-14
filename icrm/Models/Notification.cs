@@ -42,7 +42,9 @@ namespace icrm.Models
                 {
                     body = contentTitle,
                     title = "Messages from HR",
-                    badge = 1
+                    badge = 1,
+                    icon = "default",
+                    sound= "default"
                 },
             };
 

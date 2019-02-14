@@ -24,7 +24,11 @@
     <!-- Slim CSS -->
     <link rel="stylesheet" href="~/Content/css/slim.css">
     <link href="~/Content/lib/jquery-toggles/css/toggles-full.css" rel="stylesheet">
-
+    <style>
+         .dontshow{
+             display: none !important;
+        }
+    </style>
 </head>
 <body>
     @Html.Partial("_HRMenu")
@@ -91,7 +95,7 @@
                     <button class="btn btn-slim btn-uppercase-sm btn-block">Close Chat</button>
                 </div><!-- messages-left-footer -->
             </div><!-- messages-left -->
-            <div class="messages-right d-none d-lg-block" style="display: none !important">
+            <div class="messages-right d-none d-lg-block dontshow">
                 <div class="message-header">
                     <a href="default.htm" class="message-back"><i class="fa fa-angle-left"></i></a>
                     <div class="media">
@@ -305,7 +309,7 @@
         var page = 1;
         $("#txtmsg").keypress(function(event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
-            if (keycode == '13') {
+            if (keycode == '13' && $("#txtmsg").val().trim() != "") {
                 send();
             }
         });
@@ -416,10 +420,9 @@
 
         messageHub.client.userclosedchat = function (response) {
             console.log('---user closed chat-----' + response);
-            if ($('#chatId').val() == response) {
+            if ($('#chatId').val() == response && !$('.messages-right').hasClass('dontshow')) {
                 $('#userclosechat').modal('show');
-                $('.messages-right').attr('style', 'display: none !important');
-
+                $('.messages-right').addClass('dontshow');
             }
 
 
@@ -462,7 +465,7 @@
                 e.preventDefault();
                 console.log($(this).find('h6').text());
                 console.log($(this).find('img').attr('src'));
-                $('.messages-right').css('display', '');
+                $('.messages-right').removeClass('dontshow');
                 $('.messages-right').find('h6').text($(this).find('h6').text());
                 $('.messages-right').find('img').prop('src', $(this).find('img').attr('src'));
 
@@ -525,7 +528,7 @@
             console.log('in chat close func');
             var url = "/chat/close/"+activeUser;
             $('#closechat').modal('hide');
-            $('.messages-right').attr('style', 'display: none !important');
+            $('.messages-right').addClass('dontshow');
 
             $.get(url, function (data) {
                 console.log(data+"---response from serever");
