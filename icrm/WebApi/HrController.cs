@@ -265,7 +265,6 @@ namespace icrm.WebApi
         //8/ <summary>
         /// /////////////////////////////////////*************forwardTicket*****************/////////////////
         /// </summary>
-
         [HttpPost]
         [Route("api/HR/forwardTicket/{id}")]
         public IHttpActionResult forwardTicket(string Id, Forwardmodel forward)
@@ -283,13 +282,16 @@ namespace icrm.WebApi
             {
                 f.checkStatus = Models.Constants.ASSIGNED;
                 f.subcategoryId = forward.subcategoryId;
-                f.categoryId = forward.categoryId;
                 if (f.priorityId != null)
                 {
                     f.priorityId = forward.priorityId;
 
                 }
+                f.categoryId = forward.categoryId;
                 f.departmentID = forward.departmentID;
+                ApplicationUser user= feedInterface.getEscalationUser(f.departmentID, f.categoryId);
+                f.departUserId = user.Id;
+                Debug.WriteLine(f.departUserId);
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
 
@@ -813,8 +815,6 @@ namespace icrm.WebApi
             }
         }
 
-
-
         //26/ <summary>
         /// ******************************************** JobTitles  ***************************////
         /// </summary>
@@ -1075,6 +1075,7 @@ namespace icrm.WebApi
                 var Name1 = User.Identity.Name;
                 Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
                 f.checkStatus = Models.Constants.REJECTED;
+                f.status= Models.Constants.REJECTED;
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
 
@@ -1116,7 +1117,6 @@ namespace icrm.WebApi
             }
         }
 
-
         //34/ <summary>
         /// ******************************************** updateTicket by id ***************************////
         /// </summary>
@@ -1137,6 +1137,7 @@ namespace icrm.WebApi
             else
             {
                 f.checkStatus = Models.Constants.OPEN;
+                f.status = Models.Constants.OPEN;
                 f.typeId = feedBackmodel.Typeid;
                 f.title = feedBackmodel.Title;
                 f.description = feedBackmodel.Description;
@@ -1146,8 +1147,6 @@ namespace icrm.WebApi
 
             }
         }
-
-
 
         //35/ <summary>
         /// ////////////////////////////**************** Email list *******************////////////////////////////
