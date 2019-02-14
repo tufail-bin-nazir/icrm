@@ -34,10 +34,10 @@ namespace icrm.Models
                 {
                     if (_shuttingDown)
                         return;
+                   // sendEmailAsync(db.Feedbacks.FirstOrDefault(), "tufail.b.n@gmail.com");
 
-                   
                     var level1query = from f in db.Feedbacks.ToList()
-                                where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED && f.type.name != Constants.Enquiry &&
+                                where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED && f.type.name == Constants.Complaints &&
                                  f.priority.priorityId == 1 && f.escalationlevel == null && (DateTime.Now- (DateTime)f.assignedDate).TotalHours > Constants.criticalescelationtime &&
                                 (DateTime.Now - (DateTime)f.assignedDate).TotalHours < (Constants.criticalescelationtime)*2
                                       select f;
@@ -45,14 +45,14 @@ namespace icrm.Models
                     foreach (Feedback f in level1query) {
                         
                         f.escalationlevel = "level1";
-                        sendEmailAsync(f, db.Users.Find(getEmailOfUser(f).firstEscalationUserId).bussinessEmail);
+                        sendEmailAsync(f, db.Users.Find(getEmailOfUser(f).secondEscalationUserId).bussinessEmail);
                         db.Feedbacks.Add(f);
                         db.Entry(f).State = System.Data.Entity.EntityState.Modified;
                     }
                     db.SaveChanges();
 
                     var level2query = from f in db.Feedbacks.ToList()
-                                where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED && f.type.name != Constants.Enquiry &&
+                                where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED && f.type.name == Constants.Complaints &&
                                  f.priority.priorityId == 1 && f.escalationlevel == "level1" && (DateTime.Now - (DateTime)f.assignedDate).TotalHours > (Constants.criticalescelationtime)*2 &&
                                 (DateTime.Now - (DateTime)f.assignedDate).TotalHours < (Constants.criticalescelationtime) * 3
                                       select f;
@@ -60,26 +60,26 @@ namespace icrm.Models
                     foreach (Feedback f in level2query)
                     {
                         f.escalationlevel = "level2";
-                        sendEmailAsync(f, db.Users.Find(getEmailOfUser(f).secondEscalationUserId).bussinessEmail);
-                        db.Feedbacks.Add(f);
-                        db.Entry(f).State = System.Data.Entity.EntityState.Modified;
-                    }
-                    db.SaveChanges();
-
-
-                    var level3query = from f in db.Feedbacks.ToList()
-                                      where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED && f.type.name != Constants.Enquiry &&
-                                       f.priority.priorityId == 1 && f.escalationlevel == "level2" && (DateTime.Now - (DateTime)f.assignedDate).TotalHours > (Constants.criticalescelationtime) * 3
-                                      select f;
-
-                    foreach (Feedback f in level3query)
-                    {
-                        f.escalationlevel = "level3";
                         sendEmailAsync(f, db.Users.Find(getEmailOfUser(f).thirdEscalationUserId).bussinessEmail);
                         db.Feedbacks.Add(f);
                         db.Entry(f).State = System.Data.Entity.EntityState.Modified;
                     }
                     db.SaveChanges();
+
+
+                    //var level3query = from f in db.Feedbacks.ToList()
+                    //                  where f.assignedDate != null && f.checkStatus == Constants.ASSIGNED && f.type.name != Constants.Enquiry &&
+                    //                   f.priority.priorityId == 1 && f.escalationlevel == "level2" && (DateTime.Now - (DateTime)f.assignedDate).TotalHours > (Constants.criticalescelationtime) * 3
+                    //                  select f;
+
+                    //foreach (Feedback f in level3query)
+                    //{
+                    //    f.escalationlevel = "level3";
+                    //    sendEmailAsync(f, db.Users.Find(getEmailOfUser(f).thirdEscalationUserId).bussinessEmail);
+                    //    db.Feedbacks.Add(f);
+                    //    db.Entry(f).State = System.Data.Entity.EntityState.Modified;
+                    //}
+                    //db.SaveChanges();
 
                   
                 }
@@ -105,25 +105,30 @@ namespace icrm.Models
 
         private async System.Threading.Tasks.Task sendEmailAsync(Feedback f, String emailto) {
 
-            
+            Debug.WriteLine(f +" i am sending mail to " + emailto);
             string text = System.IO.File.ReadAllText(HostingEnvironment.MapPath("~/Views/EmailTemplate.cshtml"));
             string renderedText = Razor.Parse(text, new { ticketnumber = f.id,
                 employeenumber = f.user.EmployeeId, locationname = f.user.Location.name,
                 jobtitlename = f.user.JobTitle.name, email = f.user.personalEmail,
                 categoryname = f.category.name, title = f.title, description = f.description
-                , footer = f.escalationlevel.Equals("level3") ? "Please Note:This Issue has Reached to Highest Level" :" Please Note: This issue should be solved within 4 hrs., otherwise it will be escalated to the next level"} );
+                , footer = f.escalationlevel.Equals("level2") ? "Please Note:This Issue has Reached to Highest Level" :" Please Note: This issue should be solved within 4 hrs., otherwise it will be escalated to the next level"} );
             var body = renderedText;
-            var message = new MailMessage();
-            message.To.Add(new MailAddress(emailto)); //replace with valid value
-            message.Subject = "Notification";
-            message.Body = string.Format(body, "icrm", "info@stie.com.sg", "");
-            message.IsBodyHtml = true;
-            using (var smtp = new SmtpClient())
-            {
-                await smtp.SendMailAsync(message);
-               
-            }
-         }
+
+
+            MailMessage mail = new MailMessage("employee.relation@mcdonalds.com.sa", emailto);
+            SmtpClient client = new SmtpClient();
+            client.Port = 25;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = true;
+            client.EnableSsl = false;
+            client.Host = "email.mcdonalds.com.sa";
+            mail.Subject = "Notification";
+            mail.Body = body;
+            await client.SendMailAsync(mail);
+
+           
+
+        }
 
         public EscalationUser getEmailOfUser(Feedback f) {
             var query = from e in db.EscalationUsers
