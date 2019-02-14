@@ -342,25 +342,31 @@
                                             <option selected value="Open">Open</option>
                                             <option value="Resolved">Resolved</option>
                                             <option value="Closed">Closed</option>
-                                           
+                                            <option value="Rejected">Rejected</option>
+
                                         }
                                         else if (Model.status == "Closed")
                                         {
                                             <option value="Open">Open</option>
                                             <option value="Resolved">Resolved</option>
                                             <option selected value="Closed">Closed</option>
-                                           
+                                            <option value="Rejected">Rejected</option>
+
                                         }
-                                       
-                                        else
+                                        else if (Model.status == "Resolved")
                                         {
                                             <option value="Open">Open</option>
                                             <option selected value="Resolved">Resolved</option>
                                             <option value="Closed">Closed</option>
-                                           
+                                            <option value="Rejected">Rejected</option>
+                                        }
+                                        else
+                                        {
 
-
-
+                                            <option value="Open">Open</option>
+                                            <option  value="Resolved">Resolved</option>
+                                            <option value="Closed">Closed</option>
+                                            <option selected value="Rejected">Rejected</option>
                                         }
 
 
@@ -404,7 +410,7 @@
                         <div class="form-layout-footer">
 
                             <button class="btn btn-primary bd-0" value="Forward" name="submitButton" id="forward">@Resources.Resource.Forward </button>
-                            <button class="btn btn-primary bd-0" value="Resolve" name="submitButton" id="resolve">@Resources.Resource.Resolve </button>
+                            <button class="btn btn-primary bd-0" value="Submit" name="submitButton" id="resolve">@Resources.Resource.Submit </button>
                             <button value="Reject" name="submitButton" id="rejected" class="btn btn-secondary bd-0">Reject </button>
 
                           
@@ -467,14 +473,15 @@
 
             $('#statusfield').attr("disabled", true);
         }
-        $('#forward2').click(function () {
-            
+        $('#forward2').click(function () {           
             $("#dep").prop('required', true);     
             $("#emailsss").prop('required', true);          
             $("#category").prop('required', true);
             $("#subcategory").prop('required', true);
-            if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Rejected") {
-                $('#statuscheck').text("Set status either Open/Closed");
+            if ($('#statusfield').val() == "Open") {
+                return true;
+            } else {
+                $('#statuscheck').text("Set status  Open");
                 return false;
             }
 
@@ -485,8 +492,10 @@
             $("#dep").prop('required', true);
             $("#category").prop('required', true);
             $("#subcategory").prop('required', true);
-            if ($('#statusfield').val() == "Resolved" || $('#statusfield').val()=="Rejected" ) {
-                $('#statuscheck').text("Set status either Open/Closed");
+            if ($('#statusfield').val() == "Open") {
+                return true;
+            } else {
+                $('#statuscheck').text("Set status Open");
                 return false;
             }
 
@@ -495,7 +504,7 @@
         $('#resolve').click(function () {
             $("#dep").prop('required', false);
 
-            if ($('#statusfield').val() == "Resolved") {
+            if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed" ) {
                 $("#category").prop('required', false);
                 $("#subcategory").prop('required', false);
                 $("#emailsss").prop('required', false);
@@ -503,7 +512,7 @@
             }
 
             else  {
-                $('#statuscheck').text("Set status Resolved");
+                $('#statuscheck').text("Set status Resolved/Closed");
                 $("#subcategory").prop('required', false);
                 $("#category").prop('required', false);
                 $("#emailsss").prop('required', false);
@@ -517,12 +526,12 @@
             $("#emailsss").prop('required', false);
             $("#subcategory").prop('required', false);
             $("#category").prop('required', false);
-                if ($('#statusfield').val() == "Open" || $('#statusfield').val() == "Closed") {
+                if ($('#statusfield').val() == "Rejected") {
                    
                     
                     return true;
                 } else {
-                    $('#statuscheck').text("Set status either Open/Closed");
+                    $('#statuscheck').text("Set status Rejected");
                    
                    
                     return false;

@@ -142,9 +142,7 @@ namespace icrm.Controllers
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
 
-            if (feedback.status == Constants.CLOSED) {
-                feedback.closedDate = DateTime.Today;
-            }
+           
 
             if (feedback.userId == null) {
                 feedback.userId=user.Id;
@@ -197,47 +195,64 @@ namespace icrm.Controllers
                         }
                         else
                         {
-                            TempData["Message"] = "Select Department & Comment field should be empty";
+                            TempData["Message"] = "Comment field should be empty";
                             return View("Create", feedback);
                         }
                         return RedirectToAction("DashBoard");
 
 
-                    case "Resolve":
-                        if (feedback.departmentID == null && Request.Form["responsee"] != "")
-                        {                   
-                            if (ModelState.IsValid)
-                          {
-                            feedback.submittedById = user.Id;
+                    case "Submit":
+                    if (feedback.departmentID == null && Request.Form["responsee"] != "")
+                    {
+                        if (feedback.status == Constants.CLOSED)
+                        {
+                            feedback.closedDate = DateTime.Today;
+                            feedback.checkStatus = Constants.CLOSED;
+                        }
+                        else
+                        {
                             feedback.resolvedDate = DateTime.Today;
+                            feedback.checkStatus = Constants.RESOLVED;
+                        }
+
+                        if (ModelState.IsValid)
+                        {
+                            feedback.submittedById = user.Id;
                             feedback.assignedBy = null;
                             feedback.assignedDate = null;
-                            feedback.checkStatus = Constants.RESOLVED;                       
-                            feedInterface.Save(feedback);                          
+                            feedInterface.Save(feedback);
                             Comments c = new Comments();
                             c.text = Request.Form["responsee"];
                             c.commentedById = user.Id;
                             c.feedbackId = feedback.id;
                             db.comments.Add(c);
                             db.SaveChanges();
-                            TempData["MessageSuccess"] = "Ticket has been Resolved Successfully";
-                                return RedirectToAction("DashBoard");
-                            }
-                            else
-                            {
-                                ViewData["user"] = user;
-                                TempData["Message"] = "Ticket details are not valid,Fill details properly";
-                                return View("Create", feedback);
-                            }
-
+                            TempData["MessageSuccess"] = "Ticket has been Created Successfully";
+                            return RedirectToAction("DashBoard");
                         }
                         else
                         {
-                            TempData["Message"] = "Please fill Comment field & Department should be empty";
+                            ViewData["user"] = user;
+                            TempData["Message"] = "Ticket details are not valid,Fill details properly";
                             return View("Create", feedback);
                         }
-                      
-                    default:
+
+                    }
+                    else
+                    {
+                        if (feedback.departmentID != null)
+                        {
+                            TempData["Message"] = "Department should be empty";
+                        }
+                        else
+                        {
+
+                            TempData["Message"] = "Comment Field should not be empty";
+                        }
+                        return View("Create", feedback);
+
+                    }
+                default:
                         return RedirectToAction("Create");                    
                 }
         }
@@ -321,10 +336,7 @@ namespace icrm.Controllers
         [Route("assigndepart/")]
         public ActionResult assign(string submitButton,Feedback feedback)
         {
-            if (feedback.status == Constants.CLOSED)
-            {
-                feedback.closedDate = DateTime.Today;
-            }
+            
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             
@@ -334,32 +346,48 @@ namespace icrm.Controllers
                 case "Forward":
                     if (feedback.departmentID != null && Request.Form["responsee"] == "")
                     {
+                        db.Feedbacks.Attach(feedback);
                         ApplicationUser deptUser = feedInterface.getEscalationUser(feedback.departmentID, feedback.categoryId);
+                      deptUser=  db.Users.Find(deptUser.Id);
                         feedback.departUserId = deptUser.Id;
                         feedback.departUser = deptUser;
 
-                        feedback.department = db.Departments.Find(feedback.departmentID);
+                        feedback.departmentID = feedback.departmentID;
                         feedback.checkStatus = Constants.ASSIGNED;                        
                             if (feedback.assignedDate == null)
                             {
                                 feedback.assignedBy = user.Id;
                                 feedback.assignedDate = DateTime.Now;                               
                             }
-                            db.Entry(feedback).State = EntityState.Modified;
-                            db.SaveChanges();
-                            TempData["MessageSuccess"] = "Ticket has been Forwarded Successfully";
+                       
+                        db.Entry(feedback).State = EntityState.Modified;
+                        db.SaveChanges();
+                        TempData["MessageSuccess"] = "Ticket has been Forwarded Successfully";
                              eventService.sendEmails(Request.Form["emailsss"], PopulateBody(feedback));                      
                     }
                     else
                     {
-                             TempData["Message"] = "Select Department & Comment field should be empty";
+                             TempData["Message"] = "Comment field should be empty";
+
                              return RedirectToAction("view", new { id = feedback.id });
                     }
                     return RedirectToAction("DashBoard");
-                case "Resolve":
+                case "Submit":
                     if (feedback.departmentID == null && Request.Form["responsee"] != "")
                     {
-                        feedback.resolvedDate = DateTime.Today;
+                        if (feedback.status == Constants.CLOSED)
+                        {
+                            feedback.closedDate = DateTime.Today;
+                            feedback.checkStatus = Constants.CLOSED;
+                            TempData["MessageSuccess"] = "Ticket has been Closed Successfully";
+                        }
+                        else {
+                            feedback.resolvedDate = DateTime.Today;
+                            feedback.checkStatus = Constants.RESOLVED;
+                            TempData["MessageSuccess"] = "Ticket has been Resolved Successfully";
+                        }
+
+                        
                         Comments c = new Comments();
                             c.text = Request.Form["responsee"];
                             c.commentedById = user.Id;
@@ -369,15 +397,23 @@ namespace icrm.Controllers
                             feedback.assignedBy = null;
                             feedback.assignedDate = null;
                             feedback.submittedById = user.Id;
-                            feedback.checkStatus = Constants.RESOLVED;
+                            
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
-                            TempData["MessageSuccess"] = "Ticket has been Resolved Successfully";
+                            
                             return RedirectToAction("DashBoard");                     
                     }
                     else
                     {
-                        TempData["Message"] = "Please fill Comment field & Department should be empty";
+                        if (feedback.departmentID != null)
+                        {
+                            TempData["Message"] = "Department should be empty";
+                        }
+                        else
+                        {
+
+                            TempData["Message"] = "Comment Field should not be empty";
+                        }
                         return RedirectToAction("view", new { id = feedback.id });
                     }
                   case "Reject":
@@ -397,7 +433,16 @@ namespace icrm.Controllers
                     }
                     else
                     {
-                        TempData["Message"] = "Comment should not be empty & Department should be empty";
+                        if (feedback.departmentID != null)
+                        {
+                            TempData["Message"] = "Department should be empty";
+                        }
+                        else
+                        {
+
+                            TempData["Message"] = "Comment Field should not be empty";
+                        }
+                       
                         return RedirectToAction("view", new { id = feedback.id });
                     }
                 default:
@@ -874,11 +919,7 @@ namespace icrm.Controllers
         [ValidateAntiForgeryToken]
         [Route("rejected/action/")]
         public ActionResult feedbackupdate(string submitButton, Feedback feedback)
-        {
-            if (feedback.status == Constants.CLOSED)
-            {
-                feedback.closedDate = DateTime.Today;
-            }
+        {          
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             feedback.user = db.Users.Find(feedback.userId);
@@ -887,10 +928,12 @@ namespace icrm.Controllers
                 case "Forward":
                     if (feedback.departmentID != null && Request.Form["responsee"] == "")
                     {
+                        db.Feedbacks.Attach(feedback);
                         ApplicationUser deptUser = feedInterface.getEscalationUser(feedback.departmentID, feedback.categoryId);
+                        deptUser = db.Users.Find(deptUser.Id);
                         feedback.departUserId = deptUser.Id;
                         feedback.departUser = deptUser;
-                        feedback.department = db.Departments.Find(feedback.departmentID);
+                      //  feedback.department = db.Departments.Find(feedback.departmentID);
                         feedback.checkStatus = Constants.ASSIGNED;                     
                             if (feedback.assignedDate == null)
                             {
@@ -905,15 +948,26 @@ namespace icrm.Controllers
                     }
                     else
                     {
-                        TempData["Message"] = "Select Department & Comment field should be empty";
+                        TempData["Message"] = "Comment field should be empty";
                         return RedirectToAction("rejectedview", new { id = feedback.id });
                     }
                     return RedirectToAction("DashBoard");
-                case "Resolve":
+                case "Submit":
                     if (feedback.departmentID == null && Request.Form["responsee"] != "")
                     {
-                        feedback.resolvedDate = DateTime.Today;
-                        feedback.checkStatus = Constants.RESOLVED;
+
+                        if (feedback.status == Constants.CLOSED)
+                        {
+                            feedback.closedDate = DateTime.Today;
+                            feedback.checkStatus = Constants.CLOSED;
+                            TempData["MessageSuccess"] = "Ticket has been Closed Successfully";
+                        }
+                        else
+                        {
+                            feedback.resolvedDate = DateTime.Today;
+                            feedback.checkStatus = Constants.RESOLVED;
+                            TempData["MessageSuccess"] = "Ticket has been Resolved Successfully";
+                        }
                             Comments c = new Comments();
                             c.text = Request.Form["responsee"];
                             c.commentedById = user.Id;
@@ -925,12 +979,20 @@ namespace icrm.Controllers
                             feedback.submittedById = user.Id;
                             db.Entry(feedback).State = EntityState.Modified;
                             db.SaveChanges();
-                            TempData["MessageSuccess"] = "Ticket has been Resolved Successfully";
+                            
                             return RedirectToAction("DashBoard");                     
                     }
                     else
                     {
-                        TempData["Message"] = "Please fill Comment field & Department should be empty";
+                        if (feedback.departmentID != null)
+                        {
+                            TempData["Message"] = "Department should be empty";
+                        }
+                        else
+                        {
+
+                            TempData["Message"] = "Comment Field should not be empty";
+                        }
                         return RedirectToAction("rejectedview", new { id = feedback.id });
                     }
                 case "Reject":
@@ -951,7 +1013,15 @@ namespace icrm.Controllers
                     }
                     else
                     {
-                        TempData["Message"] = "Please fill Comment field & Department should be empty";
+                        if (feedback.departmentID != null)
+                        {
+                            TempData["Message"] = "Department should be empty";
+                        }
+                        else
+                        {
+
+                            TempData["Message"] = "Comment Field should not be empty";
+                        }
                         return RedirectToAction("rejectedview", new { id = feedback.id });
                     }
                 default:

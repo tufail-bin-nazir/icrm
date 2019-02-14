@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity;
 using System.Data.SqlClient;
 using System.Data;
 using Constants = icrm.Models.Constants;
+using System.Data.Entity;
 
 namespace icrm.RepositoryImpl
 {
@@ -570,5 +571,7 @@ namespace icrm.RepositoryImpl
                   EscalationUser user=(EscalationUser)query.FirstOrDefault();
                   return db.Users.Find(user.firstEscalationUserId);
         }
+
+       
     }
 }

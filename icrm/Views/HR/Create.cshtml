@@ -23,6 +23,7 @@
 <html lang="en">
 <head>
     <!-- Required meta tags -->
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -315,7 +316,7 @@
                             <!-- row -->
                             <div class="form-layout-footer">
                                 <button class="btn btn-primary bd-0" name="submitButton" id="forward" value="Forward/Create">Forward/Create</button>
-                                <button class="btn btn-primary bd-0" value="Resolve" id="resolve" name="submitButton">@Resources.Resource.Resolve </button>
+                                <button class="btn btn-primary bd-0" value="Submit" id="resolve" name="submitButton">@Resources.Resource.Submit </button>
 
                             </div>
                             <!-- form-layout-footer -->
@@ -397,13 +398,15 @@
 
 
             $('#forward').click(function () {
-                
+                $('#statuscheck').text("");
                 $("#deptId").prop('required', true); 
                 $("#emailsss").prop('required', true); 
                 $("#category").prop('required', true);
                 $("#subcategory").prop('required', true);
-                if ($('#statusfield').val() == "Resolved") {
-                    $('#statuscheck').text("Set status Open/Closed");
+                if ($('#statusfield').val() == "Open") {
+                    return true;
+                } else {
+                    $('#statuscheck').text("Set status Open");
                     return false;
                 }               
                 
@@ -412,9 +415,9 @@
             });
 
             $('#resolve').click(function () {
-                
+                $('#statuscheck').text("");
                
-                if ($('#statusfield').val() == "Resolved") {
+                if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed") {
                     $("#emailsss").prop('required', false);
                     $("#deptId").prop('required', false); 
                     $("#category").prop('required', false);
@@ -423,7 +426,7 @@
                 }
 
                 else {
-                    $('#statuscheck').text("Set status Resolved");
+                    $('#statuscheck').text("Set status Resolved/Closed");
                     $("#emailsss").prop('required', false);
                     $("#deptId").prop('required', false); 
                     $("#category").prop('required', false);
