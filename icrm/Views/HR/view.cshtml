@@ -358,19 +358,29 @@
                                                 <option selected value="Open">Open</option>
                                                 <option value="Resolved">Resolved</option>
                                                 <option value="Closed">Closed</option>
+                                                <option value="Rejected">Rejected</option>
                                             }
                                             else if (Model.status == "Closed")
                                             {
                                                 <option value="Open">Open</option>
                                                 <option value="Resolved">Resolved</option>
                                                 <option selected value="Closed">Closed</option>
+                                                <option value="Rejected">Rejected</option>
                                             }
-                                            else
+                                            else if (Model.status == "Resolved")
                                             {
 
                                                 <option value="Open">Open</option>
                                                 <option selected value="Resolved">Resolved</option>
                                                 <option value="Closed">Closed</option>
+                                                <option value="Rejected">Rejected</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="Open">Open</option>
+                                                <option value="Resolved">Resolved</option>
+                                                <option value="Closed">Closed</option>
+                                                <option selected value="Rejected">Rejected</option>
                                             }
 
 
@@ -445,7 +455,7 @@
                             <!-- row -->
                         <div class="form-layout-footer">
                             <button class="btn btn-primary bd-0" value="Forward" name="submitButton" id="forward">@Resources.Resource.Forward </button>
-                            <button class="btn btn-primary bd-0" value="Resolve" name="submitButton" id="resolve">@Resources.Resource.Resolve </button>
+                            <button class="btn btn-primary bd-0" value="Submit" name="submitButton" id="resolve">@Resources.Resource.Submit </button>
                             <button value="Reject" name="submitButton" id="rejected" class="btn btn-secondary bd-0">Reject </button>
 
                         </div>
@@ -503,13 +513,16 @@
          
 
             $('#rejected').click(function () {
+                $('#statuscheck').text("");
                 $("#emailsss").prop('required', false);
                 $("#category").prop('required', false);
                 $("#subcategory").prop('required', false);
                 $("#deptId").prop('required', false);               
-                $("#priorty").prop('required', false);
-                if ($('#statusfield').val() == "Resolved") {
-                    $('#statuscheck').text("Set status either Open/Closed");
+               // $("#priorty").prop('required', false);
+                if ($('#statusfield').val() == "Rejected") {
+                    return true;
+                } else {
+                    $('#statuscheck').text("Set status  Rejected");
                     return false;
                 }
 
@@ -517,31 +530,37 @@
 
 
             $('#forward2').click(function () {
+                $('#statuscheck').text("");
                 $("#deptId").prop('required', true);
                 $("#category").prop('required', true);
                 $("#subcategory").prop('required', true);
-                if ($('#statusfield').val() == "Resolved") {
-                    $('#statuscheck').text("Set status either Open/Closed");
+                if ($('#statusfield').val() == "Open") {
+                    return true;
+                } else {
+                    $('#statuscheck').text("Set status  Open");
                     return false;
                 }
 
             });
             $('#forward').click(function () {
+                $('#statuscheck').text("");
                 $("#emailsss").prop('required', true);
                 
                 $("#deptId").prop('required', true);
                 $("#category").prop('required', true);
                 $("#subcategory").prop('required', true);
-                if ($('#statusfield').val() == "Resolved") {
-                    $('#statuscheck').text("Set status either Open/Closed");
+                if ($('#statusfield').val() == "Open") {
+                    return true;
+                } else {
+                    $('#statuscheck').text("Set status  Open");
                 return false;
                }
                
             });
 
             $('#resolve').click(function () {
-                
-                if ($('#statusfield').val() == "Resolved") {
+                $('#statuscheck').text("");
+                if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed") {
                     $("#category").prop('required', false);
                     $("#subcategory").prop('required', false);
                     $("#emailsss").prop('required', false);
@@ -552,7 +571,7 @@
                 else {
                     $("#deptId").prop('required', false);
                     $("#emailsss").prop('required', false);
-                    $('#statuscheck').text("Set status Resolved");
+                    $('#statuscheck').text("Set status Resolved/Closed");
                     $("#category").prop('required', false);
                     $("#subcategory").prop('required', false);
 
