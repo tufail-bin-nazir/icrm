@@ -178,7 +178,7 @@ namespace icrm.Controllers
                     chatService.changeActiveStatus(chatId, false);
                 }
 
-                eventService.hrClosedChat(activeUser);
+                eventService.hrClosedChat(userService.findUserOnId(activeUser).UserName);
             }
 
             if (this.chatRequestService.ChatRequestsSize() > 0)
