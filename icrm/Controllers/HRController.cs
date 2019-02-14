@@ -1034,6 +1034,7 @@ namespace icrm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult updatestatus(Feedback feedback)
         {
+           
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             Feedback f = db.Feedbacks.Find(feedback.id);
@@ -1052,6 +1053,7 @@ namespace icrm.Controllers
            
             if (ModelState.IsValid)
             {
+
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
                 TempData["displayMsg"] = "Ticket has been Updated Successfully";
@@ -1061,7 +1063,7 @@ namespace icrm.Controllers
             else
             {
                 TempData["displayMsgErr"] = "Please Enter Valid Information ";
-                return RedirectToAction("view", new { name = "closedview", id = feedback.id });
+                return View("closedview",feedback);
             }
         }
       [HttpPost]

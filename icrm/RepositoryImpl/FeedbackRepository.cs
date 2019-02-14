@@ -124,7 +124,7 @@ namespace icrm.RepositoryImpl
 
         public IEnumerable<Feedback> getAllOpen()
         {
-            return db.Feedbacks.OrderByDescending(m => m.user.Id).Where(m=>m.status== Models.Constants.OPEN).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.user.Id).Where(m=>m.checkStatus== Models.Constants.OPEN).ToList();
 
         }
 
@@ -204,7 +204,7 @@ namespace icrm.RepositoryImpl
         }
         public IPagedList<Feedback> getAllOpen(int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == Constants.OPEN).ToPagedList(pageIndex, pageSize);
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.checkStatus == Constants.OPEN).ToPagedList(pageIndex, pageSize);
 
         }
 
@@ -226,11 +226,11 @@ namespace icrm.RepositoryImpl
 
         public IPagedList<Feedback> getAllClosed(int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == Constants.CLOSED).ToPagedList(pageIndex, pageSize);
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == Constants.CLOSED && m.type.name == Constants.Complaints).ToPagedList(pageIndex, pageSize);
         }
         public IEnumerable<Feedback> getAllClosed()
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == Constants.CLOSED).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == Constants.CLOSED && m.type.name==Constants.Complaints).ToList();
         }
         public IEnumerable<Feedback> getAllResolved()
         {

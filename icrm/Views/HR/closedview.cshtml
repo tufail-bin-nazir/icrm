@@ -199,11 +199,13 @@ new SelectList(ViewBag.Departmn,
                                 </div>
                             </div>
                             <!-- col-4 -->
+
+
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(m => m.category.name,
-                           new { @readonly = "readonly" , @class = "form-control" })
+                           new { disabled = "disabled" , @class = "form-control" })
                                     @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
 
                                 </div>
@@ -215,7 +217,7 @@ new SelectList(ViewBag.Departmn,
                                 <div class="form-group">
                                     <label class="form-control-label"> Sub Category: <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(m => m.SubCategory.name,
-                           new { @readonly = "readonly" , @class = "form-control" })
+                           new { disabled = "disabled" , @class = "form-control" })
                                     @Html.HiddenFor(model => model.subcategoryId, new { @class = "form-control" })
 
                                 </div>
