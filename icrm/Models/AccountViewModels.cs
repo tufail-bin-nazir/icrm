@@ -126,8 +126,8 @@ namespace icrm.Models
     public class ResetPasswordViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+       
+        [Display(Name = "Employee Id")]
         public string Email { get; set; }
 
         [Required]

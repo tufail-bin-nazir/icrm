@@ -307,7 +307,11 @@ namespace icrm.Controllers
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
-            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            Debug.WriteLine(model.Code);
+           string token= model.Code.Replace(' ', '+');
+            var result = await UserManager.ResetPasswordAsync(user.Id, token, model.Password);
+
+            Debug.WriteLine(result.Errors.FirstOrDefault() + "-=-=-=-=-=-=-=-=-=-=-=-=-==-=--");
             if (result.Succeeded)
             {
                 return RedirectToAction("ResetPasswordConfirmation", "Account");

@@ -1278,28 +1278,48 @@ namespace icrm.WebApi
         /// ////////////////////////////**************** Forget Password*******************////////////////////////////
         /// </summary>
         /// <returns></returns>
+        [HttpPost]
+        [AllowAnonymous]
         [Route("api/HR/ForgetPassword/{id}")]
-        public IHttpActionResult ForgetPassword(string id)
+        public async Task<IHttpActionResult> ForgotPassword(string id)
         {
-            Feedback f = db.Feedbacks.Find(id);
-
-            if (f == null)
-            {
-
-                return NotFound();
-
-            }
-
-            else
-            {
-               
+           
+                var user = await UserManager.FindByNameAsync(id);
+                if (user == null )
+                {
+                  
+                    return BadRequest("ForgotPasswordConfirmation");
+                }
+                else
+                {
+                   
+                    string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                    sendemailAsync(user.Email, user.Id, code);
                     return Ok();
+                }
+        }
 
-            }
+        private async void sendemailAsync(String emailto, String userid, String code) {
+             MailMessage mail = new MailMessage("employee.relation@mcdonalds.com.sa", emailto);
+           // MailMessage mail = new MailMessage("tufail.b.n@gmail.com", "wajahatnabi90@gmail.com");
+            SmtpClient client = new SmtpClient();
+            
+            client.Port = 25;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.UseDefaultCredentials = true;
+            client.EnableSsl = false;
+            client.Host = "email.mcdonalds.com.sa";
+           
+            mail.Subject = "Reset Your Password";
+            mail.Body ="37.76.254.20/Account/ResetPassword?code="+code;
+            mail.IsBodyHtml = true;
+            await client.SendMailAsync(mail);
 
 
 
         }
+
+       
 
     }
 }
