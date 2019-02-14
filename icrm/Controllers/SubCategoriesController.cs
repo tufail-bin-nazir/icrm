@@ -53,6 +53,7 @@ namespace icrm.Controllers
            
             ViewBag.TypeList = db.FeedbackTypes.ToList();
             ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD);
+            ViewBag.CategoryList = db.Categories.ToList();
             ViewBag.Status = "Add";
             return View("CreateList", new SubCategoryViewModel { subCategories = db.SubCategories.ToList()});
         }
@@ -74,6 +75,7 @@ namespace icrm.Controllers
            
             ViewBag.TypeList = db.FeedbackTypes.ToList();
             ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD);
+            ViewBag.CategoryList = db.Categories.ToList();
             ViewBag.Status = "Add";
             return View("CreateList", new SubCategoryViewModel { subCategories = db.SubCategories.ToList() });
         }
@@ -94,6 +96,7 @@ namespace icrm.Controllers
            
             ViewBag.TypeList = db.FeedbackTypes.ToList();
             ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD);
+            ViewBag.CategoryList = db.Categories.Where(m => m.DepartmentId == subCategory.DepartmentId && m.FeedBackTypeId == subCategory.FeedBackTypeId);
             ViewBag.Status = "Update";
             return View("CreateList", new SubCategoryViewModel { subCategory = subCategory, subCategories = db.SubCategories.ToList() });
         }
@@ -115,6 +118,7 @@ namespace icrm.Controllers
            
             ViewBag.TypeList = db.FeedbackTypes.ToList();
             ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD);
+            ViewBag.CategoryList = db.Categories.Where(m => m.DepartmentId == subCategory.DepartmentId && m.FeedBackTypeId == subCategory.FeedBackTypeId);
             ViewBag.Status = "Update";
             return View("CreateList", new SubCategoryViewModel { subCategories = db.SubCategories.ToList() });
         }
@@ -134,6 +138,7 @@ namespace icrm.Controllers
           
             ViewBag.TypeList = db.FeedbackTypes.ToList();
             ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD);
+            ViewBag.CategoryList = db.Categories.Where(m => m.DepartmentId == subCategory.DepartmentId && m.FeedBackTypeId == subCategory.FeedBackTypeId);
             ViewBag.Status = "Delete";
             return View("CreateList", new SubCategoryViewModel {subCategory = subCategory, subCategories = db.SubCategories.ToList() });
         }

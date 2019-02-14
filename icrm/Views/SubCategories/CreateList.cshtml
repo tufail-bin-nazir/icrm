@@ -69,15 +69,13 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Select Department <span class="tx-danger">*</span></label>
-                                    <select class="form-control select2" id="depid">
-                                        <option value="">Choose Department</option>
-                                        @foreach (var Department in ViewBag.DepartmentList)
-                                        {
-                                            <option value="@Department.Id">@Department.name</option>
+                                   
 
-                                        }
-
-                                    </select>
+                                        @Html.DropDownListFor(m => m.subCategory.DepartmentId,
+                                      new SelectList(ViewBag.DepartmentList,
+                                         "Id", "name"),"Choose Department", new { @class = "form-control select2", @id = "depid" })
+                                       
+                                    
 
 
 
@@ -100,8 +98,33 @@
                                     <label class="form-control-label">Category Name <span class="tx-danger">*</span></label>
                                    
 
-                                    <select name="subCategory.CategoryId" class = "form-control select2" id="category">
+                                    <select name="subCategory.CategoryId" class="form-control select2" id="category">
                                         <option value="">Select Category</option>
+                                        @foreach (var category in ViewBag.CategoryList)
+                                        {
+                                            if (ViewBag.Status == "Update" || ViewBag.Status == "Delete")
+                                            {
+                                                if (Model.subCategory.CategoryId == category.Id)
+                                                {
+                                                    <option selected value="@category.Id">@category.name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@category.Id">@category.name</option>
+                                                }
+
+
+                                            }
+                                            else
+                                            {
+                                                <option value="@category.Id">@category.name</option>
+
+                                            }
+
+
+
+                                        }
+
 
                                     </select>
 
