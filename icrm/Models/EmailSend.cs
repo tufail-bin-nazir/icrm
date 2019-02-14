@@ -30,6 +30,7 @@ namespace icrm.Models
 
         public async Task sendEmailAsync(string emails,string body)
         {
+
             string[] Multi = emails.Split(',');
             foreach (string email in Multi)
             {
@@ -39,23 +40,34 @@ namespace icrm.Models
             string b = body;
 
 
-            EmailSend e = new EmailSend();
-            var message = new MailMessage();
+          //  EmailSend e = new EmailSend();
+           // var message = new MailMessage();
+
+            MailMessage message = new MailMessage("employee.relation@mcdonalds.com.sa", "tufail.b.n@gmail.com");
+           
+           
+
+
+
             foreach (string email in Multi)
             {
                 message.To.Add(new MailAddress(email));
             }
            
-
             //message.To.Add(new MailAddress("iram.8859@gmail.com")); //replace with valid value
-            message.Subject = "Ticket has been Created ";
+            message.Subject = "Ticket has been Forwarded ";
 
-            message.Body = string.Format(b, "info@astie.com.sg", "info@astie.com.sg", "info@astie.com.sg");
+            message.Body = string.Format(b, "Owa.mcdonalds.com.sa", "Owa.mcdonalds.com.sa", "Owa.mcdonalds.com.sa");
 
             message.IsBodyHtml = true;
 
             using (var smtp = new SmtpClient())
             {
+                smtp.Port = 25;
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.UseDefaultCredentials = true;
+                smtp.EnableSsl = false;
+                smtp.Host = "email.mcdonalds.com.sa";
                 await smtp.SendMailAsync(message);
 
             }
