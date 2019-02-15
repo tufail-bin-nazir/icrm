@@ -1,11 +1,12 @@
 ﻿
 
 <div class="slim-header">
+    <link href="~/Content/css/footable.standalone.css" rel="stylesheet">
     <div class="container">
         <div class="slim-header-left">
-            <h2 class="slim-logo"><a href="/Admin/Dashboard"><img  src="~/Content/img/m_logo.png"  width="70px"/></a></h2>
+            <h2 class="slim-logo"><a href="/Admin/Dashboard"><img src="~/Content/img/m_logo.png" width="70px" /></a></h2>
 
-           
+
             <!-- search-box -->
         </div>
         <!-- slim-header-left -->
@@ -21,23 +22,23 @@
 
                 <div class="dropdown-menu dropdown-menu-right">
                     <nav class="nav">
-                        
-                               
-                                    @Html.ActionLink("English", "SetenglishCulture/Dashboard/Admin", "Culture")
-                                
-                            
-                        
-                            @Html.ActionLink("Arabic", "SetarabicCulture/Dashboard/Admin", "Culture")
-                       
-                         
-</nav>
+
+
+                        @Html.ActionLink("English", "SetenglishCulture/Dashboard/Admin", "Culture")
+
+
+
+                        @Html.ActionLink("Arabic", "SetarabicCulture/Dashboard/Admin", "Culture")
+
+
+                    </nav>
                 </div>
                 <!--<a href="#" class="logged-user">
-        <select class="form-control" style="border-radius: 4px;">
-          <option> Eng</option>
-          <option> Arabic</option>
-        </select>
-        </a>-->
+                <select class="form-control" style="border-radius: 4px;">
+                  <option> Eng</option>
+                  <option> Arabic</option>
+                </select>
+                </a>-->
 
             </div>
             <!-- dropdown -->
@@ -50,7 +51,7 @@
                 <div class="dropdown-menu dropdown-menu-right">
                     <nav class="nav">
                         <!--    <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
-                <a href="../userprofile/index" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>-->
+                        <a href="../userprofile/index" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>-->
                         <a href="@Url.Action("index","DownloadAPK")" class="nav-link"><i class="icon ion-ios-bolt"></i> Download APK</a>
 
                         <!--   <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>-->

@@ -30,6 +30,7 @@
     <link href="~/Content/lib/jt.timepicker/css/jquery.timepicker.css" rel="stylesheet">
     <link href="~/Content/lib/spectrum/css/spectrum.css" rel="stylesheet">
     <link href="~/Content/lib/bootstrap-tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet">
+   
 
     <!-- Feadback CSS -->
     <link rel="stylesheet" href="~/Content/css/slim.css">
@@ -178,7 +179,7 @@
 
                                             </td>
                                             <td class="tx-12">
-                                                <a href="@Url.Action("edit",new {id = item.Data.Id ,page=Model.Categories.PageNumber})"> <i class="fa fa-edit"> </i> </a>
+                                                <a href="@Url.Action("edit",new {id = item.Data.Id})"> <i class="fa fa-edit"> </i> </a>
                                                 <a href="@Url.Action("Delete",new {id = item.Data.Id })"> <i class="fa fa-trash"> </i> </a>
 
                                             </td>
@@ -189,25 +190,7 @@
                         </div>
                         <!-- table-responsive -->
                         
-                        <div class="pagination-wrapper">
-                            <div id='Paging' style="text-align:center">
-                                Page @(Model.Categories.PageCount < Model.Categories.PageNumber ? 0 : Model.Categories.PageNumber)
-                                of @Model.Categories.PageCount
-                                <ul class="pagination pagination-circle mg-b-0">
-
-                                    <li class="page-item ">
-                                        @if(@ViewBag.Status == "Add" || ViewBag.Status=="Delete"){
-                                        @Html.PagedListPager(Model.Categories, page => Url.Action("Create", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
-                                        }else{
-                                        @Html.PagedListPager(Model.Categories, page => Url.Action("Edit", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
-
-                                        }
-
-                                    </li>
-
-                                </ul>
-                            </div>
-                        </div>
+                       
                         
                        
                        

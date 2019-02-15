@@ -44,15 +44,11 @@ namespace icrm.Controllers
         // GET: Categories/Create
         public ActionResult Create(int? page)
         {
-            Category c = new Category();
-            int pageSize = 10;
-            int pageIndex = 1;
-            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+           
             @ViewBag.Status = "Add";
             ViewBag.DepartmentList = db.Departments.ToList();
             ViewBag.FeedBackTypeList = db.FeedbackTypes.ToList();
-            gp.GetAll<Category>(c.Id,pageIndex,pageSize);
-            return View("CreateList",new CategoryViewModel { Categories = gp.GetAll<Category>(c.Id, pageIndex, pageSize) });
+            return View("CreateList",new CategoryViewModel { Categories = db.Categories.ToList() });
         }
 
         // POST: Categories/Create
@@ -62,8 +58,7 @@ namespace icrm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create( Category category)
         {
-             int pageSize = 10;
-            int pageIndex = 1;
+            
             if (ModelState.IsValid)
             {
                 db.Categories.Add(category);
@@ -76,15 +71,14 @@ namespace icrm.Controllers
             TempData["Fail"] = "Category is not created,Enter valid Information";
             ViewBag.DepartmentList = db.Departments.ToList();
             ViewBag.FeedBackTypeList = db.FeedbackTypes.ToList();
-            return View("CreateList", new CategoryViewModel { Categories = gp.GetAll<Category>(category.Id,pageIndex,pageSize)});
+            return View("CreateList", new CategoryViewModel { Categories = db.Categories.ToList()});
         }
         // GET: Categories/Edit/5
         public ActionResult Edit(int? id,int? page)
         {
-            int pageSize = 10;
-            int pageIndex = 1;
+          
             TempData["page"] = page;
-            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+          
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -97,7 +91,7 @@ namespace icrm.Controllers
             ViewBag.Status = "Update";
             ViewBag.DepartmentList = db.Departments.ToList();
             ViewBag.FeedBackTypeList = db.FeedbackTypes.ToList();
-            return View("CreateList", new CategoryViewModel {Category = category, Categories = gp.GetAll<Category>(category.Id, pageIndex, pageSize) });
+            return View("CreateList", new CategoryViewModel {Category = category, Categories =db.Categories.ToList() });
         }
 
         // POST: Categories/Edit/5
@@ -107,30 +101,25 @@ namespace icrm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Category category)
         {
-            int? page =Convert.ToInt32 (Request.Form["pagee"]);
-            int pageSize = 10;
-            int pageIndex = 1;
-            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             if (ModelState.IsValid)
             {
                 db.Entry(category).State = EntityState.Modified;
                 db.SaveChanges();
                 TempData["Success"] = "Category has been Updated Successfully";
-                return RedirectToAction("Edit",new { id=category.Id,page=page});
+                return RedirectToAction("Edit",new { id=category.Id});
             }
             ViewBag.Status = "Update";
            TempData["Fail"] = "Category is not Updated,Enter valid Information";
             ViewBag.DepartmentList = db.Departments.ToList();
             ViewBag.FeedBackTypeList = db.FeedbackTypes.ToList();
-            return RedirectToAction("Edit", new { id = category.Id, page = page });
+            return RedirectToAction("Edit", new { id = category.Id});
         
     }
 
         // GET: Categories/Delete/5
         public ActionResult Delete(int? id)
         {
-            int pageSize = 10;
-            int pageIndex = 1;
+          
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -143,7 +132,7 @@ namespace icrm.Controllers
             @ViewBag.Status = "Delete";
             ViewBag.DepartmentList = db.Departments.ToList();
             ViewBag.FeedBackTypeList = db.FeedbackTypes.ToList();
-            return View("CreateList", new CategoryViewModel { Category = category, Categories = gp.GetAll<Category>(category.Id, pageIndex, pageSize) });
+            return View("CreateList", new CategoryViewModel { Category = category, Categories = db.Categories.ToList() });
         }
 
         // POST: Categories/Delete/5
