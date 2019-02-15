@@ -33,8 +33,10 @@ namespace icrm.RepositoryInterface
         IEnumerable<Feedback> getAllResponded();
         IEnumerable<Feedback> GetAllResponded();
         IEnumerable<Feedback> OpenWithoutDepart();
+        IEnumerable<Feedback> GETAllClosed();
 
-        
+        IEnumerable<Feedback> getRespondedDepartmenet();
+
 
         IEnumerable<Feedback> searchlist(DateTime d1, DateTime d2);
         IEnumerable<Feedback> searchHR(string d1, string d2, string status);

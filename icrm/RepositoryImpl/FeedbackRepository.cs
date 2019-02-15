@@ -128,6 +128,14 @@ namespace icrm.RepositoryImpl
 
         }
 
+
+        public IEnumerable<Feedback> getRespondedDepartmenet()
+        {
+            return db.Feedbacks.OrderByDescending(m => m.user.Id).ToList();
+
+        }
+
+
         public IEnumerable<Feedback> getAllOpenMobile()
         {
             return db.Feedbacks.OrderByDescending(m => m.user.Id).Where(m => m.checkStatus == Models.Constants.OPEN).ToList();
@@ -232,6 +240,13 @@ namespace icrm.RepositoryImpl
         {
             return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == Constants.CLOSED && m.type.name==Constants.Complaints).ToList();
         }
+
+        public IEnumerable<Feedback> GETAllClosed()
+        {
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == Constants.CLOSED && m.checkStatus == Models.Constants.CLOSED).ToList();
+        }
+
+
         public IEnumerable<Feedback> getAllResolved()
         {
             return db.Feedbacks.OrderByDescending(m => m.id).Where(m =>  m.status == Constants.RESOLVED).ToList();

@@ -94,7 +94,6 @@ namespace icrm.WebApi
 
         [HttpGet]
         [Route("api/HR/HrTicket/{id}")]
-        //Get /api/ HR / id
         public IHttpActionResult HrTicket(string id)
         {
             var quer = from n in feedInterface.getCOmments(id)
@@ -396,6 +395,8 @@ namespace icrm.WebApi
                 c.text = feedback.response;
                 db.comments.Add(c);
                 db.SaveChanges();
+
+              
                 return Ok();
 
 
@@ -434,17 +435,18 @@ namespace icrm.WebApi
         //13/ <summary>
         ////////////////////////////////////**************** respondedTicketItem*************/////////////////
         /// </summary>
-
-
         [HttpGet]
         [Route("api/HR/respondedTicketItem/{id}")]
         public IHttpActionResult respondedTicketItem(string id)
         {
+            var quer = from n in feedInterface.getCOmments(id)
+                       select n;
 
-            var Query = from f in feedInterface.getAllOpen()
+
+            var Query = from f in feedInterface.getRespondedDepartmenet()
 
                         where f.id == id
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, f.user.FirstName, f.user.Email, f.response, f.category, f.priority, };
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, f.user.FirstName, f.user.Email, f.response, f.category, f.priority,quer };
 
             if (Query != null)
             {
@@ -464,8 +466,6 @@ namespace icrm.WebApi
         //14/ <summary>
         //////////////////////////*************** update Ticket which is responded***************////////////////////////
         /// </summary>
-
-
         [HttpPost]
         [Route("api/HR/updateTicketResponded/{id}")]
         public IHttpActionResult updateTicketResponded(string Id, Feedback feedback)
@@ -484,7 +484,16 @@ namespace icrm.WebApi
                 f.status = feedback.status;
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
-
+                //////////////////////////////////////////////
+                var Name1 = User.Identity.Name;
+                Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
+                Comments c = new Comments();
+                c.date = DateTime.Now;
+                c.feedbackId = Id;
+                c.commentedById = user.Result.Id;
+                c.text = feedback.description;
+                db.comments.Add(c);
+                db.SaveChanges();
                 return Ok();
 
             }
@@ -500,7 +509,7 @@ namespace icrm.WebApi
         public IHttpActionResult Closed()
         {
 
-            var Query = from f in feedInterface.getAllClosed()
+            var Query = from f in feedInterface.GETAllClosed()
                         select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, f.user.FirstName, f.user.Email, f.category, f.priority, };
 
             if (Query != null)
@@ -533,7 +542,7 @@ namespace icrm.WebApi
             if (f != null)
             {
                 //var obj =new {f.createDate, f.title, f.description, f.response, f.satisfaction, f.status }.ToString();
-                return Ok(new { f.createDate,f.checkStatus, f.title, f.description, f.response, f.satisfaction, f.status, f.type ,quer});
+                return Ok(new { f.createDate,f.priority,f.checkStatus, f.title, f.description, f.response, f.satisfaction, f.status, f.type ,quer});
 
             }
             else
@@ -643,8 +652,6 @@ namespace icrm.WebApi
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
                 ////////////////////////////////////////////////////////// 
-               
-               
                 if (feedback.response != null)   
                 {
                     Comments c = new Comments();
@@ -653,7 +660,7 @@ namespace icrm.WebApi
                     c.commentedById = user.Result.Id;
                     c.text = feedback.response;
                     db.comments.Add(c);
-                    db.SaveChanges();
+                    db.SaveChanges();   
                 }
                
                 return Ok();
@@ -1299,7 +1306,8 @@ namespace icrm.WebApi
                 }
         }
 
-        private async void sendemailAsync(String emailto, String userid, String code) {
+        private async void sendemailAsync(String emailto, String userid, String code)
+        {
              MailMessage mail = new MailMessage("employee.relation@mcdonalds.com.sa", emailto);
            // MailMessage mail = new MailMessage("tufail.b.n@gmail.com", "wajahatnabi90@gmail.com");
             SmtpClient client = new SmtpClient();
@@ -1314,12 +1322,40 @@ namespace icrm.WebApi
             mail.Body ="37.76.254.20/Account/ResetPassword?code="+code;
             mail.IsBodyHtml = true;
             await client.SendMailAsync(mail);
-
-
-
         }
 
-       
+
+
+
+        //40/ <summary>
+        /// ///////////////////*********************** enduserTicketView************//////////////////////////////////
+        /// </summary>
+        [HttpGet]
+        [Route("api/HR/enduserTicketView/{id}")]
+        public IHttpActionResult enduserTicketView(string id)
+        {
+           
+
+            var quer = from n in feedInterface.getCOmments(id)
+                       where n.commentedBy==n.commentedBy.Roles
+                       select n;
+
+
+            var f = db.Feedbacks.Find(id);
+
+            if (f != null)
+            {
+                //var obj =new {f.createDate, f.title, f.description, f.response, f.satisfaction, f.status }.ToString();
+                return Ok(new { f.createDate, f.priority, f.checkStatus, f.title, f.description, f.response, f.satisfaction, f.status, f.type, quer });
+
+            }
+            else
+            {
+
+                return BadRequest("User list  not found");
+
+            }
+        }
 
     }
 }
