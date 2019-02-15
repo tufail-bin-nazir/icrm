@@ -39,7 +39,7 @@ namespace icrm.Controllers
         // GET: EscalationUsers/Create
         public ActionResult Create()
         {
-            ViewBag.DepartmentList = db.Departments.ToList();
+            ViewBag.DepartmentList = db.Departments.Where(m=>m.type== Constants.FORWARD).ToList();
             ViewBag.UserList = db.Users.ToList();
             //ViewBag.Categories = db.Categories.Where(c=>c.EscalationUserId== null).ToList();
             ViewBag.Status = "Add";
@@ -68,8 +68,8 @@ namespace icrm.Controllers
               
                 return RedirectToAction("Create");
             }
-            
-            ViewBag.DepartmentList = db.Departments.ToList();
+
+            ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD).ToList();
             ViewBag.UserList = db.Users.ToList();
            // ViewBag.Categories = db.Categories.Where(c => c.EscalationUserId == null).ToList();
             ViewBag.Status = "Add";
@@ -84,14 +84,22 @@ namespace icrm.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             EscalationUser escalationUser = db.EscalationUsers.Find(id);
+            List<Category> category = db.Categories.Where(c => c.EscalationUserId == id).ToList();
+            List<int> categoryids = new List<int>();
+
+            foreach (Category i in category) {
+                categoryids.Add(i.Id);
+            }
+            escalationUser.CategoriesIds = categoryids;
+         
             if (escalationUser == null)
             {
                 return HttpNotFound();
             }
-
-            ViewBag.DepartmentList = db.Departments.ToList();
+           
+            ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD).ToList();
             ViewBag.UserList = db.Users.ToList();
-           // ViewBag.Categories = db.Categories.Where(c => c.EscalationUserId == null).ToList();
+            ViewBag.Categories = db.Categories.Where(m=>m.DepartmentId == escalationUser.DepartmentId && m.FeedBackType.name == Constants.Complaints).ToList();
             ViewBag.Status = "Update";
             return View("CreateList", new EscalationUserViewModel {EscalationUser = escalationUser, EscalationUsers = db.EscalationUsers.ToList() });
         }
@@ -105,12 +113,28 @@ namespace icrm.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                List<Category> categories = db.Categories.Where(c => c.EscalationUserId == escalationUser.Id).ToList();
+                foreach (Category i in categories)
+                {
+                    i.EscalationUserId = null;
+                    db.Entry(i).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
                 db.Entry(escalationUser).State = EntityState.Modified;
                 db.SaveChanges();
+                foreach (int cid in escalationUser.CategoriesIds)
+                {
+                    Category c = db.Categories.Find(cid);
+                    c.EscalationUserId = escalationUser.Id;
+                    db.Entry(c).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                }
                 return RedirectToAction("Create");
             }
 
-            ViewBag.DepartmentList = db.Departments.ToList();
+            ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD).ToList();
             ViewBag.UserList = db.Users.ToList();
             //ViewBag.Categories = db.Categories.Where(c => c.EscalationUserId == null).ToList();
             ViewBag.Status = "Update";
@@ -125,14 +149,22 @@ namespace icrm.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             EscalationUser escalationUser = db.EscalationUsers.Find(id);
+            List<Category> category = db.Categories.Where(c => c.EscalationUserId == id).ToList();
+            List<int> categoryids = new List<int>();
+
+            foreach (Category i in category)
+            {
+                categoryids.Add(i.Id);
+            }
+            escalationUser.CategoriesIds = categoryids;
             if (escalationUser == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.DepartmentList = db.Departments.ToList();
+            ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD).ToList();
             ViewBag.UserList = db.Users.ToList();
-           // ViewBag.Categories = db.Categories.Where(c => c.EscalationUserId == null).ToList();
+            ViewBag.Categories = db.Categories.Where(m => m.DepartmentId == escalationUser.DepartmentId && m.FeedBackType.name == Constants.Complaints).ToList();
             ViewBag.Status = "Delete";
             return View("CreateList", new EscalationUserViewModel {EscalationUser = escalationUser, EscalationUsers = db.EscalationUsers.ToList() });
         }
@@ -142,6 +174,13 @@ namespace icrm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            List<Category> categories = db.Categories.Where(c => c.EscalationUserId == id).ToList();
+            foreach (Category i in categories)
+            {
+                i.EscalationUserId = null;
+                db.Entry(i).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             EscalationUser escalationUser = db.EscalationUsers.Find(id);
             db.EscalationUsers.Remove(escalationUser);
             db.SaveChanges();
@@ -161,7 +200,7 @@ namespace icrm.Controllers
         public JsonResult getCategories(int depId)
         {
 
-            List<Category> categories = db.Categories.Where(m=>m.DepartmentId== depId && m.EscalationUserId == null).ToList();
+            List<Category> categories = db.Categories.Where(m=>m.DepartmentId== depId && m.FeedBackType.name==Constants.Complaints && m.EscalationUserId == null).ToList();
             return Json(categories);
         }
 

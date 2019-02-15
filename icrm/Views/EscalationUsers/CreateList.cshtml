@@ -26,6 +26,9 @@
     <link href="~/Content/lib/jt.timepicker/css/jquery.timepicker.css" rel="stylesheet">
     <link href="~/Content/lib/spectrum/css/spectrum.css" rel="stylesheet">
     <link href="~/Content/lib/bootstrap-tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" rel="stylesheet">
+    
+
 
     <!-- Feadback CSS -->
     <link rel="stylesheet" href="~/Content/css/slim.css">
@@ -84,8 +87,25 @@
                                        new SelectList(ViewBag.Categories,
                                           "Id", "name"),"Choose Categories", new { @class = "form-control select2",Multiple ="multiple"})*@
 
-                                    <select id="category" name="EscalationUser.CategoriesIds" class="form-control select2" multiple required >
+                                    <select id="category" name="EscalationUser.CategoriesIds" class="form-control select2" multiple required>
                                         <option value="">Select category</option>
+
+                                        @if (ViewBag.Status == "Update" || ViewBag.Status == "Delete")
+                                        {
+                                            foreach (var category in ViewBag.Categories)
+                                            {
+                                                if (Model.EscalationUser.CategoriesIds.Any(p => p == category.Id))
+                                                {
+                                                    <option selected value="@category.Id">@category.name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@category.Id">@category.name</option>
+                                                }
+                                            }
+                                        }
+                                       
+
 
                                     </select>
 
@@ -98,7 +118,7 @@
                                     <label class="form-control-label">First Escalation User <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.EscalationUser.firstEscalationUserId,
                                        new SelectList(ViewBag.UserList,
-                                          "Id", "EmployeeId"),"Choose First Escalation User", new { @class = "form-control select2", required= "required"})
+                                          "Id", "EmployeeId"),"Choose First Escalation User", new { @class = "form-control select2 user", required= "required"})
 
 
                                 </div>
@@ -109,7 +129,7 @@
                                     <label class="form-control-label">Second Escalation User <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.EscalationUser.secondEscalationUserId,
                                        new SelectList(ViewBag.UserList,
-                                          "Id", "EmployeeId"), "Choose Second Escalation User", new { @class = "form-control select2", required = "required" })
+                                          "Id", "EmployeeId"), "Choose Second Escalation User", new { @class = "form-control select2 user", required = "required" })
 
 
                                 </div>
@@ -120,7 +140,7 @@
                                     <label class="form-control-label">Third Escalation User <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.EscalationUser.thirdEscalationUserId,
                                        new SelectList(ViewBag.UserList,
-                                          "Id", "EmployeeId"), "Choose Third Escalation User", new { @class = "form-control select2", required = "required" })
+                                          "Id", "EmployeeId"), "Choose Third Escalation User", new { @class = "form-control select2 user", required = "required" })
 
 
                                 </div>
@@ -262,6 +282,12 @@
 
       @Html.Partial("_AdminFooter")
         <script>
+            $('.user').selectize({
+               
+                sortField: 'text'
+            });
+
+
             $("#department").change(function () {
                
                     $("#category option").remove();
