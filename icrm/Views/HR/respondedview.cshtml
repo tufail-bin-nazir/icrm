@@ -281,7 +281,7 @@
                                             <option selected value="Closed">Closed</option>
 
                                         }
-                                        
+
 
 
 
@@ -290,7 +290,7 @@
                                 <label class="text-danger" id="statuscheck"></label>
                             </div>
                             <!-- col-4 -->
-                            @foreach( var res in commentlist)
+                            @foreach (var res in commentlist)
                             {
                                 <div class="col-lg-4">
                                     <div class="form-group">
@@ -298,7 +298,7 @@
 
 
                                         @Html.TextArea("comments", @res.text, new { @readonly = "readonly", @class = "form-control" })
-                                       
+
 
 
 
@@ -306,6 +306,15 @@
                                     </div>
                                 </div>
                             }
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@Resources.Resource.Comments</label>
+                                        @Html.TextArea("responsee", new { @class = "form-control", name = "responsee", id = "coment" })
+
+
+                                    </div>
+                                    <label class="text-danger" id="comentlbl"></label>
+                                </div>
                         </div>
 
 
@@ -344,15 +353,21 @@
         <script src="~/Content/js/slim.js"></script>
 <script>
 
-    $('#update').click(function () {
-        if ($('#statusfield').val() == "Resolved" || $('#statusfield').val()=="Closed") {
-
+    $('#update').click(function () { 
+        $('#comentlbl').text("");
+        if ($('#statusfield').val() == "Resolved" || $('#statusfield').val() == "Closed") {
+            $('#coment').attr("required", true);
             return true;
         }
-
         else {
-            $('#statuscheck').text("Set status Resolve/Closed");
-            return false;
+            if ($('#coment').val() != "") {
+                $('#comentlbl').text("Status is Open,Comment Field Should be empty");
+                return false;
+            } else {
+                $('#coment').attr("required", false);
+                return true;
+            }
+            
 
         }
 

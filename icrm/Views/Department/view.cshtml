@@ -277,38 +277,40 @@
                                 </div>
                             }
 
-                            @if (ViewBag.viewlink != "respondedlink" && bb.Count() <= 0)
-                            {
 
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">@Resources.Resource.Comments</label>
+                            @** @if (ViewBag.viewlink != "respondedlink")
+        {
+                            *@
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Comments</label>
 
-                                        @ViewBag.viewlink
-
-
-
-
-                                        @Html.TextArea("responsee", new { @class = "form-control", name = "responsee", @required = "required" })
+                                    @ViewBag.viewlink
 
 
 
 
-                                    </div>
+                                    @Html.TextArea("responsee", new { @class = "form-control", name = "responsee", @required = "required" })
+
+
+
+
                                 </div>
+                            </div>
 
-                            }
+                           
 
                         </div>
-                        @if (bb.Count() <= 0)
+                       @* @if (bb.Count() <= 0)
                         {
+                            *@ 
                             <!-- row -->
                             <div class="form-layout-footer">
                                 <button class="btn btn-primary bd-0" type="submit">@Resources.Resource.Submit</button>
 
                                 <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
                             </div>
-                        }
+                        
                         <!-- form-layout-footer -->
 
                     </div>

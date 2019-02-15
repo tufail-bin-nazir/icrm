@@ -277,51 +277,91 @@ namespace icrm.Controllers
 
             }                     
             Feedback f = db.Feedbacks.Find(feedback.id);
-            f.checkStatus = feedback.status;
+            
             f.status = feedback.status;
-            if (feedback.status == Constants.CLOSED) {
+            if (feedback.status == Constants.CLOSED)
+            {
                 f.closedDate = DateTime.Today;
+                f.checkStatus = Constants.CLOSED;
             }
-            if (feedback.status == Constants.RESOLVED)
+            else if (feedback.status == Constants.RESOLVED)
             {
                 f.resolvedDate = DateTime.Today;
+                f.checkStatus = Constants.RESOLVED;
+            }
+            else {
+                f.checkStatus = Constants.RESPONDED;
             }
             switch (type)
             {
                 case "Resolvedtype":
                     if (ModelState.IsValid)
-                    {                       
+                    {
                         db.Entry(f).State = EntityState.Modified;
                         db.SaveChanges();
+                        @TempData["MessageSuccess"] = "Ticket has been Updated Successfully";
+                        return RedirectToAction("dashBoard");
                     }
-                         @TempData["MessageSuccess"] = "Ticket has been Updated Successfully";
-                         return View("resolvedview",feedback);
+                    else {
+                        @TempData["Message"] = "Please enter fields properly";
+                        return View("resolvedview", feedback);
+                    }
+                         
                 case "Respondedtype":
-                    if (ModelState.IsValid)
-                    {                      
-                        db.Entry(f).State = EntityState.Modified;
+                    if (Request.Form["responsee"] != "")
+                    {
+                        Comments c = new Comments();
+                        c.text = Request.Form["responsee"];
+                        c.commentedById = user.Id;
+                        c.feedbackId = feedback.id;
+                        db.comments.Add(c);
                         db.SaveChanges();
                     }
-                          @TempData["MessageSuccess"] = "Ticket has been Updated Successfully";
-                          ViewData["commentList"] = db.comments.Where(m => m.feedbackId == feedback.id).ToList();
-                         return View("respondedview", feedback);
+
+                    if (ModelState.IsValid)
+                    {
+                        db.Entry(f).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                        @TempData["MessageSuccess"] = "Ticket has been  Updated Successfully";
+                        ViewData["commentList"] = db.comments.Where(m => m.feedbackId == feedback.id).ToList();
+                        return RedirectToAction("DashBoard");
+                    }
+                    else {
+                        @TempData["Message"] = "Please enter fields properly";
+                        ViewData["commentList"] = db.comments.Where(m => m.feedbackId == feedback.id).ToList();
+                        return View("respondedview", feedback);
+                    }
                 case "Assignedtype":                  
                     if (ModelState.IsValid)
                     {                       
                         db.Entry(f).State = EntityState.Modified;
                         db.SaveChanges();
+                        @TempData["MessageSuccess"] = "Ticket has been Updated Successfully";
+
+                        return RedirectToAction("DashBoard");
                     }
-                         @TempData["MessageSuccess"] = "Ticket has been Updated Successfully";
-                          return View("assignedview", feedback);
+                    else
+                    {
+                        @TempData["Message"] = "Please enter fields properly";
+                        return View("assignedview", feedback);
+
+                    }
 
                 case "Rejectedtype":
                     if (ModelState.IsValid)
-                    {                     
+                    {
                         db.Entry(f).State = EntityState.Modified;
                         db.SaveChanges();
+                        @TempData["MessageSuccess"] = "Ticket has been Updated Successfully";
+                        return RedirectToAction("DashBoard");
+                        
                     }
-                      @TempData["MessageSuccess"] = "Ticket has been Updated Successfully";
-                      return View("rejectedview", feedback);
+                    else {
+                        @TempData["Message"] = "Please enter fields properly";
+                        return View("rejectedview", feedback);
+                    }
+                      
                 default:
                     return View("Assignedtype", feedback);
                   
@@ -1029,27 +1069,52 @@ namespace icrm.Controllers
             }
         }
 
-        /******** HR update status Closed to Open on User's satisfaction status******/
+        /******** HR update status Resolved to Open/Closed on User's satisfaction status******/
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult updatestatus(Feedback feedback)
-        {
-           
+        {          
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             Feedback f = db.Feedbacks.Find(feedback.id);
             f.status = feedback.status;
-            if (feedback.status == Constants.CLOSED) {
-                f.closedDate = DateTime.Today;
-            }
+            
+         
+            f.submittedById = user.Id;
 
-            if (f.departmentID != null)
+            if (feedback.status == Constants.CLOSED)
+            {
+                f.closedDate = DateTime.Today;
+                f.resolvedDate = null;
+                f.checkStatus = Constants.CLOSED;
+               
+
+            }
+            else if (feedback.status == Constants.OPEN)
+            {
+                f.departmentID = null;
+                f.resolvedDate = null;
+                f.departUserId = null;
+                f.satisfaction = null;
+                f.priorityId = null;
+                f.categoryId = null;
+                f.subcategoryId = null;
+                f.checkStatus = Constants.OPEN;
+            }
+            else {
+                f.resolvedDate = f.resolvedDate;
+                f.checkStatus = Constants.RESOLVED;
+            }
+        
+
+            
+          /* if (f.departmentID != null)
             {
                 f.checkStatus = Constants.ASSIGNED;
             }
             else {
                 f.checkStatus = feedback.status;
-            }
+            }*/
            
             if (ModelState.IsValid)
             {
@@ -1062,8 +1127,10 @@ namespace icrm.Controllers
             }
             else
             {
+                ViewData["commentList"] = db.comments.Where(m => m.feedbackId == feedback.id).ToList();
+
                 TempData["displayMsgErr"] = "Please Enter Valid Information ";
-                return View("closedview",feedback);
+                return View("resolvedview",feedback);
             }
         }
       [HttpPost]

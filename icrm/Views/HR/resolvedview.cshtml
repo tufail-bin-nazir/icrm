@@ -48,7 +48,7 @@
             </div>
             <!-- slim-pageheader -->
             @Html.ValidationSummary()
-            @using (Html.BeginForm("update", "HR", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            @using (Html.BeginForm("updatestatus", "HR", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
 
                 @Html.AntiForgeryToken()
@@ -57,6 +57,15 @@
 
                 <p class="mg-b-20 mg-sm-b-40"></p>
                 <div class="form-layout">
+                    @if (@TempData["displayMsgErr"] != null)
+                    {
+                        <div class="alert alert-danger mg-b-0" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>@TempData["displayMsgErr"]</strong>
+                        </div>
+                    }
                     @if (@TempData["Message"] != null)
                     {
                         <div class="alert alert-success" role="alert">
@@ -66,6 +75,8 @@
                             <strong> @TempData["Message"]</strong>
                         </div>
                     }
+                    @Html.HiddenFor(model => model.departmentID, new { @class = "form-control" })
+
                     @Html.HiddenFor(model => model.departUserId, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.id, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
@@ -74,6 +85,7 @@
                     @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
+                    
 
 
                     <div class="row mg-b-25">
@@ -174,27 +186,56 @@
                             </div>
                         </div>
                         <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
-                                @Html.DropDownListFor(m => m.departmentID,
-                      new SelectList(ViewBag.Departmn,
-                    "Id", "name"), "Choose Department", new { @readonly = "readonly", disabled="disabled", @class = "form-control select2" })
-                                @Html.HiddenFor(model => model.departmentID, new { @class = "form-control" })
+                        @if (Model.departmentID != null)
+                        {
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(m => m.departmentID,
+                            new SelectList(ViewBag.Departmn,
+                          "Id", "name"), "Choose Department", new { @readonly = "readonly", disabled = "disabled", @class = "form-control select2" })
 
+                                </div>
                             </div>
-                        </div>
-                        <!-- col-4 -->
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(m => m.category.name,
-                       new { @readonly = "readonly" , @class = "form-control" })
-                                @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
+                        }
+                        else
+                        {
 
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
+                                    @Html.TextBox("deptname","",
+                        new { @readonly = "readonly" , @class = "form-control" })
+
+                                </div>
                             </div>
-                        </div>
 
+                        }<!-- col-4 -->
+                        @if (Model.categoryId != null)
+                        {
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(m => m.category.name,
+                     new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
+
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
+                                    @Html.TextBox("cat","",
+                     new { @readonly = "readonly", @class = "form-control" })
+
+                                </div>
+                            </div>
+                        }
 
 
                         <div class="col-lg-4">
@@ -207,18 +248,52 @@
                             </div>
                         </div>
 
+                        @if (Model.priorityId != null)
+                        {
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Priority <span class="tx-danger">*</span></label>
+                                    <input type="text" value="@Model.priority.name" class="form-control" readonly />
+                                    <input type="hidden" name="priorityId" value="@Model.priorityId" />
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Priority <span class="tx-danger">*</span></label>
+                                    @Html.TextBox("priortyname", "", new { @class = "form-control", @readonly = "readonly" })
 
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="form-control-label">@Resources.Resource.Priority <span class="tx-danger">*</span></label>
-                                @Html.DropDownListFor(m => m.priorityId,
-                       new SelectList(ViewBag.Priorities,
-                     "Id", "name"), "Choose Priority", new { @readonly = "readonly", disabled = "disabled", @class = "form-control select2" })
-                                @Html.HiddenFor(model => model.priorityId, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        }<!-- col-4 -->
+
+
+                        @if (Model.satisfaction == "UnSatisfied" || Model.satisfaction == "Satisfied")
+                        {
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Satisfaction</label>
+                                    @Html.TextBox("unsatisfy", Model.satisfaction, new { @class = "form-control", @readonly = "readonly" })
+
+                                </div>
 
                             </div>
-                        </div>
-                        <!-- col-4 -->
+                        }
+                        else if (Model.satisfaction == null)
+                        {
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Satisfaction</label>
+                                    @Html.TextBox("satisfy", "Not Available", new { @class = "form-control", @readonly = "readonly" })
+
+                                </div>
+
+                            </div>
+
+                        }
                     </div>
                     <!-- row -->
                     <!-- form-layout-footer -->
@@ -251,36 +326,65 @@
 
 
                         <div class="row mg-b-25">
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Choose Action</label>
-                                    <select name="status" id="statusfield" disabled class="form-control select2">
-
-                                        @if (Model.status == "Open")
-                                        {
-                                            <option selected value="Open">Open</option>
-                                            <option value="Resolved">Resolved</option>
-                                            <option value="Closed">Closed</option>
-                                        }
-                                        else if (Model.status == "Closed")
-                                        {
-                                            <option value="Open">Open</option>
-                                            <option value="Resolved">Resolved</option>
-                                            <option selected value="Closed">Closed</option>
-                                        }
-                                        else
-                                        {
-
-                                            <option value="Open">Open</option>
-                                            <option selected value="Resolved">Resolved</option>
-                                            <option value="Closed">Closed</option>
-                                        }
 
 
-                                    </select>
+                            @if (Model.satisfaction == "Satisfied" || Model.satisfaction == null)
+                            {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+
+                                        <label class="form-control-label">Choose Action</label>
+
+
+                                        @Html.TextBoxFor(model => model.status, new { @readonly = "readonly", @class = "form-control" })
+
+
+                                    </div>
+                                    <label class="text-danger" id="statuscheck"></label>
                                 </div>
-                                <label class="text-danger" id="statuscheck"></label>
-                            </div>
+
+                            }
+                            else
+                            {<div class="col-lg-4">
+                                    <div class="form-group">
+
+                                        <label class="form-control-label">Choose Action</label>
+
+                                        <select name="status" id="statusfield" class="form-control select2">
+
+                                            @if (Model.status == "Resolved")
+                                            {
+                                                <option selected value="Resolved">Resolved</option>
+                                                <option value="Open">Open</option>
+
+                                                <option value="Closed">Closed</option>
+                                            }
+                                            else if (Model.status == "Open")
+                                            {
+                                                <option selected value="Open">Open</option>
+                                                <option value="Closed">Closed</option>
+                                                <option value="Resolved">Resolved</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="Resolved">Resolved</option>
+
+                                                <option value="Open">Open</option>
+
+                                                <option selected value="Closed">Closed</option>
+                                            }
+
+
+
+                                        </select>
+
+
+                                    </div>
+
+                                    <label class="text-danger" id="statuscheck"></label>
+                                </div>
+                            }
+
                             <!-- col-4 -->
 
                             @foreach (var resp in commentList)
@@ -301,16 +405,20 @@
 
                         </div>
 
-
+                       
                         <!-- row -->
-                        <div class="form-layout-footer">
-                            <input type="hidden" value="Resolvedtype" name="typeoflink" />
-                            <!-- <input type="submit" value="Submit" class="btn btn-primary bd-0" id="SubmitBtn" />-->
-                        </div>
+                        @if (Model.satisfaction == "UnSatisfied")
+                        {
+
+                            <div class="form-layout-footer">
+                                <input type="submit" value="Submit" name="submitBtn" id="submitBtn" class="btn btn-primary bd-0" />
+
+                            </div>
+                        }
                         <!-- form-layout-footer -->
                     </div>
 
-                </div>
+                            </div>
                         }
                         <!-- container -->
                     </div>
@@ -335,7 +443,9 @@
                 <script src="~/Content/lib/jquery.maskedinput/js/jquery.maskedinput.js"></script>
                 <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
                 <script src="~/Content/js/slim.js"></script>
+   
                 <script>
+                  
                     $(document).ready(function () {
                         var navig = ["Dashboard", "Create", "HR", "Department", "Users"];
                         var url = window.location.href;
@@ -364,36 +474,7 @@
 
 
 
-                    $('#SubmitBtn').click(function () {
-
-                        if ($('#statusfield').val() == "Resolved" && $('#resolvecomment').val() != "") {
-
-                            return true;
-                        }
-                        else {
-                            $('#statuscheck').text("Set status Resolve & Fill Comment");
-                            return false;
-
-                        }
-                    });
-
-
-                    $('#resolve').click(function () {
-                        if ($('#statusfield').val() == "Resolved") {
-
-                            return true;
-                        }
-
-                        else {
-                            $('#statuscheck').text("Set status Resolve");
-                            return false;
-
-                        }
-
-                    });
-
-
-
+                   
 
 
 

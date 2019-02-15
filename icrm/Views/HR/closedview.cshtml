@@ -233,7 +233,30 @@ new SelectList(ViewBag.Priorities,
                                 </div>
                             </div>
 
+                            @if (Model.satisfaction == "UnSatisfied" || Model.satisfaction == "Satisfied")
+                            {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Satisfaction</label>
+                                        @Html.TextBox("unsatisfy", Model.satisfaction, new { @class = "form-control", @readonly = "readonly" })
 
+                                    </div>
+
+                                </div>
+                            }
+                            else if (Model.satisfaction == null)
+                            {
+
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">Satisfaction</label>
+                                        @Html.TextBox("satisfy", "Not Available", new { @class = "form-control", @readonly = "readonly" })
+
+                                    </div>
+
+                                </div>
+
+                            }
 
 
                             <!-- col-4 -->
@@ -264,6 +287,9 @@ new SelectList(ViewBag.Priorities,
 
                         </div>
 
+
+
+
                         <div class="row mg-b-25">
 
                             @if (Model.satisfaction == "Satisfied")
@@ -288,7 +314,7 @@ new SelectList(ViewBag.Priorities,
 
                                         <label class="form-control-label">Choose Action</label>
 
-                                        <select name="status" id="statusfield" class="form-control select2">
+                                        <select name="status" id="statusfield" class="form-control select2" disabled="disabled">
 
                                             @if (Model.status == "Open")
                                             {
@@ -336,14 +362,17 @@ new SelectList(ViewBag.Priorities,
 
                         </div>
 
-                        
-                        @if (Model.satisfaction== "UnSatisfied")
-                        {
-                            <div class="form-layout-footer">
-                                <input type="submit" value="Update" name="submitButton" id="forward2" class="btn btn-primary bd-0" />
 
-                            </div>
-                        }
+
+                       
+
+                        @*  @if (Model.satisfaction== "UnSatisfied")
+        { *@
+                        <!--    <div class="form-layout-footer">
+            <input type="submit" value="Update" name="submitButton" id="forward2" class="btn btn-primary bd-0" />
+
+        </div>
+    }-->
                         <!-- row -->
                         <!-- form-layout-footer -->
                     </div>

@@ -124,7 +124,7 @@ namespace icrm.RepositoryImpl
 
         public IEnumerable<Feedback> getAllOpen()
         {
-            return db.Feedbacks.OrderByDescending(m => m.user.Id).Where(m=>m.checkStatus== Models.Constants.OPEN).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.user.Id).Where(m=>m.checkStatus== Models.Constants.OPEN && m.type.name==Constants.Complaints).ToList();
 
         }
 
@@ -207,12 +207,12 @@ namespace icrm.RepositoryImpl
 
         public IPagedList<Feedback> getAllResolved(int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m =>  m.status == Constants.RESOLVED).ToPagedList(pageIndex, pageSize);
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m =>  m.status == Constants.RESOLVED && m.type.name==Constants.Complaints).ToPagedList(pageIndex, pageSize);
 
         }
         public IPagedList<Feedback> getAllOpen(int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.checkStatus == Constants.OPEN).ToPagedList(pageIndex, pageSize);
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.checkStatus == Constants.OPEN && m.type.name==Constants.Complaints).ToPagedList(pageIndex, pageSize);
 
         }
 
@@ -249,7 +249,7 @@ namespace icrm.RepositoryImpl
 
         public IEnumerable<Feedback> getAllResolved()
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m =>  m.status == Constants.RESOLVED).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m =>  m.status == Constants.RESOLVED && m.type.name==Constants.Complaints).ToList();
         }
 
         public IEnumerable<Feedback> GetAllAssigned()
@@ -490,7 +490,7 @@ namespace icrm.RepositoryImpl
             //}
             //return feedlist;
 
-            return db.Feedbacks.Where(m => m.departUserId == id && m.status == Constants.OPEN).ToList();
+            return db.Feedbacks.Where(m => m.departUserId == id && m.status == Constants.OPEN && m.type.name==Constants.Complaints).ToList();
         }
 
         public IEnumerable<Feedback> getAllClosedByDept(string id)
@@ -516,7 +516,7 @@ namespace icrm.RepositoryImpl
             //}
             //return feedlist;
 
-            return db.Feedbacks.Where(m=>m.departUserId==id && m.status==Constants.CLOSED).ToList();
+            return db.Feedbacks.Where(m=>m.departUserId==id && m.status==Constants.CLOSED && m.type.name==Constants.Complaints).ToList();
 
         }
 
@@ -546,7 +546,7 @@ namespace icrm.RepositoryImpl
             //     feedlist.Add(r);
             // }
             // return feedlist;
-            return db.Feedbacks.Where(m=>m.departUserId==id && m.status==Constants.RESOLVED).ToList();
+            return db.Feedbacks.Where(m=>m.departUserId==id && m.status==Constants.RESOLVED && m.type.name==Constants.Complaints).ToList();
         }
 
         public IPagedList<Feedback> getAllOpenByDept(string v, int pageIndex, int pageSize)
