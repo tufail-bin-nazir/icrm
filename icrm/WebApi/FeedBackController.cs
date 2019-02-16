@@ -58,8 +58,8 @@ namespace icrm.WebApi
             {
                 String ext = GetFileExtension(feedBackmodel.Attachment);
 
-
-                feedBack = new Feedback { title = feedBackmodel.Title, description = feedBackmodel.Description, userId = user.Result.Id, typeId = feedBackmodel.Typeid };
+                
+                feedBack = new Feedback { title = feedBackmodel.Title, description = feedBackmodel.Description, userId = user.Result.Id, typeId = feedBackmodel.Typeid ,mediumId=11};
                 feedBack.attachment = feedBack.id + "." + ext;
                 string path = Constants.PATH + feedBack.attachment;
                 if (!File.Exists(path))
@@ -73,7 +73,7 @@ namespace icrm.WebApi
             
             else
             {
-                feedBack = new Feedback { title = feedBackmodel.Title, description = feedBackmodel.Description, userId = user.Result.Id, typeId = feedBackmodel.Typeid };
+                feedBack = new Feedback { title = feedBackmodel.Title, description = feedBackmodel.Description, userId = user.Result.Id, typeId = feedBackmodel.Typeid,mediumId=11 };
 
             }
             feedBack.checkStatus = Models.Constants.OPEN;

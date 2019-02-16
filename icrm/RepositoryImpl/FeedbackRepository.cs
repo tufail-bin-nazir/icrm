@@ -29,6 +29,7 @@ namespace icrm.RepositoryImpl
         {
 
             db.Feedbacks.Add(feedback);
+
             db.SaveChanges();
 
         }

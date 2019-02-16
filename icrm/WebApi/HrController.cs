@@ -384,6 +384,8 @@ namespace icrm.WebApi
                 var Name1 = User.Identity.Name;
                 Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
                 f.checkStatus = Models.Constants.RESPONDED;
+                f.responseDate = DateTime.Now;
+                f.timeHours = System.Math.Round((DateTime.Now - (DateTime)f.assignedDate).TotalHours, 2);
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
                 /////////////////////////////////////////////////////////////
@@ -442,7 +444,7 @@ namespace icrm.WebApi
                        select n;
 
 
-            var Query = from f in feedInterface.getRespondedDepartmenet()
+            var Query = from f in feedInterface.getAllResolved()
 
                         where f.id == id
                         select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, f.user.FirstName, f.user.Email, f.response, f.category, f.priority,quer };
@@ -1346,7 +1348,7 @@ namespace icrm.WebApi
             var userRole = roleManager.FindByName(Constants.ROLE_HR).Users.FirstOrDefault();
             Debug.Print("-----" + userRole.RoleId);
             foreach (var comm in comments) {
-                //Debug.Print(comm.commentedBy.FirstName+"-------name");
+               // Debug.Print(comm.commentedBy.FirstName+"-------name");
                 Debug.Print(comm.commentedBy.Roles.FirstOrDefault()+"-------default");
             }
             comments.ForEach(c=>Debug.Print(c.commentedBy.FirstName+"-------"+c.commentedBy.Roles.FirstOrDefault().RoleId));
