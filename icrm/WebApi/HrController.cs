@@ -445,7 +445,7 @@ namespace icrm.WebApi
                        select n;
 
 
-            var Query = from f in feedInterface.getAllResolved()
+            var Query = from f in feedInterface.GetAllResponded()
 
                         where f.id == id
                         select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, f.user.FirstName, f.user.Email, f.response, f.category, f.priority,quer };
