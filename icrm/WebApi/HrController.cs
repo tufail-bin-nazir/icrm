@@ -21,6 +21,7 @@ using Constants = icrm.Models.Constants;
 using System.Net.Mail;
 using System.Net.Mime;
 using icrm.Controllers;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace icrm.WebApi
 {
@@ -99,15 +100,13 @@ namespace icrm.WebApi
             var quer = from n in feedInterface.getCOmments(id)
                        select n;
 
-            var Query = from f in feedInterface.getAllOpen()
+            var f = feedInterface.Find(id);
+                        //select new { f.id,f.checkStatus, f.title, f.attachment, f.description, f.user.EmployeeId, f.user.Email, f.user.FirstName, f.type.name,quer };
 
-                        where f.id == id
-                        select new { f.id,f.checkStatus, f.title, f.attachment, f.description, f.user.EmployeeId, f.user.Email, f.user.FirstName, f.type.name,quer };
-
-            if (Query != null)
+            if (f != null)
             {
 
-                return Ok(Query.SingleOrDefault());
+                return Ok(new { f.id, f.checkStatus, f.title, f.attachment, f.description, f.user.EmployeeId, f.user.Email, f.user.FirstName, f.type.name, quer });
 
             }
             else
@@ -533,6 +532,7 @@ namespace icrm.WebApi
         [Route("api/HR/userTicketView/{id}")]
         public IHttpActionResult userTicketView(string id)
         {
+            
             var quer = from n in feedInterface.getCOmments(id)
                        select n;
                        
@@ -589,7 +589,7 @@ namespace icrm.WebApi
         public IHttpActionResult Resolved()
         {
 
-            var Query = from f in feedInterface.getAllResolved()
+            var Query = from f in feedInterface.GetAllResolvedmobile()
                         
                         select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, f.user.FirstName, f.user.Email, f.category, f.priority, };
 
@@ -1334,18 +1334,36 @@ namespace icrm.WebApi
         [Route("api/HR/enduserTicketView/{id}")]
         public IHttpActionResult enduserTicketView(string id)
         {
-           
 
-            var quer = from n in feedInterface.getCOmments(id)
-                       select n;
 
+
+            var comments =feedInterface.getCOmments(id);
+            Debug.Print(comments.Count+"--------------commm count");               
+                      
+            ApplicationDbContext context = new ApplicationDbContext();
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            Debug.Print("-----" + roleManager);
+            var userRole = roleManager.FindByName(Constants.ROLE_HR).Users.FirstOrDefault();
+            Debug.Print("-----" + userRole.RoleId);
+            foreach (var comm in comments) {
+                //Debug.Print(comm.commentedBy.FirstName+"-------name");
+                Debug.Print(comm.commentedBy.Roles.FirstOrDefault()+"-------default");
+            }
+            comments.ForEach(c=>Debug.Print(c.commentedBy.FirstName+"-------"+c.commentedBy.Roles.FirstOrDefault().RoleId));
+            List<Comments> quer = comments.Where(c=>c.commentedBy.Roles.Any(r => r.RoleId == userRole.RoleId)).ToList();
+            Debug.Print(roleManager + "----rolemanager----" + userRole + "-----ur---" + quer + "----qr");
+            Debug.Print(quer.Count+"------------size");
+            foreach (var item in quer)
+            {
+                Debug.Print(item.commentedBy.FirstName+"---name");
+            }
 
             var f = db.Feedbacks.Find(id);
 
             if (f != null)
             {
-                //var obj =new {f.createDate, f.title, f.description, f.response, f.satisfaction, f.status }.ToString();
-                return Ok(new { f.createDate, f.priority, f.checkStatus, f.title, f.description, f.response, f.satisfaction, f.status, f.type, quer });
+              
+                return Ok(new { f.createDate, f.checkStatus, f.title, f.description, f.response, f.satisfaction, f.status, f.type, quer });
 
             }
             else

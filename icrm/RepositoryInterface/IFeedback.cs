@@ -65,6 +65,8 @@ namespace icrm.RepositoryInterface
         IEnumerable<Feedback> getAllResolvedByDept(string id);
 
         IEnumerable<Feedback> getAllOpenMobile();
+
+        IEnumerable<Feedback> GetAllResolvedmobile();
         ApplicationUser getEscalationUser(int? departmentId, int? categoryId);
       
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -20,13 +21,12 @@ namespace icrm.Models
         public DateTime date { get; set; }
 
         public string text { get; set; }
-
+       
         public string commentedById { get; set; }
-
+        [JsonIgnore]
         public ApplicationUser commentedBy { get; set; }
-
         public string feedbackId { get; set; }
-
+        [JsonIgnore]
         public Feedback feedback { get; set; }
 
     }

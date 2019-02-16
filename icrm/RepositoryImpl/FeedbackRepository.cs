@@ -252,6 +252,12 @@ namespace icrm.RepositoryImpl
             return db.Feedbacks.OrderByDescending(m => m.id).Where(m =>  m.status == Constants.RESOLVED && m.type.name==Constants.Complaints).ToList();
         }
 
+        public IEnumerable<Feedback> GetAllResolvedmobile()
+        {
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == Constants.RESOLVED).ToList();
+        }
+
+
         public IEnumerable<Feedback> GetAllAssigned()
         {
             return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.checkStatus == Constants.ASSIGNED).ToList();
@@ -391,7 +397,7 @@ namespace icrm.RepositoryImpl
 
         public List<Comments> getCOmments(string id)
         {
-            return db.comments.Where(m => m.feedbackId == id).ToList();
+            return db.comments.Include("commentedBy").Where(m => m.feedbackId == id).ToList();
         }
 
         public List<Category> getCategories(int deptId,int type)
