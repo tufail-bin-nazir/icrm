@@ -287,6 +287,7 @@ namespace icrm.WebApi
                 }
                 f.categoryId = forward.categoryId;
                 f.departmentID = forward.departmentID;
+                f.assignedDate = DateTime.Today;
                 ApplicationUser user= feedInterface.getEscalationUser(f.departmentID, f.categoryId);
                 f.departUserId = user.Id;
                 Debug.WriteLine(f.departUserId);
