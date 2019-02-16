@@ -384,8 +384,8 @@ namespace icrm.WebApi
                 var Name1 = User.Identity.Name;
                 Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
                 f.checkStatus = Models.Constants.RESPONDED;
-                f.responseDate = DateTime.Now;
-                f.timeHours = System.Math.Round((DateTime.Now - (DateTime)f.assignedDate).TotalHours, 2);
+                f.responseDate = DateTime.Today;
+                f.timeHours = System.Math.Round((DateTime.Today - (DateTime)f.assignedDate).TotalHours, 2);
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
                 /////////////////////////////////////////////////////////////
