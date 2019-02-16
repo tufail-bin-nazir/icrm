@@ -152,6 +152,19 @@
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
+                                    <label class="form-control-label">Ticket No <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.id, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Source <span class="tx-danger">*</span></label>
+                                    @Html.TextBox("source", Model.medium.name, new { @readonly = "readonly", @class = "form-control", })
+                                    @Html.HiddenFor(model => model.mediumId, new { @readonly = "readonly", @class = "form-control", })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Type <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(model => model.type.name, new { @readonly = "readonly", @class = "form-control" })
 

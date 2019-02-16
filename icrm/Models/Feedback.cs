@@ -84,6 +84,10 @@ namespace icrm.Models
         public string checkStatus { get; set; }
         public string departUserId { get; set; }
         public ApplicationUser departUser { get; set; }
+        public int? mediumId { get; set; }
+        public virtual Medium medium { get; set; }
+
+        public double timeHours { get; set; }
 
     }
 }

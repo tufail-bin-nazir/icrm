@@ -77,7 +77,7 @@
                                 <strong> @TempData["Message"]</strong>
                             </div>
                         }
-
+                        @Html.HiddenFor(model => model.responseDate, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.id, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.user.LastName, new { @class = "form-control" })
@@ -166,8 +166,22 @@
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
+                                    <label class="form-control-label">Ticket No <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.id, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Source <span class="tx-danger">*</span></label>
+                                    @Html.TextBox("source", Model.medium.name, new { @readonly = "readonly", @class = "form-control", })
+                                    @Html.HiddenFor(model => model.mediumId, new { @readonly = "readonly", @class = "form-control", })
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Type <span class="tx-danger">*</span></label>
-                                    @Html.TextBox("typeoffeedbackname", Model.type.name, new { @readonly = "readonly", @class = "form-control", id= "typeoffeedbacktext" })
+                                    @Html.TextBox("typeoffeedbackname", Model.type.name, new { @readonly = "readonly", @class = "form-control", id = "typeoffeedbacktext" })
                                     @Html.HiddenFor(model => model.typeId, new { @readonly = "readonly", @class = "form-control", id = "typeoffeedback" })
                                 </div>
                             </div>

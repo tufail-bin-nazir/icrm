@@ -246,7 +246,12 @@
                                         <th class="pd-y-5">@Resources.Resource.Name</th>
                                         <th class="pd-y-5">@Resources.Resource.Email_Id</th>
                                         <th class="pd-y-5">@Resources.Resource.Phone_No</th>
-                                             <th class="pd-y-5">Date</th>
+                                        <th class="pd-y-5">Date</th>
+                                        @if (ViewBag.linkName == "respondedticket")
+                                        {
+                                            <th class="pd-y-5">Response Time(minutes)</th>
+                                        }
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -324,6 +329,14 @@
                                         {
 
                                             <td>@Html.DisplayFor(modelitem => item.Data.createDate)</td>
+                                        }
+
+
+                                        @if (ViewBag.linkName == "respondedticket")
+                                        {
+                                           
+
+                                           <td>@item.Data.timeHours  </td>
                                         }
                                     </tr>
 

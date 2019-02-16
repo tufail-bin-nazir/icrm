@@ -161,7 +161,7 @@ namespace icrm.Models
         public DbSet<Models.Feedback> Feedbacks { get; set; }
         public DbSet<Models.FeedBackType> FeedbackTypes { get; set; }
         public DbSet<Models.Comments> comments { get; set; }
-
+        public DbSet<Models.Medium> medium { get; set; }
         public DbSet<Models.Category> Categories { get; set; }
         public DbSet<Models.Location> Locations { get; set; }
         public DbSet<Models.LocationGroup> LocationGroups { get; set; }

@@ -189,6 +189,17 @@
 
                 <div class="form-layout">
                     <div class="row mg-b-25">
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label">Source <span class="tx-danger">*</span></label>
+                                @Html.DropDownListFor(model => model.mediumId,
+  new SelectList(ViewBag.sourceList, "Id", "name"), "Choose", new { @class = "form-control select2",required="required" })
+
+
+                            </div>
+                        </div>
+
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">@Resources.Resource.Type <span class="tx-danger">*</span></label>
