@@ -243,7 +243,7 @@ namespace icrm.RepositoryImpl
 
         public IEnumerable<Feedback> GETAllClosed()
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == Constants.CLOSED && m.checkStatus == Models.Constants.CLOSED).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == Constants.CLOSED ).ToList();
         }
 
 

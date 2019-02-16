@@ -1337,7 +1337,6 @@ namespace icrm.WebApi
            
 
             var quer = from n in feedInterface.getCOmments(id)
-                       where n.commentedBy==n.commentedBy.Roles
                        select n;
 
 
