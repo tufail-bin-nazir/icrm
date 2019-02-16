@@ -155,14 +155,19 @@ namespace icrm.Controllers
         [Route("response/")]
         public ActionResult response(Feedback feedback)
         {
+
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             Feedback f = db.Feedbacks.Find(feedback.id);
             f.checkStatus = Constants.RESPONDED;
+            f.responseDate = DateTime.Today;
+
+          
             List<Comments> cc = new List<Comments>();
            
             if (Request.Form["responsee"] != "")
             {
+                f.timeHours= System.Math.Round((DateTime.Now - (DateTime)f.assignedDate).TotalHours,2);
                 Comments c = new Comments();
                 c.text = Request.Form["responsee"];
                 c.commentedById = user.Id;
@@ -439,5 +444,8 @@ namespace icrm.Controllers
             ViewBag.Priorities = feedInterface.getPriorties();
 
         }
+
+
+       
     }
 }

@@ -587,6 +587,9 @@ namespace icrm.RepositoryImpl
                   return db.Users.Find(user.firstEscalationUserId);
         }
 
-       
+        public IEnumerable<Medium> getSourceList()
+        {
+            return db.medium.OrderByDescending(m=>m.name).ToList();
+        }
     }
 }
