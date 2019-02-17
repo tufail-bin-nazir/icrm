@@ -98,8 +98,8 @@
                                     <div class="form-group">
                                         <label class="form-control-label">@Resources.Resource.Employee_Id <span class="tx-danger">*</span></label>
                                         @Html.DropDownListFor(m => m.userId,
-        new SelectList(ViewBag.EmployeeList,
-        "Id", "EmployeeId"), "Select Employee", new { @class = "form-control select2", id = "empID",required="required" })
+ new SelectList(ViewBag.EmployeeList,
+ "Id", "EmployeeId"), "Select Employee", new { @class = "form-control select2", id = "empID", required = "required" })
                                     </div>
                                 </div>
                                 <!-- col-4 -->
@@ -107,6 +107,24 @@
                                 <!-- col-4 -->
                             </div>
                         }
+                        else {
+
+                            <div class="row mg-b-25">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@Resources.Resource.Employee_Id <span class="tx-danger">*</span></label>
+                                       
+                                        @Html.DropDownList("parent",
+ Enumerable.Empty<SelectListItem>(),"Select Employee", new { @class = "form-control select2", id = "empID", required = "required" })
+                                    </div>
+                                </div>
+                                <!-- col-4 -->
+                                <!-- col-4 -->
+                                <!-- col-4 -->
+                            </div>
+
+                        }
+
                         <!-- row -->
                         <!-- form-layout-footer -->
 
