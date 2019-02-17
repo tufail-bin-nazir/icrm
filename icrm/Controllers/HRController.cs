@@ -206,12 +206,12 @@ namespace icrm.Controllers
                     {
                         if (feedback.status == Constants.CLOSED)
                         {
-                            feedback.closedDate = DateTime.Today;
+                            feedback.closedDate = DateTime.Now;
                             feedback.checkStatus = Constants.CLOSED;
                         }
                         else
                         {
-                            feedback.resolvedDate = DateTime.Today;
+                            feedback.resolvedDate = DateTime.Now;
                             feedback.checkStatus = Constants.RESOLVED;
                         }
 
@@ -281,12 +281,12 @@ namespace icrm.Controllers
             f.status = feedback.status;
             if (feedback.status == Constants.CLOSED)
             {
-                f.closedDate = DateTime.Today;
+                f.closedDate = DateTime.Now;
                 f.checkStatus = Constants.CLOSED;
             }
             else if (feedback.status == Constants.RESOLVED)
             {
-                f.resolvedDate = DateTime.Today;
+                f.resolvedDate = DateTime.Now;
                 f.checkStatus = Constants.RESOLVED;
             }
             else {
@@ -417,12 +417,12 @@ namespace icrm.Controllers
                     {
                         if (feedback.status == Constants.CLOSED)
                         {
-                            feedback.closedDate = DateTime.Today;
+                            feedback.closedDate = DateTime.Now;
                             feedback.checkStatus = Constants.CLOSED;
                             TempData["MessageSuccess"] = "Ticket has been Closed Successfully";
                         }
                         else {
-                            feedback.resolvedDate = DateTime.Today;
+                            feedback.resolvedDate = DateTime.Now;
                             feedback.checkStatus = Constants.RESOLVED;
                             TempData["MessageSuccess"] = "Ticket has been Resolved Successfully";
                         }
@@ -1000,13 +1000,13 @@ namespace icrm.Controllers
 
                         if (feedback.status == Constants.CLOSED)
                         {
-                            feedback.closedDate = DateTime.Today;
+                            feedback.closedDate = DateTime.Now;
                             feedback.checkStatus = Constants.CLOSED;
                             TempData["MessageSuccess"] = "Ticket has been Closed Successfully";
                         }
                         else
                         {
-                            feedback.resolvedDate = DateTime.Today;
+                            feedback.resolvedDate = DateTime.Now;
                             feedback.checkStatus = Constants.RESOLVED;
                             TempData["MessageSuccess"] = "Ticket has been Resolved Successfully";
                         }
@@ -1086,7 +1086,7 @@ namespace icrm.Controllers
 
             if (feedback.status == Constants.CLOSED)
             {
-                f.closedDate = DateTime.Today;
+                f.closedDate = DateTime.Now;
                 f.resolvedDate = null;
                 f.checkStatus = Constants.CLOSED;
                

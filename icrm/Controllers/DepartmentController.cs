@@ -160,7 +160,7 @@ namespace icrm.Controllers
             ViewData["user"] = user;
             Feedback f = db.Feedbacks.Find(feedback.id);
             f.checkStatus = Constants.RESPONDED;
-            f.responseDate = DateTime.Today;
+            f.responseDate = DateTime.Now;
 
           
             List<Comments> cc = new List<Comments>();
