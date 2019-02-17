@@ -124,6 +124,7 @@ namespace icrm.Models
             client.Host = "email.mcdonalds.com.sa";
             mail.Subject = "Notification";
             mail.Body = body;
+            mail.IsBodyHtml = true;
             await client.SendMailAsync(mail);
 
            
