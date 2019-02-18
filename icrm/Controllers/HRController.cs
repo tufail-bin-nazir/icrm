@@ -131,7 +131,6 @@ namespace icrm.Controllers
         [Route("hr/feedback/")]
         public ActionResult Create(int? id,string submitButton, Feedback feedback, HttpPostedFileBase file)
         {
-            System.Diagnostics.Debug.WriteLine(Request.Form["emailsss"]+"tttttttttttttttttttt");
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             if (roleManager.FindByName("User").Users.FirstOrDefault() != null)
             {
@@ -173,8 +172,21 @@ namespace icrm.Controllers
                     case "Forward/Create":
                         if (feedback.departmentID != null && Request.Form["responsee"] == "")
                         {
-
-                        ApplicationUser deptUser=feedInterface.getEscalationUser(feedback.departmentID,feedback.categoryId);
+                        ApplicationUser deptUser;
+                       Department dep = db.Departments.Find(feedback.departmentID);
+                        if (dep.name == Constants.OPERATIONS)
+                        {
+                             
+                            deptUser = feedInterface.getOperationsEscalationUser(Convert.ToInt32(Request.Form["costcentrId"]));
+                            
+                             
+                        }
+                        else
+                        {
+                            deptUser = feedInterface.getEscalationUser(feedback.departmentID, feedback.categoryId);
+                            
+                        }
+                        
                         feedback.departUserId = deptUser.Id;
                         feedback.departUser = deptUser;
                         if (ModelState.IsValid)
@@ -373,7 +385,7 @@ namespace icrm.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("assigndepart/")]
+        [Route("assigndepartment/")]
         public ActionResult assign(string submitButton,Feedback feedback)
         {
             
@@ -387,14 +399,24 @@ namespace icrm.Controllers
                     if (feedback.departmentID != null && Request.Form["responsee"] == "")
                     {
                         db.Feedbacks.Attach(feedback);
-                        ApplicationUser deptUser = feedInterface.getEscalationUser(feedback.departmentID, feedback.categoryId);
-                      deptUser=  db.Users.Find(deptUser.Id);
+                        ApplicationUser deptUser;
+                        Department dep = db.Departments.Find(feedback.departmentID);
+                        if (dep.name == Constants.OPERATIONS)
+                        {
+                            deptUser = feedInterface.getOperationsEscalationUser(Convert.ToInt32(Request.Form["costcentrId"]));
+                        }
+                        else
+                        {
+                            deptUser = feedInterface.getEscalationUser(feedback.departmentID, feedback.categoryId);
+                        }
+                        deptUser=  db.Users.Find(deptUser.Id);
                         feedback.departUserId = deptUser.Id;
                         feedback.departUser = deptUser;
 
                         feedback.departmentID = feedback.departmentID;
-                        feedback.checkStatus = Constants.ASSIGNED;                        
-                            if (feedback.assignedDate == null)
+                        feedback.checkStatus = Constants.ASSIGNED;
+                       
+                        if (feedback.assignedDate == null)
                             {
                                 feedback.assignedBy = user.Id;
                                 feedback.assignedDate = DateTime.Now;                               
@@ -933,6 +955,8 @@ namespace icrm.Controllers
             return Json(feedInterface.getEmpDetails(id));
         }
 
+        
+
         public ViewResult charts()
         {
             string chartsAll = (db.Feedbacks.Count()).ToString();
@@ -997,7 +1021,20 @@ namespace icrm.Controllers
                     if (feedback.departmentID != null && Request.Form["responsee"] == "")
                     {
                         db.Feedbacks.Attach(feedback);
-                        ApplicationUser deptUser = feedInterface.getEscalationUser(feedback.departmentID, feedback.categoryId);
+
+                        ApplicationUser deptUser;
+                        Department dep = db.Departments.Find(feedback.departmentID);
+                        if (dep.name == Constants.OPERATIONS)
+                        {
+                               deptUser = feedInterface.getOperationsEscalationUser(Convert.ToInt32(Request.Form["costcentrId"]));
+                           
+                           
+                        }
+                        else
+                        {
+                            deptUser = feedInterface.getEscalationUser(feedback.departmentID, feedback.categoryId);
+                        }
+
                         deptUser = db.Users.Find(deptUser.Id);
                         feedback.departUserId = deptUser.Id;
                         feedback.departUser = deptUser;

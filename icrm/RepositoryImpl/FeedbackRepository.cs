@@ -598,5 +598,12 @@ namespace icrm.RepositoryImpl
         {
             return db.medium.OrderByDescending(m=>m.name).ToList();
         }
+
+        public ApplicationUser getOperationsEscalationUser(int? costCenterId)
+        {
+            EscalationUser escUser = db.EscalationUsers.Where(m => m.CostCenterId == costCenterId).FirstOrDefault();
+            ApplicationUser user = db.Users.Find(escUser.firstEscalationUserId);
+            return user;
+        }
     }
 }
