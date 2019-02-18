@@ -24,7 +24,7 @@ namespace icrm.Models
         public String description { get; set; }
 
         [Display(Name = "Department")]
-        public String departmentname { get; set; }
+        public String departmentName { get; set; }
 
         [Display(Name = "Category")]
         public String category { get; set; }
