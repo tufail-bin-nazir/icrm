@@ -164,7 +164,8 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">Location:<span class="tx-danger">*</span></label>
-                                @Html.TextBox("EmpLocation","", new { @readonly = "readonly", @class = "form-control", id= "EmpLocation" })
+                                @Html.TextBox("EmpLocation", "", new { @readonly = "readonly", @class = "form-control", id = "EmpLocation" })
+                                @Html.Hidden("costcentrId", "", new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
 
                             </div>
                         </div>
@@ -411,8 +412,8 @@
                             $('#EmpBatch').val(response.EmployeeId);
                             $('#EmpEmail').val(response.Email);
                             $('#EmpPNo').val(response.PhoneNumber);
-                            $('#EmpLocation').val(response.Location.name);
-                           // $('#EmpSubLocation').val(response.SubLocation.name);
+                            $('#EmpLocation').val(response.CostCenter.name +"-"+ response.CostCenter.Id);
+                            $('#costcentrId').val(response.CostCenter.Id);
                             
 
                         },
@@ -552,7 +553,8 @@
 
 
             $("#deptId").change(function () {
-                
+
+                alert('jjdjhf')
                     $("#category option").remove();
 
                     $('#category').append('<option value="">' + "Choose Category" + '</option>');
