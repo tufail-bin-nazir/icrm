@@ -539,7 +539,7 @@ namespace icrm.Controllers
                     report.incidentType = f.type.name;
                     report.status = f.status;
                     report.description = f.description;
-                    report.departmentName = f.department.name;
+                    report.departmentName = f.department== null ? "": f.department.name ;
                     report.category = f.category.name;
                     report.name = f.user.FirstName;
                     report.batchNumber = f.user.EmployeeId;
