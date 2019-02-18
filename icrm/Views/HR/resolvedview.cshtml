@@ -80,7 +80,6 @@
                     @Html.HiddenFor(model => model.departUserId, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.id, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
-                    @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.user.LastName, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
@@ -121,8 +120,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">Location: <span class="tx-danger">*</span></label>
-                                @Html.TextBox("EmpLocation", Model.user.CostCenter.name + "-" + Model.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control" })
-                                @Html.Hidden("costcentrId", Model.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
+                                @Html.TextBoxFor(model => model.user.Location.name, new { @readonly = "readonly", @class = "form-control" })
 
                             </div>
                         </div>
@@ -285,30 +283,7 @@
                         }<!-- col-4 -->
 
 
-                        @if (Model.satisfaction == "UnSatisfied" || Model.satisfaction == "Satisfied")
-                        {
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Satisfaction</label>
-                                    @Html.TextBox("unsatisfy", Model.satisfaction, new { @class = "form-control", @readonly = "readonly" })
-
-                                </div>
-
-                            </div>
-                        }
-                        else if (Model.satisfaction == null)
-                        {
-
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">Satisfaction</label>
-                                    @Html.TextBox("satisfy", "Not Available", new { @class = "form-control", @readonly = "readonly" })
-
-                                </div>
-
-                            </div>
-
-                        }
+                       
                     </div>
                     <!-- row -->
                     <!-- form-layout-footer -->
@@ -342,63 +317,56 @@
 
                         <div class="row mg-b-25">
 
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Satisfaction</label>
 
-                            @if (Model.satisfaction == "Satisfied" || Model.satisfaction == null)
-                            {
-                                <div class="col-lg-4">
-                                    <div class="form-group">
+                                    @Html.DropDownListFor(m=>m.satisfaction, new List<SelectListItem>
+        {
+            new SelectListItem{ Text="Choose", Value = "" },
+            new SelectListItem{ Text="Satisfy", Value = "Satisfied" },
+            new SelectListItem{ Text="UnSatisfy", Value = "UnSatisfied" },
+         }, new { @class = "form-control select2" })
+                                </div>
+                            </div><div class="col-lg-4">
+                                <div class="form-group">
 
-                                        <label class="form-control-label">Choose Action</label>
+                                    <label class="form-control-label">Choose Action</label>
+
+                                    <select name="status" id="statusfield" class="form-control select2">
+
+                                        @if (Model.status == "Resolved")
+                                        {
+                                            <option selected value="Resolved">Resolved</option>
+                                            <option value="Open">Open</option>
+
+                                            <option value="Closed">Closed</option>
+                                        }
+                                        else if (Model.status == "Open")
+                                        {
+                                            <option selected value="Open">Open</option>
+                                            <option value="Closed">Closed</option>
+                                            <option value="Resolved">Resolved</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="Resolved">Resolved</option>
+
+                                            <option value="Open">Open</option>
+
+                                            <option selected value="Closed">Closed</option>
+                                        }
 
 
-                                        @Html.TextBoxFor(model => model.status, new { @readonly = "readonly", @class = "form-control" })
+
+                                    </select>
 
 
-                                    </div>
-                                    <label class="text-danger" id="statuscheck"></label>
                                 </div>
 
-                            }
-                            else
-                            {<div class="col-lg-4">
-                                    <div class="form-group">
+                                <label class="text-danger" id="statuscheck"></label>
+                            </div>
 
-                                        <label class="form-control-label">Choose Action</label>
-
-                                        <select name="status" id="statusfield" class="form-control select2">
-
-                                            @if (Model.status == "Resolved")
-                                            {
-                                                <option selected value="Resolved">Resolved</option>
-                                                <option value="Open">Open</option>
-
-                                                <option value="Closed">Closed</option>
-                                            }
-                                            else if (Model.status == "Open")
-                                            {
-                                                <option selected value="Open">Open</option>
-                                                <option value="Closed">Closed</option>
-                                                <option value="Resolved">Resolved</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="Resolved">Resolved</option>
-
-                                                <option value="Open">Open</option>
-
-                                                <option selected value="Closed">Closed</option>
-                                            }
-
-
-
-                                        </select>
-
-
-                                    </div>
-
-                                    <label class="text-danger" id="statuscheck"></label>
-                                </div>
-                            }
 
                             <!-- col-4 -->
 
@@ -422,19 +390,17 @@
 
                        
                         <!-- row -->
-                        @if (Model.satisfaction == "UnSatisfied")
-                        {
-
+                      
                             <div class="form-layout-footer">
                                 <input type="submit" value="Submit" name="submitBtn" id="submitBtn" class="btn btn-primary bd-0" />
 
                             </div>
-                        }
+                      
                         <!-- form-layout-footer -->
                     </div>
 
                             </div>
-                        }
+                }
                         <!-- container -->
                     </div>
                 </div>
