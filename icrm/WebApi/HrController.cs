@@ -276,27 +276,37 @@ namespace icrm.WebApi
 
             }
 
+            else if (db.Departments.Find(forward.departmentID).name==Constants.OPERATIONS)
+            {
+                var Name1 = User.Identity.Name;
+                Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
+                ApplicationUser user1 = feedInterface.getOperationsEscalationUser(user.Result.CostCenterId);
+                f.departUserId = user1.Id;
+            }
+            
             else
             {
-                f.checkStatus = Models.Constants.ASSIGNED;
-                f.subcategoryId = forward.subcategoryId;
-                if (f.priorityId != null)
-                {
-                    f.priorityId = forward.priorityId;
-
-                }
-                f.categoryId = forward.categoryId;
-                f.departmentID = forward.departmentID;
-                f.assignedDate = DateTime.Today;
-                ApplicationUser user= feedInterface.getEscalationUser(f.departmentID, f.categoryId);
+                ApplicationUser user = feedInterface.getEscalationUser(f.departmentID, f.categoryId);
                 f.departUserId = user.Id;
-                Debug.WriteLine(f.departUserId);
-                db.Entry(f).State = EntityState.Modified;
-                db.SaveChanges();
-
-                return Ok();
+               
 
             }
+            f.checkStatus = Models.Constants.ASSIGNED;
+            f.subcategoryId = forward.subcategoryId;
+            if (f.priorityId != null)
+            {
+                f.priorityId = forward.priorityId;
+
+            }
+            f.categoryId = forward.categoryId;
+            f.departmentID = forward.departmentID;
+            f.assignedDate = DateTime.Now;
+
+            db.Entry(f).State = EntityState.Modified;
+            db.SaveChanges();
+
+            return Ok();
+
         }
 
 
@@ -385,8 +395,8 @@ namespace icrm.WebApi
                 var Name1 = User.Identity.Name;
                 Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
                 f.checkStatus = Models.Constants.RESPONDED;
-                f.responseDate = DateTime.Today;
-                f.timeHours = System.Math.Round((DateTime.Today - (DateTime)f.assignedDate).TotalHours, 2);
+                f.responseDate = DateTime.Now;
+                f.timeHours = System.Math.Round((DateTime.Now - (DateTime)f.assignedDate).TotalHours, 2);
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
                 /////////////////////////////////////////////////////////////
@@ -446,7 +456,6 @@ namespace icrm.WebApi
 
 
             var Query = from f in feedInterface.GetAllResponded()
-
                         where f.id == id
                         select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, f.user.FirstName, f.user.Email, f.response, f.category, f.priority,quer };
 
@@ -544,7 +553,7 @@ namespace icrm.WebApi
             
             if (f != null)
             {
-                //var obj =new {f.createDate, f.title, f.description, f.response, f.satisfaction, f.status }.ToString();
+               
                 return Ok(new { f.createDate,f.priority,f.checkStatus, f.title, f.description, f.response, f.satisfaction, f.status, f.type ,quer});
 
             }
@@ -1313,22 +1322,17 @@ namespace icrm.WebApi
         {
              MailMessage mail = new MailMessage("employee.relation@mcdonalds.com.sa", emailto);
            // MailMessage mail = new MailMessage("tufail.b.n@gmail.com", "wajahatnabi90@gmail.com");
-            SmtpClient client = new SmtpClient();
-            
+            SmtpClient client = new SmtpClient();           
             client.Port = 25;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = true;
             client.EnableSsl = false;
-            client.Host = "email.mcdonalds.com.sa";
-           
+            client.Host = "email.mcdonalds.com.sa";  
             mail.Subject = "Reset Your Password";
-            mail.Body ="37.76.254.20/Account/ResetPassword?code="+code;
+            mail.Body ="http://37.76.254.20/Account/ResetPassword?code="+code;
             mail.IsBodyHtml = true;
             await client.SendMailAsync(mail);
         }
-
-
-
 
         //40/ <summary>
         /// ///////////////////*********************** enduserTicketView************//////////////////////////////////
@@ -1337,9 +1341,6 @@ namespace icrm.WebApi
         [Route("api/HR/enduserTicketView/{id}")]
         public IHttpActionResult enduserTicketView(string id)
         {
-
-
-
             var comments =feedInterface.getCOmments(id);
             Debug.Print(comments.Count+"--------------commm count");               
                       
