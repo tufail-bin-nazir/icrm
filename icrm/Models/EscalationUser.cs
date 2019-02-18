@@ -19,5 +19,7 @@ namespace icrm.Models
         public IEnumerable<int> CategoriesIds { get; set; }
         public int DepartmentId  { get; set; }
         public virtual Department Department { get; set; }
+        public int? CostCenterId { get; set; }
+        public virtual CostCenter CostCenter { get; set; }
     }
 }

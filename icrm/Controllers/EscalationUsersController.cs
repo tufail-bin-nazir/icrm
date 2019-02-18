@@ -39,6 +39,7 @@ namespace icrm.Controllers
         // GET: EscalationUsers/Create
         public ActionResult Create()
         {
+            ViewBag.CostCenterList = db.CostCenters.OrderBy(m=>m.CostCenterCode).ToList();
             ViewBag.DepartmentList = db.Departments.Where(m=>m.type== Constants.FORWARD).ToList();
             ViewBag.UserList = db.Users.ToList();
             //ViewBag.Categories = db.Categories.Where(c=>c.EscalationUserId== null).ToList();
@@ -68,7 +69,7 @@ namespace icrm.Controllers
               
                 return RedirectToAction("Create");
             }
-
+            ViewBag.CostCenterList = db.CostCenters.OrderBy(m => m.CostCenterCode).ToList();
             ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD).ToList();
             ViewBag.UserList = db.Users.ToList();
            // ViewBag.Categories = db.Categories.Where(c => c.EscalationUserId == null).ToList();
@@ -96,7 +97,8 @@ namespace icrm.Controllers
             {
                 return HttpNotFound();
             }
-           
+
+            ViewBag.CostCenterList = db.CostCenters.OrderBy(m => m.CostCenterCode).ToList();
             ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD).ToList();
             ViewBag.UserList = db.Users.ToList();
             ViewBag.Categories = db.Categories.Where(m=>m.DepartmentId == escalationUser.DepartmentId && m.FeedBackType.name == Constants.Complaints).ToList();
@@ -134,6 +136,7 @@ namespace icrm.Controllers
                 return RedirectToAction("Create");
             }
 
+            ViewBag.CostCenterList = db.CostCenters.OrderBy(m => m.CostCenterCode).ToList();
             ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD).ToList();
             ViewBag.UserList = db.Users.ToList();
             //ViewBag.Categories = db.Categories.Where(c => c.EscalationUserId == null).ToList();
@@ -162,6 +165,7 @@ namespace icrm.Controllers
                 return HttpNotFound();
             }
 
+            ViewBag.CostCenterList = db.CostCenters.OrderBy(m => m.CostCenterCode).ToList();
             ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD).ToList();
             ViewBag.UserList = db.Users.ToList();
             ViewBag.Categories = db.Categories.Where(m => m.DepartmentId == escalationUser.DepartmentId && m.FeedBackType.name == Constants.Complaints).ToList();

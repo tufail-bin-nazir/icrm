@@ -84,8 +84,8 @@
                                 <div class="form-group">
                                     <label class="form-control-label">Categories <span class="tx-danger">*</span></label>
                                     @*@Html.DropDownListFor(m => m.EscalationUser.CategoriesIds,
-                                       new SelectList(ViewBag.Categories,
-                                          "Id", "name"),"Choose Categories", new { @class = "form-control select2",Multiple ="multiple"})*@
+                new SelectList(ViewBag.Categories,
+                   "Id", "name"),"Choose Categories", new { @class = "form-control select2",Multiple ="multiple"})*@
 
                                     <select id="category" name="EscalationUser.CategoriesIds" class="form-control select2" multiple required>
                                         <option value="">Select category</option>
@@ -104,7 +104,7 @@
                                                 }
                                             }
                                         }
-                                       
+
 
 
                                     </select>
@@ -112,6 +112,18 @@
 
                                 </div>
                             </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Store Name<span class="tx-danger"></span></label>
+
+
+                                    @Html.DropDownListFor(m => m.EscalationUser.CostCenterId,
+                                        new SelectList(ViewBag.CostCenterList,
+                                           "Id", "name"),"Choose Cost Center", new { @class = "form-control select2 user", required= "required"})
+                                </div>
+                            </div>
+
 
                             <div class="col-lg-4">
                                 <div class="form-group">
@@ -189,6 +201,7 @@
                                     <tr class="tx-10">
                                         <th class="wd-10p pd-y-5">S.No</th>
                                         <th class="pd-y-5">Department</th>
+                                        <th class="pd-y-5">Cost Center Name</th>
                                         <th class="pd-y-5">First Escalation User</th>
                                         <th class="pd-y-5">Second Escalation User</th>
                                         <th class="pd-y-5">Third Escalation User</th>
@@ -209,7 +222,18 @@
 
                                         </td>
 
-                                       
+                                        <td>
+                                            @if(@item.CostCenterId == null){
+                                              <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">Not Availible</a>
+                                            }
+                                            else{
+                                              <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.CostCenter.name</a>
+                                            }
+                                            
+
+                                        </td>
+
+
 
                                         <td>
                                             <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">
