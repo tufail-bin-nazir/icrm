@@ -278,8 +278,6 @@ namespace icrm.WebApi
 
             else if (db.Departments.Find(forward.departmentID).name==Constants.OPERATIONS)
             {
-
-                
                 ApplicationUser user1 = feedInterface.getOperationsEscalationUser(f.user.CostCenterId);
                 f.departUserId = user1.Id;
             }
@@ -322,7 +320,7 @@ namespace icrm.WebApi
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
               var query = from f in feedInterface.GetAllAssigned()
 
-                          where f.departmentID == user.Result.DepartmentId
+                          where f.departUserId == user.Result.Id
                           select new { f.id, f.title, f.description, f.createDate, f.status,f.type.name, f.user.EmployeeId,f.user.FirstName};
                                    
 
@@ -391,7 +389,6 @@ namespace icrm.WebApi
             else
             {
 
-
                 var Name1 = User.Identity.Name;
                 Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
                 f.checkStatus = Models.Constants.RESPONDED;
@@ -427,7 +424,7 @@ namespace icrm.WebApi
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
 
             var Query = from f in feedInterface.GetAllResponded()
-                        where f.departmentID == user.Result.DepartmentId
+                        where f.departUserId == user.Result.Id
                         select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
 
             if (Query != null)
