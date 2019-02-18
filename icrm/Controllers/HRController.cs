@@ -551,7 +551,7 @@ namespace icrm.Controllers
                     report.createdBy = f.submittedBy == null ? f.user.FirstName : "ICRM AGENT";
                     report.responseTime = f.timeHours;
                     report.source = f.user.CostCenter.name;
-                    report.priority = f.priority.name;
+                    report.priority = f.priority == null ? "": f.priority.name;
                     report.owner = f.departUser == null? "": f.departUser.FirstName;
                     report.isescalated = f.escalationlevel == null ? "No" : "Yes";
                     reports.Add(report);
