@@ -56,9 +56,7 @@ namespace icrm.WebApi
 
             if (feedBackmodel.Attachment != null)
             {
-                String ext = GetFileExtension(feedBackmodel.Attachment);
-
-                
+                String ext = GetFileExtension(feedBackmodel.Attachment);                
                 feedBack = new Feedback { title = feedBackmodel.Title, description = feedBackmodel.Description, userId = user.Result.Id, typeId = feedBackmodel.Typeid ,mediumId=11};
                 feedBack.attachment = feedBack.id + "." + ext;
                 string path = Constants.PATH + feedBack.attachment;

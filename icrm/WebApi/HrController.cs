@@ -278,9 +278,9 @@ namespace icrm.WebApi
 
             else if (db.Departments.Find(forward.departmentID).name==Constants.OPERATIONS)
             {
-                var Name1 = User.Identity.Name;
-                Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
-                ApplicationUser user1 = feedInterface.getOperationsEscalationUser(user.Result.CostCenterId);
+
+                
+                ApplicationUser user1 = feedInterface.getOperationsEscalationUser(f.user.CostCenterId);
                 f.departUserId = user1.Id;
             }
             
@@ -293,7 +293,7 @@ namespace icrm.WebApi
             }
             f.checkStatus = Models.Constants.ASSIGNED;
             f.subcategoryId = forward.subcategoryId;
-            if (f.priorityId != null)
+            if (forward.priorityId != 0)
             {
                 f.priorityId = forward.priorityId;
 
