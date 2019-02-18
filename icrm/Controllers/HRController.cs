@@ -507,12 +507,38 @@ namespace icrm.Controllers
             else
             {
                 DateTime dt = DateTime.ParseExact(dd, "dd-MM-yyyy", CultureInfo.InvariantCulture);
-                DateTime dt2 = DateTime.ParseExact(d3, "dd-MM-yyyy", CultureInfo.InvariantCulture);              
+                DateTime dt2 = DateTime.ParseExact(d3, "dd-MM-yyyy", CultureInfo.InvariantCulture);
+                IEnumerable<Feedback> excelfeedbacks = feedInterface.searchHR(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), status);
+                List<ReportModel> reports = new List<ReportModel>();
+                foreach (Feedback f in excelfeedbacks) {
+                    ReportModel report = new ReportModel();
+                    report.ticketId = f.id;
+                    report.title = f.title;
+                    report.incidentType = f.type.name;
+                    report.status = f.status;
+                    report.description = f.description;
+                    report.departmentname = f.department.name;
+                    report.category = f.category.name;
+                    report.name = f.user.FirstName;
+                    report.batchNumber = f.user.EmployeeId;
+                    report.position = f.user.JobTitle.name;
+                    report.nationality = f.user.Nationality.name;
+                    report.emailId = f.user.bussinessEmail;
+                    report.phoneNumber = f.user.bussinessPhoneNumber;
+                    report.createdDate = f.createDate;
+                    report.createdBy = f.submittedBy == null ? f.user.FirstName : "ICRM AGENT";
+                    report.responseTime = f.timeHours;
+                    report.source = f.user.CostCenter.name;
+                    report.priority = f.priority.name;
+                    report.owner = f.departUser == null? "": f.departUser.FirstName;
+                    report.isescalated = f.escalationlevel == null ? "No" : "Yes";
+                    reports.Add(report);
+                }
                 if (export == "excel")
                 {
-                    IEnumerable<Feedback> feedbacks = feedInterface.searchHR(Convert.ToDateTime(dt).ToString("yyyy-MM-dd HH:mm:ss.fff"), Convert.ToDateTime(dt2).ToString("yyyy-MM-dd HH:mm:ss.fff"), status);                 
+                    
                     var grid = new GridView();
-                    grid.DataSource = feedbacks;
+                    grid.DataSource = reports;
                     grid.DataBind();
                     Response.ClearContent();
                     Response.AddHeader("content-disposition", "attachement; filename=data.xls");
