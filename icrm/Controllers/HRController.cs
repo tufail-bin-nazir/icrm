@@ -289,7 +289,7 @@ namespace icrm.Controllers
 
             }                     
             Feedback f = db.Feedbacks.Find(feedback.id);
-            
+            f.satisfaction = feedback.satisfaction;
             f.status = feedback.status;
             if (feedback.status == Constants.CLOSED)
             {
@@ -1111,25 +1111,51 @@ namespace icrm.Controllers
         /******** HR update status Resolved to Open/Closed on User's satisfaction status******/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult updatestatus(Feedback feedback)
+        public ActionResult updatestatus(Feedback feedback, string submitBtn)
         {          
             var user = UserManager.FindById(User.Identity.GetUserId());
             ViewData["user"] = user;
             Feedback f = db.Feedbacks.Find(feedback.id);
+            f.satisfaction = feedback.satisfaction;
             f.status = feedback.status;
             
          
             f.submittedById = user.Id;
 
-            if (feedback.status == Constants.CLOSED)
-            {
-                f.closedDate = DateTime.Now;
-                f.resolvedDate = null;
-                f.checkStatus = Constants.CLOSED;
-               
+            switch (submitBtn) {
+                case "Submit":
+                    if (feedback.status == Constants.CLOSED)
+                    {
+                        f.closedDate = DateTime.Now;
+                        f.resolvedDate = null;
+                        f.checkStatus = Constants.CLOSED;
 
+
+                    }
+                    else if(feedback.status==Constants.RESOLVED)
+                    {
+                        f.resolvedDate = f.resolvedDate;
+                        f.checkStatus = Constants.RESOLVED;
+                    }
+                    break;
+
+                case "Update":
+                    if (feedback.status == Constants.RESOLVED)
+                    {
+                        f.resolvedDate = DateTime.Now;
+                        f.closedDate = null;
+                        f.checkStatus = Constants.RESOLVED;
+                    }
+                    else if(feedback.status==Constants.CLOSED)
+                    {
+                        f.closedDate = f.closedDate;
+                        f.checkStatus = Constants.CLOSED;
+                    }
+                    break;
             }
-            else if (feedback.status == Constants.OPEN)
+
+            
+            if (feedback.status == Constants.OPEN)
             {
                 f.departmentID = null;
                 f.resolvedDate = null;
@@ -1140,21 +1166,8 @@ namespace icrm.Controllers
                 f.subcategoryId = null;
                 f.checkStatus = Constants.OPEN;
             }
-            else {
-                f.resolvedDate = f.resolvedDate;
-                f.checkStatus = Constants.RESOLVED;
-            }
-        
-
             
-          /* if (f.departmentID != null)
-            {
-                f.checkStatus = Constants.ASSIGNED;
-            }
-            else {
-                f.checkStatus = feedback.status;
-            }*/
-           
+       
             if (ModelState.IsValid)
             {
 
@@ -1169,7 +1182,14 @@ namespace icrm.Controllers
                 ViewData["commentList"] = db.comments.Where(m => m.feedbackId == feedback.id).ToList();
 
                 TempData["displayMsgErr"] = "Please Enter Valid Information ";
-                return View("resolvedview",feedback);
+                if (submitBtn == "Submit")
+                {
+                    return View("resolvedview", feedback);
+                }
+                else {
+                    return View("closedview", feedback);
+                }
+                
             }
         }
       [HttpPost]

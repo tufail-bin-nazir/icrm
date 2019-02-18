@@ -80,7 +80,6 @@
                         @Html.HiddenFor(model => model.departUserId, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.id, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.satisfaction, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.user.LastName, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
@@ -274,72 +273,84 @@
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Choose Action</label>
-                                    <select name="status" id="statusfield" class="form-control select2">
+                                    <label class="form-control-label">Satisfaction</label>
 
-                                        @if (Model.status == "Open")
-                                        {
-                                            <option selected value="Open">Open</option>
-
-                                            <option value="Resolved">Resolved</option>
-                                            <option value="Closed">Closed</option>
-
-
-                                        }
-                                        else if (Model.status == "Closed")
-                                        {
-                                            <option value="Open">Open</option>
-                                            <option value="Resolved">Resolved</option>
-
-                                            <option selected value="Closed">Closed</option>
-
-                                        }
-
-
-
-
-                                    </select>
+                                    @Html.DropDownListFor(m=>m.satisfaction, new List<SelectListItem>
+        {
+            new SelectListItem{ Text="Choose", Value = "" },
+            new SelectListItem{ Text="Satisfy", Value = "Satisfied" },
+            new SelectListItem{ Text="UnSatisfy", Value = "UnSatisfied" },
+         }, new { @class = "form-control select2" })
                                 </div>
-                                <label class="text-danger" id="statuscheck"></label>
                             </div>
-                            <!-- col-4 -->
-                            @foreach (var res in commentlist)
-                            {
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">@Resources.Resource.Comments</label>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Choose Action</label>
+                                            <select name="status" id="statusfield" class="form-control select2">
+
+                                                @if (Model.status == "Open")
+                                                {
+                                                    <option selected value="Open">Open</option>
+
+                                                    <option value="Resolved">Resolved</option>
+                                                    <option value="Closed">Closed</option>
 
 
-                                        @Html.TextArea("comments", @res.text, new { @readonly = "readonly", @class = "form-control" })
+                                                }
+                                                else if (Model.status == "Closed")
+                                                {
+                                                    <option value="Open">Open</option>
+                                                    <option value="Resolved">Resolved</option>
+
+                                                    <option selected value="Closed">Closed</option>
+
+                                                }
+
+
+
+
+                                            </select>
+                                        </div>
+                                        <label class="text-danger" id="statuscheck"></label>
+                                    </div>
+                                    <!-- col-4 -->
+                                    @foreach (var res in commentlist)
+                                    {
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label class="form-control-label">@Resources.Resource.Comments</label>
+
+
+                                                @Html.TextArea("comments", @res.text, new { @readonly = "readonly", @class = "form-control" })
 
 
 
 
 
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="form-control-label">@Resources.Resource.Comments</label>
+                                            @Html.TextArea("responsee", new { @class = "form-control", name = "responsee", id = "coment" })
+
+
+                                        </div>
+                                        <label class="text-danger" id="comentlbl"></label>
                                     </div>
                                 </div>
-                            }
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">@Resources.Resource.Comments</label>
-                                        @Html.TextArea("responsee", new { @class = "form-control", name = "responsee", id = "coment" })
 
 
-                                    </div>
-                                    <label class="text-danger" id="comentlbl"></label>
+                                <!-- row -->
+                                <div class="form-layout-footer">
+                                    <input type="hidden" value="Respondedtype" name="typeoflink" />
+                                    <input type="submit" value="@Resources.Resource.Submit" id="update" class="btn btn-primary bd-0" />
                                 </div>
+                                <!-- form-layout-footer -->
+                            </div>
+
                         </div>
-
-
-                        <!-- row -->
-                        <div class="form-layout-footer">
-                            <input type="hidden" value="Respondedtype" name="typeoflink" />
-                            <input type="submit" value="@Resources.Resource.Submit" id="update"class="btn btn-primary bd-0" />
-                        </div>
-                        <!-- form-layout-footer -->
-                    </div>
-
-                </div>
             }
             <!-- container -->
         </div>
