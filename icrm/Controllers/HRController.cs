@@ -540,7 +540,7 @@ namespace icrm.Controllers
                     report.status = f.status;
                     report.description = f.description;
                     report.departmentName = f.department== null ? "": f.department.name ;
-                    report.category = f.category.name;
+                    report.category = f.category == null ? "" : f.category.name;
                     report.name = f.user.FirstName;
                     report.batchNumber = f.user.EmployeeId;
                     report.position = f.user.JobTitle.name;
