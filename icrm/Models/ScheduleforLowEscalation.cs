@@ -44,9 +44,17 @@ namespace icrm.Models
                     foreach (Feedback f in level1query) {
                         
                         f.escalationlevel = "level1";
-                        sendEmailAsync(f, db.Users.Find(getEmailOfUser(f).secondEscalationUserId).bussinessEmail);
+                        if (f.department.name.Equals(Constants.OPERATIONS))
+                        {
+                            sendEmailAsync(f, getOperationsEscalationUser(f.user.CostCenter.Id).secondEscalationUser.bussinessEmail);
+                        }
+                        else {
+
+                            sendEmailAsync(f, db.Users.Find(getEmailOfUser(f).secondEscalationUserId).bussinessEmail);
+                        }
                         db.Feedbacks.Add(f);
                         db.Entry(f).State = System.Data.Entity.EntityState.Modified;
+
                     }
                     db.SaveChanges();
 
@@ -59,9 +67,16 @@ namespace icrm.Models
                     foreach (Feedback f in level2query)
                     {
                         f.escalationlevel = "level2";
-                        sendEmailAsync(f, db.Users.Find(getEmailOfUser(f).thirdEscalationUserId).bussinessEmail);
+                        if (f.department.name.Equals(Constants.OPERATIONS))
+                        {
+                            sendEmailAsync(f, getOperationsEscalationUser(f.user.CostCenter.Id).secondEscalationUser.bussinessEmail);
+                        }
+                        else {
+                            sendEmailAsync(f, db.Users.Find(getEmailOfUser(f).thirdEscalationUserId).bussinessEmail);
+                        }
                         db.Feedbacks.Add(f);
                         db.Entry(f).State = System.Data.Entity.EntityState.Modified;
+
                     }
                     db.SaveChanges();
 
@@ -138,6 +153,13 @@ namespace icrm.Models
                         select e;
             return query.FirstOrDefault();
 
+        }
+
+        public EscalationUser getOperationsEscalationUser(int? costCenterId)
+        {
+            EscalationUser escUser = db.EscalationUsers.Where(m => m.CostCenterId == costCenterId).FirstOrDefault();
+
+            return escUser;
         }
 
 

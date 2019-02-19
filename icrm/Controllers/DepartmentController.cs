@@ -167,7 +167,7 @@ namespace icrm.Controllers
            
             if (Request.Form["responsee"] != "")
             {
-                f.timeHours= System.Math.Round((DateTime.Now - (DateTime)f.assignedDate).TotalHours,2);
+                f.timeHours= (DateTime.Now - (DateTime)f.assignedDate);
                 Comments c = new Comments();
                 c.text = Request.Form["responsee"];
                 c.commentedById = user.Id;

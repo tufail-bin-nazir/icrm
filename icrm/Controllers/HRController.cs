@@ -539,8 +539,8 @@ namespace icrm.Controllers
                     report.incidentType = f.type.name;
                     report.status = f.status;
                     report.description = f.description;
-                    report.departmentName = f.department.name;
-                    report.category = f.category.name;
+                    report.departmentName = f.department== null ? "": f.department.name ;
+                    report.category = f.category == null ? "" : f.category.name;
                     report.name = f.user.FirstName;
                     report.batchNumber = f.user.EmployeeId;
                     report.position = f.user.JobTitle.name;
@@ -549,9 +549,10 @@ namespace icrm.Controllers
                     report.phoneNumber = f.user.bussinessPhoneNumber;
                     report.createdDate = f.createDate;
                     report.createdBy = f.submittedBy == null ? f.user.FirstName : "ICRM AGENT";
-                    report.responseTime = f.timeHours;
+                    report.responseTime = String.Format("{0} hours, {1} minutes, {2} seconds",
+                                          f.timeHours.Hours, f.timeHours.Minutes, f.timeHours.Seconds); ;
                     report.source = f.user.CostCenter.name;
-                    report.priority = f.priority.name;
+                    report.priority = f.priority == null ? "": f.priority.name;
                     report.owner = f.departUser == null? "": f.departUser.FirstName;
                     report.isescalated = f.escalationlevel == null ? "No" : "Yes";
                     reports.Add(report);
@@ -1047,7 +1048,8 @@ namespace icrm.Controllers
                             }
                                 db.Entry(feedback).State = EntityState.Modified;
                                 db.SaveChanges();
-                        eventService.sendEmails(Request.Form["emailsss"], PopulateBody(feedback));
+                       
+                        eventService.sendEmails(Request.Form["emailsss"+feedback.departUser.bussinessEmail], PopulateBody(feedback));
                         TempData["MessageSuccess"] = "Ticket has been Forwarded Successfully";
 
                     }

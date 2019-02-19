@@ -51,7 +51,7 @@ namespace icrm.Models
         [Display(Name = "Created Date")]
         public DateTime createdDate { get; set; }
 
-        public Double responseTime { get; set; }
+        public String responseTime { get; set; }
 
 
         [Display(Name = "Created BY")]
