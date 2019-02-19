@@ -71,7 +71,7 @@ namespace icrm.WebApi
             
             else
             {
-                feedBack = new Feedback { title = feedBackmodel.Title, description = feedBackmodel.Description, userId = user.Result.Id, typeId = feedBackmodel.Typeid,mediumId=11 };
+                feedBack = new Feedback { title = feedBackmodel.Title, description = feedBackmodel.Description, userId = user.Result.Id, typeId = feedBackmodel.Typeid,mediumId=11};
 
             }
             feedBack.checkStatus = Models.Constants.OPEN;

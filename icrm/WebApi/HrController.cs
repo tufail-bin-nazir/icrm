@@ -489,7 +489,32 @@ namespace icrm.WebApi
 
             else
             {
+
                 f.status = feedback.status;
+                if (f.status == "Open")
+                {
+                    f.checkStatus = Models.Constants.OPEN;
+
+
+                }
+                else if (f.status == "Resolved")
+                {
+                    f.checkStatus = Models.Constants.RESOLVED;
+
+
+                }
+                else if(f.status=="Closed")
+                {
+                    f.checkStatus = Models.Constants.CLOSED;
+
+
+                }
+                if (feedback.satisfaction != null)
+                {
+
+                    f.satisfaction = feedback.satisfaction;
+                }
+
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
                 //////////////////////////////////////////////
@@ -637,8 +662,7 @@ namespace icrm.WebApi
             else
             {
                 var Name1 = User.Identity.Name;
-                Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
-
+                Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);         
                 f.status = feedback.status;
                 if (f.status == "Closed")
                 {
@@ -655,6 +679,13 @@ namespace icrm.WebApi
                 else
                 {
                     f.checkStatus = Models.Constants.RESOLVED;
+
+                }
+
+                if (feedback.satisfaction != null)
+                {
+
+                    f.satisfaction = feedback.satisfaction;
 
                 }
                
@@ -1221,7 +1252,7 @@ namespace icrm.WebApi
         public IHttpActionResult respondedticket()
         {
           
-            var Query = from f in feedInterface.GetAllResponded()
+            var Query = from f in feedInterface.GetAllRespondedMobile()
                        
                         select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
 
@@ -1326,7 +1357,8 @@ namespace icrm.WebApi
             client.EnableSsl = false;
             client.Host = "email.mcdonalds.com.sa";  
             mail.Subject = "Reset Your Password";
-            mail.Body ="http://37.76.254.20/Account/ResetPassword?code="+code;
+            string strBody3 = "<html><body><a href='http://37.76.254.20/Account/ResetPassword?code=' " + code + "'" + " > Click On The Link To Reset Your Password </ a ></ body ></ html > ";
+            mail.Body = strBody3;
             mail.IsBodyHtml = true;
             await client.SendMailAsync(mail);
         }
@@ -1374,6 +1406,47 @@ namespace icrm.WebApi
 
             }
         }
+
+        //41/ <summary>
+        /// //////////////////////////********************closed update***************//////////////////////
+        /// </summary>
+        [HttpPost]
+        [Route("api/HR/closedupdate/{id}")]
+        public IHttpActionResult closedupdate(string Id, ClosedFeedbackModel forward)
+        {
+            Feedback f = db.Feedbacks.Find(Id);
+            if (f == null)
+            {
+
+                return BadRequest(" id not found");
+
+            }
+
+            else
+            {
+
+                f.status = forward.status;
+                if (f.status == "Open")
+                {
+                    f.checkStatus = Models.Constants.OPEN;
+
+                }
+                if (f.satisfaction != null)
+                {
+
+                    f.satisfaction = forward.satisfaction;
+                }
+
+                db.Entry(f).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return Ok();
+
+            }
+        }
+
+
+
 
     }
 }

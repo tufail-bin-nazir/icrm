@@ -233,6 +233,15 @@ namespace icrm.RepositoryImpl
 
         }
 
+
+        public IEnumerable<Feedback> GetAllRespondedMobile()
+        {
+
+
+            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.checkStatus == Constants.RESPONDED).ToList();
+
+        }
+
         public IPagedList<Feedback> getAllClosed(int pageIndex, int pageSize)
         {
             return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == Constants.CLOSED && m.type.name == Constants.Complaints).ToPagedList(pageIndex, pageSize);

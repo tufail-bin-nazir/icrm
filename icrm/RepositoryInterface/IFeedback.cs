@@ -32,6 +32,7 @@ namespace icrm.RepositoryInterface
         IEnumerable<Feedback> getAllResolved();
         IEnumerable<Feedback> getAllResponded();
         IEnumerable<Feedback> GetAllResponded();
+        IEnumerable<Feedback> GetAllRespondedMobile();
         IEnumerable<Feedback> OpenWithoutDepart();
         IEnumerable<Feedback> GETAllClosed();
 
