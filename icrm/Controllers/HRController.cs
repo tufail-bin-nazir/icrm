@@ -1048,7 +1048,8 @@ namespace icrm.Controllers
                             }
                                 db.Entry(feedback).State = EntityState.Modified;
                                 db.SaveChanges();
-                        eventService.sendEmails(Request.Form["emailsss"], PopulateBody(feedback));
+                       
+                        eventService.sendEmails(Request.Form["emailsss"+feedback.departUser.bussinessEmail], PopulateBody(feedback));
                         TempData["MessageSuccess"] = "Ticket has been Forwarded Successfully";
 
                     }
