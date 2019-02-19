@@ -337,7 +337,10 @@
                                         {
                                            
 
-                                           <td>@item.Data.timeHours  </td>
+                                            <td>
+                                                @String.Format("{0} hrs, {1} mins, {2} secs",
+                                                item.Data.timeHours.Hours, item.Data.timeHours.Minutes, item.Data.timeHours.Seconds);
+                                            </td>
                                         }
                                     </tr>
 

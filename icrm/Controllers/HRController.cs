@@ -549,7 +549,8 @@ namespace icrm.Controllers
                     report.phoneNumber = f.user.bussinessPhoneNumber;
                     report.createdDate = f.createDate;
                     report.createdBy = f.submittedBy == null ? f.user.FirstName : "ICRM AGENT";
-                    report.responseTime = f.timeHours;
+                    report.responseTime = String.Format("{0} hours, {1} minutes, {2} seconds",
+                                          f.timeHours.Hours, f.timeHours.Minutes, f.timeHours.Seconds); ;
                     report.source = f.user.CostCenter.name;
                     report.priority = f.priority == null ? "": f.priority.name;
                     report.owner = f.departUser == null? "": f.departUser.FirstName;

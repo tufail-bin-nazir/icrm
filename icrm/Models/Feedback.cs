@@ -87,7 +87,7 @@ namespace icrm.Models
         public int? mediumId { get; set; }
         public virtual Medium medium { get; set; }
 
-        public double timeHours { get; set; }
+        public TimeSpan timeHours { get; set; }
 
     }
 }
