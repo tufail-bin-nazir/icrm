@@ -54,25 +54,36 @@ namespace icrm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(EscalationUser escalationUser)
         {
+            if (!db.Departments.Find(escalationUser.DepartmentId).name.Equals(Constants.OPERATIONS)) {
+                if (escalationUser.CategoriesIds == null) {
+                    ModelState.AddModelError("add_categories","Please Add Categories for The Departments other than Operations");
+                }
+            }
             Debug.WriteLine(ModelState.IsValid + "0-----------------------");
             if (ModelState.IsValid)
             {
                 db.EscalationUsers.Add(escalationUser);
                 db.SaveChanges();
-                foreach (int cid in escalationUser.CategoriesIds) {
-                    Category c = db.Categories.Find(cid);
-                    c.EscalationUserId = escalationUser.Id;
-                    db.Entry(c).State = EntityState.Modified;
-                    db.SaveChanges();
 
+                if (!db.Departments.Find(escalationUser.DepartmentId).name.Equals(Constants.OPERATIONS))
+                {
+                    foreach (int cid in escalationUser.CategoriesIds)
+                    {
+                        Category c = db.Categories.Find(cid);
+                        c.EscalationUserId = escalationUser.Id;
+                        db.Entry(c).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                    }
                 }
+                   
               
                 return RedirectToAction("Create");
             }
             ViewBag.CostCenterList = db.CostCenters.OrderBy(m => m.CostCenterCode).ToList();
             ViewBag.DepartmentList = db.Departments.Where(m => m.type == Constants.FORWARD).ToList();
             ViewBag.UserList = db.Users.ToList();
-           // ViewBag.Categories = db.Categories.Where(c => c.EscalationUserId == null).ToList();
+            ViewBag.Categories = db.Categories.Where(m => m.DepartmentId == escalationUser.DepartmentId && m.FeedBackType.name == Constants.Complaints).ToList();
             ViewBag.Status = "Add";
             return View("CreateList", new EscalationUserViewModel { EscalationUsers = db.EscalationUsers.ToList() });
         }
@@ -113,6 +124,13 @@ namespace icrm.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit( EscalationUser escalationUser)
         {
+            if (!db.Departments.Find(escalationUser.DepartmentId).name.Equals(Constants.OPERATIONS))
+            {
+                if (escalationUser.CategoriesIds == null)
+                {
+                    ModelState.AddModelError("add_categories", "Please Add Categories for The Departments other than Operations");
+                }
+            }
             if (ModelState.IsValid)
             {
 
@@ -125,13 +143,16 @@ namespace icrm.Controllers
                 }
                 db.Entry(escalationUser).State = EntityState.Modified;
                 db.SaveChanges();
-                foreach (int cid in escalationUser.CategoriesIds)
+                if (!db.Departments.Find(escalationUser.DepartmentId).name.Equals(Constants.OPERATIONS))
                 {
-                    Category c = db.Categories.Find(cid);
-                    c.EscalationUserId = escalationUser.Id;
-                    db.Entry(c).State = EntityState.Modified;
-                    db.SaveChanges();
+                    foreach (int cid in escalationUser.CategoriesIds)
+                    {
+                        Category c = db.Categories.Find(cid);
+                        c.EscalationUserId = escalationUser.Id;
+                        db.Entry(c).State = EntityState.Modified;
+                        db.SaveChanges();
 
+                    }
                 }
                 return RedirectToAction("Create");
             }

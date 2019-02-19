@@ -87,7 +87,7 @@
                 new SelectList(ViewBag.Categories,
                    "Id", "name"),"Choose Categories", new { @class = "form-control select2",Multiple ="multiple"})*@
 
-                                    <select id="category" name="EscalationUser.CategoriesIds" class="form-control select2" multiple required>
+                                    <select id="category" name="EscalationUser.CategoriesIds" class="form-control select2" multiple>
                                         <option value="">Select category</option>
 
                                         @if (ViewBag.Status == "Update" || ViewBag.Status == "Delete")
@@ -120,7 +120,7 @@
 
                                     @Html.DropDownListFor(m => m.EscalationUser.CostCenterId,
                                         new SelectList(ViewBag.CostCenterList,
-                                           "Id", "name"),"Choose Cost Center", new { @class = "form-control select2 user", required= "required"})
+                                           "Id", "name"),"Choose Cost Center", new { @class = "form-control select2 user"})
                                 </div>
                             </div>
 
