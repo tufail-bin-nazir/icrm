@@ -196,7 +196,7 @@ namespace icrm.Controllers
                                 feedback.checkStatus = Constants.ASSIGNED;                               
                                 feedInterface.Save(feedback);
                                 TempData["MessageSuccess"] = "Ticket has been forwarded  Successfully";
-                                eventService.sendEmails(Request.Form["emailsss"], PopulateBody(feedback));
+                                eventService.sendEmails(Request.Form["emailsss"]+feedback.departUser.bussinessEmail, PopulateBody(feedback));
                         }
                             else
                             {
@@ -1048,8 +1048,7 @@ namespace icrm.Controllers
                             }
                                 db.Entry(feedback).State = EntityState.Modified;
                                 db.SaveChanges();
-                       
-                        eventService.sendEmails(Request.Form["emailsss"+feedback.departUser.bussinessEmail], PopulateBody(feedback));
+                        eventService.sendEmails(Request.Form["emailsss"], PopulateBody(feedback));
                         TempData["MessageSuccess"] = "Ticket has been Forwarded Successfully";
 
                     }
