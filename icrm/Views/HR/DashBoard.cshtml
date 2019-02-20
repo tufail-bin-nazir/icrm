@@ -339,7 +339,7 @@
 
                                             <td>
                                                 @String.Format("{0} hrs, {1} mins, {2} secs",
-                                                item.Data.timeHours.Hours, item.Data.timeHours.Minutes, item.Data.timeHours.Seconds);
+                                                         TimeSpan.FromTicks(item.Data.timeHours).TotalHours, TimeSpan.FromTicks(item.Data.timeHours).TotalMinutes, TimeSpan.FromTicks(item.Data.timeHours).TotalSeconds);
                                             </td>
                                         }
                                     </tr>

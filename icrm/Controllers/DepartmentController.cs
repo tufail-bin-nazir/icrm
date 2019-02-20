@@ -162,19 +162,23 @@ namespace icrm.Controllers
             f.checkStatus = Constants.RESPONDED;
             f.responseDate = DateTime.Now;
 
+            System.Diagnostics.Debug.WriteLine((DateTime.Now - (DateTime)f.assignedDate) +"-----");
           
             List<Comments> cc = new List<Comments>();
            
             if (Request.Form["responsee"] != "")
             {
-                f.timeHours= (DateTime.Now - (DateTime)f.assignedDate);
+                f.timeHours= (DateTime.Now - (DateTime)f.assignedDate).Ticks;
+
+                
                 Comments c = new Comments();
                 c.text = Request.Form["responsee"];
                 c.commentedById = user.Id;
                 c.feedbackId = feedback.id;
                 db.comments.Add(c);
-               db.SaveChanges();
-
+                
+                    db.SaveChanges();
+               
 
                 db.Entry(f).State = EntityState.Modified;
                  db.SaveChanges();
