@@ -261,7 +261,7 @@ namespace icrm.WebApi
 
 
         //8/ <summary>
-        /// /////////////////////////////////////*************forwardTicket*****************/////////////////
+        /// /////////////////////////////////////************* Hr forwardTicket to the departments here in th*****************/////////////////
         /// </summary>
         [HttpPost]
         [Route("api/HR/forwardTicket/{id}")]
@@ -280,13 +280,16 @@ namespace icrm.WebApi
             {
                 ApplicationUser user1 = feedInterface.getOperationsEscalationUser(f.user.CostCenterId);
                 f.departUserId = user1.Id;
+                string email =user1.bussinessEmail;
+              
             }
             
             else
             {
                 ApplicationUser user = feedInterface.getEscalationUser(f.departmentID, f.categoryId);
                 f.departUserId = user.Id;
-               
+                string email = user.bussinessEmail;
+              
 
             }
             f.checkStatus = Models.Constants.ASSIGNED;
@@ -300,6 +303,7 @@ namespace icrm.WebApi
             f.departmentID = forward.departmentID;
             f.assignedDate = DateTime.Now;
 
+           
             db.Entry(f).State = EntityState.Modified;
             db.SaveChanges();
 
@@ -326,6 +330,7 @@ namespace icrm.WebApi
 
               if (query != null)
               {
+
 
                   return Ok(query.ToList());
 
@@ -486,6 +491,7 @@ namespace icrm.WebApi
                 return BadRequest(" id not found");
 
             }
+
 
             else
             {
@@ -1357,7 +1363,8 @@ namespace icrm.WebApi
             client.EnableSsl = false;
             client.Host = "email.mcdonalds.com.sa";  
             mail.Subject = "Reset Your Password";
-            string strBody3 = "<html><body><a href='http://37.76.254.20/Account/ResetPassword?code=' " + code + "'" + " > Click On The Link To Reset Your Password </ a ></ body ></ html > ";
+
+            string strBody3 = String.Format("<html><body><a href='http://37.76.254.20/Account/ResetPassword?code={0}' > Click On The Link To Reset Your Password </ a ></ body ></html > ", code);
             mail.Body = strBody3;
             mail.IsBodyHtml = true;
             await client.SendMailAsync(mail);
@@ -1444,9 +1451,5 @@ namespace icrm.WebApi
 
             }
         }
-
-
-
-
     }
 }
