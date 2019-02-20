@@ -30,9 +30,6 @@ namespace icrm.WebApi
     [Authorize]
     public class HrApiController : ApiController
     {
-
-
-
         public HRController c;
 
         public EmailSend emailsend;
@@ -64,7 +61,7 @@ namespace icrm.WebApi
         }
 
         //1/ <summary>
-        /// /////////////////////////////////////************* HrTicketslist *****************/////////////////
+        /// ///////////////////////************* (Hr Tickets list)---->>>HR Sees all The Tickets here in this api *****************/////////////////
         /// </summary>
         [HttpGet]
         [Route("api/HR/HrTicketslist")]
@@ -90,9 +87,8 @@ namespace icrm.WebApi
 
         }
         //2/ <summary>
-        /// /////////////////////////////////////************* HrTicket by id *****************/////////////////
+        /// ///////////////////////////////************* (HrTicket by id)-->>   *****************/////////////////
         /// </summary>
-
         [HttpGet]
         [Route("api/HR/HrTicket/{id}")]
         public IHttpActionResult HrTicket(string id)
@@ -101,8 +97,6 @@ namespace icrm.WebApi
                        select n;
 
             var f = feedInterface.Find(id);
-                        //select new { f.id,f.checkStatus, f.title, f.attachment, f.description, f.user.EmployeeId, f.user.Email, f.user.FirstName, f.type.name,quer };
-
             if (f != null)
             {
 
@@ -237,8 +231,6 @@ namespace icrm.WebApi
         //7/ <summary>
         /// /////////////////////////////////////*************Department*****************/////////////////
         /// </summary>
-
-
         [HttpGet]
         [Route("api/HR/Department")]
         public IHttpActionResult Department()
@@ -299,11 +291,10 @@ namespace icrm.WebApi
                 f.priorityId = forward.priorityId;
 
             }
+  
             f.categoryId = forward.categoryId;
             f.departmentID = forward.departmentID;
             f.assignedDate = DateTime.Now;
-
-           
             db.Entry(f).State = EntityState.Modified;
             db.SaveChanges();
 
@@ -398,7 +389,7 @@ namespace icrm.WebApi
                 Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
                 f.checkStatus = Models.Constants.RESPONDED;
                 f.responseDate = DateTime.Now;
-                f.timeHours = (DateTime.Now - (DateTime)f.assignedDate);
+                f.timeHours = (DateTime.Now - (DateTime)f.assignedDate).Ticks;
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
                 /////////////////////////////////////////////////////////////
@@ -1131,7 +1122,6 @@ namespace icrm.WebApi
                 f.status= Models.Constants.REJECTED;
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
-
                 /////////************** New code******************////////////////////
                 Comments c = new Comments();
                 c.date = DateTime.Now;
@@ -1378,8 +1368,7 @@ namespace icrm.WebApi
         public IHttpActionResult enduserTicketView(string id)
         {
             var comments =feedInterface.getCOmments(id);
-            Debug.Print(comments.Count+"--------------commm count");               
-                      
+            Debug.Print(comments.Count+"--------------commm count");                          
             ApplicationDbContext context = new ApplicationDbContext();
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             Debug.Print("-----" + roleManager);
@@ -1446,7 +1435,6 @@ namespace icrm.WebApi
 
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
-
                 return Ok();
 
             }
