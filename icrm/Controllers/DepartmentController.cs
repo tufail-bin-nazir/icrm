@@ -170,6 +170,7 @@ namespace icrm.Controllers
             {
                 f.timeHours= (DateTime.Now - (DateTime)f.assignedDate).Ticks;
 
+
                 
                 Comments c = new Comments();
                 c.text = Request.Form["responsee"];
