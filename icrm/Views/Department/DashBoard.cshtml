@@ -5,7 +5,7 @@
 @model PagedList.IPagedList<icrm.Models.Feedback>
 
 @{
-    ViewBag.Title = "DashBoard";
+    ViewBag.Title = @Resources.Resource.Dashboard;
 }
 
 @{
@@ -46,10 +46,11 @@
         <div class="container">
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                    <li class="breadcrumb-item"><a href="#">@Resources.Resource.Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@Resources.Resource.Dashboard
+                    </li>
                 </ol>
-                <h6 class="slim-pagetitle">@Resources.Resource.Welcome_back, DEPARTMENT</h6>
+                <h6 class="slim-pagetitle">@Resources.Resource.Department</h6>
             </div>
             <!-- slim-pageheader -->
             <div class="row row-xs">
@@ -60,7 +61,7 @@
                                 <i class="icon fa fa-bullhorn tx-purple"></i>
                                 <div class="media-body">
                                     <h1>@ViewBag.TotalTickets</h1>
-                                    <p>All Tickets</p>
+                                    <p>@Resources.Resource.All_Tickets</p>
                                 </div>
                                 <!-- media-body -->
                             </div>
@@ -142,9 +143,9 @@
                     </div>
                 }
 
-                <label class="section-title">SEARCH YOUR TICKETS</label>
+                <label class="section-title">@Resources.Resource.Search_your_Tickets</label>
                 <p class="mg-b-20 mg-sm-b-40">
-                    On date criteria
+                    @Resources.Resource.On_date_Criteria
 
 
                 </p>
@@ -172,7 +173,7 @@
                             </div>
 
                             <div class="col-lg-4">
-                                <label class="form-control-label">From: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.From: <span class="tx-danger">*</span></label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
@@ -183,7 +184,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-4">
-                                <label class="form-control-label">To : <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.To : <span class="tx-danger">*</span></label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
@@ -212,7 +213,7 @@
                 <div class="col-lg-12">
                     <div class="card card-table">
                         <div class="card-header">
-                            <h6 class="slim-card-title">Ticket List</h6>
+                            <h6 class="slim-card-title">@Resources.Resource.Ticket_List</h6>
                         </div>
                         <!-- card-header -->
                         <div class="table-responsive">
@@ -220,9 +221,9 @@
                                 <thead>
                                     <tr class="tx-10">
                                         <th class="wd-10p pd-y-5">S.NO</th>
-                                        <th class="pd-y-5">TICKET ID</th>
+                                        <th class="pd-y-5">@Resources.Resource.Ticket_Id</th>
                                         <th class="pd-y-5">@Resources.Resource.Type</th>
-                                        <th class="pd-y-5">ACTION</th>
+                                        <th class="pd-y-5">@Resources.Resource.Action</th>
                                         <th class="pd-y-5">@Resources.Resource.Title</th>
                                         <th class="pd-y-5">@Resources.Resource.Status</th>
                                         <th class="pd-y-5">@Resources.Resource.Description</th>

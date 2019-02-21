@@ -16,7 +16,7 @@
             <div class="dropdown dropdown-c">
 
                 <a href="#" class="logged-user" data-toggle="dropdown">
-                    <span>Translation</span>
+                    <span>@Resources.Resource.Choose_Language</span>
                     <i class="fa fa-angle-down"></i>
                 </a>
 
@@ -47,7 +47,7 @@
                     <nav class="nav">
                         <!-- <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
                 <a href="../userprofile/index" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>-->
-                        <a href="@Url.Action("index","DownloadAPK")" class="nav-link"><i class="icon ion-ios-bolt"></i> Download APK</a>
+                        <a href="@Url.Action("index","DownloadAPK")" class="nav-link"><i class="icon ion-ios-bolt"></i> @Resources.Resource.Download_APK</a>
 
                         <!--   <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>-->
                         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, null))
@@ -58,7 +58,7 @@
 
                                 <i class="icon ion-forward"></i><input class="nav-link" style="background: transparent;
     text-decoration: none;
-    cursor: pointer; border:none;" type="submit" value="Sign Out" />
+    cursor: pointer; border:none;" type="submit" value="@Resources.Resource.Sign_Out" />
                             </a>
 
 
@@ -83,7 +83,7 @@
             <li class="nav-item  active">
                 <a class="nav-link" href="/Department/DashBoard">
                     <i class="icon ion-ios-home-outline"></i>
-                    <span>Dashboard</span>
+                    <span>@Resources.Resource.Dashboard</span>
                 </a>
 
                 <!-- sub-item -->
@@ -93,7 +93,7 @@
             <li class="nav-item with-sub ">
                 <a class="nav-link" href="#" data-toggle="dropdown">
                     <i class="icon ion-ios-gear-outline"></i>
-                    <span>Menu</span>
+                    <span>@Resources.Resource.Menu</span>
                 </a>
                 <div class="sub-item">
                     <ul>

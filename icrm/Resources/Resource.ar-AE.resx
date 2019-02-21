@@ -162,7 +162,7 @@
   <data name="Enter_your_password" xml:space="preserve">
     <value>قم بادخال الرقم السري</value>
   </data>
-  <data name="Feedback/Complaint" xml:space="preserve">
+  <data name="Feedback_Complaint" xml:space="preserve">
     <value>ملاحظة/شكوى</value>
   </data>
   <data name="FirstName" xml:space="preserve">
@@ -269,5 +269,242 @@
   </data>
   <data name="Name" xml:space="preserve">
     <value>اسم </value>
+  </data>
+  <data name="Account_Settings" xml:space="preserve">
+    <value>اعدادات الحساب</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>فعل</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>اضافة</value>
+  </data>
+  <data name="Add_Department" xml:space="preserve">
+    <value>اضافة ادارة</value>
+  </data>
+  <data name="Add_Icrm_Agent" xml:space="preserve">
+    <value>اضافة موظف خدمة العملاء</value>
+  </data>
+  <data name="Admin" xml:space="preserve">
+    <value>المدير</value>
+  </data>
+  <data name="All_Tickets" xml:space="preserve">
+    <value>جميع التذاكر</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>الفئة</value>
+  </data>
+  <data name="Category_List" xml:space="preserve">
+    <value>قائمة الفئات</value>
+  </data>
+  <data name="Change_Language" xml:space="preserve">
+    <value>تغيير اللغة</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>الدردشة</value>
+  </data>
+  <data name="Choose_Language" xml:space="preserve">
+    <value>اختيار اللغة</value>
+  </data>
+  <data name="Comment_field_Should_be_empty" xml:space="preserve">
+    <value>يجب ان تكون المنطقة المخصصة للتعليق خالية</value>
+  </data>
+  <data name="Comment_Field_Should_not_be_empty" xml:space="preserve">
+    <value>يجب ان  لا تكون المنطقة المخصصة للتعليق خالية</value>
+  </data>
+  <data name="Confirm_Password" xml:space="preserve">
+    <value>تاكيد كلمة المرور</value>
+  </data>
+  <data name="Create_Category" xml:space="preserve">
+    <value>انشاء فئة</value>
+  </data>
+  <data name="Create_Sub_Location" xml:space="preserve">
+    <value>انشاء موقع فرعي</value>
+  </data>
+  <data name="Create_Ticket" xml:space="preserve">
+    <value>انشاء تذكرة</value>
+  </data>
+  <data name="Creating_Locations" xml:space="preserve">
+    <value>اضافة مواقع</value>
+  </data>
+  <data name="Creating_Tickets_By_HR" xml:space="preserve">
+    <value>انشاء التذاكر عن طريق ال HR</value>
+  </data>
+  <data name="Creating_Tickets_by_Icrm_Agent" xml:space="preserve">
+    <value>انشاء التذاكر عن طريق موظف خدمة العملاء</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>المؤشى</value>
+  </data>
+  <data name="Department_List" xml:space="preserve">
+    <value>قائمة الادارات</value>
+  </data>
+  <data name="Department_should_be_Empty" xml:space="preserve">
+    <value>يجب ان تكون المنطقة المخصصة للادارة خالية</value>
+  </data>
+  <data name="Download_APK" xml:space="preserve">
+    <value>تنزيل التطبيق</value>
+  </data>
+  <data name="Edit_Profile" xml:space="preserve">
+    <value>تعديل الملف الرئيسي</value>
+  </data>
+  <data name="Employee_Id_not_found" xml:space="preserve">
+    <value>رقم الموظف غير موجود</value>
+  </data>
+  <data name="Enter_Employee_ID" xml:space="preserve">
+    <value>ادخل رقم الموظف</value>
+  </data>
+  <data name="Enter_Location_Name" xml:space="preserve">
+    <value>اضافة اسم الموقع</value>
+  </data>
+  <data name="Enter_Sub_Location_Name" xml:space="preserve">
+    <value>اضافة اسم فرعي للموقع</value>
+  </data>
+  <data name="Export_To_Excel" xml:space="preserve">
+    <value>انشاء عن طريق اكسل</value>
+  </data>
+  <data name="Feedback_Type" xml:space="preserve">
+    <value>نوع الملاحظة</value>
+  </data>
+  <data name="Forward_Create" xml:space="preserve">
+    <value>ارسال، انشاء</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>من</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>القائمة الرئيسية</value>
+  </data>
+  <data name="Icrm_Agent" xml:space="preserve">
+    <value>موظف خدمة العملاء</value>
+  </data>
+  <data name="Job_Title" xml:space="preserve">
+    <value>المسمى الوظيفي</value>
+  </data>
+  <data name="Job_Title_List" xml:space="preserve">
+    <value>قائمة المسميات الوظيفية</value>
+  </data>
+  <data name="List_Users" xml:space="preserve">
+    <value>قائمة المستخدمين</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>الموقع</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>القائمة</value>
+  </data>
+  <data name="Nationality" xml:space="preserve">
+    <value>الجنسية</value>
+  </data>
+  <data name="On_date_Criteria" xml:space="preserve">
+    <value>معايير التاريخ</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>كلمة المرور</value>
+  </data>
+  <data name="Please_fill_comment_field" xml:space="preserve">
+    <value>نرجو تعبئة المنطقة المخصصة للتعليق</value>
+  </data>
+  <data name="Please_Select_StartDate_And_EndDate" xml:space="preserve">
+    <value>نرجو اختيار وقت البدء والنهاية</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>المنصب</value>
+  </data>
+  <data name="Priorities" xml:space="preserve">
+    <value>الاولويات</value>
+  </data>
+  <data name="Priority_Id" xml:space="preserve">
+    <value>رقم الاولوية</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>الملف الرئيسي</value>
+  </data>
+  <data name="Registering_User" xml:space="preserve">
+    <value>تسجيل المستخدم</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>رفض</value>
+  </data>
+  <data name="Rejected_Tickets" xml:space="preserve">
+    <value>التذاكر المرفوضة</value>
+  </data>
+  <data name="Religion" xml:space="preserve">
+    <value>الديانة</value>
+  </data>
+  <data name="Religion_List" xml:space="preserve">
+    <value>قائمة الديانات</value>
+  </data>
+  <data name="Report" xml:space="preserve">
+    <value>التقرير</value>
+  </data>
+  <data name="Salutation" xml:space="preserve">
+    <value>التحية</value>
+  </data>
+  <data name="Search_your_Tickets" xml:space="preserve">
+    <value>ابحث عن التذاكر</value>
+  </data>
+  <data name="Select_Job_Title" xml:space="preserve">
+    <value>اختر المسمى الوظيفي</value>
+  </data>
+  <data name="Sign_Out" xml:space="preserve">
+    <value>تسجيل الخروج</value>
+  </data>
+  <data name="Some_Fields_are_empty" xml:space="preserve">
+    <value>بعض الحقول فارغة</value>
+  </data>
+  <data name="Sub_Category" xml:space="preserve">
+    <value>الفئة الفرعية</value>
+  </data>
+  <data name="Sub_Location" xml:space="preserve">
+    <value>الموقع الفرعي</value>
+  </data>
+  <data name="This_Ticket_is_not_found_Try_with_proper_data" xml:space="preserve">
+    <value>لم يتم العثور على هذه التذكرة ، حاول باستخدام بيانات صحيحة</value>
+  </data>
+  <data name="Ticket_details_are_not_valid_Fill_details_properly" xml:space="preserve">
+    <value>تفاصيل التذكرة غيرصحيحة نرجو تعبئة التفاصيل بدقة</value>
+  </data>
+  <data name="Ticket_has_been_Closed_Successfully" xml:space="preserve">
+    <value>تم اغلاق التذكرة بنجاح</value>
+  </data>
+  <data name="Ticket_has_been_created_Successfully" xml:space="preserve">
+    <value>تم انشاء التذكرة بنجاح</value>
+  </data>
+  <data name="Ticket_has_been_Rejected" xml:space="preserve">
+    <value>تم رفض التذكرة</value>
+  </data>
+  <data name="Ticket_has_been_Resolved_Successfully" xml:space="preserve">
+    <value>تم حل التذكرة بنجاح</value>
+  </data>
+  <data name="Ticket_has_been_Updated_Successfully" xml:space="preserve">
+    <value>تم تحديث التذكة بنجاح</value>
+  </data>
+  <data name="Ticket_Id" xml:space="preserve">
+    <value>رقم التذكرة</value>
+  </data>
+  <data name="Ticket_List" xml:space="preserve">
+    <value>قائمة التذاكر</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>الى</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>تحديث</value>
+  </data>
+  <data name="Username_or_Password_wrong" xml:space="preserve">
+    <value>اسم المستخدم او كلمة المرور خاطئة</value>
+  </data>
+  <data name="View_Profile" xml:space="preserve">
+    <value>معاينة الملف الرئيسي</value>
+  </data>
+  <data name="View_Ticket" xml:space="preserve">
+    <value>معاينة التذكرة</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>أقسام</value>
+  </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>المرفق</value>
   </data>
 </root>

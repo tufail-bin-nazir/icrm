@@ -162,7 +162,7 @@
   <data name="Enter_your_password" xml:space="preserve">
     <value>Enter your password</value>
   </data>
-  <data name="Feedback/Complaint" xml:space="preserve">
+  <data name="Feedback_Complaint" xml:space="preserve">
     <value>Feedback/Complaint</value>
   </data>
   <data name="FirstName" xml:space="preserve">
@@ -269,5 +269,242 @@
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="Account_Settings" xml:space="preserve">
+    <value>Account Settings</value>
+  </data>
+  <data name="Action" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="Add_Department" xml:space="preserve">
+    <value>Add Department</value>
+  </data>
+  <data name="Add_Icrm_Agent" xml:space="preserve">
+    <value>Add Icrm Agent</value>
+  </data>
+  <data name="Admin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="All_Tickets" xml:space="preserve">
+    <value>All Tickets</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Category_List" xml:space="preserve">
+    <value>Category List</value>
+  </data>
+  <data name="Change_Language" xml:space="preserve">
+    <value>Change Language</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>Chat</value>
+  </data>
+  <data name="Choose_Language" xml:space="preserve">
+    <value>Choose Language</value>
+  </data>
+  <data name="Comment_field_Should_be_empty" xml:space="preserve">
+    <value>Comment field Should  be empty</value>
+  </data>
+  <data name="Comment_Field_Should_not_be_empty" xml:space="preserve">
+    <value>Comment Field Should not be empty</value>
+  </data>
+  <data name="Confirm_Password" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="Create_Category" xml:space="preserve">
+    <value>Create Category</value>
+  </data>
+  <data name="Create_Sub_Location" xml:space="preserve">
+    <value>Create Sub Location</value>
+  </data>
+  <data name="Create_Ticket" xml:space="preserve">
+    <value>Create Ticket</value>
+  </data>
+  <data name="Creating_Locations" xml:space="preserve">
+    <value>Creating Locations</value>
+  </data>
+  <data name="Creating_Tickets_By_HR" xml:space="preserve">
+    <value>Creating Tickets By HR</value>
+  </data>
+  <data name="Creating_Tickets_by_Icrm_Agent" xml:space="preserve">
+    <value>Creating Tickets by Icrm Agent</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Department_List" xml:space="preserve">
+    <value>Department List</value>
+  </data>
+  <data name="Department_should_be_Empty" xml:space="preserve">
+    <value>Department should be Empty</value>
+  </data>
+  <data name="Download_APK" xml:space="preserve">
+    <value>Download APK</value>
+  </data>
+  <data name="Edit_Profile" xml:space="preserve">
+    <value>Edit Profile</value>
+  </data>
+  <data name="Employee_Id_not_found" xml:space="preserve">
+    <value>Employee Id not found</value>
+  </data>
+  <data name="Enter_Employee_ID" xml:space="preserve">
+    <value>Enter Employee ID</value>
+  </data>
+  <data name="Enter_Location_Name" xml:space="preserve">
+    <value>Enter Location Name</value>
+  </data>
+  <data name="Enter_Sub_Location_Name" xml:space="preserve">
+    <value>Enter Sub Location Name</value>
+  </data>
+  <data name="Export_To_Excel" xml:space="preserve">
+    <value>Export To Excel</value>
+  </data>
+  <data name="Feedback_Type" xml:space="preserve">
+    <value>Feedback Type</value>
+  </data>
+  <data name="Forward_Create" xml:space="preserve">
+    <value>Forward/Create</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Icrm_Agent" xml:space="preserve">
+    <value>Icrm Agent</value>
+  </data>
+  <data name="Job_Title" xml:space="preserve">
+    <value>Job Title</value>
+  </data>
+  <data name="Job_Title_List" xml:space="preserve">
+    <value>Job Title List</value>
+  </data>
+  <data name="List_Users" xml:space="preserve">
+    <value>List Users</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="Nationality" xml:space="preserve">
+    <value>Nationality</value>
+  </data>
+  <data name="On_date_Criteria" xml:space="preserve">
+    <value>On date Criteria</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Please_fill_comment_field" xml:space="preserve">
+    <value>Please fill comment field</value>
+  </data>
+  <data name="Please_Select_StartDate_And_EndDate" xml:space="preserve">
+    <value>Please Select StartDate And EndDate</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="Priorities" xml:space="preserve">
+    <value>Priorities</value>
+  </data>
+  <data name="Priority_Id" xml:space="preserve">
+    <value>Priority Id</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="Registering_User" xml:space="preserve">
+    <value>Registering User</value>
+  </data>
+  <data name="Reject" xml:space="preserve">
+    <value>Reject</value>
+  </data>
+  <data name="Rejected_Tickets" xml:space="preserve">
+    <value>Rejected Tickets</value>
+  </data>
+  <data name="Religion" xml:space="preserve">
+    <value>Religion</value>
+  </data>
+  <data name="Religion_List" xml:space="preserve">
+    <value>Religion List</value>
+  </data>
+  <data name="Report" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="Salutation" xml:space="preserve">
+    <value>Salutation</value>
+  </data>
+  <data name="Search_your_Tickets" xml:space="preserve">
+    <value>Search your Tickets</value>
+  </data>
+  <data name="Select_Job_Title" xml:space="preserve">
+    <value>Select Job Title</value>
+  </data>
+  <data name="Sign_Out" xml:space="preserve">
+    <value>Sign Out</value>
+  </data>
+  <data name="Some_Fields_are_empty" xml:space="preserve">
+    <value>Some Fields are  empty</value>
+  </data>
+  <data name="Sub_Category" xml:space="preserve">
+    <value>Sub Category</value>
+  </data>
+  <data name="Sub_Location" xml:space="preserve">
+    <value>Sub Location</value>
+  </data>
+  <data name="This_Ticket_is_not_found_Try_with_proper_data" xml:space="preserve">
+    <value>This Ticket is not found,Try with proper data</value>
+  </data>
+  <data name="Ticket_details_are_not_valid_Fill_details_properly" xml:space="preserve">
+    <value>Ticket details are not valid,Fill details properly</value>
+  </data>
+  <data name="Ticket_has_been_Closed_Successfully" xml:space="preserve">
+    <value>Ticket has been Closed Successfully</value>
+  </data>
+  <data name="Ticket_has_been_created_Successfully" xml:space="preserve">
+    <value>Ticket has been created Successfully</value>
+  </data>
+  <data name="Ticket_has_been_Rejected" xml:space="preserve">
+    <value>Ticket has been Rejected</value>
+  </data>
+  <data name="Ticket_has_been_Resolved_Successfully" xml:space="preserve">
+    <value>Ticket has been Resolved Successfully</value>
+  </data>
+  <data name="Ticket_has_been_Updated_Successfully" xml:space="preserve">
+    <value>Ticket has been Updated Successfully</value>
+  </data>
+  <data name="Ticket_Id" xml:space="preserve">
+    <value>Ticket Id</value>
+  </data>
+  <data name="Ticket_List" xml:space="preserve">
+    <value>Ticket List</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Username_or_Password_wrong" xml:space="preserve">
+    <value>Username or Password wrong</value>
+  </data>
+  <data name="View_Profile" xml:space="preserve">
+    <value>View Profile</value>
+  </data>
+  <data name="View_Ticket" xml:space="preserve">
+    <value>View Ticket</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>Department</value>
+  </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>Attachment</value>
   </data>
 </root>
