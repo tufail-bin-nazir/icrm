@@ -335,11 +335,26 @@
 
                                         @if (ViewBag.linkName == "respondedticket")
                                         {
-                                           
+
+                                            var ticks = item.Data.timeHours;
+
+                                            var totalsecs = TimeSpan.FromTicks(item.Data.timeHours).TotalSeconds;
+                                            var sec = totalsecs % 60;
+
+                                            var totalminutes = totalsecs / 60;
+
+                                            var totalhours = totalminutes / 60;
+                                            var minutes = totalminutes % 60;
+
+                                            var days = totalhours / 24;
+                                            var hours = totalhours % 24;
 
                                             <td>
-                                                @String.Format("{0} hrs, {1} mins, {2} secs",
-                                                         TimeSpan.FromTicks(item.Data.timeHours).TotalHours, TimeSpan.FromTicks(item.Data.timeHours).TotalMinutes, TimeSpan.FromTicks(item.Data.timeHours).TotalSeconds);
+
+
+                                              @String.Format("{0} days, {1} hrs, {2} mins,{3} secs",
+           Math.Round(days), Math.Round(hours), Math.Round(minutes),Math.Round(sec) );
+
                                             </td>
                                         }
                                     </tr>
