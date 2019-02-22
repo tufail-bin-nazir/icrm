@@ -507,4 +507,34 @@
   <data name="Attachment" xml:space="preserve">
     <value>المرفق</value>
   </data>
+  <data name="Complaints" xml:space="preserve">
+    <value>شكاوي</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>تاريخ</value>
+  </data>
+  <data name="Bands" xml:space="preserve">
+    <value>الفئات</value>
+  </data>
+  <data name="Employee_Class" xml:space="preserve">
+    <value>فئة الموظف</value>
+  </data>
+  <data name="Employer_Type" xml:space="preserve">
+    <value>نوع الموظّف</value>
+  </data>
+  <data name="Escalation_Users" xml:space="preserve">
+    <value>مستخدمين التصعيد</value>
+  </data>
+  <data name="Ethnicities" xml:space="preserve">
+    <value>العرق</value>
+  </data>
+  <data name="Event_Reason" xml:space="preserve">
+    <value>سبب الحدث</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>النوع</value>
+  </data>
+  <data name="Vendor" xml:space="preserve">
+    <value>البائع</value>
+  </data>
 </root>

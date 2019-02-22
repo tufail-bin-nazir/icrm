@@ -507,4 +507,34 @@
   <data name="Attachment" xml:space="preserve">
     <value>Attachment</value>
   </data>
+  <data name="Complaints" xml:space="preserve">
+    <value>Complaints</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Bands" xml:space="preserve">
+    <value>Bands</value>
+  </data>
+  <data name="Employee_Class" xml:space="preserve">
+    <value>Employee Class</value>
+  </data>
+  <data name="Employer_Type" xml:space="preserve">
+    <value>Employer Type</value>
+  </data>
+  <data name="Escalation_Users" xml:space="preserve">
+    <value>Escalation Users</value>
+  </data>
+  <data name="Ethnicities" xml:space="preserve">
+    <value>Ethnicities</value>
+  </data>
+  <data name="Event_Reason" xml:space="preserve">
+    <value>Event Reason</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>Gender</value>
+  </data>
+  <data name="Vendor" xml:space="preserve">
+    <value>Vendor</value>
+  </data>
 </root>
