@@ -108,7 +108,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Location: <span class="tx-danger">*</span></label>
-                                    @Html.TextBox("EmpLocation", Model.user.CostCenter.name + "-" + Model.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.TextBox("EmpLocation", Model.user.CostCenter.costCenterDisplay, new { @readonly = "readonly", @class = "form-control" })
                                     @Html.Hidden("costcentrId", Model.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
 
                                 </div>

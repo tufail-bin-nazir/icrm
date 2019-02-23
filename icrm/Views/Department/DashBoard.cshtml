@@ -139,7 +139,7 @@
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
-                        <strong> @TempData["displayMsg"]</strong>
+                        <strong> @Resources.Resource.Ticket_has_been_Updated_Successfully</strong>
                     </div>
                 }
 
@@ -157,7 +157,7 @@
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
-                            <strong>@TempData["DateMsg"]</strong>
+                            <strong>@Resources.Resource.Please_Select_StartDate_And_EndDate</strong>
                         </div>
                     }
                     @using (Html.BeginForm("search", "Department", FormMethod.Get, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))

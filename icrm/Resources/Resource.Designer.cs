@@ -151,6 +151,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bands.
+        /// </summary>
+        public static string Bands {
+            get {
+                return ResourceManager.GetString("Bands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -241,6 +250,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Complaints.
+        /// </summary>
+        public static string Complaints {
+            get {
+                return ResourceManager.GetString("Complaints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm Password.
         /// </summary>
         public static string Confirm_Password {
@@ -318,6 +336,15 @@ namespace Resources {
         public static string Dashboard {
             get {
                 return ResourceManager.GetString("Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
             }
         }
         
@@ -403,6 +430,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Employee Class.
+        /// </summary>
+        public static string Employee_Class {
+            get {
+                return ResourceManager.GetString("Employee_Class", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Employee Details.
         /// </summary>
         public static string Employee_Details {
@@ -435,6 +471,15 @@ namespace Resources {
         public static string Employee_Name {
             get {
                 return ResourceManager.GetString("Employee_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Employer Type.
+        /// </summary>
+        public static string Employer_Type {
+            get {
+                return ResourceManager.GetString("Employer_Type", resourceCulture);
             }
         }
         
@@ -480,6 +525,33 @@ namespace Resources {
         public static string Enter_your_password {
             get {
                 return ResourceManager.GetString("Enter_your_password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Escalation Users.
+        /// </summary>
+        public static string Escalation_Users {
+            get {
+                return ResourceManager.GetString("Escalation_Users", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ethnicities.
+        /// </summary>
+        public static string Ethnicities {
+            get {
+                return ResourceManager.GetString("Ethnicities", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Event Reason.
+        /// </summary>
+        public static string Event_Reason {
+            get {
+                return ResourceManager.GetString("Event_Reason", resourceCulture);
             }
         }
         
@@ -552,6 +624,15 @@ namespace Resources {
         public static string From {
             get {
                 return ResourceManager.GetString("From", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gender.
+        /// </summary>
+        public static string Gender {
+            get {
+                return ResourceManager.GetString("Gender", resourceCulture);
             }
         }
         
@@ -1200,6 +1281,15 @@ namespace Resources {
         public static string Username_or_Password_wrong {
             get {
                 return ResourceManager.GetString("Username_or_Password_wrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vendor.
+        /// </summary>
+        public static string Vendor {
+            get {
+                return ResourceManager.GetString("Vendor", resourceCulture);
             }
         }
         

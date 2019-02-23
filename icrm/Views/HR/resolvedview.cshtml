@@ -23,7 +23,7 @@
     <!-- Meta -->
     <meta name="description" content="feedback managment system.">
     <meta name="author" content="feedback">
-    <title>Create Tickets</title>
+    <title>@Resources.Resource.View_Ticket</title>
     <!-- vendor css -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
@@ -41,10 +41,10 @@
         <div class="container">
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Create Tickets</li>
+                    <li class="breadcrumb-item"><a href="#">@Resources.Resource.Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@Resources.Resource.View_Ticket</li>
                 </ol>
-                <h6 class="slim-pagetitle">CREATE TICKET</h6>
+                <h6 class="slim-pagetitle">@Resources.Resource.View_Ticket</h6>
             </div>
             <!-- slim-pageheader -->
             @Html.ValidationSummary()
@@ -53,26 +53,75 @@
 
                 @Html.AntiForgeryToken()
             <div class="section-wrapper">
-                <label class="section-title">CREATING TICKETS BY HR</label>
+                <label class="section-title">@Resources.Resource.View_Ticket</label>
 
                 <p class="mg-b-20 mg-sm-b-40"></p>
                 <div class="form-layout">
-                    @if (@TempData["displayMsgErr"] != null)
+                    @if (@TempData["displayMsgErr"] != null && @TempData["displayMsgErr"] == "Please Enter Valid Information")
                     {
                         <div class="alert alert-danger mg-b-0" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
-                            <strong>@TempData["displayMsgErr"]</strong>
+                            <strong>@Resources.Resource.Ticket_details_are_not_valid_Fill_details_properly</strong>
                         </div>
                     }
-                    @if (@TempData["Message"] != null)
+                    @if (@TempData["Message"] != null && @TempData["Message"] == "Department should be empty")
                     {
-                        <div class="alert alert-success" role="alert">
+                        <div class="alert alert-danger mg-b-0" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
-                            <strong> @TempData["Message"]</strong>
+                            <strong>@Resources.Resource.Department_should_be_Empty</strong>
+                        </div>
+                    }
+
+                    @if (@TempData["Message"] != null && @TempData["Message"] == "Comment Field should not be empty")
+                    {
+                        <div class="alert alert-danger mg-b-0" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>@Resources.Resource.Comment_Field_Should_not_be_empty</strong>
+                        </div>
+                    }
+                    @if (@TempData["Message"] != null && @TempData["Message"] == "Please enter fields properly")
+                    {
+                        <div class="alert alert-danger mg-b-0" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>@Resources.Resource.Ticket_details_are_not_valid_Fill_details_properly</strong>
+                        </div>
+                    }
+
+                    @if (@TempData["Message"] != null && @TempData["Message"] == "Comment field should be empty")
+                    {
+                        <div class="alert alert-danger mg-b-0" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>@Resources.Resource.Comment_field_Should_be_empty</strong>
+                        </div>
+                    }
+
+                    @if (@TempData["Message"] != null && @TempData["Message"] == "File Size Limit Exceeds")
+                    {
+                        <div class="alert alert-danger mg-b-0" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>@TempData["Message"]</strong>
+                        </div>
+                    }
+
+                    @if (@TempData["Message"] != null && @TempData["Message"] == "Ticket details are not valid,Fill details properly")
+                    {
+                        <div class="alert alert-danger mg-b-0" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>@Resources.Resource.Ticket_details_are_not_valid_Fill_details_properly</strong>
                         </div>
                     }
                     @Html.HiddenFor(model => model.departmentID, new { @class = "form-control" })
@@ -82,9 +131,7 @@
                     @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.user.LastName, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
-                    @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
-                    @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
-                    @Html.HiddenFor(model => model.responseDate, new { @class = "form-control" })
+                  
 
 
 
@@ -119,8 +166,9 @@
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Location: <span class="tx-danger">*</span></label>
-                                @Html.TextBoxFor(model => model.user.Location.name, new { @readonly = "readonly", @class = "form-control" })
+                                <label class="form-control-label">@Resources.Resource.Location: <span class="tx-danger">*</span></label>
+                                @Html.TextBoxFor(m => m.user.CostCenter.costCenterDisplay, new { @readonly = "readonly", @class = "form-control" })
+                                @Html.HiddenFor(m => m.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
 
                             </div>
                         </div>
@@ -136,7 +184,7 @@
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Job Title: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Job_Title: <span class="tx-danger">*</span></label>
                                 @Html.TextBoxFor(model => model.user.JobTitle.name, new { @readonly = "readonly", @class = "form-control" })
 
                             </div>
@@ -144,7 +192,7 @@
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Nationality: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Nationality: <span class="tx-danger">*</span></label>
                                 @Html.TextBoxFor(model => model.user.Nationality.name, new { @readonly = "readonly", @class = "form-control" })
 
                             </div>
@@ -165,14 +213,14 @@
 
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Ticket No <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Ticket_Id <span class="tx-danger">*</span></label>
                                 @Html.TextBoxFor(model => model.id, new { @readonly = "readonly", @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">Source <span class="tx-danger">*</span></label>
-                                @Html.TextBox("source", Model.medium.name, new { @readonly = "readonly", @class = "form-control", })
+                                @Html.TextBoxFor(model=>model.medium.name, new { @readonly = "readonly", @class = "form-control", })
                                 @Html.HiddenFor(model => model.mediumId, new { @readonly = "readonly", @class = "form-control", })
                             </div>
                         </div>
@@ -203,10 +251,8 @@
                         {
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
-                                    @Html.DropDownListFor(m => m.departmentID,
-                            new SelectList(ViewBag.Departmn,
-                          "Id", "name"), "Choose Department", new { @readonly = "readonly", disabled = "disabled", @class = "form-control select2" })
+                                    <label class="form-control-label">@Resources.Resource.Department: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(m => m.departmentID, new { @readonly = "readonly", disabled = "disabled", @class = "form-control select2" })
 
                                 </div>
                             </div>
@@ -216,7 +262,7 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Department: <span class="tx-danger">*</span></label>
                                     @Html.TextBox("deptname","",
                         new { @readonly = "readonly" , @class = "form-control" })
 
@@ -228,7 +274,7 @@
                         {
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Category: <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(m => m.category.name,
                      new { @readonly = "readonly", @class = "form-control" })
                                     @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
@@ -242,7 +288,7 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Category: <span class="tx-danger">*</span></label>
                                     @Html.TextBox("cat","",
                      new { @readonly = "readonly", @class = "form-control" })
 
@@ -253,7 +299,7 @@
 
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label"> Sub Category: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label"> @Resources.Resource.Sub_Category: <span class="tx-danger">*</span></label>
                                 @Html.TextBoxFor(m => m.SubCategory.name,
                        new { @readonly = "readonly" , @class = "form-control" })
                                 @Html.HiddenFor(model => model.subcategoryId, new { @class = "form-control" })
@@ -266,8 +312,11 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Priority <span class="tx-danger">*</span></label>
-                                    <input type="text" value="@Model.priority.name" class="form-control" readonly />
-                                    <input type="hidden" name="priorityId" value="@Model.priorityId" />
+                                    @Html.TextBoxFor(m => m.priority.name,
+                     new { @readonly = "readonly" , @class = "form-control" })
+                                    @Html.HiddenFor(m => m.priorityId,
+                     new { @readonly = "readonly" , @class = "form-control" })
+                                   
                                 </div>
                             </div>
                         }
@@ -293,7 +342,7 @@
                     <div class="row mg-b-25">
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="section-title">Attachment</label>
+                                <label class="section-title">@Resources.Resource.Attachment</label>
                                 <div class="row mg-b-25">
 
                                     <div class="col-lg-4">
@@ -391,10 +440,11 @@
                        
                         <!-- row -->
                       
-                            <div class="form-layout-footer">
-                                <input type="submit" value="Submit" name="submitBtn" id="submitBtn" class="btn btn-primary bd-0" />
-
-                            </div>
+                        <div class="form-layout-footer">
+                            <input type="submit" value="Submit" name="submitBtn" id="submitBtn" class="btn btn-primary bd-0" />
+                            <!--  <button class="btn btn-primary bd-0" value="Submit" name="submitBtn" id="submitBtn">@Resources.Resource.Update </button>
+    -->
+                        </div>
                       
                         <!-- form-layout-footer -->
                     </div>

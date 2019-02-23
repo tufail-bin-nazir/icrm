@@ -30,7 +30,7 @@
     <!-- Meta -->
     <meta name="description" content="feedback managment system.">
     <meta name="author" content="feedback">
-    <title>Create Tickets</title>
+    <title>@Resources.Resource.Create_Ticket</title>
     <!-- vendor css -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
@@ -48,10 +48,10 @@
         <div class="container">
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Create Tickets</li>
+                    <li class="breadcrumb-item"><a href="#">@Resources.Resource.Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@Resources.Resource.Create_Ticket</li>
                 </ol>
-                <h6 class="slim-pagetitle">CREATE TICKET</h6>
+                <h6 class="slim-pagetitle">@Resources.Resource.Create_Ticket</h6>
             </div>
             <!-- slim-pageheader -->
             @Html.ValidationSummary()
@@ -60,18 +60,104 @@
 
                 @Html.AntiForgeryToken()
             <div class="section-wrapper">
-                <label class="section-title">CREATING TICKETS BY ICRM Agent</label>
+                <label class="section-title">@Resources.Resource.Creating_Tickets_by_Icrm_Agent</label>
                 <div class="form-layout">
-                    @if (@TempData["MessageSuccess"] != null)
+                    @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Created Successfully")
                     {
                         <div class="alert alert-success" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
-                            <strong> @TempData["MessageSuccess"]</strong>
+                            <strong> @Resources.Resource.Ticket_has_been_created_Successfully</strong>
                         </div>
                     }
-                    @if (@TempData["Message"] != null)
+
+                    @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Updated Successfully")
+                    {
+                        <div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong> @Resources.Resource.Ticket_has_been_Updated_Successfully</strong>
+                        </div>
+                    }
+                    @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Forwarded Successfully")
+                    {
+                        <div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong> @TempData["MessageSuccess"] </strong>
+                        </div>
+                    }
+                    @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Closed Successfully")
+                    {
+                        <div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong> @Resources.Resource.Ticket_has_been_Closed_Successfully</strong>
+                        </div>
+                    }
+                    @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Resolved Successfully")
+                    {
+                        <div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong> @Resources.Resource.Ticket_has_been_Resolved_Successfully</strong>
+                        </div>
+                    }
+                    @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Rejected")
+                    {
+                        <div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong> @Resources.Resource.Ticket_has_been_Rejected</strong>
+                        </div>
+                    }
+
+                    @if (@TempData["Message"] != null && @TempData["Message"] == "Department should be empty")
+                    {
+                        <div class="alert alert-danger mg-b-0" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>@Resources.Resource.Department_should_be_Empty</strong>
+                        </div>
+                    }
+
+                    @if (@TempData["Message"] != null && @TempData["Message"] == "Comment Field should not be empty")
+                    {
+                        <div class="alert alert-danger mg-b-0" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>@Resources.Resource.Comment_Field_Should_not_be_empty</strong>
+                        </div>
+                    }
+                    @if (@TempData["Message"] != null && @TempData["Message"] == "Please enter fields properly")
+                    {
+                        <div class="alert alert-danger mg-b-0" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>@Resources.Resource.Ticket_details_are_not_valid_Fill_details_properly</strong>
+                        </div>
+                    }
+
+                    @if (@TempData["Message"] != null && @TempData["Message"] == "Comment field should be empty")
+                    {
+                        <div class="alert alert-danger mg-b-0" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>@Resources.Resource.Comment_field_Should_be_empty</strong>
+                        </div>
+                    }
+
+                    @if (@TempData["Message"] != null && @TempData["Message"] == "File Size Limit Exceeds")
                     {
                         <div class="alert alert-danger mg-b-0" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -80,55 +166,65 @@
                             <strong>@TempData["Message"]</strong>
                         </div>
                     }
-                        
-                        @Html.HiddenFor(model => model.submittedById, new { @class = "form-control", id = "submittedBy" })
+
+                    @if (@TempData["Message"] != null && @TempData["Message"] == "Ticket details are not valid,Fill details properly")
+                    {
+                        <div class="alert alert-danger mg-b-0" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <strong>@Resources.Resource.Ticket_details_are_not_valid_Fill_details_properly</strong>
+                        </div>
+                    }
+                    @Html.HiddenFor(model => model.submittedById, new { @class = "form-control", id = "submittedBy" })
 
 
 
-                        <input type="hidden" id="hrdetail" value="@data.Id" />
-                        @Html.HiddenFor(model => model.userId, new { @class = "form-control", id = "userID" })
-                        @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
+                    <input type="hidden" id="hrdetail" value="@data.Id" />
+                    @Html.HiddenFor(model => model.userId, new { @class = "form-control", id = "userID" })
+                    @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
+                    @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
+                    @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
 
-                        @if (ViewBag.EmployeeList != null)
-                        {
-                            <div class="row mg-b-25">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">@Resources.Resource.Employee_Id <span class="tx-danger">*</span></label>
-                                        @Html.DropDownListFor(m => m.userId,
- new SelectList(ViewBag.EmployeeList,
- "Id", "EmployeeId"), "Select Employee", new { @class = "form-control select2", id = "empID", required = "required" })
-                                    </div>
+                    @if (ViewBag.EmployeeList != null)
+                    {
+                        <div class="row mg-b-25">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Employee_Id <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(m => m.userId,
+new SelectList(ViewBag.EmployeeList,
+"Id", "EmployeeId"), "Select Employee", new { @class = "form-control select2", id = "empID", required = "required" })
                                 </div>
-                                <!-- col-4 -->
-                                <!-- col-4 -->
-                                <!-- col-4 -->
                             </div>
-                        }
-                        else {
+                            <!-- col-4 -->
+                            <!-- col-4 -->
+                            <!-- col-4 -->
+                        </div>
+                    }
+                    else
+                    {
 
-                            <div class="row mg-b-25">
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="form-control-label">@Resources.Resource.Employee_Id <span class="tx-danger">*</span></label>
-                                       
-                                        @Html.DropDownList("parent",
- Enumerable.Empty<SelectListItem>(),"Select Employee", new { @class = "form-control select2", id = "empID", required = "required" })
-                                    </div>
+                        <div class="row mg-b-25">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Employee_Id <span class="tx-danger">*</span></label>
+
+                                    @Html.DropDownList("parent",
+Enumerable.Empty<SelectListItem>(),"Select Employee", new { @class = "form-control select2", id = "empID", required = "required" })
                                 </div>
-                                <!-- col-4 -->
-                                <!-- col-4 -->
-                                <!-- col-4 -->
                             </div>
+                            <!-- col-4 -->
+                            <!-- col-4 -->
+                            <!-- col-4 -->
+                        </div>
 
-                        }
+                    }
 
-                        <!-- row -->
-                        <!-- form-layout-footer -->
+                    <!-- row -->
+                    <!-- form-layout-footer -->
 
-                    </div>
+                </div>
 
 
                 <div id="OuterDiv" style="display:none;">
@@ -163,7 +259,7 @@
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Location:<span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Location:<span class="tx-danger">*</span></label>
                                 @Html.TextBox("EmpLocation", "", new { @readonly = "readonly", @class = "form-control", id = "EmpLocation" })
                                 @Html.Hidden("costcentrId", "", new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
 
@@ -182,7 +278,7 @@
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">JobTitle: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Job_Title: <span class="tx-danger">*</span></label>
                                 @Html.TextBox("EmpPosition","", new { @readonly = "readonly", @class = "form-control", id= "EmpPosition" })
 
                             </div>
@@ -190,7 +286,7 @@
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Nationality: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Nationality: <span class="tx-danger">*</span></label>
                                 @Html.TextBox("EmpNationality","", new { @readonly = "readonly", @class = "form-control", id="EmpNationality" })
 
                             </div>
@@ -244,7 +340,7 @@
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Department: <span class="tx-danger">*</span></label>
                                 @Html.DropDownListFor(m => m.departmentID,
                       new SelectList(ViewBag.Departmn,
                     "Id", "name"), "Choose Department", new { @class = "form-control select2",id="deptId" })
@@ -253,7 +349,7 @@
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Category: <span class="tx-danger">*</span></label>
                                 <select id="category" class="form-control select2" name="categoryId">
                                     <option value="">Choose Category</option>
 
@@ -269,7 +365,7 @@
 
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Sub Category: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Sub_Category <span class="tx-danger">*</span></label>
                                 <select id="subcategory" class="form-control select2" name="subcategoryId">
                                     <option value="">Choose Sub Category</option>
 
@@ -278,7 +374,7 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4" id="priordiv">
+                        <div class="col-lg-4" id="priordiv" style="display:none;">
                             <div class="form-group">
                                 <label class="form-control-label">@Resources.Resource.Priority <span class="tx-danger">*</span></label>
                                 @Html.DropDownListFor(m => m.priorityId,
@@ -305,7 +401,7 @@
 
 
 
-                        <label class="section-title">Attachment</label>
+                <label class="section-title">@Resources.Resource.Attachment</label>
 
 
                         <div class="form-layout">
@@ -345,7 +441,7 @@
 
                             <!-- row -->
                             <div class="form-layout-footer">
-                                <button class="btn btn-primary bd-0" name="submitButton" id="forward" value="Forward/Create">Forward/Create</button>
+                                <button class="btn btn-primary bd-0" name="submitButton" id="forward" value="Forward/Create">@Resources.Resource.Forward_Create</button>
                                 <button class="btn btn-primary bd-0" value="Submit" id="resolve" name="submitButton">@Resources.Resource.Submit </button>
 
                             </div>
@@ -378,8 +474,43 @@
         <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
         <script src="~/Content/js/slim.js"></script>
         <script>
+            if ($('#empID').val() != "") {
+                id = $('#empID').val();
+                $('#OuterDiv').show();
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: '{"id":"' + id + '"}',
+                        url: "@Url.Action("getEmpDetails", "HR")",
+                        dataType: "json",
+                        success: function (response) {
+                          
+                            $('#EmpPosition').val(response.JobTitle.name);
+                            $('#EmpNationality').val(response.Nationality.name);
+                            $('#EmpName').val(response.UserName);
+                            $('#EmpBatch').val(response.EmployeeId);
+                            $('#EmpEmail').val(response.Email);
+                            $('#EmpPNo').val(response.PhoneNumber);
+                            $('#EmpLocation').val(response.CostCenter.costCenterDisplay);
+                            $('#costcentrId').val(response.CostCenter.Id);
+                            
+
+                        },
+                        error: function (response) {
+                            //alert(response.responseText)
+                        }
+
+                    })
+
+
+            }
+            
+            if ($("#typeofFeedback").find(":selected").text() == "Complaint") {
+                $('#priordiv').show();
+                $("#priorty").prop('required', true);
+            }
             $("#typeofFeedback").prop('required', true);
-            $('#priordiv').hide();
+           // $('#priordiv').hide();
             $('#typeofFeedback').change(function () {
                
                 if ($(this).find(":selected").text() == "Complaint") {
@@ -412,13 +543,13 @@
                             $('#EmpBatch').val(response.EmployeeId);
                             $('#EmpEmail').val(response.Email);
                             $('#EmpPNo').val(response.PhoneNumber);
-                            $('#EmpLocation').val(response.CostCenter.name +"-"+ response.CostCenter.Id);
+                            $('#EmpLocation').val(response.CostCenter.costCenterDisplay);
                             $('#costcentrId').val(response.CostCenter.Id);
                             
 
                         },
                         error: function (response) {
-                            alert(response.responseText)
+                            //alert(response.responseText)
                         }
 
                     })

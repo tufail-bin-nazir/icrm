@@ -195,7 +195,7 @@ namespace icrm.Controllers
                                 feedback.assignedDate = DateTime.Now;
                                 feedback.checkStatus = Constants.ASSIGNED;                               
                                 feedInterface.Save(feedback);
-                                TempData["MessageSuccess"] = "Ticket has been forwarded  Successfully";
+                                TempData["MessageSuccess"] = "Ticket has been Forwarded Successfully";
                                 eventService.sendEmails(Request.Form["emailsss"]+","+feedback.departUser.bussinessEmail, PopulateBody(feedback));
                         }
                             else
@@ -335,7 +335,7 @@ namespace icrm.Controllers
                         db.Entry(f).State = EntityState.Modified;
                         db.SaveChanges();
 
-                        @TempData["MessageSuccess"] = "Ticket has been  Updated Successfully";
+                        @TempData["MessageSuccess"] = "Ticket has been Updated Successfully";
                         ViewData["commentList"] = db.comments.Where(m => m.feedbackId == feedback.id).ToList();
                         return RedirectToAction("DashBoard");
                     }
@@ -1199,11 +1199,16 @@ namespace icrm.Controllers
             {
                 f.departmentID = null;
                 f.resolvedDate = null;
+                f.closedDate = null;
                 f.departUserId = null;
                 f.satisfaction = null;
                 f.priorityId = null;
                 f.categoryId = null;
                 f.subcategoryId = null;
+                f.responseDate = null;
+                f.timeHours = 0;
+                f.assignedBy = null;
+                f.assignedDate = null;
                 f.checkStatus = Constants.OPEN;
             }
             
@@ -1221,7 +1226,7 @@ namespace icrm.Controllers
             {
                 ViewData["commentList"] = db.comments.Where(m => m.feedbackId == feedback.id).ToList();
 
-                TempData["displayMsgErr"] = "Please Enter Valid Information ";
+                TempData["displayMsgErr"] = "Please enter fields properly";
                 if (submitBtn == "Submit")
                 {
                     return View("resolvedview", feedback);

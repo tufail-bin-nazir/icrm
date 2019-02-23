@@ -46,7 +46,7 @@
             <div class="dropdown dropdown-c">
 
                 <a href="#" class="logged-user" data-toggle="dropdown">
-                    <span>Translation</span>
+                    <span>@Resources.Resource.Choose_Language</span>
                     <i class="fa fa-angle-down"></i>
                 </a>
 
@@ -74,7 +74,7 @@
                     <nav class="nav">
                         <!-- <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
                 <a href="@Url.Action("index","userprofile")" class="nav-link"><i class="icon ion-compose"></i> Edit Profile</a>-->
-                        <a href="@Url.Action("index","DownloadAPK")" class="nav-link"><i class="icon ion-ios-bolt"></i> Download APK</a>
+                        <a href="@Url.Action("index","DownloadAPK")" class="nav-link"><i class="icon ion-ios-bolt"></i> @Resources.Resource.Download_APK</a>
 
 
                         <!--  <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>-->
@@ -86,7 +86,7 @@
 
                                 <i class="icon ion-forward"></i><input class="nav-link" style="background: transparent;
     text-decoration: none;
-    cursor: pointer; border:none;" type="submit" value="Sign Out" />
+    cursor: pointer; border:none;" type="submit" value="@Resources.Resource.Sign_Out" />
                             </a>
 
 
@@ -113,7 +113,7 @@
             <li class="nav-item  active">
                 <a class="nav-link" href="/HR/DashBoard">
                     <i class="icon ion-ios-home-outline"></i>
-                    <span>Dashboard</span>
+                    <span>@Resources.Resource.Dashboard</span>
                 </a>
 
                 <!-- sub-item -->
@@ -124,7 +124,7 @@
                 <a class="nav-link" href="/HR/charts">
 
                     <i class="icon ion-document-text"></i>
-                    <span>Report</span>
+                    <span>@Resources.Resource.Report</span>
                 </a>
 
                 <!-- sub-item -->
@@ -134,21 +134,21 @@
             <li class="nav-item with-sub ">
                 <a class="nav-link" href="#" data-toggle="dropdown">
                     <i class="icon ion-ios-gear-outline"></i>
-                    <span>Menu</span>
+                    <span>@Resources.Resource.Menu</span>
                 </a>
                 <div class="sub-item">
                     <ul>
-                        <li class="active">@Html.ActionLink("Create Ticket", "Create", "HR")</li>
+                        <li class="active">@Html.ActionLink(@Resources.Resource.Create_Ticket, "Create", "HR")</li>
 
                         <li class="active">@Html.ActionLink(Resources.Resource.Open_Tickets, "openAll", "HR", new { id = "openticket" }, null)</li>
                         <li>@Html.ActionLink(Resources.Resource.Resolved_Complaints, "resolved", "HR", new { id = "resolvedticket" }, null)</li>
                         <li>@Html.ActionLink(Resources.Resource.Assigned_Complaints, "assigned", "HR", new { id = "assignedticket" }, null)</li>
                         <li>@Html.ActionLink(Resources.Resource.Responded_Complaints, "responded", "HR", new { id = "respondedticket" }, null)</li>
                         <li>@Html.ActionLink(Resources.Resource.Closed_Complaints, "Closed", "HR", new { id = "closedticket" }, null)</li>
-                        <li>@Html.ActionLink("Rejected Tickets", "Rejected", "HR", new { id = "rejectedticket" }, null)</li>
+                        <li>@Html.ActionLink(@Resources.Resource.Rejected_Tickets, "Rejected", "HR", new { id = "rejectedticket" }, null)</li>
                         <li>@Html.ActionLink(Resources.Resource.Inquiries, "tickets", "HR", new { typeId = "Enquiry" }, null)</li>
                         <li>@Html.ActionLink(Resources.Resource.Suggestions, "tickets", "HR", new { typeId = "Suggestion" }, null)</li>
-                        <li>@Html.ActionLink("Complaints", "tickets", "HR", new { typeId = "Complaint" }, null)</li>
+                        <li>@Html.ActionLink(@Resources.Resource.Complaints, "tickets", "HR", new { typeId = "Complaint" }, null)</li>
                         <li>@Html.ActionLink("Appreciations", "tickets", "HR", new { typeId = "Appreciation" }, null)</li>
                     </ul>
                 </div>
@@ -157,7 +157,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="/Chat/HRChat">
                     <i class="icon ion-ios-chatboxes-outline"></i>
-                    <span>Chat</span>
+                    <span>@Resources.Resource.Chat</span>
                 </a>
                 <div class="sub-item">
 

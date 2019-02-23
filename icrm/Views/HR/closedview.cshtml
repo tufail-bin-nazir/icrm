@@ -29,7 +29,7 @@
     <!-- Meta -->
     <meta name="description" content="feedback managment system.">
     <meta name="author" content="feedback">
-    <title>Create Tickets</title>
+    <title>@Resources.Resource.View_Ticket</title>
     <!-- vendor css -->
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
@@ -47,26 +47,26 @@
         <div class="container">
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Create Tickets</li>
+                    <li class="breadcrumb-item"><a href="#">@Resources.Resource.Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@Resources.Resource.View_Ticket</li>
                 </ol>
-                <h6 class="slim-pagetitle">CREATE TICKET</h6>
-                @if (@TempData["displayMsg"] != null)
+                <h6 class="slim-pagetitle">@Resources.Resource.View_Ticket</h6>
+                @if (@TempData["displayMsg"] != null && @TempData["displayMsg"] == "Ticket has been Updated Successfully")
                 {
                     <div class="alert alert-success" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
-                        <strong> @TempData["displayMsg"]</strong>
+                        <strong> @Resources.Resource.Ticket_has_been_Updated_Successfully</strong>
                     </div>
                 }
-                @if (@TempData["displayMsgErr"] != null)
+                @if (@TempData["displayMsgErr"] != null && @TempData["displayMsgErr"] == "Please Enter Valid Information")
                 {
                     <div class="alert alert-danger mg-b-0" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
-                        <strong>@TempData["displayMsgErr"]</strong>
+                        <strong>@Resources.Resource.Ticket_details_are_not_valid_Fill_details_properly</strong>
                     </div>
                 }
             </div>
@@ -77,7 +77,7 @@
 
                 @Html.AntiForgeryToken()
             <div class="section-wrapper">
-                <label class="section-title">CREATING TICKETS BY HR</label>
+                <label class="section-title">@Resources.Resource.View_Ticket</label>
 
                 <p class="mg-b-20 mg-sm-b-40"></p>
                 <div class="form-layout">
@@ -88,14 +88,11 @@
                    
                     @Html.HiddenFor(model => model.user.LastName, new { @class = "form-control" })
                     @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
-                    @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
-                    @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
-
-                    @Html.HiddenFor(model => model.responseDate, new { @class = "form-control" })
+                    
                     <div class="row mg-b-25">
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Ticket No <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Ticket_Id <span class="tx-danger">*</span></label>
                                 @Html.TextBoxFor(model => model.id, new { @readonly = "readonly", @class = "form-control" })
                             </div>
                         </div>
@@ -128,9 +125,9 @@
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Location: <span class="tx-danger">*</span></label>
-                                @Html.TextBox("EmpLocation", Model.user.CostCenter.name + "-" + Model.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control" })
-                                @Html.Hidden("costcentrId", Model.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
+                                <label class="form-control-label">@Resources.Resource.Location: <span class="tx-danger">*</span></label>
+                                @Html.TextBoxFor(m=>m.user.CostCenter.costCenterDisplay, new { @readonly = "readonly", @class = "form-control" })
+                                @Html.HiddenFor(m=>m.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
 
                             </div>
                         </div>
@@ -146,7 +143,7 @@
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Job Title: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Job_Title: <span class="tx-danger">*</span></label>
                                 @Html.TextBoxFor(model => model.user.JobTitle.name, new { @readonly = "readonly", @class = "form-control" })
 
                             </div>
@@ -154,7 +151,7 @@
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Nationality: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Nationality: <span class="tx-danger">*</span></label>
                                 @Html.TextBoxFor(model => model.user.Nationality.name, new { @readonly = "readonly", @class = "form-control" })
 
                             </div>
@@ -167,7 +164,7 @@
 
                 </div>
 
-                <label class="section-title">FeedBack / Complaint</label>
+                <label class="section-title">@Resources.Resource.Feedback_Complaint</label>
 
 
                 <div class="form-layout">
@@ -176,7 +173,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
                                 <label class="form-control-label">Source <span class="tx-danger">*</span></label>
-                                @Html.TextBox("source", Model.medium.name, new { @readonly = "readonly", @class = "form-control", })
+                                @Html.TextBoxFor(model=>model.medium.name, new { @readonly = "readonly", @class = "form-control", })
                                 @Html.HiddenFor(model => model.mediumId, new { @readonly = "readonly", @class = "form-control", })
                             </div>
                         </div>
@@ -205,7 +202,7 @@
                         <!-- col-4 -->
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Department: <span class="tx-danger">*</span></label>
                                 @Html.DropDownListFor(m => m.departmentID,
 new SelectList(ViewBag.Departmn,
 "Id", "name"), "Choose Department", new { @readonly = "readonly", @class = "form-control select2" })
@@ -216,7 +213,7 @@ new SelectList(ViewBag.Departmn,
 
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Category: <span class="tx-danger">*</span></label>
                                 @Html.TextBoxFor(m => m.category.name,
 new { disabled = "disabled", @class = "form-control" })
                                 @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
@@ -228,7 +225,7 @@ new { disabled = "disabled", @class = "form-control" })
 
                         <div class="col-lg-4">
                             <div class="form-group">
-                                <label class="form-control-label"> Sub Category: <span class="tx-danger">*</span></label>
+                                <label class="form-control-label">@Resources.Resource.Sub_Category: <span class="tx-danger">*</span></label>
                                 @Html.TextBoxFor(m => m.SubCategory.name,
 new { disabled = "disabled", @class = "form-control" })
                                 @Html.HiddenFor(model => model.subcategoryId, new { @class = "form-control" })
@@ -257,7 +254,7 @@ new SelectList(ViewBag.Priorities,
 
 
 
-                <label class="section-title">Attachment</label>
+                <label class="section-title">@Resources.Resource.Attachment</label>
 
 
                 <div class="form-layout">
@@ -280,10 +277,10 @@ new SelectList(ViewBag.Priorities,
 
 
 
-                    <div class="row mg-b-25">
+                
 
                         <div class="row mg-b-25">
-
+                            
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Satisfaction</label>
@@ -350,9 +347,11 @@ new SelectList(ViewBag.Priorities,
 
                         </div>
 
-                    </div>
+                 
                     <div class="form-layout-footer">
-                        <input type="submit" value="Update" name="submitBtn" id="forward2" class="btn btn-primary bd-0" />
+                        <button class="btn btn-primary bd-0" value="Update" name="submitBtn" id="forward2">@Resources.Resource.Update </button>
+
+                        <!--   <input type="submit" value="Update" name="submitBtn" id="forward2" class="btn btn-primary bd-0" />-->
 
                     </div>
                 </div>

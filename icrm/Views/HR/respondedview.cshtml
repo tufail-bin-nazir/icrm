@@ -41,10 +41,10 @@
         <div class="container">
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Create Tickets</li>
+                    <li class="breadcrumb-item"><a href="#">@Resources.Resource.Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">@Resources.Resource.View_Ticket</li>
                 </ol>
-                <h6 class="slim-pagetitle">CREATE TICKET</h6>
+                <h6 class="slim-pagetitle">@Resources.Resource.View_Ticket</h6>
                 
             </div>
             <!-- slim-pageheader -->
@@ -54,20 +54,106 @@
 
                 @Html.AntiForgeryToken()
                 <div class="section-wrapper">
-                    <label class="section-title">CREATING TICKETS BY HR</label>
+                    <label class="section-title">@Resources.Resource.View_Ticket</label>
 
                     <p class="mg-b-20 mg-sm-b-40"></p>
                     <div class="form-layout">
-                        @if (@TempData["MessageSuccess"] != null)
+                        @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Created Successfully")
                         {
                             <div class="alert alert-success" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
-                                <strong> @TempData["MessageSuccess"]</strong>
+                                <strong> @Resources.Resource.Ticket_has_been_created_Successfully</strong>
                             </div>
                         }
-                        @if (@TempData["Message"] != null)
+
+                        @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Updated Successfully")
+                        {
+                            <div class="alert alert-success" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong> @Resources.Resource.Ticket_has_been_Updated_Successfully</strong>
+                            </div>
+                        }
+                        @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Forwarded Successfully")
+                        {
+                            <div class="alert alert-success" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong> @TempData["MessageSuccess"] </strong>
+                            </div>
+                        }
+                        @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Closed Successfully")
+                        {
+                            <div class="alert alert-success" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong> @Resources.Resource.Ticket_has_been_Closed_Successfully</strong>
+                            </div>
+                        }
+                        @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Resolved Successfully")
+                        {
+                            <div class="alert alert-success" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong> @Resources.Resource.Ticket_has_been_Resolved_Successfully</strong>
+                            </div>
+                        }
+                        @if (@TempData["MessageSuccess"] != null && @TempData["MessageSuccess"] == "Ticket has been Rejected")
+                        {
+                            <div class="alert alert-success" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong> @Resources.Resource.Ticket_has_been_Rejected</strong>
+                            </div>
+                        }
+
+                        @if (@TempData["Message"] != null && @TempData["Message"] == "Department should be empty")
+                        {
+                            <div class="alert alert-danger mg-b-0" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>@Resources.Resource.Department_should_be_Empty</strong>
+                            </div>
+                        }
+
+                        @if (@TempData["Message"] != null && @TempData["Message"] == "Comment Field should not be empty")
+                        {
+                            <div class="alert alert-danger mg-b-0" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>@Resources.Resource.Comment_Field_Should_not_be_empty</strong>
+                            </div>
+                        }
+                        @if (@TempData["Message"] != null && @TempData["Message"] == "Please enter fields properly")
+                        {
+                            <div class="alert alert-danger mg-b-0" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>@Resources.Resource.Ticket_details_are_not_valid_Fill_details_properly</strong>
+                            </div>
+                        }
+
+                        @if (@TempData["Message"] != null && @TempData["Message"] == "Comment field should be empty")
+                        {
+                            <div class="alert alert-danger mg-b-0" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>@Resources.Resource.Comment_field_Should_be_empty</strong>
+                            </div>
+                        }
+
+                        @if (@TempData["Message"] != null && @TempData["Message"] == "File Size Limit Exceeds")
                         {
                             <div class="alert alert-danger mg-b-0" role="alert">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -75,17 +161,24 @@
                                 </button>
                                 <strong>@TempData["Message"]</strong>
                             </div>
+                        }
 
+                        @if (@TempData["Message"] != null && @TempData["Message"] == "Ticket details are not valid,Fill details properly")
+                        {
+                            <div class="alert alert-danger mg-b-0" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                                <strong>@Resources.Resource.Ticket_details_are_not_valid_Fill_details_properly</strong>
+                            </div>
                         }
                         @Html.HiddenFor(model => model.departUserId, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.id, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.userId, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.user.LastName, new { @class = "form-control" })
                         @Html.HiddenFor(model => model.assignedBy, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.assignedDate, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.closedDate, new { @class = "form-control" })
-                        @Html.HiddenFor(model => model.responseDate, new { @class = "form-control" })
-
+                       
+                       
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
@@ -116,9 +209,9 @@
                             <!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Location: <span class="tx-danger">*</span></label>
-                                    @Html.TextBox("EmpLocation", Model.user.CostCenter.name + "-" + Model.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control" })
-                                    @Html.Hidden("costcentrId", Model.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
+                                    <label class="form-control-label">@Resources.Resource.Location: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(m=>m.user.CostCenter.costCenterDisplay, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.HiddenFor(m=>m.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
 
                                 </div>
                             </div>
@@ -135,7 +228,7 @@
                             <!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Job Title: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Job_Title: <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(model => model.user.JobTitle.name, new { @readonly = "readonly", @class = "form-control" })
 
                                 </div>
@@ -143,7 +236,7 @@
                             <!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Nationality: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Nationality: <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(model => model.user.Nationality.name, new { @readonly = "readonly", @class = "form-control" })
 
                                 </div>
@@ -163,14 +256,14 @@
                         <div class="row mg-b-25">
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Ticket No <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Ticket_Id<span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(model => model.id, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Source <span class="tx-danger">*</span></label>
-                                    @Html.TextBox("source", Model.medium.name, new { @readonly = "readonly", @class = "form-control", })
+                                    @Html.TextBoxFor(m=>m.medium.name, new { @readonly = "readonly", @class = "form-control", })
                                     @Html.HiddenFor(model => model.mediumId, new { @readonly = "readonly", @class = "form-control", })
                                 </div>
                             </div>
@@ -200,7 +293,7 @@
                             <!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Department: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Department: <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.departmentID,
                           new SelectList(ViewBag.Departmn,
                         "Id", "name"), "Choose Department", new { @readonly = "readonly", disabled="disabled", @class = "form-control select2" })
@@ -211,7 +304,7 @@
                             <!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Category: <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(m => m.category.name,
                            new { @readonly = "readonly" , @class = "form-control" })
                                     @Html.HiddenFor(model => model.categoryId, new { @class = "form-control" })
@@ -223,7 +316,7 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label"> Sub Category: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label"> @Resources.Resource.Sub_Category: <span class="tx-danger">*</span></label>
                                     @Html.TextBoxFor(m => m.SubCategory.name,
                            new { @readonly = "readonly" , @class = "form-control" })
                                     @Html.HiddenFor(model => model.subcategoryId, new { @class = "form-control" })
@@ -250,7 +343,7 @@
 
 
 
-                    <label class="section-title">Attachment</label>
+                    <label class="section-title">@Resources.Resource.Attachment</label>
 
 
                     <div class="form-layout">

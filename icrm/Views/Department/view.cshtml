@@ -115,7 +115,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Location: <span class="tx-danger">*</span></label>
-                                    @Html.TextBox("EmpLocation", Model.user.CostCenter.name + "-" + Model.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control" })
+                                    @Html.TextBox("EmpLocation", Model.user.CostCenter.costCenterDisplay, new { @readonly = "readonly", @class = "form-control" })
                                     @Html.Hidden("costcentrId", Model.user.CostCenter.Id, new { @readonly = "readonly", @class = "form-control", id = "costcentrId" })
 
                                 </div>
@@ -292,9 +292,9 @@
                             }
 
 
-                            @** @if (ViewBag.viewlink != "respondedlink")
-        {
-                            *@
+                             @if (Model.checkStatus == "Assigned")
+                             {
+
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Comments</label>
@@ -312,21 +312,21 @@
                                 </div>
                             </div>
 
-                           
+                             }
 
                         </div>
-                       @* @if (bb.Count() <= 0)
-                        {
-                            *@ 
+                       @if (Model.checkStatus=="Assigned")
+                       {
+                          
                             <!-- row -->
                             <div class="form-layout-footer">
                                 <button class="btn btn-primary bd-0" type="submit">@Resources.Resource.Submit</button>
 
                                 <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
                             </div>
-                        
-                        <!-- form-layout-footer -->
 
+                        <!-- form-layout-footer -->
+                       }
                     </div>
 
                 </div>
