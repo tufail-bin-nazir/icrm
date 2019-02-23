@@ -1,0 +1,339 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <!-- Meta -->
+    <!-- Meta -->
+    <meta name="description" content="feedback managment system.">
+    <meta name="author" content="feedback">
+
+    <title>ICRM 2.0 </title>
+
+    <!-- vendor css -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+
+    <!-- Slim CSS -->
+    <link rel="stylesheet" href="~/Content/css/slim.css">
+    @*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">*@
+    <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/MonthPicker.min.css" rel="stylesheet" />
+
+    <link href="~/Content/lib/jquery-toggles/css/toggles-full.css" rel="stylesheet">
+
+    <style type="text/css">
+        #flotTip {
+            padding: 3px 5px;
+            background-color: #dfbaba;
+            z-index: 100;
+            color: #000;
+            opacity: .80;
+            filter: alpha(opacity=85);
+        }
+    </style>
+
+
+
+    <style type="text/css">
+        #placeholder {
+            width: 900px;
+            height: 400px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .legend table, .legend > div {
+            height: 82px !important;
+            opacity: 1 !important;
+            right: -55px;
+            top: 10px;
+            width: 116px !important;
+        }
+
+        .legend table {
+            border: 1px solid #555;
+            padding: 5px;
+        }
+
+        #flot-tooltip {
+            font-size: 12px;
+            font-family: Verdana, Arial, sans-serif;
+            position: absolute;
+            display: none;
+            border: 2px solid;
+            padding: 2px;
+            background-color: #FFF;
+            opacity: 0.8;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -khtml-border-radius: 5px;
+            border-radius: 5px;
+        }
+    </style>
+
+
+
+
+</head>
+
+<body>
+    @Html.Partial("_HRMenu")
+    <!-- slim-navbar -->
+
+    <div class="slim-mainpanel">
+        <div class="container">
+            <div class="slim-pageheader">
+                <ol class="breadcrumb slim-breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Feedback Department Charts</li>
+                </ol>
+                <h6 class="slim-pagetitle">Pictorial Charts</h6>
+            </div>
+            <!-- slim-pageheader -->
+
+            <div class="form-layout">
+                <span class="text-danger">
+                    @TempData["DateMsg"]
+
+
+                </span>
+
+                @using (Html.BeginForm("chartsfeedbackdepartmentsearch", "HR", FormMethod.Get, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+                    <div class="row mg-b-25">
+
+
+                        <div class="col-lg-3">
+                            <label class="form-control-label">Select Months : <span class="tx-danger">*</span></label>
+
+                        </div>
+
+
+                        <div class="col-lg-3">
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                                    </div>
+                                </div>
+                                <input type="text" class="monthpicker" id="monthpicker1" value="" name="month1" placeholder="MM/YYYY">
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                                    </div>
+                                </div>
+                                <input type="text" class="monthpicker" id="monthpicker2" value="" name="month2" placeholder="MM/YYYY">
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                                    </div>
+                                </div>
+                                <input type="text" class="monthpicker" id="monthpicker3" value="" name="month3" placeholder="MM/YYYY">
+                            </div>
+                        </div>
+
+
+                        <!-- col-4 -->
+                    </div>
+
+                    <!-- row -->
+                    <div class="form-layout-footer">
+                        <button class="btn btn-primary bd-0" name="charts" id="submit" value="search">Submit </button>
+
+
+                    </div>
+                }
+                <!-- form-layout-footer -->
+            </div>
+
+
+
+
+
+
+            <!-- section-wrapper -->
+
+            <div class="section-wrapper">
+                <label class="section-title">Feedback Department Chart</label>
+                <p class="mg-b-20 mg-sm-b-40"></p>
+
+                <div class="row">
+                    <div class="col-xl-12">
+
+
+                        <div class="bd pd-t-30 pd-b-20 pd-x-20">
+                            <div id="placeholder"></div>
+
+                            @*<canvas id="chartBar1" height="200"></canvas>*@
+                        </div>
+                    </div>
+                    <!-- col-6 -->
+                    <!-- col-6 -->
+                </div>
+                <!-- row -->
+            </div>
+            <!-- section-wrapper -->
+            <!-- section-wrapper -->
+
+        </div>
+        <!-- container -->
+    </div>
+    <!-- slim-mainpanel -->
+
+    <div class="slim-footer">
+        <div class="container">
+            <p>Copyright 2018 &copy; All Rights Reserved. Slim Dashboard Template</p>
+            <p>Designed by: <a href="default.htm">ThemePixels</a></p>
+        </div>
+        <!-- container -->
+    </div>
+    @*<input type="hidden" id="allcount" value="@ViewBag.All" />
+        <input type="hidden" id="opencount" value="@ViewBag.Open" />
+        <input type="hidden" id="closedcount" value="@ViewBag.Closed" />
+        <input type="hidden" id="resolvedcount" value="@ViewBag.Resolved" />*@
+
+    @*ViewBag.mnt1feedbacksinquiries = mnt1feedbacksinquiries.Count();
+        ViewBag.mnt1feedbackscompliants = mnt1feedbackscompliants.Count();
+        ViewBag.mnt1feedbacksappreciations = mnt1feedbacksappreciations.Count();
+        ViewBag.mnt1feedbackssuggestions = mnt1feedbackssuggestions.Count();*@
+
+
+
+    <input type="hidden" id="mnt1feedbacksfinance" value="@ViewBag.mnt1feedbacksfinance" />
+    <input type="hidden" id="mnt1feedbackstalentmanagement" value="@ViewBag.mnt1feedbackstalentmanagement" />
+    <input type="hidden" id="mnt1feedbacksadministrations" value="@ViewBag.mnt1feedbacksadministrations" />
+    <input type="hidden" id="mnt1feedbacksoperations" value="@ViewBag.mnt1feedbacksoperations" />
+    <input type="hidden" id="mnt1feedbackssahlfeedback" value="@ViewBag.mnt1feedbackssahlfeedback" />
+    <input type="hidden" id="mnt1feedbackssahlmds" value="@ViewBag.mnt1feedbackssahlmds" />
+    <input type="hidden" id="mnt1feedbackssahltraining" value="@ViewBag.mnt1feedbackssahltraining" />
+
+    <input type="hidden" id="mnt2feedbacksfinance" value="@ViewBag.mnt2feedbacksfinance" />
+    <input type="hidden" id="mnt2feedbackstalentmanagement" value="@ViewBag.mnt2feedbackstalentmanagement" />
+    <input type="hidden" id="mnt2feedbacksadministrations" value="@ViewBag.mnt2feedbacksadministrations" />
+    <input type="hidden" id="mnt2feedbacksoperations" value="@ViewBag.mnt2feedbacksoperations" />
+    <input type="hidden" id="mnt2feedbackssahlfeedback" value="@ViewBag.mnt2feedbackssahlfeedback" />
+    <input type="hidden" id="mnt2feedbackssahlmds" value="@ViewBag.mnt2feedbackssahlmds" />
+    <input type="hidden" id="mnt2feedbackssahltraining" value="@ViewBag.mnt2feedbackssahltraining" />
+
+    <input type="hidden" id="mnt3feedbacksfinance" value="@ViewBag.mnt3feedbacksfinance" />
+    <input type="hidden" id="mnt3feedbackstalentmanagement" value="@ViewBag.mnt3feedbackstalentmanagement" />
+    <input type="hidden" id="mnt3feedbacksadministrations" value="@ViewBag.mnt3feedbacksadministrations" />
+    <input type="hidden" id="mnt3feedbacksoperations" value="@ViewBag.mnt3feedbacksoperations" />
+    <input type="hidden" id="mnt3feedbackssahlfeedback" value="@ViewBag.mnt3feedbackssahlfeedback" />
+    <input type="hidden" id="mnt3feedbackssahlmds" value="@ViewBag.mnt3feedbackssahlmds" />
+    <input type="hidden" id="mnt3feedbackssahltraining" value="@ViewBag.mnt3feedbackssahltraining" />
+
+     
+
+     
+
+
+
+
+    <input type="hidden" id="mnt1feedbacksall" value="@ViewBag.mnt1feedbacksall" />
+    <input type="hidden" id="mnt2feedbacksall" value="@ViewBag.mnt2feedbacksall" />
+    <input type="hidden" id="mnt3feedbacksall" value="@ViewBag.mnt3feedbacksall" />
+
+
+    <input type="hidden" id="month1" value="@ViewBag.month1" />
+    <input type="hidden" id="month2" value="@ViewBag.month2" />
+    <input type="hidden" id="month3" value="@ViewBag.month3" />
+
+
+
+
+
+
+
+
+    <!-- slim-footer -->
+    @*<script src="~/Content/lib/jquery/js/jquery.js"></script>*@
+
+    <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script src="~/Content/lib/popper.js/js/popper.js"></script>
+    <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
+    <script src="~/Content/lib/Flot/js/jquery.flot.js"></script>
+    <script src="~/Content/lib/Flot/js/jquery.flot.time.js"></script>
+    <script src="~/Content/lib/Flot/js/jquery.flot.pie.js"></script>
+    <script src="~/Content/lib/Flot/js/jquery.flot.resize.js"></script>
+    <script src="~/Content/lib/flot-spline/js/jquery.flot.spline.js"></script>
+    <script src="~/Content/lib/Flot/js/jquery.flot.axislabels.js"></script>
+    <script src="~/Content/lib/Flot/js/jquery.flot.orderBars.js"></script>
+
+    <script src="~/Content/lib/chart.js/js/Chart.js"></script>
+    <script src="~/Content/lib/Flot/js/jquery.flot.tooltip.min.js"></script>
+
+
+
+
+
+
+
+
+
+    <script src="~/Content/js/slim.js"></script>
+    @*<script src="~/Content/js/chart.chartjs.js"></script>
+        <script src="~/Content/js/chart.flot.js"></script>*@
+    <script src="~/Content/js/chart.feedbackdepartment.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script src="~/Content/js/MonthPicker.min.js"></script>
+
+
+    <script>
+        $(function () {
+
+           // alert("date choose");
+            // Datepicker
+
+           /* $(".date").flatpickr({
+                dateFormat: "d-m-Y"
+            });
+            */
+            //   $('#mmp').mmp();
+
+            $('#monthpicker1').MonthPicker({ Button: false });
+            $('#monthpicker2').MonthPicker({ Button: false });
+            $('#monthpicker3').MonthPicker({ Button: false });
+
+            $('#submit').click(function () {
+                $('#month1').val('');
+                $('#month2').val('');
+                $('#month3').val('');
+            });
+
+        });
+
+
+
+    </script>
+
+</body>
+
+@Html.Partial("_HRFooter")
+</html>
+
+

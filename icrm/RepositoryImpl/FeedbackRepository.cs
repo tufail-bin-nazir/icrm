@@ -338,6 +338,431 @@ namespace icrm.RepositoryImpl
             return feedlist.ToList();
         }
 
+        public IEnumerable<Feedback> chartsFeedbackTypes(string d1, string d2, string type)
+        {
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@D1";
+
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = d1;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@D2";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = d2;
+
+
+            var param3 = new SqlParameter();
+            param3.ParameterName = "@Type";
+            param3.SqlDbType = SqlDbType.VarChar;
+            param3.SqlValue = type;
+
+
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("chartsFeedbackTypes @D1,@D2,@Type", param1, param2, param3).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToList();
+        }
+
+        public IEnumerable<Feedback> chartsFeedbackSource(string d1, string d2, string source)
+        {
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@D1";
+
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = d1;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@D2";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = d2;
+
+
+            var param3 = new SqlParameter();
+            param3.ParameterName = "@Source";
+            param3.SqlDbType = SqlDbType.VarChar;
+            param3.SqlValue = source;
+
+
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("chartsFeedbackSource @D1,@D2,@Source", param1, param2, param3).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToList();
+        }
+
+        public IEnumerable<Feedback> chartsFeedbackDepartment(string d1, string d2, string department)
+        {
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@D1";
+
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = d1;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@D2";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = d2;
+
+
+            var param3 = new SqlParameter();
+            param3.ParameterName = "@Department";
+            param3.SqlDbType = SqlDbType.VarChar;
+            param3.SqlValue = department;
+
+
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("chartsFeedbackDepartment @D1,@D2,@Department", param1, param2, param3).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToList();
+        }
+
+        public IEnumerable<Feedback> chartsFeedbackPosition(string d1, string d2, string position)
+        {
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@D1";
+
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = d1;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@D2";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = d2;
+
+
+            var param3 = new SqlParameter();
+            param3.ParameterName = "@Position";
+            param3.SqlDbType = SqlDbType.VarChar;
+            param3.SqlValue = position;
+
+
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("chartsFeedbackPosition @D1,@D2,@Position", param1, param2, param3).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToList();
+        }
+
+
+        public IEnumerable<Feedback> chartsFeedbackNationalitySaudi(string d1, string d2)
+        {
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@D1";
+
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = d1;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@D2";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = d2;
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("chartsFeedbackNationalitySaudi @D1,@D2", param1, param2).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToList();
+        }
+
+        public IEnumerable<Feedback> chartsFeedbackNationalityExpatriates(string d1, string d2)
+        {
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@D1";
+
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = d1;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@D2";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = d2;
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("chartsFeedbackNationalityExpartriates @D1,@D2", param1, param2).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToList();
+        }
+
+
+        /* chartsFeedbackSatisfaction */
+        public IEnumerable<Feedback> chartsFeedbackSatisfaction(string d1, string d2, string satisfaction)
+        {
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@D1";
+
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = d1;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@D2";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = d2;
+
+
+            var param3 = new SqlParameter();
+            param3.ParameterName = "@Satisfaction";
+            param3.SqlDbType = SqlDbType.VarChar;
+            param3.SqlValue = satisfaction;
+
+
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("chartsFeedbackSatisfaction @D1,@D2,@Satisfaction", param1, param2, param3).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToList();
+        }
+
+
+        //chartsFeedbackEscalation
+
+        public IEnumerable<Feedback> chartsFeedbackEscalation(string d1, string d2, string escalation)
+        {
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@D1";
+
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = d1;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@D2";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = d2;
+
+
+            var param3 = new SqlParameter();
+            param3.ParameterName = "@Escalation";
+            param3.SqlDbType = SqlDbType.VarChar;
+            param3.SqlValue = escalation;
+
+
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("chartsFeedbackEscalation @D1,@D2,@Escalation", param1, param2, param3).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToList();
+        }
+
+
+        public IEnumerable<Feedback> chartsFeedbackSalaryTimeSheet(string d1, string d2)
+        {
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@D1";
+
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = d1;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@D2";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = d2;
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("chartsFeedbackSalaryTimeSheet @D1,@D2", param1, param2).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToList();
+        }
+        public IEnumerable<Feedback> chartsFeedbackHousing(string d1, string d2)
+        {
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@D1";
+
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = d1;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@D2";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = d2;
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("chartsFeedbackHousing @D1,@D2", param1, param2).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToList();
+        }
+        public IEnumerable<Feedback> chartsFeedbackPoorTreatment(string d1, string d2)
+        {
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@D1";
+
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = d1;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@D2";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = d2;
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("chartsFeedbackPoorTreatment @D1,@D2", param1, param2).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToList();
+        }
+
+        public IEnumerable<Feedback> chartsFeedbackAccomodationSupplies(string d1, string d2)
+        {
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@D1";
+
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = d1;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@D2";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = d2;
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("chartsFeedbackAccomodationSupplies @D1,@D2", param1, param2).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToList();
+        }
+
+
+        public IEnumerable<Feedback> chartsFeedbackSalaryIssuesReasons(string d1, string d2, string salaryissuesreasons)
+        {
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@D1";
+
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = d1;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@D2";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = d2;
+
+
+            var param3 = new SqlParameter();
+            param3.ParameterName = "@SalaryIssuesReasons";
+            param3.SqlDbType = SqlDbType.VarChar;
+            param3.SqlValue = salaryissuesreasons;
+
+
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("chartsFeedbackSalaryIssuesReasons @D1,@D2,@Escalation", param1, param2, param3).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToList();
+        }
+
+
+
+
+        public string[] chartsFeedbackMostFrequentLocations(string d1, string d2)
+        {
+
+
+            var total = 1;
+            var locationid = 1;
+            var locationname = "";
+
+
+            try
+            {
+                var sql = "select top 1 COUNT(*) as c From Feedbacks inner join AspNetUsers on Feedbacks.userId=AspNetUsers.Id inner join Locations on AspNetUsers.LocationId=Locations.Id Where    month(createDate)=" + d1 + " and YEAR(createDate)=" + d2 + " group by AspNetUsers.LocationId order by c asc";
+
+                total = db.Database.SqlQuery<int>(sql).First();
+                sql = "select top 1 LocationId From Feedbacks inner join AspNetUsers on Feedbacks.userId=AspNetUsers.Id inner join Locations on AspNetUsers.LocationId=Locations.Id Where    month(createDate)=" + d1 + " and YEAR(createDate)=" + d2 + " group by AspNetUsers.LocationId order by count(*) asc";
+
+                locationid = db.Database.SqlQuery<int>(sql).First();
+                sql = "select name From Locations  Where  Id=" + locationid;
+
+                locationname = db.Database.SqlQuery<string>(sql).First();
+            }
+            catch
+            {
+
+                total = 0;
+                locationname = "No Locations";
+            }
+            string[] locationnamec = new string[2];
+            locationnamec[0] = total.ToString();
+            locationnamec[1] = locationname;
+
+            return locationnamec;
+        }
+
+        public IEnumerable<Feedback> chartsFeedbackAll(string d1, string d2)
+        {
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@D1";
+
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = d1;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@D2";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = d2;
+
+
+
+
+
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("chartsFeedbackAll @D1,@D2", param1, param2).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToList();
+        }
 
         public IEnumerable<Feedback> getAllAssigned()
         {
