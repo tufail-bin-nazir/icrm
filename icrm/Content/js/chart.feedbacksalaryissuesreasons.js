@@ -67,14 +67,14 @@
 
 
     if (!parseFloat(mnt2feedbacksall) == 0) {
-        mnt2feedbacklegitimate = ((parseFloat(mnt2feedbacklegitimate) * 100) / parseFloat(mnt1feedbacksall)).toFixed(2);
-        mnt2feedbackillegitimate = ((parseFloat(mnt2feedbackillegitimate) * 100) / parseFloat(mnt1feedbacksall)).toFixed(2);
+        mnt2feedbacklegitimate = ((parseFloat(mnt2feedbacklegitimate) * 100) / parseFloat(mnt2feedbacksall)).toFixed(2);
+        mnt2feedbackillegitimate = ((parseFloat(mnt2feedbackillegitimate) * 100) / parseFloat(mnt2feedbacksall)).toFixed(2);
 
     }
 
     if (!parseFloat(mnt3feedbacksall) == 0) {
-        mnt3feedbacklegitimate = ((parseFloat(mnt3feedbacklegitimate) * 100) / parseFloat(mnt1feedbacksall)).toFixed(2);
-        mnt3feedbackillegitimate = ((parseFloat(mnt3feedbackillegitimate) * 100) / parseFloat(mnt1feedbacksall)).toFixed(2);
+        mnt3feedbacklegitimate = ((parseFloat(mnt3feedbacklegitimate) * 100) / parseFloat(mnt3feedbacksall)).toFixed(2);
+        mnt3feedbackillegitimate = ((parseFloat(mnt3feedbackillegitimate) * 100) / parseFloat(mnt3feedbacksall)).toFixed(2);
 
     }
     /*

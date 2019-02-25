@@ -29,6 +29,8 @@ using icrm.Events;
 using System.Drawing.Imaging;
 using System.Web.Routing;
 
+
+
 namespace icrm.Controllers
 {
     [Authorize(Roles = "HR")]
@@ -1232,16 +1234,22 @@ namespace icrm.Controllers
 
         }
 
+        
+
+      
+
         [HttpGet]
 
         [Route("hr/chartsfeedbacktypesearch/")]
 
         public ActionResult chartsfeedbacktypesearch(ChartMonths c)
         {
+
+            
             string mnt1 = c.month1;
             string mnt2 = c.month2;
             string mnt3 = c.month3;
-
+             
 
             if (string.IsNullOrEmpty(mnt1) && string.IsNullOrEmpty(mnt2) && string.IsNullOrEmpty(mnt3))
             {
@@ -3476,12 +3484,12 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
 
 
 
-            IEnumerable<Feedback> mnt2feedbacklegitimate = feedInterface.chartsFeedbackSalaryIssuesReasons(dmnt1.Month.ToString(), dmnt1.Year.ToString(), "1");
-            IEnumerable<Feedback> mnt2feedbackillegitimate = feedInterface.chartsFeedbackSalaryIssuesReasons(dmnt1.Month.ToString(), dmnt1.Year.ToString(), "0");
+            IEnumerable<Feedback> mnt2feedbacklegitimate = feedInterface.chartsFeedbackSalaryIssuesReasons(dmnt2.Month.ToString(), dmnt2.Year.ToString(), "1");
+            IEnumerable<Feedback> mnt2feedbackillegitimate = feedInterface.chartsFeedbackSalaryIssuesReasons(dmnt2.Month.ToString(), dmnt2.Year.ToString(), "0");
 
 
-            IEnumerable<Feedback> mnt3feedbacklegitimate = feedInterface.chartsFeedbackSalaryIssuesReasons(dmnt1.Month.ToString(), dmnt1.Year.ToString(), "1");
-            IEnumerable<Feedback> mnt3feedbackillegitimate = feedInterface.chartsFeedbackSalaryIssuesReasons(dmnt1.Month.ToString(), dmnt1.Year.ToString(), "0");
+            IEnumerable<Feedback> mnt3feedbacklegitimate = feedInterface.chartsFeedbackSalaryIssuesReasons(dmnt3.Month.ToString(), dmnt3.Year.ToString(), "1");
+            IEnumerable<Feedback> mnt3feedbackillegitimate = feedInterface.chartsFeedbackSalaryIssuesReasons(dmnt3.Month.ToString(), dmnt3.Year.ToString(), "0");
 
 
 
@@ -3610,15 +3618,11 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
 
 
                     IEnumerable<Feedback> mnt1feedbacksall = feedInterface.chartsFeedbackAll(dmnt1.Month.ToString(), dmnt1.Year.ToString());
-                    IEnumerable<Feedback> mnt1feedbacksalarytimeissue = feedInterface.chartsFeedbackSalaryTimeSheet(dmnt1.Month.ToString(), dmnt1.Year.ToString());
-                    IEnumerable<Feedback> mnt1feedbackhousingservices = feedInterface.chartsFeedbackHousing(dmnt1.Month.ToString(), dmnt1.Year.ToString());
-                    IEnumerable<Feedback> mnt1feedbackpoortreatment = feedInterface.chartsFeedbackPoorTreatment(dmnt1.Month.ToString(), dmnt1.Year.ToString());
-                    IEnumerable<Feedback> mnt1feedbackaccomodation = feedInterface.chartsFeedbackAccomodationSupplies(dmnt1.Month.ToString(), dmnt1.Year.ToString());
+                    IEnumerable<Feedback> mnt1feedbacklegitimate = feedInterface.chartsFeedbackSalaryIssuesReasons(dmnt1.Month.ToString(), dmnt1.Year.ToString(), "1");
+                    IEnumerable<Feedback> mnt1feedbackillegitimate = feedInterface.chartsFeedbackSalaryIssuesReasons(dmnt1.Month.ToString(), dmnt1.Year.ToString(), "0");
 
-                    ViewBag.mnt1feedbacksalarytimeissue = mnt1feedbacksalarytimeissue.Count();
-                    ViewBag.mnt1feedbackhousingservices = mnt1feedbackhousingservices.Count();
-                    ViewBag.mnt1feedbackpoortreatment = mnt1feedbackpoortreatment.Count();
-                    ViewBag.mnt1feedbackaccomodation = mnt1feedbackaccomodation.Count();
+                    ViewBag.mnt1feedbacklegitimate = mnt1feedbacklegitimate.Count();
+                    ViewBag.mnt1feedbackillegitimate = mnt1feedbackillegitimate.Count();
 
                     ViewBag.mnt1feedbacksall = mnt1feedbacksall.Count();
                     ViewBag.month1 = dmnt1.ToString("MMM");
@@ -3633,16 +3637,11 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                 if (!string.IsNullOrEmpty(mnt2))
                 {
                     IEnumerable<Feedback> mnt2feedbacksall = feedInterface.chartsFeedbackAll(dmnt2.Month.ToString(), dmnt2.Year.ToString());
-                    IEnumerable<Feedback> mnt2feedbacksalarytimeissue = feedInterface.chartsFeedbackSalaryTimeSheet(dmnt2.Month.ToString(), dmnt2.Year.ToString());
-                    IEnumerable<Feedback> mnt2feedbackhousingservices = feedInterface.chartsFeedbackHousing(dmnt2.Month.ToString(), dmnt2.Year.ToString());
-                    IEnumerable<Feedback> mnt2feedbackpoortreatment = feedInterface.chartsFeedbackPoorTreatment(dmnt2.Month.ToString(), dmnt2.Year.ToString());
-                    IEnumerable<Feedback> mnt2feedbackaccomodation = feedInterface.chartsFeedbackAccomodationSupplies(dmnt2.Month.ToString(), dmnt2.Year.ToString());
+                    IEnumerable<Feedback> mnt2feedbacklegitimate = feedInterface.chartsFeedbackSalaryIssuesReasons(dmnt2.Month.ToString(), dmnt2.Year.ToString(), "1");
+                    IEnumerable<Feedback> mnt2feedbackillegitimate = feedInterface.chartsFeedbackSalaryIssuesReasons(dmnt2.Month.ToString(), dmnt2.Year.ToString(), "0");
 
-                    ViewBag.mnt2feedbacksalarytimeissue = mnt2feedbacksalarytimeissue.Count();
-                    ViewBag.mnt2feedbackhousingservices = mnt2feedbackhousingservices.Count();
-                    ViewBag.mnt2feedbackpoortreatment = mnt2feedbackpoortreatment.Count();
-                    ViewBag.mnt2feedbackaccomodation = mnt2feedbackaccomodation.Count();
-
+                    ViewBag.mnt2feedbacklegitimate = mnt2feedbacklegitimate.Count();
+                    ViewBag.mnt2feedbackillegitimate = mnt2feedbackillegitimate.Count();
 
                     ViewBag.mnt2feedbacksall = mnt2feedbacksall.Count();
                     ViewBag.month2 = dmnt2.ToString("MMM");
@@ -3655,15 +3654,11 @@ IEnumerable<Feedback> mnt1feedbackssahltraining = feedInterface.chartsFeedbackDe
                 if (!string.IsNullOrEmpty(mnt3))
                 {
                     IEnumerable<Feedback> mnt3feedbacksall = feedInterface.chartsFeedbackAll(dmnt3.Month.ToString(), dmnt3.Year.ToString());
-                    IEnumerable<Feedback> mnt3feedbacksalarytimeissue = feedInterface.chartsFeedbackSalaryTimeSheet(dmnt3.Month.ToString(), dmnt3.Year.ToString());
-                    IEnumerable<Feedback> mnt3feedbackhousingservices = feedInterface.chartsFeedbackHousing(dmnt3.Month.ToString(), dmnt3.Year.ToString());
-                    IEnumerable<Feedback> mnt3feedbackpoortreatment = feedInterface.chartsFeedbackPoorTreatment(dmnt3.Month.ToString(), dmnt3.Year.ToString());
-                    IEnumerable<Feedback> mnt3feedbackaccomodation = feedInterface.chartsFeedbackAccomodationSupplies(dmnt3.Month.ToString(), dmnt3.Year.ToString());
+                    IEnumerable<Feedback> mnt3feedbacklegitimate = feedInterface.chartsFeedbackSalaryIssuesReasons(dmnt3.Month.ToString(), dmnt3.Year.ToString(), "1");
+                    IEnumerable<Feedback> mnt3feedbackillegitimate = feedInterface.chartsFeedbackSalaryIssuesReasons(dmnt3.Month.ToString(), dmnt3.Year.ToString(), "0");
 
-                    ViewBag.mnt3feedbacksalarytimeissue = mnt3feedbacksalarytimeissue.Count();
-                    ViewBag.mnt3feedbackhousingservices = mnt3feedbackhousingservices.Count();
-                    ViewBag.mnt3feedbackpoortreatment = mnt3feedbackpoortreatment.Count();
-                    ViewBag.mnt3feedbackaccomodation = mnt3feedbackaccomodation.Count();
+                    ViewBag.mnt3feedbacklegitimate = mnt3feedbacklegitimate.Count();
+                    ViewBag.mnt3feedbackillegitimate = mnt3feedbackillegitimate.Count();
 
                     ViewBag.mnt3feedbacksall = mnt3feedbacksall.Count();
                     ViewBag.month3 = dmnt3.ToString("MMM");

@@ -690,7 +690,7 @@ namespace icrm.RepositoryImpl
 
 
             List<Feedback> feedlist = new List<Feedback>();
-            var result = db.Feedbacks.SqlQuery("chartsFeedbackSalaryIssuesReasons @D1,@D2,@Escalation", param1, param2, param3).ToList();
+            var result = db.Feedbacks.SqlQuery("chartsFeedbackSalaryIssuesReasons @D1,@D2,@SalaryIssuesReasons", param1, param2, param3).ToList();
             foreach (var r in result)
             {
                 feedlist.Add(r);
