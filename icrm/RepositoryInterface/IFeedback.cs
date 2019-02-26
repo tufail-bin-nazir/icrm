@@ -72,5 +72,25 @@ namespace icrm.RepositoryInterface
         IEnumerable<Medium> getSourceList();
         ApplicationUser getOperationsEscalationUser(int? costCenterId);
 
+        IEnumerable<Feedback> chartsFeedbackTypes(string d1, string d2, string type);
+        IEnumerable<Feedback> chartsFeedbackAll(string d1, string d2);
+
+
+       
+        IEnumerable<Feedback> chartsFeedbackSource(string d1, string d2, string source);
+        IEnumerable<Feedback> chartsFeedbackDepartment(string d1, string d2, string department);
+        IEnumerable<Feedback> chartsFeedbackPosition(string d1, string d2, string position);
+        IEnumerable<Feedback> chartsFeedbackNationalitySaudi(string d1, string d2);
+        IEnumerable<Feedback> chartsFeedbackNationalityExpatriates(string d1, string d2);
+        IEnumerable<Feedback> chartsFeedbackSatisfaction(string d1, string d2, string satisfaction);
+        IEnumerable<Feedback> chartsFeedbackEscalation(string d1, string d2, string escalation);
+
+        IEnumerable<Feedback> chartsFeedbackSalaryTimeSheet(string d1, string d2);
+        IEnumerable<Feedback> chartsFeedbackHousing(string d1, string d2);
+        IEnumerable<Feedback> chartsFeedbackPoorTreatment(string d1, string d2);
+        IEnumerable<Feedback> chartsFeedbackAccomodationSupplies(string d1, string d2);
+        IEnumerable<Feedback> chartsFeedbackSalaryIssuesReasons(string d1, string d2, string salaryissuesreasons);
+        string[] chartsFeedbackMostFrequentLocations(string d1, string d2);
+
     }
 }
