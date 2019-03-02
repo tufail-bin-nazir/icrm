@@ -61,14 +61,13 @@ namespace icrm.WebApi
         }
 
         //1/ <summary>
-        /// ///////////////////////************* (Hr Tickets list)---->>>HR Sees all The Tickets here in this api *****************/////////////////
+        /// //////////////************* (Hr Tickets list)---->>>HR Sees all The Tickets here in this api **********//////////////
         /// </summary>
         [HttpGet]
         [Route("api/HR/HrTicketslist")]
         public IHttpActionResult HrTicketslist()
         {
             
-
             var Query = from f in feedInterface.getAllOpenMobile()
                         select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
 
@@ -87,7 +86,7 @@ namespace icrm.WebApi
 
         }
         //2/ <summary>
-        /// ///////////////////////////////************* (HrTicket by id)-->>   *****************/////////////////
+        /// //////////////////////********** (HrTicket by id)-->> HR sees Particular Tickets Here By Id  ********/////////////////
         /// </summary>
         [HttpGet]
         [Route("api/HR/HrTicket/{id}")]
@@ -136,7 +135,7 @@ namespace icrm.WebApi
         }
 
         //4/ <summary>
-        /// /////////////////////////////////////*************Resolve By Id *****************/////////////////
+        /// /////////////////////////////*************Resolve By Id *****************/////////////////
         /// </summary>
         [HttpPost]
         [Route("api/HR/Resolve/{id}")]
@@ -206,7 +205,6 @@ namespace icrm.WebApi
         //6/ <summary>
         /// /////////////////////////////////////*************catagorey*****************/////////////////
         /// </summary>
-
         [HttpGet]
         [Route("api/HR/catagorey/{deptId}/{type}")]
         public IHttpActionResult catagorey(int deptId, string type)
@@ -235,7 +233,7 @@ namespace icrm.WebApi
         [Route("api/HR/Department")]
         public IHttpActionResult Department()
         {
-
+           
             var entity = db.Departments.ToList();
 
             if (entity != null)
@@ -253,7 +251,7 @@ namespace icrm.WebApi
 
 
         //8/ <summary>
-        /// /////////////////////////////////////************* Hr forwardTicket to the departments here in th*****************/////////////////
+        /// ///////////////////************* Hr forwardTicket to the departments here in this api*****************/////////////////
         /// </summary>
         [HttpPost]
         [Route("api/HR/forwardTicket/{id}")]
@@ -278,6 +276,7 @@ namespace icrm.WebApi
             
             else
             {
+
                 ApplicationUser user = feedInterface.getEscalationUser(f.departmentID, f.categoryId);
                 f.departUserId = user.Id;
                 string email = user.bussinessEmail;
@@ -411,7 +410,6 @@ namespace icrm.WebApi
         /// ////////////////////////////****************RespondedTicketList*******************////////////////////////////
         /// </summary>
         /// <returns></returns>
-
         [HttpGet]
         [Route("api/HR/respondedTicketList")]
         public IHttpActionResult respondedTicketList()
@@ -420,7 +418,7 @@ namespace icrm.WebApi
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
 
             var Query = from f in feedInterface.GetAllResponded()
-                        where f.departUserId == user.Result.Id
+                        where f.departmentID == user.Result.DepartmentId
                         select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId, };
 
             if (Query != null)
@@ -533,7 +531,6 @@ namespace icrm.WebApi
         //////////////////////////////**************** closed list****************//////////////////////////////////////////////////////////// 
         /// </summary>
         /// <returns></returns>
-
         [HttpGet]
         [Route("api/HR/Closed")]
         public IHttpActionResult Closed()
@@ -993,7 +990,7 @@ namespace icrm.WebApi
             else
             {
 
-                return BadRequest(" Assigned List not found");
+                return BadRequest(" Assigned List not found ");
 
             }
 
@@ -1131,7 +1128,6 @@ namespace icrm.WebApi
 
             }
         }
-
 
         //33/ <summary>
         /// ******************************************** Subcatagorey list    ***************************////
@@ -1351,10 +1347,11 @@ namespace icrm.WebApi
             client.Host = "email.mcdonalds.com.sa";  
             mail.Subject = "Reset Your Password";
 
-            string strBody3 = String.Format("<html><body><a href='http://37.76.254.20/Account/ResetPassword?code={0}' > Click On The Link To Reset Your Password </ a ></ body ></html > ", code);
+            string strBody3 = String.Format("<html><body><a href='http://icrm.mcdonalds.com.sa/Account/ResetPassword?code={0}' > Click On The Link To Reset Your Password </ a ></ body ></html > ", code);
             mail.Body = strBody3;
             mail.IsBodyHtml = true;
             await client.SendMailAsync(mail);
+
         }
 
         //40/ <summary>
@@ -1421,6 +1418,7 @@ namespace icrm.WebApi
                 f.status = forward.status;
                 if (f.status == "Open")
                 {
+
                     f.checkStatus = Models.Constants.OPEN;
 
                 }
@@ -1436,5 +1434,34 @@ namespace icrm.WebApi
 
             }
         }
+
+        //42/ <summary>
+        /// /////////////****** HR edit description here ------->Edit discription update************/////////
+        /// </summary>
+        [HttpPost]
+        [Route("api/HR/Editdescription/{id}")]
+        public IHttpActionResult Editdescription(string Id, Feedback feedback)
+        {
+            Feedback f = db.Feedbacks.Find(Id);
+
+            if (f == null)
+            {
+
+                return BadRequest("Ticket not found");
+
+            }
+
+            else
+            {
+               
+                f.description = feedback.description;
+                db.Entry(f).State = EntityState.Modified;
+                db.SaveChanges();
+                return Ok();
+
+            }
+        }
+
+
     }
 }
