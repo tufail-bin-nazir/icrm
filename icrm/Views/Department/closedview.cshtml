@@ -158,7 +158,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Source <span class="tx-danger">*</span></label>
-                                    @Html.TextBoxFor(model=>model.medium.name, new { @readonly = "readonly", @class = "form-control", })
+                                    @Html.TextBoxFor(model => model.medium.name, new { @readonly = "readonly", @class = "form-control", })
                                     @Html.HiddenFor(model => model.mediumId, new { @readonly = "readonly", @class = "form-control", })
                                 </div>
                             </div>
@@ -182,6 +182,12 @@
                                 <div class="form-group mg-b-10-force">
                                     <label class="form-control-label">@Resources.Resource.Description <span class="tx-danger">*</span></label>
                                     @Html.TextAreaFor(model => model.description, new { @readonly = "readonly", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Date<span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.closedDate, new { @readonly = "readonly", @class = "form-control", @Value = Model.createDate.ToString("dd-MM-yyyy") })
                                 </div>
                             </div>
                             <!-- col-4 -->

@@ -412,7 +412,7 @@ namespace icrm.Controllers
             {
                 getAttributeList();
                 Feedback f = feedInterface.Find(id);
-                return View("closedview",f);
+                return View("view",f);
             }
         }
         /*******************DOWNLOAD FILE********************/
