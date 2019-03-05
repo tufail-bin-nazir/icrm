@@ -69,7 +69,7 @@ namespace icrm.WebApi
         {
             
             var Query = from f in feedInterface.getAllOpenMobile()
-                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,};
+                        select new { f.id, f.title, f.description, f.createDate, f.status, f.user.EmployeeId,f.user.FirstName};
 
             if (Query != null)
             {
@@ -277,7 +277,7 @@ namespace icrm.WebApi
             else
             {
 
-                ApplicationUser user = feedInterface.getEscalationUser(f.departmentID, f.categoryId);
+                ApplicationUser user = feedInterface.getEscalationUser(forward.departmentID, forward.categoryId);
                 f.departUserId = user.Id;
                 string email = user.bussinessEmail;
               
@@ -1398,7 +1398,7 @@ namespace icrm.WebApi
         }
 
         //41/ <summary>
-        /// //////////////////////////********************closed update***************//////////////////////
+        /// //////////////////////////********************HR closed update***************//////////////////////
         /// </summary>
         [HttpPost]
         [Route("api/HR/closedupdate/{id}")]
@@ -1444,13 +1444,12 @@ namespace icrm.WebApi
         {
             Feedback f = db.Feedbacks.Find(Id);
 
-            if (f == null)
+            if (f == null)  
             {
 
-                return BadRequest("Ticket not found");
+                return BadRequest("Id not found");
 
             }
-
             else
             {
                
