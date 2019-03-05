@@ -297,6 +297,12 @@
                                         @Html.TextAreaFor(model => model.description, new { @class = "form-control" })
                                     </div>
                                 </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@Resources.Resource.Date<span class="tx-danger">*</span></label>
+                                        @Html.TextBoxFor(model => model.createDate, new { @readonly = "readonly", @class = "form-control", @Value = Model.createDate.ToString("dd-MM-yyyy") })
+                                    </div>
+                                </div>
                             }
                             else
                             {
@@ -304,14 +310,14 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="form-control-label">@Resources.Resource.Title <span class="tx-danger">*</span></label>
-                                        @Html.TextBoxFor(model => model.title, new { @readonly="readonly", @class = "form-control" })
+                                        @Html.TextBoxFor(model => model.title, new { @readonly = "readonly", @class = "form-control" })
                                     </div>
                                 </div>
                                 <!-- col-4 -->
                                 <div class="col-lg-4">
                                     <div class="form-group mg-b-10-force">
                                         <label class="form-control-label">@Resources.Resource.Description <span class="tx-danger">*</span></label>
-                                        @Html.TextAreaFor(model => model.description, new { @readonly= "readonly", @class = "form-control" })
+                                        @Html.TextAreaFor(model => model.description, new { @readonly = "readonly", @class = "form-control" })
                                     </div>
                                 </div>
 
@@ -446,14 +452,14 @@
                             <!-- col-4 -->
                             @if (Model.checkStatus == "Open")
                             {
-                            <div class="col-lg-4">
-                                <div class="form-group">
-                                    <label class="form-control-label">@Resources.Resource.Email_Id<span class="tx-danger">*</span></label>
-                                    @Html.DropDownList("emailsss",
-                           new SelectList(ViewBag.Emails,
-                         "", ""), new { @class = "form-control select2", Multiple = "multiple", name = "emailsss" })
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@Resources.Resource.Email_Id<span class="tx-danger">*</span></label>
+                                        @Html.DropDownList("emailsss",
+                               new SelectList(ViewBag.Emails,
+                             "", ""), new { @class = "form-control select2", Multiple = "multiple", name = "emailsss" })
+                                    </div>
                                 </div>
-                            </div>
                             }
                             <!-- col-4 -->
                         </div>

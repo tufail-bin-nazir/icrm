@@ -193,6 +193,12 @@
                                     @Html.TextAreaFor(model => model.description, new { @readonly = "readonly", @class = "form-control" })
                                 </div>
                             </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Date<span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(model => model.createDate, new { @readonly = "readonly", @class = "form-control", @Value = Model.createDate.ToString("dd-MM-yyyy") })
+                                </div>
+                            </div>
                             <!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
@@ -275,8 +281,8 @@
 
                             </div><!-- col-4 -->
 
-
-                            @foreach (var resp in bb)
+                            @if (bb!=null) { 
+                            foreach (var resp in bb)
                             {
                                 <div class="col-lg-4">
                                     <div class="form-group">
@@ -290,7 +296,7 @@
                                     </div>
                                 </div>
                             }
-
+                            }
 
                              @if (Model.checkStatus == "Assigned")
                              {
@@ -299,7 +305,6 @@
                                 <div class="form-group">
                                     <label class="form-control-label">@Resources.Resource.Comments</label>
 
-                                    @ViewBag.viewlink
 
 
 

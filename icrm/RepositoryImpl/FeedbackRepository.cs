@@ -42,7 +42,7 @@ namespace icrm.RepositoryImpl
 
         public IPagedList<Feedback> Pagination(int pageIndex, int pageSize, string userId)
         {
-            return db.Feedbacks.OrderByDescending(m => m.user.Id).Where(m => m.user.Id == userId).ToPagedList(pageIndex, pageSize);
+            return db.Feedbacks.OrderByDescending(m => m.createDate).Where(m => m.user.Id == userId).ToPagedList(pageIndex, pageSize);
 
         }
 
@@ -60,7 +60,7 @@ namespace icrm.RepositoryImpl
                 feedlist.Add(r);
             }
 
-            return feedlist.ToPagedList(pageIndex, pageSize);
+            return feedlist.OrderByDescending(m=>m.createDate).ToPagedList(pageIndex, pageSize);
 
         }
 
@@ -108,31 +108,31 @@ namespace icrm.RepositoryImpl
                 feedlist.Add(r);
             }
             
-            return feedlist.ToPagedList(pageIndex,pageSize);
+            return feedlist.OrderByDescending(m=>m.createDate).ToPagedList(pageIndex,pageSize);
         }
       
         public IEnumerable<Feedback> getAll()
         {
-            return db.Feedbacks.OrderByDescending(m => m.user.Id).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.createDate).ToList();
 
         }
 
         public IPagedList<Feedback> getAll(int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(m => m.user.Id).ToPagedList(pageIndex,pageSize);
+            return db.Feedbacks.OrderByDescending(m => m.createDate).ToPagedList(pageIndex,pageSize);
 
         }
 
         public IEnumerable<Feedback> getAllOpen()
         {
-            return db.Feedbacks.OrderByDescending(m => m.user.Id).Where(m=>m.checkStatus== Models.Constants.OPEN && m.type.name==Constants.Complaints).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.createDate).Where(m=>m.checkStatus== Models.Constants.OPEN && m.type.name==Constants.Complaints).ToList();
 
         }
 
 
         public IEnumerable<Feedback> getRespondedDepartmenet()
         {
-            return db.Feedbacks.OrderByDescending(m => m.user.Id).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.createDate).ToList();
 
         }
 
@@ -167,7 +167,7 @@ namespace icrm.RepositoryImpl
 
            // return feedlist.ToPagedList(pageIndex, pageSize);
 
-            return db.Feedbacks.OrderByDescending(m=>m.id).Where(m=>m.departUserId==usrid && m.checkStatus==Constants.ASSIGNED).ToPagedList(pageIndex, pageSize);
+            return db.Feedbacks.OrderByDescending(m=>m.createDate).Where(m=>m.departUserId==usrid && m.checkStatus==Constants.ASSIGNED).ToPagedList(pageIndex, pageSize);
 
         }
 
@@ -196,24 +196,24 @@ namespace icrm.RepositoryImpl
                 feedlist.Add(r);
             }
 
-            return feedlist.ToPagedList(pageIndex, pageSize);
+            return feedlist.OrderByDescending(m=>m.createDate).ToPagedList(pageIndex, pageSize);
 
         }
 
         public IPagedList<Feedback> OpenWithoutDepart(int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == null  && m.checkStatus==Constants.OPEN).ToPagedList(pageIndex, pageSize);
+            return db.Feedbacks.OrderByDescending(m => m.createDate).Where(m => m.departmentID == null  && m.checkStatus==Constants.OPEN).ToPagedList(pageIndex, pageSize);
 
         }
 
         public IPagedList<Feedback> getAllResolved(int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m =>  m.status == Constants.RESOLVED && m.type.name==Constants.Complaints).ToPagedList(pageIndex, pageSize);
+            return db.Feedbacks.OrderByDescending(m => m.resolvedDate).Where(m =>  m.status == Constants.RESOLVED && m.type.name==Constants.Complaints).ToPagedList(pageIndex, pageSize);
 
         }
         public IPagedList<Feedback> getAllOpen(int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.checkStatus == Constants.OPEN && m.type.name==Constants.Complaints).ToPagedList(pageIndex, pageSize);
+            return db.Feedbacks.OrderByDescending(m => m.createDate).Where(m => m.checkStatus == Constants.OPEN && m.type.name==Constants.Complaints).ToPagedList(pageIndex, pageSize);
 
         }
 
@@ -221,7 +221,7 @@ namespace icrm.RepositoryImpl
         {
             
 
-            return db.Feedbacks.OrderByDescending(m=>m.id).Where(m=>m.checkStatus==Constants.RESPONDED).ToPagedList(pageIndex, pageSize);
+            return db.Feedbacks.OrderByDescending(m=>m.createDate).Where(m=>m.checkStatus==Constants.RESPONDED).ToPagedList(pageIndex, pageSize);
 
         }
 
@@ -229,7 +229,7 @@ namespace icrm.RepositoryImpl
         {
 
 
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.checkStatus == Constants.RESPONDED).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.createDate).Where(m => m.checkStatus == Constants.RESPONDED).ToList();
 
         }
 
@@ -244,11 +244,11 @@ namespace icrm.RepositoryImpl
 
         public IPagedList<Feedback> getAllClosed(int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == Constants.CLOSED && m.type.name == Constants.Complaints).ToPagedList(pageIndex, pageSize);
+            return db.Feedbacks.OrderByDescending(m => m.closedDate).Where(m => m.status == Constants.CLOSED && m.type.name == Constants.Complaints).ToPagedList(pageIndex, pageSize);
         }
         public IEnumerable<Feedback> getAllClosed()
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.status == Constants.CLOSED && m.type.name==Constants.Complaints).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.closedDate).Where(m => m.status == Constants.CLOSED && m.type.name==Constants.Complaints).ToList();
         }
 
         public IEnumerable<Feedback> GETAllClosed()
@@ -259,7 +259,7 @@ namespace icrm.RepositoryImpl
 
         public IEnumerable<Feedback> getAllResolved()
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m =>  m.status == Constants.RESOLVED && m.type.name==Constants.Complaints).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.resolvedDate).Where(m =>  m.status == Constants.RESOLVED && m.type.name==Constants.Complaints).ToList();
         }
 
         public IEnumerable<Feedback> GetAllResolvedmobile()
@@ -270,7 +270,7 @@ namespace icrm.RepositoryImpl
 
         public IEnumerable<Feedback> GetAllAssigned()
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.checkStatus == Constants.ASSIGNED).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.createDate).Where(m => m.checkStatus == Constants.ASSIGNED).ToList();
         }
 
 
@@ -303,7 +303,7 @@ namespace icrm.RepositoryImpl
                 feedlist.Add(r);
             }
 
-            return feedlist.ToPagedList(pageIndex, pageSize);
+            return feedlist.OrderByDescending(m=>m.createDate).ToPagedList(pageIndex, pageSize);
         }
 
 
@@ -335,7 +335,7 @@ namespace icrm.RepositoryImpl
                 feedlist.Add(r);
             }
 
-            return feedlist.ToList();
+            return feedlist.OrderByDescending(m=>m.createDate).ToList();
         }
 
         public IEnumerable<Feedback> chartsFeedbackTypes(string d1, string d2, string type)
@@ -777,7 +777,7 @@ namespace icrm.RepositoryImpl
                 feedlist.Add(r);
             }
 
-            return feedlist;
+            return feedlist.OrderByDescending(m=>m.createDate).ToList();
         }
 
         public IEnumerable<Feedback> getAllResponded()
@@ -788,17 +788,17 @@ namespace icrm.RepositoryImpl
             {
                 feedlist.Add(r);
             }
-            return feedlist;
+            return feedlist.OrderByDescending(m => m.createDate).ToList();
         }
 
         public IEnumerable<Feedback> OpenWithoutDepart()
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.departmentID == null && m.checkStatus == Constants.OPEN).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.createDate).Where(m => m.departmentID == null && m.checkStatus == Constants.OPEN).ToList();
         }
 
         public IPagedList<Feedback> getAllRejected(int pageIndex, int pageSize)
         {
-            return db.Feedbacks.OrderByDescending(m => m.id).Where(m => m.checkStatus == Constants.REJECTED).ToPagedList(pageIndex,pageSize);
+            return db.Feedbacks.OrderByDescending(m => m.createDate).Where(m => m.checkStatus == Constants.REJECTED).ToPagedList(pageIndex,pageSize);
 
         }
 
@@ -822,7 +822,7 @@ namespace icrm.RepositoryImpl
             {
                 feedlist.Add(r);
             }
-            return feedlist;
+            return feedlist.OrderByDescending(m => m.createDate).ToList(); ;
 
         }
 
@@ -860,13 +860,13 @@ namespace icrm.RepositoryImpl
 
         public IPagedList<Feedback> getListBasedOnType(int pageIndex, int pageSize,string typeId)
         {
-            return db.Feedbacks.OrderBy(m=>m.id).Where(m => m.type.name==typeId).ToPagedList(pageIndex,pageSize);
+            return db.Feedbacks.OrderByDescending(m=>m.createDate).Where(m => m.type.name==typeId).ToPagedList(pageIndex,pageSize);
         }
 
 
         public IEnumerable<Feedback> GetListBasedOnType(string type)
         {
-            return db.Feedbacks.OrderBy(m => m.id).Where(m => m.type.name == type).ToList();
+            return db.Feedbacks.OrderByDescending(m => m.createDate).Where(m => m.type.name == type).ToList();
         }
         public List<Department> getDepartmentsOnType(string fORWARD)
         {
@@ -904,7 +904,7 @@ namespace icrm.RepositoryImpl
             //    feedlist.Add(r);
             //}
 
-            return db.Feedbacks.Where(m => m.departUserId == id).ToList();
+            return db.Feedbacks.Where(m => m.departUserId == id).OrderByDescending(m=>m.createDate).ToList();
 
         }
 
@@ -931,7 +931,7 @@ namespace icrm.RepositoryImpl
             //}
             //return feedlist;
 
-            return db.Feedbacks.Where(m => m.departUserId == id && m.status == Constants.OPEN && m.type.name==Constants.Complaints).ToList();
+            return db.Feedbacks.Where(m => m.departUserId == id && m.status == Constants.OPEN && m.type.name==Constants.Complaints).OrderByDescending(m => m.createDate).ToList();
         }
 
         public IEnumerable<Feedback> getAllClosedByDept(string id)
@@ -957,7 +957,7 @@ namespace icrm.RepositoryImpl
             //}
             //return feedlist;
 
-            return db.Feedbacks.Where(m=>m.departUserId==id && m.status==Constants.CLOSED && m.type.name==Constants.Complaints).ToList();
+            return db.Feedbacks.Where(m=>m.departUserId==id && m.status==Constants.CLOSED && m.type.name==Constants.Complaints).OrderByDescending(m => m.closedDate).ToList();
 
         }
 
@@ -987,7 +987,7 @@ namespace icrm.RepositoryImpl
             //     feedlist.Add(r);
             // }
             // return feedlist;
-            return db.Feedbacks.Where(m=>m.departUserId==id && m.status==Constants.RESOLVED && m.type.name==Constants.Complaints).ToList();
+            return db.Feedbacks.Where(m=>m.departUserId==id && m.status==Constants.RESOLVED && m.type.name==Constants.Complaints).OrderByDescending(m => m.resolvedDate).ToList();
         }
 
         public IPagedList<Feedback> getAllOpenByDept(string v, int pageIndex, int pageSize)
@@ -1015,7 +1015,7 @@ namespace icrm.RepositoryImpl
             {
                 feedlist.Add(r);
             }
-            return feedlist.ToPagedList(pageIndex, pageSize);
+            return feedlist.OrderByDescending(m=>m.createDate).ToPagedList(pageIndex, pageSize);
         }
 
         public ApplicationUser getEscalationUser(int? departmentId, int? categoryId)

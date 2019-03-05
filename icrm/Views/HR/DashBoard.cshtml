@@ -421,17 +421,17 @@
                                         <td>@Html.DisplayFor(modelitem => item.Data.user.Email)</td>
                                         <td>@Html.DisplayFor(modelitem => item.Data.user.PhoneNumber)</td>
 
-                                        @if (item.Data.status == "Closed")
+                                        @if (item.Data.status == "Closed" && ViewBag.linkName == "closedticket")
                                         {
 
                                             <td>@Html.DisplayFor(modelitem => item.Data.closedDate)</td>
                                         }
-                                        @if (item.Data.status == "Resolved")
+                                        else if (item.Data.status == "Resolved" && ViewBag.linkName == "resolvedticket")
                                         {
 
                                             <td>@Html.DisplayFor(modelitem => item.Data.resolvedDate)</td>
                                         }
-                                        @if (item.Data.status == "Open")
+                                        else
                                         {
 
                                             <td>@Html.DisplayFor(modelitem => item.Data.createDate)</td>
