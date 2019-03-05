@@ -26,7 +26,7 @@
     <link href="~/Content/lib/jt.timepicker/css/jquery.timepicker.css" rel="stylesheet">
     <link href="~/Content/lib/spectrum/css/spectrum.css" rel="stylesheet">
     <link href="~/Content/lib/bootstrap-tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" rel="stylesheet">
+    <link href="~/Content/css/selectize.default.min.css" rel="stylesheet">
     
 
 
@@ -43,19 +43,19 @@
         <div class="container">
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Create Escalation</li>
+                    <li class="breadcrumb-item"><a href="#">@Resources.Resource.Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Create @Resources.Resource.Escalation_Users</li>
                 </ol>
-                <h6 class="slim-pagetitle">Create Escalation</h6>
+                <h6 class="slim-pagetitle">@Resources.Resource.Escalation_Users</h6>
             </div>
             <!-- slim-pageheader -->
 
             <div class="section-wrapper">
-                <label class="section-title">Creating Escalation</label>
+                <label class="section-title">@Resources.Resource.Escalation_Users</label>
                 <p class="mg-b-20 mg-sm-b-40"></p>
 
 
-                <label class="section-title">Admin / Escalation</label>
+                <label class="section-title">@Resources.Resource.Admin / @Resources.Resource.Escalation_Users</label>
                 @using (Html.BeginForm())
                 {
                     @Html.ValidationSummary()
@@ -71,7 +71,7 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Department <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Department <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.EscalationUser.DepartmentId,
                                        new SelectList(ViewBag.DepartmentList,
                                           "Id", "name"),"Choose Department", new { @class = "form-control select2", @id="department", required="required"})
@@ -82,7 +82,7 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Categories <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">@Resources.Resource.Category <span class="tx-danger">*</span></label>
                                     @*@Html.DropDownListFor(m => m.EscalationUser.CategoriesIds,
                 new SelectList(ViewBag.Categories,
                    "Id", "name"),"Choose Categories", new { @class = "form-control select2",Multiple ="multiple"})*@
@@ -127,7 +127,7 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">First Escalation User <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">First @Resources.Resource.Escalation_Users <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.EscalationUser.firstEscalationUserId,
                                        new SelectList(ViewBag.UserList,
                                           "Id", "EmployeeId"),"Choose First Escalation User", new { @class = "form-control select2 user", required= "required"})
@@ -138,7 +138,7 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Second Escalation User <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">Second @Resources.Resource.Escalation_Users <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.EscalationUser.secondEscalationUserId,
                                        new SelectList(ViewBag.UserList,
                                           "Id", "EmployeeId"), "Choose Second Escalation User", new { @class = "form-control select2 user", required = "required" })
@@ -149,7 +149,7 @@
 
                             <div class="col-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label">Third Escalation User <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">Third @Resources.Resource.Escalation_Users <span class="tx-danger">*</span></label>
                                     @Html.DropDownListFor(m => m.EscalationUser.thirdEscalationUserId,
                                        new SelectList(ViewBag.UserList,
                                           "Id", "EmployeeId"), "Choose Third Escalation User", new { @class = "form-control select2 user", required = "required" })
@@ -192,7 +192,7 @@
                 <div class="col-lg-12">
                     <div class="card card-table">
                         <div class="card-header">
-                            <h6 class="slim-card-title">Escalation List</h6>
+                            <h6 class="slim-card-title">@Resources.Resource.Escalation_Users List</h6>
                         </div>
                         <!-- card-header -->
                         <div class="table-responsive">
@@ -200,12 +200,12 @@
                                 <thead>
                                     <tr class="tx-10">
                                         <th class="wd-10p pd-y-5">S.No</th>
-                                        <th class="pd-y-5">Department</th>
+                                        <th class="pd-y-5">@Resources.Resource.Department</th>
                                         <th class="pd-y-5">Cost Center Name</th>
-                                        <th class="pd-y-5">First Escalation User</th>
-                                        <th class="pd-y-5">Second Escalation User</th>
-                                        <th class="pd-y-5">Third Escalation User</th>
-                                        <th class="pd-y-5">Action</th>
+                                        <th class="pd-y-5">First @Resources.Resource.Escalation_Users</th>
+                                        <th class="pd-y-5">Second @Resources.Resource.Escalation_Users</th>
+                                        <th class="pd-y-5">Third @Resources.Resource.Escalation_Users</th>
+                                        <th class="pd-y-5">@Resources.Resource.Action</th>
 
                                     </tr>
                                 </thead>
