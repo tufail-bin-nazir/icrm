@@ -77,7 +77,6 @@ namespace icrm.Controllers
           
         }
 
-
         public ActionResult postUser(RegisterViewModel model,string rolename) {
 
             ApplicationDbContext context = new ApplicationDbContext();
@@ -140,6 +139,112 @@ namespace icrm.Controllers
             ViewBag.rolename = rolename;
             return View("AddUser",model);
           
+        }
+
+        public ActionResult UserList(int? page) {
+            ApplicationDbContext context = new ApplicationDbContext();
+            ApplicationUser user = new ApplicationUser();
+            ViewBag.JobTitleList = context.JobTitles.ToList();
+            ViewBag.DepartmentList = context.Departments.ToList();
+            ViewBag.CostCenterList = context.CostCenters.ToList();
+            ViewBag.NationalityList = context.Nationalities.ToList();
+            ViewBag.LocationList = context.Locations.ToList();
+            ViewBag.LocationGroupList = context.LocationGroups.ToList();
+            ViewBag.EmployerTypeList = context.employerTypes.ToList();
+            ViewBag.VendorList = context.vendors.ToList();
+            ViewBag.JobTitleList = context.JobTitles.ToList();
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            ViewBag.Status = "Add";
+            return View("editUser", new UserListViewModel { users = gp.GetAll<ApplicationUser>(user.EmployeeId, pageIndex, pageSize) });
+
+
+        }
+
+        [HttpGet]
+        public ActionResult Edit(String id, int? page)
+        {
+            
+
+            ApplicationDbContext context = new ApplicationDbContext();
+            ApplicationUser user = new ApplicationUser();
+            ViewBag.JobTitleList = context.JobTitles.ToList();
+            ViewBag.DepartmentList = context.Departments.ToList();
+            ViewBag.CostCenterList = context.CostCenters.ToList();
+            ViewBag.NationalityList = context.Nationalities.ToList();
+            ViewBag.LocationList = context.Locations.ToList();
+            ViewBag.LocationGroupList = context.LocationGroups.ToList();
+            ViewBag.EmployerTypeList = context.employerTypes.ToList();
+            ViewBag.VendorList = context.vendors.ToList();
+            ViewBag.JobTitleList = context.JobTitles.ToList();
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            ViewBag.Status = "Update";
+            return View("editUser", new UserListViewModel { user = context.Users.Find(id), users = gp.GetAll<ApplicationUser>(user.EmployeeId, pageIndex, pageSize) });
+        }
+
+        [HttpPost]
+        public ActionResult Edit(ApplicationUser user)
+        {
+
+            String page =  Request.Params["page"];
+           
+            ApplicationDbContext context = new ApplicationDbContext();
+
+
+            ApplicationUser appuser = context.Users.Find(user.Id);
+            appuser.EmployeeId = user.EmployeeId;
+            appuser.FirstName = user.FirstName;
+            appuser.MiddleName = user.MiddleName;
+            appuser.LastName = user.LastName;
+            appuser.JobTitleId = user.JobTitleId;
+            appuser.JobTitle = null;
+            appuser.DepartmentId = user.DepartmentId;
+            appuser.Department = null;
+            appuser.CostCenterId = user.CostCenterId;
+            appuser.CostCenter = null;
+            appuser.NationalityId = user.NationalityId;
+            appuser.Nationality = null;
+            appuser.LocationId = user.LocationId;
+            appuser.Location = null;
+            appuser.LocationGroupId = user.LocationGroupId;
+            appuser.LocationGroup = null;
+            appuser.EmployerTypeId = user.EmployerTypeId;
+            appuser.EmployerType = null;
+            appuser.VendorId = user.VendorId;
+            appuser.Vendor = null;
+            appuser.bussinessPhoneNumber = user.bussinessPhoneNumber;
+            appuser.bussinessEmail = user.bussinessEmail;
+
+            context.Entry(appuser).State = System.Data.Entity.EntityState.Modified;
+            context.SaveChanges();
+            TempData["Success"] = "User Updated Successfully";
+            return RedirectToAction("Edit", new { id = user.Id , page});
+
+        }
+
+        [HttpPost]
+        public ActionResult searchByEmployeeId() {
+            ApplicationDbContext context = new ApplicationDbContext();
+            ApplicationUser user = new ApplicationUser();
+            int empid =Convert.ToInt32( Request.Params["employeeId"]);
+            int? page = 1;
+            ViewBag.JobTitleList = context.JobTitles.ToList();
+            ViewBag.DepartmentList = context.Departments.ToList();
+            ViewBag.CostCenterList = context.CostCenters.ToList();
+            ViewBag.NationalityList = context.Nationalities.ToList();
+            ViewBag.LocationList = context.Locations.ToList();
+            ViewBag.LocationGroupList = context.LocationGroups.ToList();
+            ViewBag.EmployerTypeList = context.employerTypes.ToList();
+            ViewBag.VendorList = context.vendors.ToList();
+            ViewBag.JobTitleList = context.JobTitles.ToList();
+            int pageSize = 10;
+            int pageIndex = 1;
+            pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+            ViewBag.Status = "Update";
+            return View("editUser", new UserListViewModel { users = context.Users.Where(m=>m.EmployeeId == empid).OrderBy(m=>m.EmployeeId).ToPagedList(pageIndex, pageSize)});
         }
 
         private void AddErrors(IdentityResult result)

@@ -64,7 +64,7 @@
 
                                 <i class="icon ion-forward"></i><input class="nav-link" style="background: transparent;
                text-decoration: none;
-               cursor: pointer; border:none;" type="submit" value="Sign Out" />
+               cursor: pointer; border:none;" type="submit" value="@Resources.Resource.Sign_Out" />
                             </a>
 
 
@@ -86,7 +86,7 @@
             <li class="nav-item  active">
                 <a class="nav-link" href="/Admin/Dashboard">
                     <i class="icon ion-ios-home-outline"></i>
-                    <span>Dashboard</span>
+                    <span>@Resources.Resource.Dashboard</span>
                 </a>
 
                 <!-- sub-item -->
@@ -96,7 +96,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="/Admin/charts">
                     <i class="icon ion-document-text"></i>
-                    <span>Reports</span>
+                    <span>@Resources.Resource.Report</span>
                 </a>
 
                 <!-- sub-item -->
@@ -106,30 +106,30 @@
             <li class="nav-item with-sub ">
                 <a class="nav-link" href="#" data-toggle="dropdown">
                     <i class="icon ion-ios-gear-outline"></i>
-                    <span>Menu</span>
+                    <span>@Resources.Resource.Menu</span>
                 </a>
                 <div class="sub-item">
                     <ul>
-                        <li class="active">@Html.ActionLink("Categories", "Create", "Categories")</a></li>
-                        <li>@Html.ActionLink("SubCategories", "Create", "SubCategories")</a></li>
-                        <li> @Html.ActionLink("Location", "Create", "Locations")</li>
-                        <li>@Html.ActionLink("Sub Location", "Create", "SubLocations")</li>
-                        <li>@Html.ActionLink("Nationality", "Create", "Nationalities")</li>
-                        <li>@Html.ActionLink("FeedBackType", "Create", "FeedbackTypes")</li>
-                        <li>@Html.ActionLink("Position", "Create", "Positions")</li>
+                        <li class="active">@Html.ActionLink(Resources.Resource.Category, "Create", "Categories")</a></li>
+                        <li>@Html.ActionLink(Resources.Resource.Sub_Category, "Create", "SubCategories")</a></li>
+                        <li> @Html.ActionLink(Resources.Resource.Location, "Create", "Locations")</li>
+                        <li>@Html.ActionLink(Resources.Resource.Sub_Location, "Create", "SubLocations")</li>
+                        <li>@Html.ActionLink(Resources.Resource.Nationality, "Create", "Nationalities")</li>
+                        <li>@Html.ActionLink(Resources.Resource.Feedback_Type, "Create", "FeedbackTypes")</li>
+                        <li>@Html.ActionLink(Resources.Resource.Position, "Create", "Positions")</li>
                         <li>@Html.ActionLink(@Resources.Resource.Priority, "Create", "Priorities")</li>
-                        <li>@Html.ActionLink("Job Title", "Create", "JobTitles")</li>
-                        <li>@Html.ActionLink("Department", "Create", "Departments")</li>
-                        <li>@Html.ActionLink("Escalation Users", "Create", "escalationUsers")</li>
-                        <li>@Html.ActionLink("Pay Scale Type", "Create", "PayScaleTypes")</li>
-                        <li>@Html.ActionLink("Religion", "Create", "Religions")</li>
-                        <li>@Html.ActionLink("Event Reason", "Create", "EventReasons")</li>
-                        <li>@Html.ActionLink("Employee Class", "Create", "EmployeeClasses")</li>
-                        <li>@Html.ActionLink("Ethnicity", "Create", "Ethnicities")</li>
-                        <li>@Html.ActionLink("Gender", "Create", "Genders")</li>
-                        <li>@Html.ActionLink("EmployerType", "Create", "EmployerTypes")</li>
-                        <li>@Html.ActionLink("Vendor", "Create", "Vendors")</li>
-                        <li>@Html.ActionLink("Band", "Create", "Bands")</li>
+                        <li>@Html.ActionLink(@Resources.Resource.Job_Title, "Create", "JobTitles")</li>
+                        <li>@Html.ActionLink(@Resources.Resource.Department, "Create", "Departments")</li>
+                        <li>@Html.ActionLink(@Resources.Resource.Escalation_Users, "Create", "escalationUsers")</li>
+                       
+                        <li>@Html.ActionLink(Resources.Resource.Religion, "Create", "Religions")</li>
+                        <li>@Html.ActionLink(Resources.Resource.Event_Reason, "Create", "EventReasons")</li>
+                        <li>@Html.ActionLink(Resources.Resource.Employee_Class, "Create", "EmployeeClasses")</li>
+                        <li>@Html.ActionLink(Resources.Resource.Ethnicities, "Create", "Ethnicities")</li>
+                        <li>@Html.ActionLink(Resources.Resource.Gender, "Create", "Genders")</li>
+                        <li>@Html.ActionLink(Resources.Resource.Employer_Type, "Create", "EmployerTypes")</li>
+                        <li>@Html.ActionLink(Resources.Resource.Vendor, "Create", "Vendors")</li>
+                        <li>@Html.ActionLink(Resources.Resource.Bands, "Create", "Bands")</li>
 
                     </ul>
                 </div>
@@ -142,9 +142,9 @@
                 </a>
                 <div class="sub-item">
                     <ul>
-                        <li class="active">@Html.ActionLink("Add ICRM Agent", "AddUser", "Admin", new { id = "HR" }, null)</a></li>
-                        <li>@Html.ActionLink("Add Department", "AddUser", "Admin", new { id = "Department" }, null)</a></li>
-                        <li>@Html.ActionLink("List Users", "ListUser", "Admin")</li>
+                        <li class="active">@Html.ActionLink(Resources.Resource.Add_Icrm_Agent, "AddUser", "Admin", new { id = "HR" }, null)</a></li>
+                        <li>@Html.ActionLink(Resources.Resource.Add_Department, "AddUser", "Admin", new { id = "Department" }, null)</a></li>
+                        <li>@Html.ActionLink("Edit/Update User", "UserList", "Admin")</li>
 
                     </ul>
                 </div>

@@ -1,0 +1,415 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model icrm.Models.UserListViewModel
+@{
+    Layout = null;
+
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <!-- Meta -->
+    <meta name="description" content="feedback managment system.">
+    <meta name="author" content="feedback">
+
+    <title>ICRM 2.0</title>
+
+    <!-- vendor css -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+    <link href="~/Content/lib/jquery-toggles/css/toggles-full.css" rel="stylesheet">
+    <link href="~/Content/lib/jt.timepicker/css/jquery.timepicker.css" rel="stylesheet">
+    <link href="~/Content/lib/spectrum/css/spectrum.css" rel="stylesheet">
+    <link href="~/Content/lib/bootstrap-tagsinput/css/bootstrap-tagsinput.css" rel="stylesheet">
+
+    <!-- Feadback CSS -->
+    <link rel="stylesheet" href="~/Content/css/slim.css">
+
+</head>
+<body>
+    @Html.Partial("_AdminMenu")
+
+    <div class="slim-mainpanel">
+        <div class="container">
+            <div class="slim-pageheader">
+                <ol class="breadcrumb slim-breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">@Resources.Resource.Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Update User</li>
+                </ol>
+                <h6 class="slim-pagetitle">Update User</h6>
+            </div><!-- slim-pageheader -->
+
+            <div class="section-wrapper">
+                <label class="section-title">Update User</label>
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        <strong> @TempData["Success"]</strong>
+                    </div>
+                }
+
+                @Html.ValidationSummary()
+                @using (Html.BeginForm())
+                {
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" name="rolename" value="@ViewBag.rolename" />
+
+                    <div class="form-layout">
+                        <div class="row mg-b-25">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Salutation <span class="tx-danger">*</span></label>
+                                    <select class="form-control select2" data-placeholder="@Resources.Resource.Salutation">
+                                        <option label="Choose"></option>
+                                        <option value="">Mr</option>
+                                        <option value="">Miss</option>
+                                        <option value="">Mrs</option>
+                                        <option value="">Mdm</option>
+                                        <option value="">Dr</option>
+                                    </select>
+                                </div>
+                            </div><!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+
+                                    @if (@ViewBag.Status == "Update")
+                                    {
+                                        @Html.HiddenFor(x => x.user.Id)
+                                    }
+
+                                    <label class="form-control-label">@Resources.Resource.Employee_Id<span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(x => x.user.EmployeeId, new { @class = "form-control", placeholder = Resources.Resource.Employee_Id })
+
+                                </div>
+                            </div><!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.FirstName: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(x => x.user.FirstName, new { @class = "form-control", placeholder = Resources.Resource.FirstName })
+                                </div>
+                            </div><!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Middle Name: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(x => x.user.MiddleName, new { @class = "form-control", placeholder = "Middle Name" })
+                                </div>
+                            </div><!-- col-4 -->
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Last Name: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(x => x.user.LastName, new { @class = "form-control", placeholder = "Last Name" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(x => x.user.bussinessEmail, new { @class = "form-control", placeholder = "Email" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Department <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(m => m.user.DepartmentId,
+                                        new SelectList(ViewBag.DepartmentList,
+                                        "Id", "name"), "Choose Department", new { @class = "form-control select2" })
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Cost Center <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(m => m.user.CostCenterId,
+                                        new SelectList(ViewBag.CostCenterList,
+                                        "Id", "name"), "Choose Cost Center", new { @class = "form-control select2" })
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Nationality <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(m => m.user.NationalityId,
+                                        new SelectList(ViewBag.NationalityList,
+                                        "Id", "name"), "Choose Nationality", new { @class = "form-control select2" })
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Location <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(m => m.user.LocationId,
+                                        new SelectList(ViewBag.LocationList,
+                                        "Id", "name"), "Choose Location", new { @class = "form-control select2" })
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Location Group <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(m => m.user.LocationGroupId,
+                                        new SelectList(ViewBag.LocationGroupList,
+                                        "Id", "name"), "Choose Location Group", new { @class = "form-control select2" })
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Employer_Type <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(m => m.user.EmployerTypeId,
+                                        new SelectList(ViewBag.EmployerTypeList,
+                                        "Id", "name"), "Choose Employer Type", new { @class = "form-control select2" })
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Vendor <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(m => m.user.VendorId,
+                                        new SelectList(ViewBag.VendorList,
+                                        "Id", "name"), "Choose Vendor", new { @class = "form-control select2" })
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Bussiness Phone Number: <span class="tx-danger">*</span></label>
+                                    @Html.TextBoxFor(x => x.user.bussinessPhoneNumber, new { @class = "form-control", placeholder = "Bussiness Phone Number" })
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">@Resources.Resource.Job_Title <span class="tx-danger">*</span></label>
+                                    @Html.DropDownListFor(m => m.user.JobTitleId,
+                                        new SelectList(ViewBag.JobTitleList,
+                                        "Id", "name"), "Choose Job Title", new { @class = "form-control select2" })
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </div><!-- row -->
+
+                    <div class="form-layout-footer">
+                        <button class="btn btn-primary bd-0">@ViewBag.Status</button>
+                        <button class="btn btn-secondary bd-0">@Resources.Resource.Cancel</button>
+                    </div><!-- form-layout-footer -->
+
+
+                }
+
+
+                <div class="row row-xs mg-t-10">
+                    <div class="col-lg-12">
+                        <div class="card card-table">
+                            <div class="card-header">
+                                <h6 class="slim-card-title">@Resources.Resource.List_Users</h6>
+                            </div>
+                            <!-- card-header -->
+                            <div class="table-responsive">
+                                @using (Html.BeginForm("searchByEmployeeId", "Admin", FormMethod.Post))
+                                {
+                                    <input type="number" name="employeeId" required />
+                                    <input type="submit" value="Filter By EmployeeId" />
+
+                                }
+                                <table class="table mg-b-0 tx-13">
+                                    <thead>
+                                        <tr class="tx-10">
+                                            <th class="wd-10p pd-y-5">S.No</th>
+                                            <th class="pd-y-5">@Resources.Resource.Employee_Id</th>
+                                            <th class="pd-y-5">@Resources.Resource.FirstName</th>
+                                            <th class="pd-y-5">Middle Name</th>
+                                            <th class="pd-y-5">@Resources.Resource.LastName</th>
+                                            <th class="pd-y-5">@Resources.Resource.Email_Id</th>
+                                            <th class="pd-y-5">@Resources.Resource.Department</th>
+                                            <th class="pd-y-5">Cost Center</th>
+                                            <th class="pd-y-5">@Resources.Resource.Nationality</th>
+                                            <th class="pd-y-5">@Resources.Resource.Location</th>
+                                            <th class="pd-y-5">Location Group</th>
+                                            <th class="pd-y-5">Employer Type</th>
+                                            <th class="pd-y-5">Vendor</th>
+                                            <th class="pd-y-5">Bussiness Phone Number</th>
+                                            <th class="pd-y-5">Job Title</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+
+
+                                        @foreach (var item in Model.users.Select((x, i) => new { Data = x, Index = i }))
+                                        {
+
+                                        <tr>
+                                            <td class="pd-l-20">
+                                                @(item.Index + 1)
+
+                                            </td>
+
+                                            <td>
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.EmployeeId</a>
+
+                                            </td>
+                                            <td>
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.FirstName</a>
+
+                                            </td>
+                                            <td>
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.MiddleName</a>
+
+                                            </td>
+
+                                            <td>
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.LastName</a>
+
+                                            </td>
+                                            <td>
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.bussinessEmail</a>
+
+                                            </td>
+                                            <td>
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.Department.name</a>
+
+                                            </td>
+                                            <td>
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.CostCenter.name @item.Data.CostCenter.CostCenterCode</a>
+
+                                            </td>
+                                            <td>
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.Nationality.name</a>
+
+                                            </td>
+                                            <td>
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.Location.name</a>
+
+                                            </td>
+                                            <td>
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.LocationGroup.name</a>
+
+                                            <td>
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.EmployerType.name</a>
+
+                                            </td>
+                                            <td>
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.Vendor.name</a>
+
+                                            </td>
+                                            <td>
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.bussinessPhoneNumber</a>
+
+                                            </td>
+                                            <td>
+                                                <a href="default.htm" class="tx-inverse tx-14 tx-medium d-block">@item.Data.JobTitle.name</a>
+
+                                            </td>
+
+                                            </td>
+
+                                            <td class="tx-12">
+                                                <a href="@Url.Action("Edit",new {id = item.Data.Id, page = Request.Params["page"]})"> <i class="fa fa-edit"> </i> </a>
+                                                <a href="@Url.Action("Delete",new {id = item.Data.Id })"> <i class="fa fa-trash"> </i> </a>
+
+                                            </td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- table-responsive -->
+                            <div class="pagination-wrapper">
+                                <div id='Paging' style="text-align:center">
+                                    Page @(Model.users.PageCount < Model.users.PageNumber ? 0 : Model.users.PageNumber)
+                                    of @Model.users.PageCount
+                                    <ul class="pagination pagination-circle mg-b-0">
+
+                                        <li class="page-item ">
+                                            @Html.PagedListPager(Model.users, page => Url.Action("UserList", new { page }), new PagedListRenderOptions() { LiElementClasses = new string[] { "page-link" } })
+
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- pagination-wrapper -->
+
+
+
+                        </div>
+                        <!-- card -->
+                    </div>
+                    <!-- col-6 -->
+
+                </div>
+
+
+            </div><!-- container -->
+        </div><!-- slim-mainpanel -->
+
+        <script src="~/Content/lib/jquery/js/jquery.js"></script>
+        <script src="~/Content/lib/popper.js/js/popper.js"></script>
+        <script src="~/Content/lib/bootstrap/js/bootstrap.js"></script>
+        <script src="~/Content/lib/jquery.cookie/js/jquery.cookie.js"></script>
+        <script src="~/Content/lib/moment/js/moment.js"></script>
+        <script src="~/Content/lib/jquery-ui/js/jquery-ui.js"></script>
+        <script src="~/Content/lib/jquery-toggles/js/toggles.min.js"></script>
+        <script src="~/Content/lib/jt.timepicker/js/jquery.timepicker.js"></script>
+        <script src="~/Content/lib/spectrum/js/spectrum.js"></script>
+        <script src="~/Content/lib/jquery.maskedinput/js/jquery.maskedinput.js"></script>
+        <script src="~/Content/lib/bootstrap-tagsinput/js/bootstrap-tagsinput.js"></script>
+        <script src="~/Content/js/footable.min.js"></script>
+        <script src="~/Content/js/selectize.min.js"></script>
+
+
+        <script src="~/Content/js/slim.js"></script>
+        <script>
+            $(document).ready(function () {
+
+                $('.table').footable({
+                    "paging": {
+                        "enabled": true
+                    },
+                    "filtering": {
+                        "enabled": false
+                    }
+                });
+            }
+        </script>
+
+       
+
+</body>
+</html>
+
+
+
+
+
+
+
+
