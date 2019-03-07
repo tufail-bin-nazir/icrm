@@ -41,13 +41,13 @@
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
                     <li class="breadcrumb-item"><a href="#">@Resources.Resource.Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Update User</li>
+                    <li class="breadcrumb-item active" aria-current="page">@ViewBag.Status User</li>
                 </ol>
                 <h6 class="slim-pagetitle">Update User</h6>
             </div><!-- slim-pageheader -->
 
             <div class="section-wrapper">
-                <label class="section-title">Update User</label>
+                <label class="section-title">@ViewBag.Status User</label>
                 @if (TempData["Success"] != null)
                 {
                     <div class="alert alert-success" role="alert">
@@ -189,6 +189,62 @@
 
                                 </div>
                             </div>
+
+                            @if (ViewBag.Status == "Add")
+                            {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@Resources.Resource.Gender <span class="tx-danger">*</span></label>
+                                        @Html.DropDownListFor(m => m.user.GenderId,
+                                             new SelectList(ViewBag.GenderList,
+                                             "Id", "name"), "Choose Gender", new { @class = "form-control select2" })
+
+
+                                    </div>
+                                </div>
+                            }
+
+                            @if (ViewBag.Status == "Add")
+                            {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@Resources.Resource.Ethnicities <span class="tx-danger">*</span></label>
+                                        @Html.DropDownListFor(m => m.user.EthincityId,
+                                             new SelectList(ViewBag.EthincityList,
+                                             "Id", "name"), "Choose Ethnicity", new { @class = "form-control select2" })
+
+
+                                    </div>
+                                </div>
+                            }
+
+                            @if (ViewBag.Status == "Add")
+                            {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">@Resources.Resource.Religion <span class="tx-danger">*</span></label>
+                                        @Html.DropDownListFor(m => m.user.ReligionId,
+                                             new SelectList(ViewBag.ReligionList,
+                                             "Id", "name"), "Choose Religion", new { @class = "form-control select2" })
+
+
+                                    </div>
+                                </div>
+                            }
+
+                            @if (ViewBag.Status == "Add")
+                            {
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label">PayScale Type <span class="tx-danger">*</span></label>
+                                        @Html.DropDownListFor(m => m.user.PayScaleTypeId,
+                                             new SelectList(ViewBag.PayScaleTypeList,
+                                             "Id", "name"), "Choose PayScale Type", new { @class = "form-control select2" })
+
+
+                                    </div>
+                                </div>
+                            }
 
                             <div class="col-lg-4">
                                 <div class="form-group">
@@ -333,7 +389,7 @@
 
                                             <td class="tx-12">
                                                 <a href="@Url.Action("Edit",new {id = item.Data.Id, page = Request.Params["page"]})"> <i class="fa fa-edit"> </i> </a>
-                                                <a href="@Url.Action("Delete",new {id = item.Data.Id })"> <i class="fa fa-trash"> </i> </a>
+                                              
 
                                             </td>
                                         </tr>

@@ -141,6 +141,7 @@ namespace icrm.Controllers
           
         }
 
+        [HttpGet]
         public ActionResult UserList(int? page) {
             ApplicationDbContext context = new ApplicationDbContext();
             ApplicationUser user = new ApplicationUser();
@@ -153,6 +154,10 @@ namespace icrm.Controllers
             ViewBag.EmployerTypeList = context.employerTypes.ToList();
             ViewBag.VendorList = context.vendors.ToList();
             ViewBag.JobTitleList = context.JobTitles.ToList();
+            ViewBag.GenderList = context.Genders.ToList();
+            ViewBag.EthincityList = context.Ethnicities.ToList();
+            ViewBag.ReligionList = context.Religions.ToList();
+            ViewBag.PayScaleTypeList = context.PayScaleTypes.ToList();
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
@@ -160,6 +165,25 @@ namespace icrm.Controllers
             return View("editUser", new UserListViewModel { users = gp.GetAll<ApplicationUser>(user.EmployeeId, pageIndex, pageSize) });
 
 
+        }
+
+        [HttpPost]
+        public ActionResult UserList(ApplicationUser user)
+        {
+           
+            ApplicationDbContext context = new ApplicationDbContext();
+            if (context.Users.Where(m => m.EmployeeId == user.EmployeeId).SingleOrDefault() != null)
+            {
+                TempData["Success"] = "Employee Id Already Exists";
+            }
+            else
+            {
+                user.UserName = Guid.NewGuid().ToString("n").Substring(0, 8) + "@gmail.com";
+                context.Users.Add(user);
+                context.SaveChanges();
+                TempData["Success"] = "User Added Successfully";
+            }
+            return RedirectToAction("UserList", new { page = 1 });
         }
 
         [HttpGet]
