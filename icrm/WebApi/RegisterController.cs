@@ -55,6 +55,7 @@ namespace icrm.WebApi
                 user.UserName = Convert.ToString(model.EmployeeId);
                 user.PasswordHash = HashPassword(model.Password);
                 user.Email = user.bussinessEmail;
+                user.LastPasswordChangedDate = DateTime.Now;
                 user.SecurityStamp = Guid.NewGuid().ToString("D");
                 db.Users.Add(user);
                 db.Entry(user).State = System.Data.Entity.EntityState.Modified;

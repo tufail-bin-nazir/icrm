@@ -132,6 +132,8 @@ namespace icrm.Models
       
         public bool? status { get; set; }
 
+        public System.DateTime? LastPasswordChangedDate { get; set; }
+
         public bool? available { get; set; }
 
         public string DeviceCode { get; set; }
