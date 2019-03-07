@@ -49,7 +49,7 @@
                             {
                                 <a href="#" class="media" id="chatlist@(item.Chat.Id)">
                                     <div class="media-left">
-                                        <img src="~/Content/img/img2.jpg" alt="">
+                                        <img src="/Content/img/avatar.jpg" alt="">
                                         <span class="square-10 bg-success"></span>
                                     </div><!-- media-left -->
                                     <div class="media-body">
@@ -402,7 +402,7 @@
                     console.log('sender is not in chat list');
                     $('.messages-list').prepend('<a href="#" class="media" id="chatlist' +
                         response.ChatId +
-                        '"><div class="media-left"><img src="/Content/img/img2.jpg" alt=""><span class="square-10 bg-success"></span></div><div class="media-body"><div><h6>' +
+                        '"><div class="media-left"><img src="/Content/img/avatar.jpg" alt=""><span class="square-10 bg-success"></span></div><div class="media-body"><div><h6>' +
                         response.Sender.FirstName + " " + response.Sender.LastName +
                         '</h6><p id="latestmsg' +
                         response.ChatId +

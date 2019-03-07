@@ -3,7 +3,7 @@
 <script src="~/Scripts/jquery.signalR-2.4.0.min.js"></script>
 <script src="/signalr/hubs"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"></script>
-
+<script src="~/Content/lib/noty/noty.min.js"></script>
 <script>
     $(function() {
         'use strict'
@@ -39,6 +39,39 @@
             '</div>' +
             '</div>' +
             '</a>');
+
+        Noty.overrideDefaults({
+      callbacks: {
+        onTemplate: function() {
+          if (this.options.type === 'reply') {
+            this.barDom.innerHTML = '<div class="my-custom-template noty_body">';
+            this.barDom.innerHTML += '<div class="noty-header"><a href="' + this.options.category_link + '">' + this.options.category + '</a> <span class="noty-bull">&bull;</span> <span class="noty-date">' + moment(this.options.date).fromNow() + '</span></div>';
+            this.barDom.innerHTML += '<h3 class="from-name">' + this.options.from + '</h3>';
+            this.barDom.innerHTML += '<p class="noty-reply">' + this.options.text + '</p>';
+            this.barDom.innerHTML += '<img src="' + this.options.avatar + '">';
+            this.barDom.innerHTML += '<div>';
+          }
+        }
+      }
+    })
+
+        new Noty({
+            text: message.Text,
+            type: 'reply',
+            theme: 'mint',
+            layout: 'bottomRight',
+            category: 'New Message',
+            category_link: '/Chat/HRChat',
+            date: message.SentTime,
+            from: message.FirstName + ' ' + message.LastName,
+            progressBar: true,
+            sounds:{
+                sources: 'some.wav',
+                volume:1
+            },
+            timeout: 2000,
+             avatar: '/Content/img/avatar.jpg'
+    }).show();
     }
 
     $(document).ready(function () {
