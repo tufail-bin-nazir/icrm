@@ -219,7 +219,7 @@ namespace icrm.WebApi
                 else
                 {
                     ChatRequest chatRequest = new ChatRequest();
-                    chatRequest.UserId = message.Sender.Id;
+                    chatRequest.UserId = message.SenderId;
                     chatRequestService.Save(chatRequest);
                     message.ChatId = null;
                     message.RecieverId = null;
@@ -243,7 +243,7 @@ namespace icrm.WebApi
                 else
                 {
                     ChatRequest chatRequest = new ChatRequest();
-                    chatRequest.UserId = message.Sender.Id;
+                    chatRequest.UserId = message.SenderId;
                     chatRequestService.Save(chatRequest);
                     message.ChatId = null;
                     message.RecieverId = null;
