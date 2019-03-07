@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using icrm.Models;
@@ -30,6 +31,11 @@ namespace icrm.Provider
             {
                 context.SetError("invalid_grant",
                 "The username or password is incorrect");
+            }
+            else if (user.LastPasswordChangedDate.AddDays(90) < DateTime.Now) {
+                context.SetError("invalid_grant",
+               "Your PassWord Has Expired , Please Change Your Password In Forgot Password Link");
+
             }
             else
             {

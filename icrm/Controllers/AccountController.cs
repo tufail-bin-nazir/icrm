@@ -314,6 +314,9 @@ namespace icrm.Controllers
             Debug.WriteLine(result.Errors.FirstOrDefault() + "-=-=-=-=-=-=-=-=-=-=-=-=-==-=--");
             if (result.Succeeded)
             {
+                var usr = await UserManager.FindByNameAsync(model.Email);
+                usr.LastPasswordChangedDate = DateTime.Now;
+                UserManager.Update(usr);
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
             AddErrors(result);
