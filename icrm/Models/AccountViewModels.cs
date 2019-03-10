@@ -115,7 +115,7 @@ namespace icrm.Models
        
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
-        [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",ErrorMessage = "The Password Must Contain Atleast One Upper Case Letter, One Lower Case Letter,One Base 10 digits (0-9) And Non-alphanumeric characters")]
+        [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",ErrorMessage = "The Password Must Contain Atleast One Upper Case Letter, One Lower Case Letter,One Base 10 digits (0-9) And Non-alphanumeric Characters And Must Be At Least Eight Characters Long")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
@@ -135,7 +135,7 @@ namespace icrm.Models
         
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
-        [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", ErrorMessage = "The Password Must Contain Atleast One Upper Case Letter, One Lower Case Letter,One Base 10 digits (0-9) And Non-alphanumeric characters")]
+        [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", ErrorMessage = "The Password Must Contain Atleast One Upper Case Letter, One Lower Case Letter,One Base 10 digits (0-9) And Non-alphanumeric Characters And Must Be At Least Eight Characters Long")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
