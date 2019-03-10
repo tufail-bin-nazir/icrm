@@ -12,6 +12,7 @@ using icrm.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Diagnostics;
 using System.Data;
+using System.Security.Cryptography;
 
 namespace icrm.Controllers
 {
@@ -297,6 +298,7 @@ namespace icrm.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
+            ApplicationDbContext context = new ApplicationDbContext();
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -307,19 +309,56 @@ namespace icrm.Controllers
                 // Don't reveal that the user does not exist
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
-            Debug.WriteLine(model.Code);
-           string token= model.Code.Replace(' ', '+');
-            var result = await UserManager.ResetPasswordAsync(user.Id, token, model.Password);
+            var query = context.PasswordHistories.Where(m => m.userId == user.Id).ToList();
+            bool flag = false;
+            String HashedPassword = HashPassword(model.Password);
+            PasswordHasher passwordHasher = new PasswordHasher();
+            
+            foreach (PasswordHistory password in query) {
+                var result = passwordHasher.VerifyHashedPassword(password.password, model.Password);
+                if (result.ToString() == "Success") {
 
-            Debug.WriteLine(result.Errors.FirstOrDefault() + "-=-=-=-=-=-=-=-=-=-=-=-=-==-=--");
-            if (result.Succeeded)
-            {
-                var usr = await UserManager.FindByNameAsync(model.Email);
-                usr.LastPasswordChangedDate = DateTime.Now;
-                UserManager.Update(usr);
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                    flag = true;
+                    break;
+                }
             }
-            AddErrors(result);
+            if (flag)
+            {
+                ViewBag.Error = "Cannot user last 13 passwords,Choose Something new";
+            }
+            else
+            {
+                string token = model.Code.Replace(' ', '+');
+                var result = await UserManager.ResetPasswordAsync(user.Id, token, model.Password);
+                 if (result.Succeeded)
+                {
+                    var usr = await UserManager.FindByNameAsync(model.Email);
+                    usr.LastPasswordChangedDate = DateTime.Now;
+                    UserManager.Update(usr);
+                    if (context.PasswordHistories.LongCount() == 13)
+                    {
+                        var lastN = context.PasswordHistories.Where(m => m.userId == usr.Id)
+                        .OrderBy(g => g.Id)
+                        .Take(1);
+                        context.PasswordHistories.RemoveRange(lastN);
+                        PasswordHistory ph = new PasswordHistory();
+                        ph.userId = usr.Id;
+                        ph.password = usr.PasswordHash;
+                        context.PasswordHistories.Add(ph);
+                        context.SaveChanges();
+                    }
+                    else {
+                        PasswordHistory ph = new PasswordHistory();
+                        ph.userId = usr.Id;
+                        ph.password = usr.PasswordHash;
+                        context.PasswordHistories.Add(ph);
+                        context.SaveChanges();
+                     }
+                    return RedirectToAction("ResetPasswordConfirmation", "Account");
+                }
+                AddErrors(result);
+            }
+           
             return View();
         }
 
@@ -457,6 +496,25 @@ namespace icrm.Controllers
             UserManager.Update(appuser);
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Login", "Account");
+        }
+
+        public string HashPassword(string password)
+        {
+            byte[] salt;
+            byte[] buffer2;
+            if (password == null)
+            {
+                throw new ArgumentNullException("password");
+            }
+            using (Rfc2898DeriveBytes bytes = new Rfc2898DeriveBytes(password, 0x10, 0x3e8))
+            {
+                salt = bytes.Salt;
+                buffer2 = bytes.GetBytes(0x20);
+            }
+            byte[] dst = new byte[0x31];
+            Buffer.BlockCopy(salt, 0, dst, 1, 0x10);
+            Buffer.BlockCopy(buffer2, 0, dst, 0x11, 0x20);
+            return Convert.ToBase64String(dst);
         }
 
         //

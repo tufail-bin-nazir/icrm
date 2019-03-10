@@ -108,10 +108,11 @@ namespace icrm.Controllers
                     return RedirectToAction("AddUser", new { @id = rolename });
 
                 }
-               
+                user.LastPasswordChangedDate = DateTime.Now;
                 var result = UserManager.Update(user);
                 if (result.Succeeded)
                 {
+                    
                     if(rolename.Equals("HR"))
                          UserManager.AddToRole(user.Id, roleManager.FindByName("HR").Name);
                     else if (rolename.Equals("Department"))

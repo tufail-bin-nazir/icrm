@@ -112,10 +112,10 @@ namespace icrm.Models
         public int ReligionId { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+       
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
-        [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")]
+        [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",ErrorMessage = "The Password Must Contain Atleast One Upper Case Letter, One Lower Case Letter,One Base 10 digits (0-9) And Non-alphanumeric characters")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
@@ -132,9 +132,10 @@ namespace icrm.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
+        [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", ErrorMessage = "The Password Must Contain Atleast One Upper Case Letter, One Lower Case Letter,One Base 10 digits (0-9) And Non-alphanumeric characters")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]

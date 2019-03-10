@@ -60,6 +60,11 @@ namespace icrm.WebApi
                 db.Users.Add(user);
                 db.Entry(user).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
+                PasswordHistory ph = new PasswordHistory();
+                ph.userId = user.Id;
+                ph.password = user.PasswordHash;
+                db.PasswordHistories.Add(ph);
+                db.SaveChanges();
                 UserManager.AddToRole(user.Id, roleManager.FindByName("User").Name);
                 return Ok();
 
