@@ -83,7 +83,16 @@ namespace icrm.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
+            // UserManager.AccessFailedAsync(user.Id); // Register failed access
+            
+
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
+            ApplicationUser u = UserManager.FindByName(model.Email);
+            if (UserManager.GetAccessFailedCount(u.Id) == 8) {
+                  Session["minutes"] = DateTime.Now.AddMinutes(UserManager.DefaultAccountLockoutTimeSpan.Minutes);
+               }
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -119,13 +128,25 @@ namespace icrm.Controllers
                     }
                     
                 case SignInStatus.LockedOut:
-                    return View("Lockout");
+                    {
+
+                        if(((DateTime)Session["minutes"] - DateTime.Now).Minutes != 0)
+                          ViewBag.LogoutTime = ((DateTime)Session["minutes"] - DateTime.Now).Minutes +" Mins" +" : "+ ((DateTime)Session["minutes"] - DateTime.Now).Seconds +" Secs";
+                        else
+                          ViewBag.LogoutTime = ((DateTime)Session["minutes"] - DateTime.Now).Seconds+ " Secs";
+                        return View("Login");
+                    }
+                   
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                    {
+                        IdentityUser user = UserManager.FindByName(model.Email);
+                        ModelState.AddModelError("", "Invalid login attempt. You have Just " + (9-UserManager.GetAccessFailedCount(user.Id)) + " Attempts Left Before Your Account Locks");
+                        return View(model);
+                    }
+                   
             }
         }
 
