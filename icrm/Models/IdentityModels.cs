@@ -132,7 +132,7 @@ namespace icrm.Models
       
         public bool? status { get; set; }
 
-        public System.DateTime LastPasswordChangedDate { get; set; }
+        public System.DateTime? LastPasswordChangedDate { get; set; }
 
         public bool? available { get; set; }
 

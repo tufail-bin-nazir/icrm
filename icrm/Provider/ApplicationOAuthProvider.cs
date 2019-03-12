@@ -29,10 +29,11 @@ namespace icrm.Provider
             context.Password);
             if (user == null)
             {
+                
                 context.SetError("invalid_grant",
                 "The username or password is incorrect");
             }
-            else if (user.LastPasswordChangedDate.AddDays(90) < DateTime.Now) {
+            else if (((DateTime)user.LastPasswordChangedDate).AddDays(90) < DateTime.Now) {
                 context.SetError("invalid_grant",
                "Your PassWord Has Expired , Please Change Your Password In Forgot Password Link");
 
