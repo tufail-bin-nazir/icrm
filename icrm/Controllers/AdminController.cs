@@ -180,6 +180,7 @@ namespace icrm.Controllers
             else
             {
                 user.UserName = Guid.NewGuid().ToString("n").Substring(0, 8) + "@gmail.com";
+                user.EmployeeStatus = "Active";
                 context.Users.Add(user);
                 context.SaveChanges();
                 TempData["Success"] = "User Added Successfully";
