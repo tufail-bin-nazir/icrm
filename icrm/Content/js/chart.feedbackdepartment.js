@@ -217,8 +217,8 @@
             [1330560000000, mnt1feedbacksadministrations],
             [1333238400000, mnt1feedbacksoperations],
             [1335916800000, mnt1feedbackssahlfeedback],
-            [1337238400000, mnt1feedbackssahlmds],
-            [1339916800000, mnt1feedbackssahltraining]
+            [1338238400000, mnt1feedbackssahlmds],
+            [1340916800000, mnt1feedbackssahltraining]
 
         ];
     }
@@ -230,8 +230,8 @@
             [1330560000000, mnt2feedbacksadministrations],
             [1333238400000, mnt2feedbacksoperations],
             [1335916800000, mnt2feedbackssahlfeedback],
-            [1337238400000, mnt2feedbackssahlmds],
-            [1339916800000, mnt2feedbackssahltraining]
+            [1338238400000, mnt2feedbackssahlmds],
+            [1340916800000, mnt2feedbackssahltraining]
         ];
     }
 
@@ -243,8 +243,8 @@
             [1330560000000, mnt3feedbacksadministrations],
             [1333238400000, mnt3feedbacksoperations],
             [1335916800000, mnt3feedbackssahlfeedback],
-            [1337238400000, mnt3feedbackssahlmds],
-            [1339916800000, mnt3feedbackssahltraining]
+            [1338238400000, mnt3feedbackssahlmds],
+            [1340916800000, mnt3feedbackssahltraining]
         ];
     }
     /* var d1_4 = [
@@ -444,22 +444,22 @@
 
                 var originalPoint;
 
-                if (item.datapoint[0] == item.series.data[0][6]) {
+                if (item.datapoint[0] == item.series.data[0][3]) {
                     originalPoint = item.series.data[0][0];
-                } else if (item.datapoint[0] == item.series.data[1][6]) {
+                } else if (item.datapoint[0] == item.series.data[1][3]) {
                     originalPoint = item.series.data[1][0];
-                } else if (item.datapoint[0] == item.series.data[2][6]) {
+                } else if (item.datapoint[0] == item.series.data[2][3]) {
                     originalPoint = item.series.data[2][0];
-                } else if (item.datapoint[0] == item.series.data[3][6]) {
+                } else if (item.datapoint[0] == item.series.data[3][3]) {
                     originalPoint = item.series.data[3][0];
                 }
-                else if (item.datapoint[0] == item.series.data[4][6]) {
+                else if (item.datapoint[0] == item.series.data[4][3]) {
                     originalPoint = item.series.data[4][0];
                 }
-                else if (item.datapoint[0] == item.series.data[5][6]) {
+                else if (item.datapoint[0] == item.series.data[5][3]) {
                     originalPoint = item.series.data[5][0];
                 }
-                else if (item.datapoint[0] == item.series.data[6][6]) {
+                else if (item.datapoint[0] == item.series.data[6][3]) {
                     originalPoint = item.series.data[6][0];
                 }
                 /*

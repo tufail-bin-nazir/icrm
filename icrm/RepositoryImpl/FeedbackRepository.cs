@@ -1039,5 +1039,39 @@ namespace icrm.RepositoryImpl
             ApplicationUser user = db.Users.Find(escUser.firstEscalationUserId);
             return user;
         }
+
+        public IEnumerable<Feedback> chartsFeedbackRegion(string d1, string d2, string region)
+        {
+            var param1 = new SqlParameter();
+            param1.ParameterName = "@D1";
+
+            param1.SqlDbType = SqlDbType.VarChar;
+            param1.SqlValue = d1;
+
+            var param2 = new SqlParameter();
+            param2.ParameterName = "@D2";
+            param2.SqlDbType = SqlDbType.VarChar;
+            param2.SqlValue = d2;
+
+
+            var param3 = new SqlParameter();
+            param3.ParameterName = "@Region";
+            param3.SqlDbType = SqlDbType.VarChar;
+            param3.SqlValue = region;
+
+
+
+            List<Feedback> feedlist = new List<Feedback>();
+            var result = db.Feedbacks.SqlQuery("chartsFeedbackRegion @D1,@D2,@Region", param1, param2, param3).ToList();
+            foreach (var r in result)
+            {
+                feedlist.Add(r);
+            }
+
+            return feedlist.ToList();
+        }
+
+
+
     }
 }

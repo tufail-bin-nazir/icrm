@@ -10,6 +10,8 @@ namespace icrm.Models
        public string month1 { get; set; }
        public string month2 { get; set; }
        public string month3 { get; set; }
-       
+
+        public string charts { get; set; }
+
     }
 }

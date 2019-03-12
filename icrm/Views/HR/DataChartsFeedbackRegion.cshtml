@@ -44,14 +44,11 @@
 
 
     <style type="text/css">
-      
-
         #placeholder {
             width: 550px;
             height: 400px;
             position: relative;
             margin: 0 auto;
-           
         }
 
         .legend table, .legend > div {
@@ -84,7 +81,7 @@
     </style>
 
 
-  
+
 
 </head>
 
@@ -97,7 +94,7 @@
             <div class="slim-pageheader">
                 <ol class="breadcrumb slim-breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Feedback Type Charts</li>
+                    <li class="breadcrumb-item active" aria-current="page">Feedback Region Charts</li>
                 </ol>
                 <h6 class="slim-pagetitle">Pictorial Charts</h6>
             </div>
@@ -110,48 +107,48 @@
 
                 </span>
 
-                @using (Html.BeginForm("chartsfeedbacktypesearch", "HR", FormMethod.Get, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("chartsfeedbackregionsearch", "HR", FormMethod.Get, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
                 {
                     <div class="row mg-b-25">
 
-                       
-                        <div class="col-lg-3">
-                            <label class="form-control-label">Select Months : <span class="tx-danger">*</span></label>
-                           
-                        </div>
-                     
 
                         <div class="col-lg-3">
-                           
+                            <label class="form-control-label">Select Months : <span class="tx-danger">*</span></label>
+
+                        </div>
+
+
+                        <div class="col-lg-3">
+
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
                                         <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
                                     </div>
                                 </div>
-                                <input type="text" class="monthpicker" id="monthpicker1" value="" name="month1" placeholder="MM/YYYY" >
+                                <input type="text" class="monthpicker" id="monthpicker1" value="" name="month1" placeholder="MM/YYYY">
                             </div>
                         </div>
                         <div class="col-lg-3">
-                            
+
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
                                         <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
                                     </div>
                                 </div>
-                                <input type="text" class="monthpicker" id="monthpicker2" value="" name="month2" placeholder="MM/YYYY" >
+                                <input type="text" class="monthpicker" id="monthpicker2" value="" name="month2" placeholder="MM/YYYY">
                             </div>
                         </div>
                         <div class="col-lg-3">
-                           
+
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">
                                         <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
                                     </div>
                                 </div>
-                                <input type="text" class="monthpicker" id="monthpicker3" value="" name="month3" placeholder="MM/YYYY" >
+                                <input type="text" class="monthpicker" id="monthpicker3" value="" name="month3" placeholder="MM/YYYY">
                             </div>
                         </div>
 
@@ -162,14 +159,14 @@
                     <!-- row -->
                     <div class="form-layout-footer">
                         <button class="btn btn-primary bd-0" name="charts" id="submit" value="search">Submit </button>
-                        <button class="btn btn-primary bd-0" name="charts" id="download" value="Download Excel_p">Download Excel (%) </button>
-                        <button class="btn btn-primary bd-0" name="charts" id="download_n" value="Download Excel_n">Download Excel (Numbers) </button>
+                        <button class="btn btn-primary bd-0" name="charts" id="download" value="Download Excel">Download Excel</button>
+                       
 
                     </div>
                 }
                 <!-- form-layout-footer -->
 
-                 
+
 
             </div>
 
@@ -177,11 +174,11 @@
 
 
 
-          
+
             <!-- section-wrapper -->
 
             <div class="section-wrapper">
-                <label class="section-title">Feedback Type Chart</label>
+                <label class="section-title">Feedback Region Chart</label>
                 <p class="mg-b-20 mg-sm-b-40"></p>
 
                 <div class="row">
@@ -190,11 +187,11 @@
 
                         <div class="bd pd-t-30 pd-b-20 pd-x-20">
                             <div id="placeholder"></div>
-    
-    @*<canvas id="chartBar1" height="200"></canvas>*@</div>
+
+                            @*<canvas id="chartBar1" height="200"></canvas>*@
+                        </div>
                     </div>
                     <!-- col-6 -->
-                    
                     <!-- col-6 -->
                 </div>
                 <!-- row -->
@@ -215,34 +212,38 @@
         <!-- container -->
     </div>
     @*<input type="hidden" id="allcount" value="@ViewBag.All" />
-    <input type="hidden" id="opencount" value="@ViewBag.Open" />
-    <input type="hidden" id="closedcount" value="@ViewBag.Closed" />
-    <input type="hidden" id="resolvedcount" value="@ViewBag.Resolved" />*@
+        <input type="hidden" id="opencount" value="@ViewBag.Open" />
+        <input type="hidden" id="closedcount" value="@ViewBag.Closed" />
+        <input type="hidden" id="resolvedcount" value="@ViewBag.Resolved" />*@
 
     @*ViewBag.mnt1feedbacksinquiries = mnt1feedbacksinquiries.Count();
-    ViewBag.mnt1feedbackscompliants = mnt1feedbackscompliants.Count();
-    ViewBag.mnt1feedbacksappreciations = mnt1feedbacksappreciations.Count();
-    ViewBag.mnt1feedbackssuggestions = mnt1feedbackssuggestions.Count();*@
+        ViewBag.mnt1feedbackscompliants = mnt1feedbackscompliants.Count();
+        ViewBag.mnt1feedbacksappreciations = mnt1feedbacksappreciations.Count();
+        ViewBag.mnt1feedbackssuggestions = mnt1feedbackssuggestions.Count();*@
 
 
 
-    <input type="hidden" id="mnt1feedbacksinquiries" value="@ViewBag.mnt1feedbacksinquiries" />
-    <input type="hidden" id="mnt1feedbackscompliants" value="@ViewBag.mnt1feedbackscompliants" />
-    <input type="hidden" id="mnt1feedbacksappreciations" value="@ViewBag.mnt1feedbacksappreciations" />
-    <input type="hidden" id="mnt1feedbackssuggestions" value="@ViewBag.mnt1feedbackssuggestions" />
+    <input type="hidden" id="mnt1feedbackscentral" value="@ViewBag.mnt1feedbackscentral" />
+    <input type="hidden" id="mnt1feedbackseastern" value="@ViewBag.mnt1feedbackseastern" />
+    <input type="hidden" id="mnt1feedbacksnorthern" value="@ViewBag.mnt1feedbacksnorthern" />
+    <input type="hidden" id="mnt1feedbacksheadoffice" value="@ViewBag.mnt1feedbacksheadoffice" />
 
-    <input type="hidden" id="mnt2feedbacksinquiries" value="@ViewBag.mnt2feedbacksinquiries" />
-    <input type="hidden" id="mnt2feedbackscompliants" value="@ViewBag.mnt2feedbackscompliants" />
-    <input type="hidden" id="mnt2feedbacksappreciations" value="@ViewBag.mnt2feedbacksappreciations" />
-    <input type="hidden" id="mnt2feedbackssuggestions" value="@ViewBag.mnt2feedbackssuggestions" />
-
-    <input type="hidden" id="mnt3feedbacksinquiries" value="@ViewBag.mnt3feedbacksinquiries" />
-    <input type="hidden" id="mnt3feedbackscompliants" value="@ViewBag.mnt3feedbackscompliants" />
-    <input type="hidden" id="mnt3feedbacksappreciations" value="@ViewBag.mnt3feedbacksappreciations" />
-    <input type="hidden" id="mnt3feedbackssuggestions" value="@ViewBag.mnt3feedbackssuggestions" />
+    <input type="hidden" id="mnt2feedbackscentral" value="@ViewBag.mnt2feedbackscentral" />
+    <input type="hidden" id="mnt2feedbackseastern" value="@ViewBag.mnt2feedbackseastern" />
+    <input type="hidden" id="mnt2feedbacksnorthern" value="@ViewBag.mnt2feedbacksnorthern" />
+    <input type="hidden" id="mnt2feedbacksheadoffice" value="@ViewBag.mnt2feedbacksheadoffice" />
 
 
-                                
+
+
+    <input type="hidden" id="mnt3feedbackscentral" value="@ViewBag.mnt3feedbackscentral" />
+    <input type="hidden" id="mnt3feedbackseastern" value="@ViewBag.mnt3feedbackseastern" />
+    <input type="hidden" id="mnt3feedbacksnorthern" value="@ViewBag.mnt3feedbacksnorthern" />
+    <input type="hidden" id="mnt3feedbacksheadoffice" value="@ViewBag.mnt3feedbacksheadoffice" />
+
+
+
+
 
     <input type="hidden" id="mnt1feedbacksall" value="@ViewBag.mnt1feedbacksall" />
     <input type="hidden" id="mnt2feedbacksall" value="@ViewBag.mnt2feedbacksall" />
@@ -261,7 +262,6 @@
 
 
     <!-- slim-footer -->
-
     @*<script src="~/Content/lib/jquery/js/jquery.js"></script>*@
 
     <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
@@ -276,13 +276,13 @@
     <script src="~/Content/lib/flot-spline/js/jquery.flot.spline.js"></script>
     <script src="~/Content/lib/Flot/js/jquery.flot.axislabels.js"></script>
     <script src="~/Content/lib/Flot/js/jquery.flot.orderBars.js"></script>
-  
+
     <script src="~/Content/lib/chart.js/js/Chart.js"></script>
     <script src="~/Content/lib/Flot/js/jquery.flot.tooltip.min.js"></script>
 
-  
-   
-   
+
+
+
 
 
 
@@ -290,8 +290,8 @@
 
     <script src="~/Content/js/slim.js"></script>
     @*<script src="~/Content/js/chart.chartjs.js"></script>
-    <script src="~/Content/js/chart.flot.js"></script>*@
-    <script src="~/Content/js/chart.feedbacktype.js"></script>
+        <script src="~/Content/js/chart.flot.js"></script>*@
+    <script src="~/Content/js/chart.feedbackregion.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
@@ -322,7 +322,7 @@
 
         });
 
-      
+
 
     </script>
 
