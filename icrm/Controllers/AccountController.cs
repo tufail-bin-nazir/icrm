@@ -146,8 +146,10 @@ namespace icrm.Controllers
                 case SignInStatus.Failure:
                 default:
                     {
+
                         IdentityUser user = UserManager.FindByName(model.Email);
-                        ModelState.AddModelError("", "Invalid login attempt. You have Just " + (9-UserManager.GetAccessFailedCount(user.Id)) + " Attempts Left Before Your Account Locks");
+                        if(user != null)
+                           ModelState.AddModelError("", "Invalid login attempt. You have Just " + (9-UserManager.GetAccessFailedCount(user.Id)) + " Attempts Left Before Your Account Locks");
                         return View(model);
                     }
                    
