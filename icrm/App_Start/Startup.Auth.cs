@@ -41,7 +41,7 @@ namespace icrm
             app.UseOAuthBearerTokens(new OAuthAuthorizationServerOptions
             {
                 Provider = new ApplicationOAuthProvider(),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(365),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(90),
                 TokenEndpointPath = new PathString("/Authenticate"),
                  AllowInsecureHttp = true,
             });
