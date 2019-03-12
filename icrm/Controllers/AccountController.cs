@@ -89,9 +89,13 @@ namespace icrm.Controllers
 
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: true);
             ApplicationUser u = UserManager.FindByName(model.Email);
-            if (UserManager.GetAccessFailedCount(u.Id) == 8) {
-                  Session["minutes"] = DateTime.Now.AddMinutes(UserManager.DefaultAccountLockoutTimeSpan.Minutes);
-               }
+            if (u != null) {
+                if (UserManager.GetAccessFailedCount(u.Id) == 8)
+                {
+                    Session["minutes"] = DateTime.Now.AddMinutes(UserManager.DefaultAccountLockoutTimeSpan.Minutes);
+                }
+            }
+          
 
             switch (result)
             {
