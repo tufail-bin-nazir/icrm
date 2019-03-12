@@ -92,6 +92,8 @@ namespace icrm.Controllers
             if (u != null) {
                 if (UserManager.GetAccessFailedCount(u.Id) == 8)
                 {
+                    ApplicationUser appuser = UserManager.FindByName(model.Email);
+                    UserManager.SetLockoutEnabled(appuser.Id, true);
                     Session["minutes"] = DateTime.Now.AddMinutes(UserManager.DefaultAccountLockoutTimeSpan.Minutes);
                 }
             }
