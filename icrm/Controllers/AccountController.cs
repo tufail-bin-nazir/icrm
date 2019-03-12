@@ -150,6 +150,8 @@ namespace icrm.Controllers
                         IdentityUser user = UserManager.FindByName(model.Email);
                         if(user != null)
                            ModelState.AddModelError("", "Invalid login attempt. You have Just " + (9-UserManager.GetAccessFailedCount(user.Id)) + " Attempts Left Before Your Account Locks");
+                        else
+                            ModelState.AddModelError("", "Invalid login attempt. No Employee Id Found" );
                         return View(model);
                     }
                    
