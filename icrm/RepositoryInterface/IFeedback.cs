@@ -91,6 +91,7 @@ namespace icrm.RepositoryInterface
         IEnumerable<Feedback> chartsFeedbackAccomodationSupplies(string d1, string d2);
         IEnumerable<Feedback> chartsFeedbackSalaryIssuesReasons(string d1, string d2, string salaryissuesreasons);
         string[] chartsFeedbackMostFrequentLocations(string d1, string d2);
+        IEnumerable<Feedback> chartsFeedbackRegion(string d1, string d2, string region);
 
     }
 }

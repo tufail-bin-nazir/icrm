@@ -14,40 +14,34 @@
    "mnt3feedbackscompliants"  
   "mnt3feedbacksappreciations"  
     "mnt3feedbackssuggestions"  
+     
 
- mnt1feedbackswalkin
- mnt1feedbackswhatsapp 
- mnt1feedbacksmobile 
- mnt1feedbackstollfree 
- mnt1feedbacksemail   
+    
     
     */
 
-    var mnt1feedbackswalkin = $("#mnt1feedbackswalkin").val();
+    var mnt1feedbackscentral = $("#mnt1feedbackscentral").val();
 
-    var mnt1feedbackswhatsapp = $("#mnt1feedbackswhatsapp").val();
+    var mnt1feedbackseastern = $("#mnt1feedbackseastern").val();
 
-    var mnt1feedbacksmobile = $("#mnt1feedbacksmobile").val();
-    var mnt1feedbackstollfree = $("#mnt1feedbackstollfree").val();
-    var mnt1feedbacksemail = $("#mnt1feedbacksemail").val();
-
-
-    var mnt2feedbackswalkin = $("#mnt2feedbackswalkin").val();
-
-    var mnt2feedbackswhatsapp = $("#mnt2feedbackswhatsapp").val();
-
-    var mnt2feedbacksmobile = $("#mnt2feedbacksmobile").val();
-    var mnt2feedbackstollfree = $("#mnt2feedbackstollfree").val();
-    var mnt2feedbacksemail = $("#mnt2feedbacksemail").val();
+    var mnt1feedbacksnorthern = $("#mnt1feedbacksnorthern").val();
+    var mnt1feedbacksheadoffice = $("#mnt1feedbacksheadoffice").val();
 
 
-    var mnt3feedbackswalkin = $("#mnt3feedbackswalkin").val();
+    var mnt2feedbackscentral = $("#mnt2feedbackscentral").val();
 
-    var mnt3feedbackswhatsapp = $("#mnt3feedbackswhatsapp").val();
+    var mnt2feedbackseastern = $("#mnt2feedbackseastern").val();
 
-    var mnt3feedbacksmobile = $("#mnt3feedbacksmobile").val();
-    var mnt3feedbackstollfree = $("#mnt3feedbackstollfree").val();
-    var mnt3feedbacksemail = $("#mnt3feedbacksemail").val();
+    var mnt2feedbacksnorthern = $("#mnt2feedbacksnorthern").val();
+    var mnt2feedbacksheadoffice = $("#mnt2feedbacksheadoffice").val();
+
+
+    var mnt3feedbackscentral = $("#mnt3feedbackscentral").val();
+
+    var mnt3feedbackseastern = $("#mnt3feedbackseastern").val();
+
+    var mnt3feedbacksnorthern = $("#mnt3feedbacksnorthern").val();
+    var mnt3feedbacksheadoffice = $("#mnt3feedbacksheadoffice").val();
 
 
   /*  console.log(mnt1feedbacksappreciations + mnt1feedbackscompliants + mnt1feedbacksinquiries + mnt1feedbackssuggestions);
@@ -63,35 +57,32 @@
     console.log(mnt1feedbacksall + mnt2feedbacksall + mnt3feedbacksall);
 
     if (!parseFloat(mnt1feedbacksall) == 0) {
-        mnt1feedbackswalkin = ((parseFloat(mnt1feedbackswalkin) * 100) / parseFloat(mnt1feedbacksall)).toFixed(2);
-        mnt1feedbackswhatsapp = ((parseFloat(mnt1feedbackswhatsapp) * 100) / parseFloat(mnt1feedbacksall)).toFixed(2);
-        mnt1feedbacksmobile = ((parseFloat(mnt1feedbacksmobile) * 100) / parseFloat(mnt1feedbacksall)).toFixed(2);
-        mnt1feedbackstollfree = ((parseFloat(mnt1feedbackstollfree) * 100) / parseFloat(mnt1feedbacksall)).toFixed(2);
-        mnt1feedbacksemail = ((parseFloat(mnt1feedbacksemail) * 100) / parseFloat(mnt1feedbacksall)).toFixed(2);
+        mnt1feedbackscentral = ((parseFloat(mnt1feedbackscentral) * 100) / parseFloat(mnt1feedbacksall)).toFixed(2);
+        mnt1feedbackseastern = ((parseFloat(mnt1feedbackseastern) * 100) / parseFloat(mnt1feedbacksall)).toFixed(2);
+        mnt1feedbacksnorthern = ((parseFloat(mnt1feedbacksnorthern) * 100) / parseFloat(mnt1feedbacksall)).toFixed(2);
+        mnt1feedbacksheadoffice = ((parseFloat(mnt1feedbacksheadoffice) * 100) / parseFloat(mnt1feedbacksall)).toFixed(2);
     }
 
 
     if (!parseFloat(mnt2feedbacksall) == 0) {
-        mnt2feedbackswalkin = ((parseFloat(mnt2feedbackswalkin) * 100) / parseFloat(mnt2feedbacksall)).toFixed(2);
-        mnt2feedbackswhatsapp = ((parseFloat(mnt2feedbackswhatsapp) * 100) / parseFloat(mnt2feedbacksall)).toFixed(2);
-        mnt2feedbacksmobile = ((parseFloat(mnt2feedbacksmobile) * 100) / parseFloat(mnt2feedbacksall)).toFixed(2);
-        mnt2feedbackstollfree = ((parseFloat(mnt2feedbackstollfree) * 100) / parseFloat(mnt2feedbacksall)).toFixed(2);
-        mnt2feedbacksemail = ((parseFloat(mnt2feedbacksemail) * 100) / parseFloat(mnt2feedbacksall)).toFixed(2);
+        mnt2feedbackscentral = ((parseFloat(mnt2feedbackscentral) * 100) / parseFloat(mnt2feedbacksall)).toFixed(2);
+        mnt2feedbackseastern = ((parseFloat(mnt2feedbackseastern) * 100) / parseFloat(mnt2feedbacksall)).toFixed(2);
+        mnt2feedbacksnorthern = ((parseFloat(mnt2feedbacksnorthern) * 100) / parseFloat(mnt2feedbacksall)).toFixed(2);
+        mnt2feedbacksheadoffice = ((parseFloat(mnt2feedbacksheadoffice) * 100) / parseFloat(mnt2feedbacksall)).toFixed(2);
     }
 
     if (!parseFloat(mnt3feedbacksall) == 0) {
-        mnt3feedbackswalkin = ((parseFloat(mnt3feedbackswalkin) * 100) / parseFloat(mnt3feedbacksall)).toFixed(2);
-        mnt3feedbackswhatsapp = ((parseFloat(mnt3feedbackswhatsapp) * 100) / parseFloat(mnt3feedbacksall)).toFixed(2);
-        mnt3feedbacksmobile = ((parseFloat(mnt3feedbacksmobile) * 100) / parseFloat(mnt3feedbacksall)).toFixed(2);
-        mnt3feedbackstollfree = ((parseFloat(mnt3feedbackstollfree) * 100) / parseFloat(mnt3feedbacksall)).toFixed(2);
-        mnt3feedbacksemail = ((parseFloat(mnt3feedbacksemail) * 100) / parseFloat(mnt3feedbacksall)).toFixed(2);
+        mnt3feedbackscentral = ((parseFloat(mnt3feedbackscentral) * 100) / parseFloat(mnt3feedbacksall)).toFixed(2);
+        mnt3feedbackseastern = ((parseFloat(mnt3feedbackseastern) * 100) / parseFloat(mnt3feedbacksall)).toFixed(2);
+        mnt3feedbacksnorthern = ((parseFloat(mnt3feedbacksnorthern) * 100) / parseFloat(mnt3feedbacksall)).toFixed(2);
+        mnt3feedbacksheadoffice = ((parseFloat(mnt3feedbacksheadoffice) * 100) / parseFloat(mnt3feedbacksall)).toFixed(2);
     }
 
    /* console.log(mnt1feedbacksappreciations + mnt1feedbackscompliants + mnt1feedbacksinquiries + mnt1feedbackssuggestions);
     console.log(mnt2feedbacksappreciations + mnt2feedbackscompliants + mnt2feedbacksinquiries + mnt2feedbackssuggestions);
     console.log(mnt3feedbacksappreciations + mnt3feedbackscompliants + mnt3feedbacksinquiries + mnt3feedbackssuggestions);
-
     */
+
 
 
 
@@ -165,44 +156,46 @@
 
     console.log("months" + month1 + month2 + month3);
 
- /*   mnt1feedbackswalkin 
-    mnt1feedbackswhatsapp 
-    mnt1feedbacksmobile
-    mnt1feedbackstollfree 
-    mnt1feedbacksemail 
+
+    /*
+      var mnt3feedbackscentral = $("#mnt3feedbackscentral").val();
+
+    var mnt3feedbackseastern = $("#mnt3feedbackseastern").val();
+
+    var mnt3feedbacksnorthern = $("#mnt3feedbacksnorthern").val();
+    var mnt3feedbacksheadoffice = $("#mnt3feedbacksheadoffice").val();
+
+    
     */
 
 
 
     if (!month1 == "") {
         var d1_1 = [
-            [1325376000000, mnt1feedbackswalkin],
-            [1328054400000, mnt1feedbackswhatsapp],
-            [1330560000000, mnt1feedbacksmobile],
-            [1333238400000, mnt1feedbackstollfree],
-            [1335916800000, mnt1feedbacksemail]
+            [1325376000000, mnt1feedbackscentral],
+            [1328054400000, mnt1feedbackseastern],
+            [1330560000000, mnt1feedbacksnorthern],
+            [1333238400000, mnt1feedbacksheadoffice]
 
         ];
     }
 
     if (!month2 == "") {
         var d1_2 = [
-            [1325376000000, mnt2feedbackswalkin],
-            [1328054400000, mnt2feedbackswhatsapp],
-            [1330560000000, mnt2feedbacksmobile],
-            [1333238400000, mnt2feedbackstollfree],
-            [1335916800000, mnt2feedbacksemail]
+            [1325376000000, mnt2feedbackscentral],
+            [1328054400000, mnt2feedbackseastern],
+            [1330560000000, mnt2feedbacksnorthern],
+            [1333238400000, mnt2feedbacksheadoffice]
         ];
     }
 
 
     if (!month3 == "") {
         var d1_3 = [
-            [1325376000000, mnt3feedbackswalkin],
-            [1328054400000, mnt3feedbackswhatsapp],
-            [1330560000000, mnt3feedbacksmobile],
-            [1333238400000, mnt3feedbackstollfree],
-            [1335916800000, mnt3feedbacksemail]
+            [1325376000000, mnt3feedbackscentral],
+            [1328054400000, mnt3feedbackseastern],
+            [1330560000000, mnt3feedbacksnorthern],
+            [1333238400000, mnt3feedbacksheadoffice]
         ];
     }
     /* var d1_4 = [
@@ -324,23 +317,16 @@
     }*/
     //];
 
-
-    /*  [1325376000000, mnt1feedbackswalkin],
-            [1328054400000, mnt1feedbackswhatsapp],
-            [1330560000000, mnt1feedbacksmobile],
-            [1333238400000, mnt1feedbackstollfree],
-            [1335916800000, mnt1feedbacksemail]*/
-
     var p = $.plot($("#placeholder"), data1, {
         xaxis: {
             min: (new Date(2011, 11, 15)).getTime(),
-            max: (new Date(2012, 04, 18)).getTime(),
+            max: (new Date(2012, 03, 18)).getTime(),
             mode: "time",
             timeformat: "%b",
             tickSize: [1, "month"],
-            monthNames: ["Walkin", "whatsapp", "Mobile", "Toll Free", "E-Mail"],
+            monthNames: ["Central", "Eastern", "Northern", "Head Office"],
             tickLength: 0, // hide gridlines
-            axisLabel: 'Feedback Source',
+            axisLabel: 'Feedback Region',
             axisLabelUseCanvas: true,
             axisLabelFontSizePixels: 12,
             axisLabelFontFamily: 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
@@ -375,23 +361,11 @@
         }).appendTo("body").show();
     }
 
-  /*  mnt1feedbackswalkin
-    mnt1feedbackswhatsapp
-    mnt1feedbacksmobile
-    mnt1feedbackstollfree
-    mnt1feedbacksemail
-    */
-
-
     function getMonthName(newTimestamp) {
-       // alert("getmonth");
-
         var d = new Date(newTimestamp);
-       // console.log("d=" + d);
-        var numericMonth = d.getMonth();
-       // console.log("numericmonth=" + numericMonth);
 
-        var monthArray = ["Walk-In", "Whatsapp", "Mobile", "Toll free", "Email"];
+        var numericMonth = d.getMonth();
+        var monthArray = ["Central", "Eastern", "Northern", "Head Office"];
 
         var alphaMonth = monthArray[numericMonth];
 
@@ -406,31 +380,20 @@
 
                 var originalPoint;
 
-              //  alert("item series datapoint " + item.series.data[0][3] + " item.datapoint[0] " + item.datapoint[0]);
-               
-                    if (item.datapoint[0] == item.series.data[0][3]) {
-                        originalPoint = item.series.data[0][0];
-                    } else if (item.datapoint[0] == item.series.data[1][3]) {
-                        originalPoint = item.series.data[1][0];
-                    } else if (item.datapoint[0] == item.series.data[2][3]) {
-                        originalPoint = item.series.data[2][0];
-                    } else if (item.datapoint[0] == item.series.data[3][3]) {
-                        originalPoint = item.series.data[3][0];
-                    }
-                            
-                    else if (item.datapoint[0] == item.series.data[4][3]) {
-                        originalPoint = item.series.data[4][0];
-                    }
-                    /*
-                    else if (item.datapoint[0] == item.series.data[4][3]) {
-                        originalPoint = item.series.data[4][0];
-                    }
-                    */
-                 
-
-
-             //   alert("original point" + originalPoint);
-
+                if (item.datapoint[0] == item.series.data[0][3]) {
+                    originalPoint = item.series.data[0][0];
+                } else if (item.datapoint[0] == item.series.data[1][3]) {
+                    originalPoint = item.series.data[1][0];
+                } else if (item.datapoint[0] == item.series.data[2][3]) {
+                    originalPoint = item.series.data[2][0];
+                } else if (item.datapoint[0] == item.series.data[3][3]) {
+                    originalPoint = item.series.data[3][0];
+                }
+                /*
+                else if (item.datapoint[0] == item.series.data[4][3]) {
+                    originalPoint = item.series.data[4][0];
+                }
+                */
                 var x = getMonthName(originalPoint);
                 y = item.datapoint[1];
                 z = item.series.color;

@@ -100,7 +100,72 @@
             </div>
             <!-- slim-pageheader -->
 
-            
+            <div class="form-layout">
+                <span class="text-danger">
+                    @TempData["DateMsg"]
+
+
+                </span>
+
+                @using (Html.BeginForm("chartsfeedbacklast12Monthssearch", "HR", FormMethod.Get, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+                {
+                    <div class="row mg-b-25">
+
+
+                        <div class="col-lg-3" style="display:none">
+                            <label class="form-control-label">Select Months : <span class="tx-danger">*</span></label>
+
+                        </div>
+
+
+                        <div class="col-lg-3" style="display:none">
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                                    </div>
+                                </div>
+                                <input type="text" class="monthpicker" id="monthpicker1" value="" name="month1" placeholder="MM/YYYY">
+                            </div>
+                        </div>
+                        <div class="col-lg-3" style="display:none">
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                                    </div>
+                                </div>
+                                <input type="text" class="monthpicker" id="monthpicker2" value="" name="month2" placeholder="MM/YYYY">
+                            </div>
+                        </div>
+                        <div class="col-lg-3" style="display:none">
+
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="icon ion-calendar tx-16 lh-0 op-6"></i>
+                                    </div>
+                                </div>
+                                <input type="text" class="monthpicker" id="monthpicker3" value="" name="month3" placeholder="MM/YYYY">
+                            </div>
+                        </div>
+
+
+                        <!-- col-4 -->
+                    </div>
+
+                    <!-- row -->
+                    <div class="form-layout-footer">
+                       
+                        <button class="btn btn-primary bd-0" name="charts" id="download" value="Download Excel">Download Excel</button>
+
+
+                    </div>
+                }
+                <!-- form-layout-footer -->
+            </div>
 
 
 
