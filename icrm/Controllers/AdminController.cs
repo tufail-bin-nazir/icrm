@@ -269,7 +269,7 @@ namespace icrm.Controllers
             int pageSize = 10;
             int pageIndex = 1;
             pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
-            ViewBag.Status = "Update";
+            ViewBag.Status = "Add";
             return View("editUser", new UserListViewModel { users = context.Users.Where(m=>m.EmployeeId == empid).OrderBy(m=>m.EmployeeId).ToPagedList(pageIndex, pageSize)});
         }
 
