@@ -109,7 +109,7 @@ namespace icrm.WebApi
 
             }
         }
-        //3/ <summary>
+        //3/<summary>
         /// /////////////////////////////////////************* GetFile *****************/////////////////
         /// </summary>
         [HttpGet]
@@ -135,7 +135,7 @@ namespace icrm.WebApi
         }
 
         //4/ <summary>
-        /// /////////////////////////////*************Resolve By Id *****************/////////////////
+        /// /////////////////////////////************* Resolve By Id *****************/////////////////
         /// </summary>
         [HttpPost]
         [Route("api/HR/Resolve/{id}")]
@@ -169,17 +169,13 @@ namespace icrm.WebApi
                 db.comments.Add(c);
                 db.SaveChanges();
                 return Ok();
-
-
-              
-
+                
             }
         }
 
         //5/ <summary>
         /// /////////////////////////////////////*************Priority*****************/////////////////
         /// </summary>
-
         [HttpGet]
         [Route("api/HR/priority")]
         public IHttpActionResult priority()
@@ -296,7 +292,6 @@ namespace icrm.WebApi
             f.assignedDate = DateTime.Now;
             db.Entry(f).State = EntityState.Modified;
             db.SaveChanges();
-
             return Ok();
 
         }
@@ -367,7 +362,6 @@ namespace icrm.WebApi
         //11/ <summary>
         /// ////////////////////////******************* update Ticket Department***************////////////////////
         /// </summary>
-
         [HttpPost]
         [Route("api/HR/updateTicketDepartment/{id}")]
         public IHttpActionResult updateTicketDepartment(string Id, Feedback feedback)
@@ -399,7 +393,6 @@ namespace icrm.WebApi
                 c.text = feedback.response;
                 db.comments.Add(c);
                 db.SaveChanges();
-
               
                 return Ok();
 
@@ -582,7 +575,7 @@ namespace icrm.WebApi
         }
 
         //17/ <summary>
-        /// //////////////////////////********************update satisfaction***************//////////////////////
+        /// //////////////////////////*********update satisfaction***************//////////////////////
         /// </summary>
         [HttpPost]
         [Route("api/HR/updatesatisfaction/{id}")]
@@ -609,7 +602,7 @@ namespace icrm.WebApi
 
 
         //18/ <summary>
-        /// ********************************************   Resolved tickets Here ***************************////
+        /// ********************************************  Resolved tickets Here ***************************////
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -1149,7 +1142,7 @@ namespace icrm.WebApi
             {
 
                 return BadRequest(" Subcatagorey list not found");
-
+                
             }
         }
 
@@ -1219,7 +1212,6 @@ namespace icrm.WebApi
         {
             Debug.WriteLine(emails);
           
-
             string combindedString = "";
             combindedString = string.Join(",", emails.EmailList.ToArray());
             combindedString = combindedString.Replace("[", " ");
@@ -1229,9 +1221,7 @@ namespace icrm.WebApi
 
 
         }
-
-      
-
+        
         //37/ <summary>
         /// ////////////////////////////****************Get HR Responded TicketList*******************////////////////////////////
         /// </summary>
@@ -1330,28 +1320,26 @@ namespace icrm.WebApi
                 {
                    
                     string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                    sendemailAsync(user.Email, user.Id, code);
+                    await sendemailAsync(user.Email, user.Id, code);
                     return Ok();
                 }
         }
 
-        private async void sendemailAsync(String emailto, String userid, String code)
+        private async Task sendemailAsync(String emailto, String userid, String code)
         {
-             MailMessage mail = new MailMessage("employee.relation@mcdonalds.com.sa", emailto);
-           // MailMessage mail = new MailMessage("tufail.b.n@gmail.com", "wajahatnabi90@gmail.com");
-            SmtpClient client = new SmtpClient();           
+            MailMessage mail = new MailMessage("employee.relation@mcdonalds.com.sa", emailto);
+            // MailMessage mail = new MailMessage("tufail.b.n@gmail.com", "wajahatnabi90@gmail.com");
+            SmtpClient client = new SmtpClient();
             client.Port = 25;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
             client.UseDefaultCredentials = true;
             client.EnableSsl = false;
-            client.Host = "email.mcdonalds.com.sa";  
+            client.Host = "email.mcdonalds.com.sa";
             mail.Subject = "Reset Your Password";
-
             string strBody3 = String.Format("<html><body><a href='http://icrm.mcdonalds.com.sa/Account/ResetPassword?code={0}' > Click On The Link To Reset Your Password </ a ></ body ></html > ", code);
             mail.Body = strBody3;
             mail.IsBodyHtml = true;
             await client.SendMailAsync(mail);
-
         }
 
         //40/ <summary>
@@ -1398,7 +1386,7 @@ namespace icrm.WebApi
         }
 
         //41/ <summary>
-        /// //////////////////////////********************HR closed update***************//////////////////////
+        /// //////////////////////////******************** HR closed update ***************//////////////////////
         /// </summary>
         [HttpPost]
         [Route("api/HR/closedupdate/{id}")]
@@ -1436,7 +1424,7 @@ namespace icrm.WebApi
         }
 
         //42/ <summary>
-        /// /////////////****** HR edit description here ------->Edit discription update************/////////
+        ////////////////****** HR edit description here ------->Edit discription update************/////////
         /// </summary>
         [HttpPost]
         [Route("api/HR/Editdescription/{id}")]
@@ -1457,7 +1445,6 @@ namespace icrm.WebApi
                 db.Entry(f).State = EntityState.Modified;
                 db.SaveChanges();
                 return Ok();
-
             }
         }
 
