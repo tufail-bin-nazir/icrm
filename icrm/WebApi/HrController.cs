@@ -92,13 +92,15 @@ namespace icrm.WebApi
         [Route("api/HR/HrTicket/{id}")]
         public IHttpActionResult HrTicket(string id)
         {
-            var quer = from n in feedInterface.getCOmments(id)
+            var quer1 = from n in feedInterface.getCOmments(id)
                        select n;
+
+            var quer = quer1.OrderByDescending(x => x.Id).ToList();
 
             var f = feedInterface.Find(id);
             if (f != null)
             {
-
+               
                 return Ok(new { f.id, f.checkStatus, f.title, f.attachment, f.description, f.user.EmployeeId, f.user.Email, f.user.FirstName, f.type.name, quer });
 
             }
@@ -135,7 +137,7 @@ namespace icrm.WebApi
         }
 
         //4/ <summary>
-        /// /////////////////////////////************* Resolve By Id *****************/////////////////
+        //////////*************when Hr forward the ticket he can also close or  Resolve By itself *****************/////////////////
         /// </summary>
         [HttpPost]
         [Route("api/HR/Resolve/{id}")]
@@ -155,7 +157,8 @@ namespace icrm.WebApi
 
                 var Name1 = User.Identity.Name;
                 Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
-                f.checkStatus = Models.Constants.RESOLVED;
+                f.checkStatus = feedback.status;
+               
                 f.status = feedback.status;
                 f.response = feedback.response;
                 db.Entry(f).State = EntityState.Modified;
@@ -292,7 +295,7 @@ namespace icrm.WebApi
             f.assignedDate = DateTime.Now;
             db.Entry(f).State = EntityState.Modified;
             db.SaveChanges();
-            return Ok();
+            return Ok(f);
 
         }
 
@@ -309,7 +312,7 @@ namespace icrm.WebApi
             Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
               var query = from f in feedInterface.GetAllAssigned()
 
-                          where f.departUserId == user.Result.Id
+                          where f.departmentID == user.Result.DepartmentId
                           select new { f.id, f.title, f.description, f.createDate, f.status,f.type.name, f.user.EmployeeId,f.user.FirstName};
                                    
 
@@ -360,7 +363,7 @@ namespace icrm.WebApi
         }
 
         //11/ <summary>
-        /// ////////////////////////******************* update Ticket Department***************////////////////////
+        /// /////***** In This Api Department sends back the Assigned Ticket To The HR And Also Send comments******////////////////////
         /// </summary>
         [HttpPost]
         [Route("api/HR/updateTicketDepartment/{id}")]
@@ -392,11 +395,8 @@ namespace icrm.WebApi
                 c.commentedById = user.Result.Id;
                 c.text = feedback.response;
                 db.comments.Add(c);
-                db.SaveChanges();
-              
+                db.SaveChanges();            
                 return Ok();
-
-
             }
         }
         //12/ <summary>
@@ -630,7 +630,7 @@ namespace icrm.WebApi
 
 
         //19/ <summary>
-        /// ********************************************   update  Resolve  by id  ***************************////
+        /// ******************************************** HR here   update  Resolve/Closed and also comment  by id  ***************************////
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -741,7 +741,7 @@ namespace icrm.WebApi
             else
             {
 
-                return BadRequest(" Religion list  not found");
+                return BadRequest("Religion list  not found");
 
             }
         }
