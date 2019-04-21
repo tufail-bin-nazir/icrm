@@ -157,8 +157,7 @@ namespace icrm.WebApi
 
                 var Name1 = User.Identity.Name;
                 Task<ApplicationUser> user = UserManager.FindByNameAsync(Name1);
-                f.checkStatus = feedback.status;
-               
+                f.checkStatus = feedback.status;           
                 f.status = feedback.status;
                 f.response = feedback.response;
                 db.Entry(f).State = EntityState.Modified;
@@ -598,6 +597,8 @@ namespace icrm.WebApi
                 return Ok();
 
             }
+            
+           
         }
 
 
@@ -1448,6 +1449,35 @@ namespace icrm.WebApi
             }
         }
 
+
+        //43/ <summary>
+        /// **************** updateTicket by user if it is rejected then user can open by itself ***************************////
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/HR/updateTicketbyUser/{id}")]
+        public IHttpActionResult updateTicketbyUser(string Id, FeedBackViewModel feedBackmodel)
+        {
+            Feedback f = db.Feedbacks.Find(Id);
+
+            if (f == null)
+            {
+
+                return BadRequest(" Ticket id not found");
+
+            }
+
+            else
+            {
+                f.checkStatus = Models.Constants.OPEN;
+                f.status = Models.Constants.OPEN;
+                f.description = feedBackmodel.Description;
+                db.Entry(f).State = EntityState.Modified;
+                db.SaveChanges();
+                return Ok();
+
+            }
+        }
 
     }
 }

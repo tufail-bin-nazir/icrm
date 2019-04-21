@@ -4,6 +4,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -11,7 +13,6 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
-
 
 namespace icrm.WebApi
 {
@@ -43,15 +44,33 @@ namespace icrm.WebApi
             {
                 return BadRequest(ModelState);
             }
-            ApplicationUser user = db.Users.Where(e => e.EmployeeId == model.EmployeeId && e.EmployeeStatus== "Active").SingleOrDefault();
+            ApplicationUser user = db.Users.Where(e => e.EmployeeId == model.EmployeeId && e.EmployeeStatus == "Active").SingleOrDefault();
             if (user == null)
             {
-                return BadRequest(" NO User Found");
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                ApplicationUser User = new ApplicationUser();
+                User.UserName = Convert.ToString(model.EmployeeId);
+                User.PasswordHash = HashPassword(model.Password);
+                User.EmployeeId = model.EmployeeId;
+                User.Email = "wajahatnabi90@gmail.com";
+                User.FirstName = "wajahat";
+                User.LastName = "Nabi";
+                User.LastPasswordChangedDate = DateTime.Now;
+                User.SecurityStamp = Guid.NewGuid().ToString("D");
+                db.Users.Add(User);
+                db.SaveChanges();
+                UserManager.AddToRole(User.Id, roleManager.FindByName("User").Name);
+                PasswordHistory ph = new PasswordHistory();
+                ph.userId = User.Id;
+                ph.password = User.PasswordHash;
+                db.PasswordHistories.Add(ph);
+                db.SaveChanges();
+                return Ok();
 
             }
-            else if(user.PasswordHash==null)
+            else if (user.PasswordHash == null)
             {
-               
+                var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
                 user.UserName = Convert.ToString(model.EmployeeId);
                 user.PasswordHash = HashPassword(model.Password);
                 user.Email = user.bussinessEmail;
@@ -96,4 +115,4 @@ namespace icrm.WebApi
             return Convert.ToBase64String(dst);
         }
     }
-}
+    }
