@@ -29,5 +29,7 @@ namespace icrm.Models
         [JsonIgnore]
         public Feedback feedback { get; set; }
 
+        public string commentFor { get; set; }
+
     }
 }

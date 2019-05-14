@@ -25,5 +25,12 @@ namespace icrm.Models
         public static string criticallevel2useremail = "khursheed@stie.com.sg";
         public static string criticallevel3useremail = "tufail.b.n@gmail.com";
         public static string FORWARD = "Forward";
+        
+        public static int highescelationtime = 12;
+        public static int mediumescelationtime = 24;
+        public static int lowescelationtime = 48;
+        public static string Complaints = "Complaint";
+        public static string OPERATIONS = "Operations";
+        public static List<string> commentType = new List<string>(new string[] {"Hr","Department","User" });
     }
 }

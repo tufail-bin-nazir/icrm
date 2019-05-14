@@ -176,6 +176,7 @@ namespace icrm.Controllers
                 c.text = Request.Form["responsee"];
                 c.commentedById = user.Id;
                 c.feedbackId = feedback.id;
+                c.commentFor = Constants.commentType[0];
                 db.comments.Add(c);
                 
                     db.SaveChanges();
@@ -412,6 +413,7 @@ namespace icrm.Controllers
             {
                 getAttributeList();
                 Feedback f = feedInterface.Find(id);
+                ViewData["decide"] = feedInterface.getCOmments(id);
                 return View("view",f);
             }
         }
